@@ -115,6 +115,26 @@ const routes = [
           },
         ],
       },
+      // Values
+      {
+        path: "/app/values",
+        component: () => import("./views/app/values"),
+        redirect: "/app/values/list",
+        children: [
+          {
+            path: "list",
+            component: () => import("./views/app/values/list"),
+          },
+          {
+            path: "create",
+            component: () => import("./views/app/values/create"),
+          },
+          {
+            path: "id",
+            component: () => import("./views/app/values/id"),
+          },
+        ],
+      },
       //ui-kits
       {
         path: "/app/ui-kits",

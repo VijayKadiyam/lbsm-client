@@ -43,6 +43,19 @@
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
+            :class="{ active: selectedParentMenu == 'users' }"
+            data-item="users"
+            :data-submenu="true"
+          >
+            <a class="nav-item-hold" href="#">
+              <i class="nav-icon i-File-Clipboard-File--Text"></i>
+              <span class="nav-text">Users</span>
+            </a>
+            <div class="triangle"></div>
+          </li>
+          <li
+            @mouseenter="toggleSubMenu"
+            class="nav-item"
             :class="{ active: selectedParentMenu == 'ui-kits' }"
             data-item="ui-kits"
             :data-submenu="true"
@@ -243,6 +256,31 @@
           </li>
           <li class="nav-item">
             <router-link tag="a" class to="/app/sites/id">
+              <i class="nav-icon i-Receipt-4"></i>
+              <span class="item-name">Id</span>
+            </router-link>
+          </li>
+        </ul>
+        <!-- Submenu Users -->
+        <ul
+          class="childNav d-none"
+          data-parent="users"
+          :class="{ 'd-block': selectedParentMenu == 'users' }"
+        >
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/users/list">
+              <i class="nav-icon i-File-Clipboard-Text--Image"></i>
+              <span class="item-name">Listing</span>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/users/create">
+              <i class="nav-icon i-Split-Vertical"></i>
+              <span class="item-name">Add New Site</span>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/users/id">
               <i class="nav-icon i-Receipt-4"></i>
               <span class="item-name">Id</span>
             </router-link>

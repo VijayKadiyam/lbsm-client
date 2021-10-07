@@ -95,6 +95,26 @@ const routes = [
           },
         ],
       },
+      // Programs
+      {
+        path: "/app/programs",
+        component: () => import("./views/app/programs"),
+        redirect: "/app/programs/list",
+        children: [
+          {
+            path: "list",
+            component: () => import("./views/app/programs/list"),
+          },
+          {
+            path: "create",
+            component: () => import("./views/app/programs/create"),
+          },
+          {
+            path: "id",
+            component: () => import("./views/app/programs/id"),
+          },
+        ],
+      },
       //ui-kits
       {
         path: "/app/ui-kits",

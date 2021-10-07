@@ -43,6 +43,19 @@
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
+            :class="{ active: selectedParentMenu == 'permissions' }"
+            data-item="permissions"
+            :data-submenu="true"
+          >
+            <a class="nav-item-hold" href="#">
+              <i class="nav-icon text-20 i-Check"></i>
+              <span class="nav-text">Permissions</span>
+            </a>
+            <div class="triangle"></div>
+          </li>
+          <li
+            @mouseenter="toggleSubMenu"
+            class="nav-item"
             :class="{ active: selectedParentMenu == 'ui-kits' }"
             data-item="ui-kits"
             :data-submenu="true"
@@ -247,6 +260,31 @@
               <span class="item-name">Id</span>
             </router-link>
           </li>
+        </ul>
+        <!-- Submenu Permissions -->
+        <ul
+          class="childNav d-none"
+          data-parent="permissions"
+          :class="{ 'd-block': selectedParentMenu == 'permissions' }"
+        >
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/permissions/list">
+              <i class="nav-icon i-File-Clipboard-Text--Image"></i>
+              <span class="item-name">Listing</span>
+            </router-link>
+          </li>
+          <!-- <li class="nav-item">
+            <router-link tag="a" class to="/app/permissions/create">
+              <i class="nav-icon i-Split-Vertical"></i>
+              <span class="item-name">Add New Site</span>
+            </router-link>
+          </li> -->
+          <!-- <li class="nav-item">
+            <router-link tag="a" class to="/app/permissions/id">
+              <i class="nav-icon i-Receipt-4"></i>
+              <span class="item-name">Id</span>
+            </router-link>
+          </li> -->
         </ul>
         <ul
           class="childNav d-none"

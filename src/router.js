@@ -63,6 +63,26 @@ const routes = [
           },
         ],
       },
+      // Permissions
+      {
+        path: "/app/permissions",
+        component: () => import("./views/app/permissions"),
+        redirect: "/app/permissions/list",
+        children: [
+          {
+            path: "list",
+            component: () => import("./views/app/permissions/list"),
+          },
+          // {
+          //   path: "create",
+          //   component: () => import("./views/app/permissions/create"),
+          // },
+          // {
+          //   path: "id",
+          //   component: () => import("./views/app/permissions/id"),
+          // },
+        ],
+      },
       //ui-kits
       {
         path: "/app/ui-kits",

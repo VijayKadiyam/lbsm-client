@@ -30,6 +30,19 @@
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
+            :class="{ active: selectedParentMenu == 'sites' }"
+            data-item="sites"
+            :data-submenu="true"
+          >
+            <a class="nav-item-hold" href="#">
+              <i class="nav-icon i-File-Clipboard-File--Text"></i>
+              <span class="nav-text">Sites</span>
+            </a>
+            <div class="triangle"></div>
+          </li>
+          <li
+            @mouseenter="toggleSubMenu"
+            class="nav-item"
             :class="{ active: selectedParentMenu == 'ui-kits' }"
             data-item="ui-kits"
             :data-submenu="true"
@@ -207,6 +220,31 @@
               <span class="item-name">{{
                 $t("dashboardItems.versionFour")
               }}</span>
+            </router-link>
+          </li>
+        </ul>
+        <!-- Submenu Sites -->
+        <ul
+          class="childNav d-none"
+          data-parent="sites"
+          :class="{ 'd-block': selectedParentMenu == 'sites' }"
+        >
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/sites/list">
+              <i class="nav-icon i-File-Clipboard-Text--Image"></i>
+              <span class="item-name">Listing</span>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/sites/create">
+              <i class="nav-icon i-Split-Vertical"></i>
+              <span class="item-name">Add New Site</span>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/sites/id">
+              <i class="nav-icon i-Receipt-4"></i>
+              <span class="item-name">Id</span>
             </router-link>
           </li>
         </ul>

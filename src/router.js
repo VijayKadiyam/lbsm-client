@@ -83,6 +83,18 @@ const routes = [
           },
         ],
       },
+      // Permissions
+      {
+        path: "/app/permissions",
+        component: () => import("./views/app/permissions"),
+        redirect: "/app/permissions/list",
+        children: [
+          {
+            path: "list",
+            component: () => import("./views/app/permissions/list"),
+          },
+        ],
+      },
       //ui-kits
       {
         path: "/app/ui-kits",

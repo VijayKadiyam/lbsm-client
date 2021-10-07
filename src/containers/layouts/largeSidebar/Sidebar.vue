@@ -56,6 +56,19 @@
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
+            :class="{ active: selectedParentMenu == 'permissions' }"
+            data-item="permissions"
+            :data-submenu="true"
+          >
+            <a class="nav-item-hold" href="#">
+              <i class="nav-icon text-20 i-Check"></i>
+              <span class="nav-text">Permissions</span>
+            </a>
+            <div class="triangle"></div>
+          </li>
+          <li
+            @mouseenter="toggleSubMenu"
+            class="nav-item"
             :class="{ active: selectedParentMenu == 'ui-kits' }"
             data-item="ui-kits"
             :data-submenu="true"
@@ -283,6 +296,19 @@
             <router-link tag="a" class to="/app/users/id">
               <i class="nav-icon i-Receipt-4"></i>
               <span class="item-name">Id</span>
+            </router-link>
+          </li>
+        </ul>
+        <!-- Submenu Permissions -->
+        <ul
+          class="childNav d-none"
+          data-parent="permissions"
+          :class="{ 'd-block': selectedParentMenu == 'permissions' }"
+        >
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/permissions/list">
+              <i class="nav-icon i-File-Clipboard-Text--Image"></i>
+              <span class="item-name">Listing</span>
             </router-link>
           </li>
         </ul>
@@ -998,7 +1024,7 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
-    Topnav
+    Topnav,
   },
 
   data() {
@@ -1007,7 +1033,7 @@ export default {
       isMenuOver: false,
       isStyle: true,
       selectedParentMenu: "",
-      isMobile
+      isMobile,
     };
   },
   mounted() {
@@ -1022,7 +1048,7 @@ export default {
     window.removeEventListener("resize", this.handleWindowResize);
   },
   computed: {
-    ...mapGetters(["getSideBarToggleProperties"])
+    ...mapGetters(["getSideBarToggleProperties"]),
   },
 
   methods: {
@@ -1030,7 +1056,7 @@ export default {
       "changeSecondarySidebarProperties",
       "changeSecondarySidebarPropertiesViaMenuItem",
       "changeSecondarySidebarPropertiesViaOverlay",
-      "changeSidebarProperties"
+      "changeSidebarProperties",
     ]),
 
     handleWindowResize() {
@@ -1051,7 +1077,7 @@ export default {
     toggleSelectedParentMenu() {
       const currentParentUrl = this.$route.path
         .split("/")
-        .filter(x => x !== "")[1];
+        .filter((x) => x !== "")[1];
 
       if (currentParentUrl !== undefined || currentParentUrl !== null) {
         this.selectedParentMenu = currentParentUrl.toLowerCase();
@@ -1090,13 +1116,12 @@ export default {
 
       event.currentTarget.classList.toggle("open");
 
-      dropdownMenus.forEach(dropdown => {
+      dropdownMenus.forEach((dropdown) => {
         dropdown.classList.remove("open");
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style lang="" scoped>
-</style>
+<style lang="" scoped></style>

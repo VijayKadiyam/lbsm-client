@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@johmun/vue-tags-input": "^2.1.0",
-    "apexcharts": "^3.23.1",
+    "apexcharts": "^3.28.3",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.21.2",
@@ -58,7 +58,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.10",
     "@vue/cli-plugin-eslint": "^4.5.10",
-    "@vue/cli-service": "^4.5.10",
+    "@vue/cli-service": "^4.5.13",
     "@vue/eslint-config-prettier": "^6.0.0",
     "babel-eslint": "^10.1.0",
     "copy-webpack-plugin": "^6.4.1",

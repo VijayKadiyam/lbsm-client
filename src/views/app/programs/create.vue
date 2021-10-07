@@ -11,49 +11,75 @@
                 class="mb-2"
                 label="Program Name"
                 placeholder="Enter Program Name"
-                v-model.trim="$v.name.$model"
+                v-model.trim="program_name"
               >
               </b-form-input>
 
-              <b-alert
+              <!-- <b-alert
                 show
                 variant="danger"
                 class="error col-md-6 mt-1"
-                v-if="!$v.name.minLength"
+                v-if="!program_name.minLength"
                 >Name must have at least
-                {{ $v.name.$params.minLength.min }} letters.</b-alert
-              >
+                {{ program_name.$params.minLength.min }} letters.</b-alert
+              > -->
             </b-form-group>
-            <b-form-group>
+
+            <b-form-group label="Program Description">
               <b-form-textarea
                 id="textarea"
-                v-model="text"
+                v-model="program_description"
                 placeholder="Program Description"
                 rows="3"
                 max-rows="6"
               ></b-form-textarea>
+
+              <!-- <b-alert
+                show
+                variant="danger"
+                class="error col-md-6 mt-1"
+                v-if="!$v.program_description.minLength"
+                >Name must have at least
+                {{ $v.name.$params.minLength.min }} letters.</b-alert
+              > -->
             </b-form-group>
 
             <b-form-group label="Instructor">
               <b-form-input
                 class="mb-2"
                 label="Instructor"
-                placeholder="Instructor"
-                v-model.trim="$v.instrutor.$model"
+                placeholder="Enter Instructor"
+                v-model="instrutor"
               >
               </b-form-input>
 
+              <!-- <b-alert
+                show
+                variant="danger"
+                class="error col-md-6 mt-1"
+                v-if="!instrutor.minLength"
+                >Name must have at least
+                {{ instrutor.$params.minLength.min }} letters.</b-alert
+              > -->
             </b-form-group>
 
             <b-form-group label="Hours">
               <b-form-input
                 class="mb-2"
                 label="Hours"
-                placeholder="Hours"
-                v-model.trim="$v.hour.$model"
+                placeholder="Enter Hours"
+                v-model="hours"
               >
               </b-form-input>
 
+              <!-- <b-alert
+                show
+                variant="danger"
+                class="error col-md-6 mt-1"
+                v-if="!hours.minLength"
+                >Name must have at least
+                {{ hours.$params.minLength.min }} letters.</b-alert
+              > -->
             </b-form-group>
 
             <b-button
@@ -82,11 +108,8 @@
 
 <script>
 import {
-  email,
-  numeric,
   required,
   minLength,
-  maxLength,
 } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
@@ -95,9 +118,10 @@ export default {
   },
   data() {
     return {
-      name: "",
-      phone: "",
-      email: "",
+      program_name: "",
+      program_description: "",
+      intructor: "",
+      hours: "",
       submitStatus: null,
       peopleAdd: [
         {
@@ -110,20 +134,9 @@ export default {
     };
   },
   validations: {
-    name: {
+    program_name: {
       required,
       minLength: minLength(4),
-    },
-    email: {
-      email,
-      required,
-      minLength: minLength(4),
-    },
-    phone: {
-      required,
-      numeric,
-      minLength: minLength(10),
-      maxLength: maxLength(12),
     },
 
     // add input

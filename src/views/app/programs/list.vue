@@ -17,6 +17,11 @@
         styleClass="tableOne vgt-table"
         :rows="rows"
       >
+      <div slot="table-actions" class="mb-3">
+          <b-button variant="primary" class="btn-rounded d-none d-sm-block"  to="/app/programs/create"
+            ><i class="i-Add-User text-white mr-2"> </i>Add Program
+          </b-button>
+        </div>
         <div slot="table-actions" class="mb-3">
         </div>
 

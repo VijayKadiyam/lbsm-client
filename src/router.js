@@ -63,6 +63,26 @@ const routes = [
           },
         ],
       },
+      // Users
+      {
+        path: "/app/users",
+        component: () => import("./views/app/users"),
+        redirect: "/app/users/list",
+        children: [
+          {
+            path: "list",
+            component: () => import("./views/app/users/list"),
+          },
+          {
+            path: "create",
+            component: () => import("./views/app/users/create"),
+          },
+          {
+            path: "id",
+            component: () => import("./views/app/users/id"),
+          },
+        ],
+      },
       // Permissions
       {
         path: "/app/permissions",
@@ -73,14 +93,6 @@ const routes = [
             path: "list",
             component: () => import("./views/app/permissions/list"),
           },
-          // {
-          //   path: "create",
-          //   component: () => import("./views/app/permissions/create"),
-          // },
-          // {
-          //   path: "id",
-          //   component: () => import("./views/app/permissions/id"),
-          // },
         ],
       },
       //ui-kits

@@ -82,6 +82,19 @@
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
+            :class="{ active: selectedParentMenu == 'values' }"
+            data-item="values"
+            :data-submenu="true"
+          >
+            <a class="nav-item-hold" href="#">
+              <i class="nav-icon text-20 i-Diploma-2"></i>
+              <span class="nav-text">Values</span>
+            </a>
+            <div class="triangle"></div>
+          </li>
+          <li
+            @mouseenter="toggleSubMenu"
+            class="nav-item"
             :class="{ active: selectedParentMenu == 'ui-kits' }"
             data-item="ui-kits"
             :data-submenu="true"
@@ -345,6 +358,31 @@
           </li> 
          <li class="nav-item">
             <router-link tag="a" class to="/app/programs/id">
+              <i class="nav-icon i-Receipt-4"></i>
+              <span class="item-name">Id</span>
+            </router-link>
+          </li>
+        </ul>
+        <!-- Submenu Values -->
+        <ul
+          class="childNav d-none"
+          data-parent="values"
+          :class="{ 'd-block': selectedParentMenu == 'values' }"
+        >
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/values/list">
+              <i class="nav-icon i-File-Clipboard-Text--Image"></i>
+              <span class="item-name">Listing</span>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/values/create">
+              <i class="nav-icon i-Split-Vertical"></i>
+              <span class="item-name">Add New Value</span>
+            </router-link>
+          </li> 
+         <li class="nav-item">
+            <router-link tag="a" class to="/app/values/id">
               <i class="nav-icon i-Receipt-4"></i>
               <span class="item-name">Id</span>
             </router-link>

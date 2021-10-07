@@ -69,6 +69,19 @@
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
+            :class="{ active: selectedParentMenu == 'programs' }"
+            data-item="programs"
+            :data-submenu="true"
+          >
+            <a class="nav-item-hold" href="#">
+              <i class="nav-icon text-20 i-Diploma-2"></i>
+              <span class="nav-text">Programs</span>
+            </a>
+            <div class="triangle"></div>
+          </li>
+          <li
+            @mouseenter="toggleSubMenu"
+            class="nav-item"
             :class="{ active: selectedParentMenu == 'ui-kits' }"
             data-item="ui-kits"
             :data-submenu="true"
@@ -312,6 +325,31 @@
             </router-link>
           </li>
         </ul>
+         <!-- Submenu Programs -->
+        <ul
+          class="childNav d-none"
+          data-parent="programs"
+          :class="{ 'd-block': selectedParentMenu == 'programs' }"
+        >
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/programs/list">
+              <i class="nav-icon i-File-Clipboard-Text--Image"></i>
+              <span class="item-name">Listing</span>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/programs/create">
+              <i class="nav-icon i-Split-Vertical"></i>
+              <span class="item-name">Add New Site</span>
+            </router-link>
+          </li> 
+         <li class="nav-item">
+            <router-link tag="a" class to="/app/programs/id">
+              <i class="nav-icon i-Receipt-4"></i>
+              <span class="item-name">Id</span>
+            </router-link>
+          </li>
+        </ul>
         <ul
           class="childNav d-none"
           data-parent="forms"
@@ -482,7 +520,7 @@
               <i class="nav-icon i-Add-File"></i>
               <span class="item-name"
                 >Ecommerce
-                <span class=" ml-2 badge badge-pill badge-danger"
+                <span class="ml-2 badge badge-pill badge-danger"
                   >New</span
                 ></span
               >
@@ -499,7 +537,7 @@
               <i class="nav-icon i-Add-File"></i>
               <span class="item-name"
                 >Todo App
-                <span class=" ml-2 badge badge-pill badge-danger"
+                <span class="ml-2 badge badge-pill badge-danger"
                   >New</span
                 ></span
               >
@@ -510,7 +548,7 @@
               <i class="nav-icon i-Add-File"></i>
               <span class="item-name"
                 >Contacts Table
-                <span class=" ml-2 badge badge-pill badge-danger"
+                <span class="ml-2 badge badge-pill badge-danger"
                   >New</span
                 ></span
               >
@@ -541,7 +579,7 @@
               <i class="nav-icon i-Add-File"></i>
               <span class="item-name"
                 >scrumboard
-                <span class=" ml-2 badge badge-pill badge-danger"
+                <span class="ml-2 badge badge-pill badge-danger"
                   >New</span
                 ></span
               >

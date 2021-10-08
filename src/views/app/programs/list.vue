@@ -31,6 +31,13 @@
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
               {{ props.row.button }}</a
             >
+            <a href="/app/programs/id/program-tasks">
+              <i class="i-Add text-25 text-success mr-2"></i>
+              </a
+            >
+            <!-- <b-button variant="primary" class="btn-rounded d-none d-sm-block"  to=""
+            ><i class="i-Add text-white mr-2"> </i>Program Tasks
+          </b-button>  -->
           </span>
         </template>
       </vue-good-table>

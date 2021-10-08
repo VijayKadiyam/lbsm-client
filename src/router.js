@@ -135,6 +135,26 @@ const routes = [
           },
         ],
       },
+      // Values
+      {
+        path: "/app/value-lists",
+        component: () => import("./views/app/value-lists"),
+        redirect: "/app/value-lists/list",
+        children: [
+          {
+            path: "list",
+            component: () => import("./views/app/value-lists/list"),
+          },
+          {
+            path: "create",
+            component: () => import("./views/app/value-lists/create"),
+          },
+          {
+            path: "id",
+            component: () => import("./views/app/value-lists/id"),
+          },
+        ],
+      },
       // Program Tasks
       {
         path: "/app/programs/id/program-tasks",

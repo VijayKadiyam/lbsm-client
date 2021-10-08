@@ -1,86 +1,30 @@
 <template>
   <div class="main-content">
-    <breadcumb :page="'Create Program'" :folder="'Programs'" />
+    <breadcumb :page="'Create Value'" :folder="'Values'" />
 
     <b-row class="justify-content-md-center">
       <b-col md="6">
         <b-card>
           <b-form @submit.prevent="submit">
-            <b-form-group label="Program Name">
+            <b-form-group label="Name">
               <b-form-input
                 class="mb-2"
-                label="Program Name"
-                placeholder="Enter Program Name"
-                v-model.trim="program_name"
+                label="Name"
+                placeholder="Enter Name"
+                v-model.trim="$v.name.$model"
               >
               </b-form-input>
 
-              <!-- <b-alert
+              <b-alert
                 show
                 variant="danger"
                 class="error col-md-6 mt-1"
-                v-if="!program_name.minLength"
-                >Name must have at least
-                {{ program_name.$params.minLength.min }} letters.</b-alert
-              > -->
-            </b-form-group>
-
-            <b-form-group label="Program Description">
-              <b-form-textarea
-                id="textarea"
-                v-model="program_description"
-                placeholder="Program Description"
-                rows="3"
-                max-rows="6"
-              ></b-form-textarea>
-
-              <!-- <b-alert
-                show
-                variant="danger"
-                class="error col-md-6 mt-1"
-                v-if="!$v.program_description.minLength"
+                v-if="!$v.name.minLength"
                 >Name must have at least
                 {{ $v.name.$params.minLength.min }} letters.</b-alert
-              > -->
-            </b-form-group>
-
-            <b-form-group label="Instructor">
-              <b-form-input
-                class="mb-2"
-                label="Instructor"
-                placeholder="Enter Instructor"
-                v-model="instrutor"
               >
-              </b-form-input>
-
-              <!-- <b-alert
-                show
-                variant="danger"
-                class="error col-md-6 mt-1"
-                v-if="!instrutor.minLength"
-                >Name must have at least
-                {{ instrutor.$params.minLength.min }} letters.</b-alert
-              > -->
             </b-form-group>
 
-            <b-form-group label="Hours">
-              <b-form-input
-                class="mb-2"
-                label="Hours"
-                placeholder="Enter Hours"
-                v-model="hours"
-              >
-              </b-form-input>
-
-              <!-- <b-alert
-                show
-                variant="danger"
-                class="error col-md-6 mt-1"
-                v-if="!hours.minLength"
-                >Name must have at least
-                {{ hours.$params.minLength.min }} letters.</b-alert
-              > -->
-            </b-form-group>
 
             <b-button
               type="submit"
@@ -107,36 +51,43 @@
 
 
 <script>
-import {
-  required,
-  minLength,
-} from "vuelidate/lib/validators";
+import {email,numeric, between,required, sameAs, minLength,maxLength } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Program | Create",
+    title: "Form Component"
   },
   data() {
     return {
-      program_name: "",
-      program_description: "",
-      intructor: "",
-      hours: "",
+      name: "",
+      phone: "",
+      email:"",
       submitStatus: null,
       peopleAdd: [
         {
-          multipleName: "Johnn",
+          multipleName: "Johnn"
         },
         {
-          multipleName: "",
-        },
-      ],
+          multipleName: ""
+        }
+      ]
     };
   },
   validations: {
-    program_name: {
+    name: {
       required,
-      minLength: minLength(4),
+      minLength: minLength(4)
+    },
+    email: {
+      email,
+      required,
+      minLength: minLength(4)
+    },
+    phone: {
+      required,
+      numeric,
+      minLength: minLength(10),
+      maxLength: maxLength(12),
     },
 
     // add input
@@ -173,21 +124,21 @@ export default {
       this.$bvToast.toast("Please fill the form correctly.", {
         title: `Variant ${variant || "default"}`,
         variant: variant,
-        solid: true,
+        solid: true
       });
     },
     makeToastTwo(variant = null) {
       this.$bvToast.toast("Successfully Submitted", {
         title: `Variant ${variant || "default"}`,
         variant: variant,
-        solid: true,
+        solid: true
       });
     },
 
     inputSubmit() {
       console.log("submitted");
-    },
-  },
+    }
+  }
 };
 </script>
 <style>

@@ -55,7 +55,7 @@ import {email,numeric, between,required, sameAs, minLength,maxLength } from "vue
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Form Component"
+    title: "Value | Create"
   },
   data() {
     return {

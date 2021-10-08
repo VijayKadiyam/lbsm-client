@@ -95,6 +95,19 @@
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
+            :class="{ active: selectedParentMenu == 'value-lists' }"
+            data-item="value-lists"
+            :data-submenu="true"
+          >
+            <a class="nav-item-hold" href="#">
+              <i class="nav-icon text-20 i-Diploma-2"></i>
+              <span class="nav-text">Value Lists</span>
+            </a>
+            <div class="triangle"></div>
+          </li>
+          <li
+            @mouseenter="toggleSubMenu"
+            class="nav-item"
             :class="{ active: selectedParentMenu == 'user-programs' }"
             data-item="user-programs"
             :data-submenu="true"
@@ -351,7 +364,7 @@
             </router-link>
           </li>
         </ul>
-         <!-- Submenu Programs -->
+        <!-- Submenu Programs -->
         <ul
           class="childNav d-none"
           data-parent="programs"
@@ -368,8 +381,8 @@
               <i class="nav-icon i-Split-Vertical"></i>
               <span class="item-name">Add New Site</span>
             </router-link>
-          </li> 
-         <li class="nav-item">
+          </li>
+          <li class="nav-item">
             <router-link tag="a" class to="/app/programs/id">
               <i class="nav-icon i-Receipt-4"></i>
               <span class="item-name">Id</span>
@@ -393,15 +406,40 @@
               <i class="nav-icon i-Split-Vertical"></i>
               <span class="item-name">Add New Value</span>
             </router-link>
-          </li> 
-         <li class="nav-item">
+          </li>
+          <li class="nav-item">
             <router-link tag="a" class to="/app/values/id">
               <i class="nav-icon i-Receipt-4"></i>
               <span class="item-name">Id</span>
             </router-link>
           </li>
         </ul>
-         <!-- Submenu Program Tasks -->
+        <!-- Submenu Value-Lists -->
+        <ul
+          class="childNav d-none"
+          data-parent="value-lists"
+          :class="{ 'd-block': selectedParentMenu == 'value-lists' }"
+        >
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/value-lists/list">
+              <i class="nav-icon i-File-Clipboard-Text--Image"></i>
+              <span class="item-name">Listing</span>
+            </router-link>
+          </li>
+          <!-- <li class="nav-item">
+            <router-link tag="a" class to="/app/value-lists/create">
+              <i class="nav-icon i-Split-Vertical"></i>
+              <span class="item-name">Add New Value</span>
+            </router-link>
+          </li> 
+         <li class="nav-item">
+            <router-link tag="a" class to="/app/value-lists/id">
+              <i class="nav-icon i-Receipt-4"></i>
+              <span class="item-name">Id</span>
+            </router-link>
+          </li> -->
+        </ul>
+        <!-- Submenu Program Tasks -->
         <ul
           class="childNav d-none"
           data-parent="user-programs"
@@ -418,8 +456,8 @@
               <i class="nav-icon i-Split-Vertical"></i>
               <span class="item-name">Add New User Programs</span>
             </router-link>
-          </li> 
-         <li class="nav-item">
+          </li>
+          <li class="nav-item">
             <router-link tag="a" class to="/app/user-programs/id">
               <i class="nav-icon i-Receipt-4"></i>
               <span class="item-name">Id</span>

@@ -135,6 +135,46 @@ const routes = [
           },
         ],
       },
+      // Program Tasks
+      {
+        path: "/app/programs/id/program-tasks",
+        component: () => import("./views/app/program-tasks"),
+        redirect: "/app/programs/id/program-tasks/list",
+        children: [
+          {
+            path: "list",
+            component: () => import("./views/app/program-tasks/list"),
+          },
+          {
+            path: "create",
+            component: () => import("./views/app/program-tasks/create"),
+          },
+          {
+            path: "id",
+            component: () => import("./views/app/program-tasks/id"),
+          },
+        ],
+      },
+      // User Programs
+      {
+        path: "/app/user-programs",
+        component: () => import("./views/app/user-programs"),
+        redirect: "/app/user-programs/list",
+        children: [
+          {
+            path: "list",
+            component: () => import("./views/app/user-programs/list"),
+          },
+          {
+            path: "create",
+            component: () => import("./views/app/user-programs/create"),
+          },
+          {
+            path: "id",
+            component: () => import("./views/app/user-programs/id"),
+          },
+        ],
+      },
       //ui-kits
       {
         path: "/app/ui-kits",
@@ -218,7 +258,7 @@ const routes = [
         ],
       },
 
-      //uiExtraKits
+      //uiExtraK+its
       {
         path: "/app/extraKits",
         component: () => import("./views/app/extraKits"),

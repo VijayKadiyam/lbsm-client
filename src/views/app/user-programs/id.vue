@@ -1,87 +1,48 @@
 <template>
   <div class="main-content">
-    <breadcumb :page="'Update Program'" :folder="'Programs'" />
+    <breadcumb :page="'Update User Program'" :folder="'User Programs'" />
 
     <b-row class="justify-content-md-center">
       <b-col md="6">
         <b-card>
           <b-form @submit.prevent="submit">
-            <b-form-group label="Program Name">
-              <b-form-input
+            <b-form-group label="User">
+              <vue-tags-input
+                v-model="user"
+                :tags="users"
+                class="tag-custom text-15 mb-2"
+                :autocomplete-items="filteredUserItems"
+                :add-only-from-autocomplete="true"
+                @ABCs-changed="(newTags) => (users = newTags)"
+                placeholder="Type User Name"
+              />
+            </b-form-group>
+            <b-form-group label="Program">
+              <vue-tags-input
+                v-model="program"
+                :tags="programs"
+                class="tag-custom text-15 mb-2"
+                :autocomplete-items="filteredProgramItems"
+                :add-only-from-autocomplete="true"
+                @tags-changed="(newTags) => (programs = newTags)"
+                placeholder="Type Program Name"
+              />
+            </b-form-group>
+
+            <b-form-group label="Enrollment Date">
+              <b-form-datepicker
+                id="enrollment_date"
+                v-model="enrollment_date"
                 class="mb-2"
-                label="Program Name"
-                placeholder="Enter Program Name"
-                v-model.trim="program_name"
+              ></b-form-datepicker>
+              <b-alert
+                show
+                variant="danger"
+                class="error mt-1"
+                v-if="!$v.enrollment_date.required"
+                >Field is required</b-alert
               >
-              </b-form-input>
-
-              <!-- <b-alert
-                show
-                variant="danger"
-                class="error col-md-6 mt-1"
-                v-if="!program_name.minLength"
-                >Name must have at least
-                {{ program_name.$params.minLength.min }} letters.</b-alert
-              > -->
             </b-form-group>
-
-            <b-form-group label="Program Description">
-              <b-form-textarea
-                id="textarea"
-                v-model="program_description"
-                placeholder="Program Description"
-                rows="3"
-                max-rows="6"
-              ></b-form-textarea>
-
-              <!-- <b-alert
-                show
-                variant="danger"
-                class="error col-md-6 mt-1"
-                v-if="!$v.program_description.minLength"
-                >Name must have at least
-                {{ $v.name.$params.minLength.min }} letters.</b-alert
-              > -->
-            </b-form-group>
-
-            <b-form-group label="Instructor">
-              <b-form-input
-                class="mb-2"
-                label="Instructor"
-                placeholder="Enter Instructor"
-                v-model="instrutor"
-              >
-              </b-form-input>
-
-              <!-- <b-alert
-                show
-                variant="danger"
-                class="error col-md-6 mt-1"
-                v-if="!instrutor.minLength"
-                >Name must have at least
-                {{ instrutor.$params.minLength.min }} letters.</b-alert
-              > -->
-            </b-form-group>
-
-            <b-form-group label="Hours">
-              <b-form-input
-                class="mb-2"
-                label="Hours"
-                placeholder="Enter Hours"
-                v-model="hours"
-              >
-              </b-form-input>
-
-              <!-- <b-alert
-                show
-                variant="danger"
-                class="error col-md-6 mt-1"
-                v-if="!hours.minLength"
-                >Name must have at least
-                {{ hours.$params.minLength.min }} letters.</b-alert
-              > -->
-            </b-form-group>
-
             <b-button
               type="submit"
               variant="primary"
@@ -105,12 +66,8 @@
   </div>
 </template>
 
-
 <script>
-import {
-  required,
-  minLength,
-} from "vuelidate/lib/validators";
+import { required, minLength } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
@@ -118,10 +75,7 @@ export default {
   },
   data() {
     return {
-      program_name: "",
-      program_description: "",
-      intructor: "",
-      hours: "",
+      enrollment_date: "",
       submitStatus: null,
       peopleAdd: [
         {
@@ -131,12 +85,96 @@ export default {
           multipleName: "",
         },
       ],
+      //   auto complete
+      user: "",
+      users: [],
+
+      userItems: [
+        {
+          id: 1,
+          text: "John",
+        },
+        {
+          id: 2,
+          text: "Jane",
+        },
+        {
+          id: 3,
+          text: "Susan",
+        },
+        {
+          id: 4,
+          text: "Chris",
+        },
+        {
+          id: 5,
+          text: "Dan",
+        },
+        {
+          id: 6,
+          text: "John",
+        },
+        {
+          id: 1,
+          text: "John",
+        },
+        {
+          id: 2,
+          text: "Jane",
+        },
+        {
+          id: 3,
+          text: "Susan",
+        },
+        {
+          id: 4,
+          text: "Chris",
+        },
+        {
+          id: 5,
+          text: "Dan",
+        },
+        {
+          id: 6,
+          text: "John",
+        },
+      ],
+      program: "",
+      programs: [],
+      programItems: [
+        {
+          text: "Program Name 1",
+        },
+        {
+          text: "Program Name 2",
+        },
+        {
+          text: "Program Name 3",
+        },
+        {
+          text: "Program Name 4",
+        },
+        {
+          text: "Program Name 5",
+        },
+      ],
     };
   },
+  computed: {
+    filteredUserItems() {
+      return this.userItems.filter((u) => {
+        return u.text.toLowerCase().indexOf(this.user.toLowerCase()) !== -1;
+      });
+    },
+    filteredProgramItems() {
+      return this.programItems.filter((p) => {
+        return p.text.toLowerCase().indexOf(this.program.toLowerCase()) !== -1;
+      });
+    },
+  },
   validations: {
-    program_name: {
+    enrollment_date: {
       required,
-      minLength: minLength(4),
     },
 
     // add input

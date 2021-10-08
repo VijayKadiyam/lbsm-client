@@ -155,6 +155,26 @@ const routes = [
           },
         ],
       },
+      // User Programs
+      {
+        path: "/app/user-programs",
+        component: () => import("./views/app/user-programs"),
+        redirect: "/app/user-programs/list",
+        children: [
+          {
+            path: "list",
+            component: () => import("./views/app/user-programs/list"),
+          },
+          {
+            path: "create",
+            component: () => import("./views/app/user-programs/create"),
+          },
+          {
+            path: "id",
+            component: () => import("./views/app/user-programs/id"),
+          },
+        ],
+      },
       //ui-kits
       {
         path: "/app/ui-kits",

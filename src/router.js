@@ -135,7 +135,7 @@ const routes = [
           },
         ],
       },
-      // Values
+      // Value-Lists
       {
         path: "/app/value-lists",
         component: () => import("./views/app/value-lists"),
@@ -152,6 +152,26 @@ const routes = [
           {
             path: "id",
             component: () => import("./views/app/value-lists/id"),
+          },
+        ],
+      },
+      // Program Posts
+      {
+        path: "/app/program-posts",
+        component: () => import("./views/app/program-posts"),
+        redirect: "/app/program-posts/list",
+        children: [
+          {
+            path: "list",
+            component: () => import("./views/app/program-posts/list"),
+          },
+          {
+            path: "create",
+            component: () => import("./views/app/program-posts/create"),
+          },
+          {
+            path: "id",
+            component: () => import("./views/app/program-posts/id"),
           },
         ],
       },

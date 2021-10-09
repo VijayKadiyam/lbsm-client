@@ -1,18 +1,18 @@
 <template>
   <div class="main-content">
-    <breadcumb :page="'Value-List'" :folder="'Value-Lists'" />
+    <breadcumb :page="'Program Posts'" :folder="'Program Posts'" />
     <!-- <div class="wrapper"> -->
     <b-row>
       <b-col md="12" class="mt-4 mb-4">
-        <b-card title="Values">
+        <b-card title="Programs">
           <vue-tags-input
-            v-model="value"
-            :tags="values"
+            v-model="program"
+            :tags="programs"
             class="tag-custom text-15"
             :add-only-from-autocomplete="true"
             :autocomplete-items="filteredItems"
-            @tags-changed="(newTags) => (values = newTags)"
-            placeholder="Type Value Name"
+            @tags-changed="(newTags) => (programs = newTags)"
+            placeholder="Type Program Name"
           />
         </b-card>
       </b-col>
@@ -54,25 +54,24 @@
             >X
           </b-button>
             </span>
-          <!-- </span> -->
-          <span v-if="props.column.field == 'checked'">
-            <label class="switch switch-success mr-3">
-              <input type="checkbox" checked="checkbox" /><span
-                class="slider"
-              ></span>
-            </label>
-          </span>
-          <span v-if="props.column.field == 'description'">
+          <span v-if="props.column.field == 'serial_no'">
             <b-form-input
               class="mb-2"
-              label="Description"
-              placeholder="Enter Description"
+              label="Serial No"
+              placeholder="Enter Serial No"
             >
             </b-form-input>
           </span>
-          <span v-if="props.column.field == 'code'">
-            <b-form-input class="mb-2" label="Code" placeholder="Enter Code">
-            </b-form-input>
+          <span v-if="props.column.field == 'post_id'">
+            <vue-tags-input
+            v-model="value_list"
+            :tags="value_lists"
+            class="tag-custom text-15"
+            :add-only-from-autocomplete="true"
+            :autocomplete-items="ValueListfilteredItems"
+            @tags-changed="(newTags) => (value_lists = newTags)"
+            placeholder="Type Value List"
+          />
           </span>
         </template>
       </vue-good-table>
@@ -95,17 +94,13 @@ export default {
           field: "sr_no",
         },
         {
-          label: "Description",
-          field: "description",
+          label: "Serial No",
+          field: "serial_no",
         },
         {
-          label: "Code",
-          field: "code",
-        },
-        {
-          label: "Active",
-          field: "checked",
-        },
+          label: "Post ID",
+          field: "post_id",
+        }
       ],
       tag: "",
 
@@ -113,27 +108,45 @@ export default {
         {
           description: "",
           code: "",
-          active: "",
         },
       ],
       //   auto complete
-      value: "",
+      program: "",
 
       autocompleteItems: [
         {
-          text: "Country",
+          text: "Program 1",
         },
         {
-          text: "State",
+          text: "Program 2",
         },
         {
-          text: "City",
+          text: "Program 3",
         },
         {
-          text: "Department",
+          text: "Program 4",
         },
         {
-          text: "Category",
+          text: "Program 5",
+        },
+      ],
+      value_list: "",
+
+      valueListItems: [
+        {
+          text: "Mumbai",
+        },
+        {
+          text: "India",
+        },
+        {
+          text: "Maharashtra",
+        },
+        {
+          text: "Accounts",
+        },
+        {
+          text: "Male",
         },
       ],
     };
@@ -141,6 +154,11 @@ export default {
   computed: {
     filteredItems() {
       return this.autocompleteItems.filter((i) => {
+        return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
+      });
+    },
+    ValueListfilteredItems() {
+      return this.valueListItems.filter((i) => {
         return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
       });
     },

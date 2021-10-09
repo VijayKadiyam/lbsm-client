@@ -69,19 +69,6 @@
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
-            :class="{ active: selectedParentMenu == 'programs' }"
-            data-item="programs"
-            :data-submenu="true"
-          >
-            <a class="nav-item-hold" href="#">
-              <i class="nav-icon text-20 i-Diploma-2"></i>
-              <span class="nav-text">Programs</span>
-            </a>
-            <div class="triangle"></div>
-          </li>
-          <li
-            @mouseenter="toggleSubMenu"
-            class="nav-item"
             :class="{ active: selectedParentMenu == 'values' }"
             data-item="values"
             :data-submenu="true"
@@ -102,6 +89,32 @@
             <a class="nav-item-hold" href="#">
               <i class="nav-icon text-20 i-Diploma-2"></i>
               <span class="nav-text">Value Lists</span>
+            </a>
+            <div class="triangle"></div>
+          </li>
+          <li
+            @mouseenter="toggleSubMenu"
+            class="nav-item"
+            :class="{ active: selectedParentMenu == 'programs' }"
+            data-item="programs"
+            :data-submenu="true"
+          >
+            <a class="nav-item-hold" href="#">
+              <i class="nav-icon text-20 i-Diploma-2"></i>
+              <span class="nav-text">Programs</span>
+            </a>
+            <div class="triangle"></div>
+          </li>
+          <li
+            @mouseenter="toggleSubMenu"
+            class="nav-item"
+            :class="{ active: selectedParentMenu == 'program-posts' }"
+            data-item="program-posts"
+            :data-submenu="true"
+          >
+            <a class="nav-item-hold" href="#">
+              <i class="nav-icon text-20 i-Diploma-2"></i>
+              <span class="nav-text">Program Posts</span>
             </a>
             <div class="triangle"></div>
           </li>
@@ -422,6 +435,31 @@
         >
           <li class="nav-item">
             <router-link tag="a" class to="/app/value-lists/list">
+              <i class="nav-icon i-File-Clipboard-Text--Image"></i>
+              <span class="item-name">Listing</span>
+            </router-link>
+          </li>
+          <!-- <li class="nav-item">
+            <router-link tag="a" class to="/app/value-lists/create">
+              <i class="nav-icon i-Split-Vertical"></i>
+              <span class="item-name">Add New Value</span>
+            </router-link>
+          </li> 
+         <li class="nav-item">
+            <router-link tag="a" class to="/app/value-lists/id">
+              <i class="nav-icon i-Receipt-4"></i>
+              <span class="item-name">Id</span>
+            </router-link>
+          </li> -->
+        </ul>
+        <!-- Submenu Program Posts-->
+        <ul
+          class="childNav d-none"
+          data-parent="program-posts"
+          :class="{ 'd-block': selectedParentMenu == 'program-posts' }"
+        >
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/program-posts/list">
               <i class="nav-icon i-File-Clipboard-Text--Image"></i>
               <span class="item-name">Listing</span>
             </router-link>

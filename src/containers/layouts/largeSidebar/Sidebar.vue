@@ -147,6 +147,19 @@
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
+            :class="{ active: selectedParentMenu == 'user-program-tasks' }"
+            data-item="user-program-tasks"
+            :data-submenu="true"
+          >
+            <a class="nav-item-hold" href="#">
+              <i class="nav-icon text-20 i-Diploma-2"></i>
+              <span class="nav-text">User Program Tasks</span>
+            </a>
+            <div class="triangle"></div>
+          </li>
+          <li
+            @mouseenter="toggleSubMenu"
+            class="nav-item"
             :class="{ active: selectedParentMenu == 'ui-kits' }"
             data-item="ui-kits"
             :data-submenu="true"
@@ -537,6 +550,19 @@
             <router-link tag="a" class to="/app/user-program-posts/id">
               <i class="nav-icon i-Receipt-4"></i>
               <span class="item-name">Id</span>
+            </router-link>
+          </li>
+        </ul>
+         <!-- Submenu User Program Tasks -->
+        <ul
+          class="childNav d-none"
+          data-parent="user-program-tasks"
+          :class="{ 'd-block': selectedParentMenu == 'user-program-tasks' }"
+        >
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/user-program-tasks/list">
+              <i class="nav-icon i-File-Clipboard-Text--Image"></i>
+              <span class="item-name">Listing</span>
             </router-link>
           </li>
         </ul>

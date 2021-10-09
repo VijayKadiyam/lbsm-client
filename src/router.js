@@ -215,6 +215,27 @@ const routes = [
           },
         ],
       },
+      // User Program Posts
+      {
+        path: "/app/user-program-posts",
+        component: () => import("./views/app/user-program-posts"),
+        redirect: "/app/user-program-posts/list",
+        children: [
+          {
+            path: "list",
+            component: () => import("./views/app/user-program-posts/list"),
+          },
+          {
+            path: "create",
+            component: () => import("./views/app/user-program-posts/create"),
+          },
+          {
+            path: "id",
+            component: () => import("./views/app/user-program-posts/id"),
+          },
+        ],
+      },
+
       //ui-kits
       {
         path: "/app/ui-kits",

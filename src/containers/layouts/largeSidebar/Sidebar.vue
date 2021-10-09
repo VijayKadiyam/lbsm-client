@@ -134,6 +134,19 @@
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
+            :class="{ active: selectedParentMenu == 'user-program-posts' }"
+            data-item="user-program-posts"
+            :data-submenu="true"
+          >
+            <a class="nav-item-hold" href="#">
+              <i class="nav-icon text-20 i-Diploma-2"></i>
+              <span class="nav-text">User Program Posts</span>
+            </a>
+            <div class="triangle"></div>
+          </li>
+          <li
+            @mouseenter="toggleSubMenu"
+            class="nav-item"
             :class="{ active: selectedParentMenu == 'ui-kits' }"
             data-item="ui-kits"
             :data-submenu="true"
@@ -477,7 +490,7 @@
             </router-link>
           </li> -->
         </ul>
-        <!-- Submenu Program Tasks -->
+        <!-- Submenu User Program -->
         <ul
           class="childNav d-none"
           data-parent="user-programs"
@@ -497,6 +510,31 @@
           </li>
           <li class="nav-item">
             <router-link tag="a" class to="/app/user-programs/id">
+              <i class="nav-icon i-Receipt-4"></i>
+              <span class="item-name">Id</span>
+            </router-link>
+          </li>
+        </ul>
+        <!-- Submenu User Program Posts -->
+        <ul
+          class="childNav d-none"
+          data-parent="user-program-posts"
+          :class="{ 'd-block': selectedParentMenu == 'user-program-posts' }"
+        >
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/user-program-posts/list">
+              <i class="nav-icon i-File-Clipboard-Text--Image"></i>
+              <span class="item-name">Listing</span>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/user-program-posts/create">
+              <i class="nav-icon i-Split-Vertical"></i>
+              <span class="item-name">Add New User Programs</span>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/user-program-posts/id">
               <i class="nav-icon i-Receipt-4"></i>
               <span class="item-name">Id</span>
             </router-link>

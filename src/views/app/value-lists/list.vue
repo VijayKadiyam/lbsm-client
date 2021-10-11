@@ -8,9 +8,10 @@
           <vue-tags-input
             v-model="value"
             :tags="values"
+            :max-tags="1"
             class="tag-custom text-15"
             :add-only-from-autocomplete="true"
-            :autocomplete-items="filteredItems"
+            :autocomplete-items="filteredValueItems"
             @tags-changed="(newTags) => (values = newTags)"
             placeholder="Type Value Name"
           />
@@ -33,7 +34,7 @@
         :rows="rows"
         foot-clone
       >
-        <div slot="table-actions-bottom" class="mb-3">
+        <div slot="table-actions-bottom" class="mb-3 ml-4  ">
           <b-button
             variant="primary"
             class="btn-rounded d-none d-sm-block"
@@ -88,7 +89,6 @@ export default {
   },
   data() {
     return {
-      // foods: ["apple", "orrange"],
       columns: [
         {
           label: "Sr No",
@@ -107,8 +107,6 @@ export default {
           field: "checked",
         },
       ],
-      tag: "",
-
       rows: [
         {
           description: "",
@@ -118,8 +116,8 @@ export default {
       ],
       //   auto complete
       value: "",
-
-      autocompleteItems: [
+      values:[],
+      valueItems: [
         {
           text: "Country",
         },
@@ -139,9 +137,9 @@ export default {
     };
   },
   computed: {
-    filteredItems() {
-      return this.autocompleteItems.filter((i) => {
-        return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
+    filteredValueItems() {
+      return this.valueItems.filter((v) => {
+        return v.text.toLowerCase().indexOf(this.value.toLowerCase()) !== -1;
       });
     },
   },

@@ -1,19 +1,19 @@
 <template>
   <div class="main-content">
-    <breadcumb :page="'Value-List'" :folder="'Value-Lists'" />
+    <breadcumb :page="'User Program Task'" :folder="'User Program Tasks'" />
     <!-- <div class="wrapper"> -->
     <b-row>
       <b-col md="12" class="mt-4 mb-4">
-        <b-card title="Values">
+        <b-card title="Users">
           <vue-tags-input
-            v-model="value"
-            :tags="values"
+            v-model="user"
+            :tags="users"
             :max-tags="1"
             class="tag-custom text-15"
             :add-only-from-autocomplete="true"
-            :autocomplete-items="filteredValueItems"
-            @tags-changed="(newTags) => (values = newTags)"
-            placeholder="Type Value Name"
+            :autocomplete-items="filteredUserItems"
+            @tags-changed="(newTags) => (users = newTags)"
+            placeholder="Type User Name"
           />
         </b-card>
       </b-col>
@@ -34,46 +34,22 @@
         :rows="rows"
         foot-clone
       >
-        <div slot="table-actions-bottom" class="mb-1 mr-2 mt-3 pull-right">
+        <!-- <div slot="table-actions-bottom" class="mb-3">
           <b-button
             variant="primary"
             class="btn-rounded d-none d-sm-block"
             @click="addEmptyValueList()"
             ><i class="i-Add text-white mr-2"></i>Add Row
           </b-button>
-        </div>
+        </div> -->
 
         <template slot="table-row" slot-scope="props">
-          <!-- <b-form> -->
-          <span v-if="props.column.field == 'sr_no'">
-            <!-- <span @click="deleteValueList(valueList)" v-if="!valueList.id"> -->
-            <!-- <span  > -->
-              <b-button
+          <span v-if="props.column.field == 'button'">
+            <b-button
             variant="primary"
             class="btn-rounded d-none d-sm-block"
-            @click="deleteValueList(row)"
-            >X
+            to="/app/user-program/id/user-program-tasks"><i class="i-Eye text-white mr-2"> View Tasks</i>
           </b-button>
-            </span>
-          <!-- </span> -->
-          <span v-if="props.column.field == 'checked'">
-            <label class="switch switch-success mr-3">
-              <input type="checkbox" checked="checkbox" /><span
-                class="slider"
-              ></span>
-            </label>
-          </span>
-          <span v-if="props.column.field == 'description'">
-            <b-form-input
-              class="mb-2"
-              label="Description"
-              placeholder="Enter Description"
-            >
-            </b-form-input>
-          </span>
-          <span v-if="props.column.field == 'code'">
-            <b-form-input class="mb-2" label="Code" placeholder="Enter Code">
-            </b-form-input>
           </span>
         </template>
       </vue-good-table>
@@ -85,61 +61,80 @@
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Value List",
+    title: "User Program Tasks",
   },
   data() {
     return {
+      // foods: ["apple", "orrange"],
       columns: [
         {
           label: "Sr No",
           field: "sr_no",
         },
         {
+          label: "Program Name",
+          field: "program_name",
+        },
+        {
           label: "Description",
           field: "description",
         },
         {
-          label: "Code",
-          field: "code",
+          label: "Instructor",
+          field: "instructor",
         },
         {
-          label: "Active",
-          field: "checked",
+          label: "Hours",
+          field: "hours",
+        },
+        {
+          label: "Task Detail",
+          field: "button",
         },
       ],
+      tag: "",
+
       rows: [
         {
-          description: "",
-          code: "",
-          active: "",
+          program_name: "Program 1",
+          description: "Description",
+          instructor: "Instructor",
+          hours: 3,
+        },
+        {
+          program_name: "Program 2",
+          description: "Description",
+          instructor: "Instructor",
+          hours: 3,
         },
       ],
       //   auto complete
-      value: "",
-      values:[],
-      valueItems: [
+      user: "",
+      users: [],
+
+      userItems: [
         {
-          text: "Country",
+          text: "User 1",
         },
         {
-          text: "State",
+          text: "User 2",
         },
         {
-          text: "City",
+          text: "User 3",
         },
         {
-          text: "Department",
+          text: "User 4",
         },
         {
-          text: "Category",
+          text: "User 5",
         },
       ],
     };
   },
   computed: {
-    filteredValueItems() {
-      return this.valueItems.filter((v) => {
-        return v.text.toLowerCase().indexOf(this.value.toLowerCase()) !== -1;
+    filteredUserItems() {
+      return this.userItems.filter((i) => {
+        return i.text.toLowerCase().indexOf(this.user.toLowerCase()) !== -1;
       });
     },
   },
@@ -156,9 +151,11 @@ export default {
         is_active: 1,
       });
     },
-    deleteValueList() {
-       this.rows.splice(this.rows.index, 1);
-    },
+    // deleteValueList() {
+    //    return this.rows.filter((i) => {
+    //     return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
+    //   });
+    // },
   },
 };
 </script>

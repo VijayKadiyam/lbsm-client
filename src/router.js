@@ -135,7 +135,7 @@ const routes = [
           },
         ],
       },
-      // Values
+      // Value-Lists
       {
         path: "/app/value-lists",
         component: () => import("./views/app/value-lists"),
@@ -152,6 +152,26 @@ const routes = [
           {
             path: "id",
             component: () => import("./views/app/value-lists/id"),
+          },
+        ],
+      },
+      // Program Posts
+      {
+        path: "/app/program-posts",
+        component: () => import("./views/app/program-posts"),
+        redirect: "/app/program-posts/list",
+        children: [
+          {
+            path: "list",
+            component: () => import("./views/app/program-posts/list"),
+          },
+          {
+            path: "create",
+            component: () => import("./views/app/program-posts/create"),
+          },
+          {
+            path: "id",
+            component: () => import("./views/app/program-posts/id"),
           },
         ],
       },
@@ -192,6 +212,60 @@ const routes = [
           {
             path: "id",
             component: () => import("./views/app/user-programs/id"),
+          },
+        ],
+      },
+      // User Program Posts
+      {
+        path: "/app/user-program-posts",
+        component: () => import("./views/app/user-program-posts"),
+        redirect: "/app/user-program-posts/list",
+        children: [
+          {
+            path: "list",
+            component: () => import("./views/app/user-program-posts/list"),
+          },
+          {
+            path: "create",
+            component: () => import("./views/app/user-program-posts/create"),
+          },
+          {
+            path: "id",
+            component: () => import("./views/app/user-program-posts/id"),
+          },
+        ],
+      },
+      // User Program Tasks
+      {
+        path: "/app/user-program-tasks",
+        component: () =>
+          import("./views/app/user-program-tasks/user-program-task-list"),
+        redirect: "/app/user-program-tasks/list",
+        children: [
+          {
+            path: "list",
+            component: () =>
+              import("./views/app/user-program-tasks/user-program-task-list"),
+          },
+        ],
+      },
+      // User Program Tasks details
+      {
+        path: "/app/user-program/id/user-program-tasks",
+        component: () => import("./views/app/user-program-tasks"),
+        redirect: "/app/user-program/id/user-program-tasks/list",
+        children: [
+          {
+            path: "list",
+            component: () => import("./views/app/user-program-tasks/list"),
+          },
+          {
+            path: "create",
+            component: () => import("./views/app/user-program-tasks/create"),
+          },
+          {
+            path: "id",
+            component: () => import("./views/app/user-program-tasks/id"),
           },
         ],
       },

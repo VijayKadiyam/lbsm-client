@@ -22,7 +22,7 @@
             variant="primary"
             class="btn-rounded d-none d-sm-block"
             to="/app/users/create"
-            ><i class="i-Add-User text-white mr-2"> </i>Add User
+            ><i class="i-Add text-white mr-2"> </i>Add User
           </b-button>
         </div>
 

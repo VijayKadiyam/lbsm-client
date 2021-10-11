@@ -1,6 +1,102 @@
 <template>
   <div class="main-content">
-    <breadcumb :page="'List'" :folder="'User Programs'" />
+    <breadcumb :page="'List'" :folder="'User Program Posts'" />
+    <!-- User & Program Details card -->
+    <b-row>
+      <b-col md="6">
+        <b-card class="mb-4">
+          <div class="content">
+            <b-row>
+              <b-col md="3">
+                <p class="text-muted mt-2 mb-0">User Name</p>
+              </b-col>
+              <b-col md="9">
+                <p class="text-primary text-24 line-height-1 mb-2">
+                  {{ user_program_posts[0].user.user_name }}
+                </p>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="3">
+                <p class="text-muted mt-2 mb-0">First Name</p>
+              </b-col>
+              <b-col md="9">
+                <p class="text-primary text-24 line-height-1 mb-2">
+                  {{ user_program_posts[0].user.first_name }}
+                </p>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="3">
+                <p class="text-muted mt-2 mb-0">Email</p>
+              </b-col>
+              <b-col md="9">
+                <p class="text-primary text-24 line-height-1 mb-2">
+                  {{ user_program_posts[0].user.email }}
+                </p>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="3">
+                <p class="text-muted mt-2 mb-0">Phone</p>
+              </b-col>
+              <b-col md="9">
+                <p class="text-primary text-24 line-height-1 mb-2">
+                  {{ user_program_posts[0].user.phone }}
+                </p>
+              </b-col>
+            </b-row>
+          </div>
+        </b-card>
+      </b-col>
+      <b-col md="6">
+        <b-card class="mb-4">
+          <div class="content">
+            <b-row>
+              <b-col md="3">
+                <p class="text-muted mt-2 mb-0">Program Name</p>
+              </b-col>
+              <b-col md="9">
+                <p class="text-primary text-20 line-height-1 mb-0">
+                  {{ user_program_posts[0].program.program_name }}
+                </p>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="3">
+                <p class="text-muted mt-2 mb-0">Program Description</p>
+              </b-col>
+              <b-col md="9">
+                <p class="text-primary text-20 line-height-1 mb-0">
+                  {{ user_program_posts[0].program.program_description }}
+                </p>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="3">
+                <p class="text-muted mt-2 mb-0">Instructor</p>
+              </b-col>
+              <b-col md="9">
+                <p class="text-primary text-20 line-height-1 mb-0">
+                  {{ user_program_posts[0].program.instructor }}
+                </p>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="3">
+                <p class="text-muted mt-2 mb-0">Hours</p>
+              </b-col>
+              <b-col md="9">
+                <p class="text-primary text-20 line-height-1 mb-0">
+                  {{ user_program_posts[0].program.hours }}
+                </p>
+              </b-col>
+            </b-row>
+          </div>
+        </b-card>
+      </b-col>
+    </b-row>
+    <!-- /User & Program Details card -->
     <!-- <div class="wrapper"> -->
     <b-card>
       <vue-good-table
@@ -15,33 +111,33 @@
           mode: 'records',
         }"
         styleClass="tableOne vgt-table"
-        :rows="user_programs"
+        :rows="user_program_posts"
       >
         <div slot="table-actions" class="mb-3">
           <b-button
             variant="primary"
             class="btn-rounded d-none d-sm-block"
-            to="/app/user-programs/create"
-            ><i class="i-Add text-white mr-2"> </i>Add User Program
+            to="/app/user-program-posts/create"
+            ><i class="i-Add text-white mr-2"> </i>Add User Program Post
           </b-button>
         </div>
         <div slot="table-actions" class="mb-3"></div>
 
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
-            <a href="/app/user-programs/id">
+            <a href="/app/user-program-posts/id">
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
               {{ props.row.button }}</a
             >
           </span>
-          <span v-if="props.column.field == 'user'">
-            {{ props.row.user.user_name }}
+          <span v-if="props.column.field == 'program_post'">
+            {{ props.row.program_post.post.description }}
           </span>
-          <span v-else-if="props.column.field == 'program'">
-            {{ props.row.program.program_name }}
+          <span v-else-if="props.column.field == 'promotion_date'">
+            {{ props.row.promotion_date }}
           </span>
-          <span v-else-if="props.column.field == 'enrollment_date'">
-            {{ props.row.enrollment_date }}
+          <span v-else-if="props.column.field == 'remarks'">
+            {{ props.row.remarks }}
           </span>
         </template>
       </vue-good-table>
@@ -53,32 +149,32 @@
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "User Program Listing",
+    title: "User Program  Post Listing",
   },
   data() {
     return {
       columns: [
         {
-          label: "User Name",
-          field: "user",
+          label: "Program Post",
+          field: "program_post",
         },
         {
-          label: "Program Name",
-          field: "program",
-        },
-        {
-          label: "Enrollment Date",
-          field: "enrollment_date",
+          label: "Promotion Date",
+          field: "promotion_date",
           type: "date",
           dateInputFormat: "yyyy-MM-dd",
           dateOutputFormat: "yyyy/MM/dd",
+        },
+        {
+          label: "Remarks",
+          field: "remarks",
         },
         {
           label: "Action",
           field: "button",
         },
       ],
-      user_programs: [
+      user_program_posts: [
         {
           id: 1,
           site_id: 1,
@@ -102,7 +198,22 @@ export default {
             instructor: "Instructor 1",
             hours: "1",
           },
-          enrollment_date: "2021-03-16",
+          program_post_id: 2,
+          program_post: {
+            id: 2,
+            serial_no: 12345,
+            post_id: 5,
+            post: {
+              id: 5,
+              site_id: 1,
+              value_id: 2,
+              description: "Engineer",
+              code: "Engineer",
+              is_active: true,
+            },
+          },
+          promotion_date: "2021-03-16",
+          remarks: "Remarks",
         },
         {
           id: 1,
@@ -127,7 +238,22 @@ export default {
             instructor: "Instructor 2",
             hours: "2",
           },
-          enrollment_date: "2021-03-16",
+          program_post_id: 2,
+          program_post: {
+            id: 2,
+            serial_no: 12345,
+            post_id: 5,
+            post: {
+              id: 5,
+              site_id: 1,
+              value_id: 2,
+              description: "Engineer",
+              code: "Engineer",
+              is_active: true,
+            },
+          },
+          promotion_date: "2021-03-16",
+          remarks: "Remarks",
         },
         {
           id: 1,
@@ -152,7 +278,22 @@ export default {
             instructor: "Instructor 3",
             hours: "3",
           },
-          enrollment_date: "2021-03-16",
+          program_post_id: 2,
+          program_post: {
+            id: 2,
+            serial_no: 12345,
+            post_id: 5,
+            post: {
+              id: 5,
+              site_id: 1,
+              value_id: 2,
+              description: "Engineer",
+              code: "Engineer",
+              is_active: true,
+            },
+          },
+          promotion_date: "2021-03-16",
+          remarks: "Remarks",
         },
         {
           id: 1,
@@ -177,7 +318,22 @@ export default {
             instructor: "Instructor 4",
             hours: "4",
           },
-          enrollment_date: "2021-03-16",
+          program_post_id: 2,
+          program_post: {
+            id: 2,
+            serial_no: 12345,
+            post_id: 5,
+            post: {
+              id: 5,
+              site_id: 1,
+              value_id: 2,
+              description: "Engineer",
+              code: "Engineer",
+              is_active: true,
+            },
+          },
+          promotion_date: "2021-03-16",
+          remarks: "Remarks",
         },
         {
           id: 1,
@@ -202,7 +358,22 @@ export default {
             instructor: "Instructor 5",
             hours: "5",
           },
-          enrollment_date: "2021-03-16",
+          program_post_id: 2,
+          program_post: {
+            id: 2,
+            serial_no: 12345,
+            post_id: 5,
+            post: {
+              id: 5,
+              site_id: 1,
+              value_id: 2,
+              description: "Engineer",
+              code: "Engineer",
+              is_active: true,
+            },
+          },
+          promotion_date: "2021-03-16",
+          remarks: "Remarks",
         },
         {
           id: 1,
@@ -227,7 +398,22 @@ export default {
             instructor: "Instructor 6",
             hours: "6",
           },
-          enrollment_date: "2021-03-16",
+          program_post_id: 2,
+          program_post: {
+            id: 2,
+            serial_no: 12345,
+            post_id: 5,
+            post: {
+              id: 5,
+              site_id: 1,
+              value_id: 2,
+              description: "Engineer",
+              code: "Engineer",
+              is_active: true,
+            },
+          },
+          promotion_date: "2021-03-16",
+          remarks: "Remarks",
         },
         {
           id: 1,
@@ -252,7 +438,22 @@ export default {
             instructor: "Instructor 7",
             hours: "7",
           },
-          enrollment_date: "2021-03-16",
+          program_post_id: 2,
+          program_post: {
+            id: 2,
+            serial_no: 12345,
+            post_id: 5,
+            post: {
+              id: 5,
+              site_id: 1,
+              value_id: 2,
+              description: "Engineer",
+              code: "Engineer",
+              is_active: true,
+            },
+          },
+          promotion_date: "2021-03-16",
+          remarks: "Remarks",
         },
         {
           id: 1,
@@ -277,7 +478,22 @@ export default {
             instructor: "Instructor 8",
             hours: "8",
           },
-          enrollment_date: "2021-03-16",
+          program_post_id: 2,
+          program_post: {
+            id: 2,
+            serial_no: 12345,
+            post_id: 5,
+            post: {
+              id: 5,
+              site_id: 1,
+              value_id: 2,
+              description: "Engineer",
+              code: "Engineer",
+              is_active: true,
+            },
+          },
+          promotion_date: "2021-03-16",
+          remarks: "Remarks",
         },
         {
           id: 1,
@@ -302,7 +518,22 @@ export default {
             instructor: "Instructor 9",
             hours: "9",
           },
-          enrollment_date: "2021-03-16",
+          program_post_id: 2,
+          program_post: {
+            id: 2,
+            serial_no: 12345,
+            post_id: 5,
+            post: {
+              id: 5,
+              site_id: 1,
+              value_id: 2,
+              description: "Engineer",
+              code: "Engineer",
+              is_active: true,
+            },
+          },
+          promotion_date: "2021-03-16",
+          remarks: "Remarks",
         },
         {
           id: 1,
@@ -327,7 +558,22 @@ export default {
             instructor: "Instructor 10",
             hours: "10",
           },
-          enrollment_date: "2021-03-16",
+          program_post_id: 2,
+          program_post: {
+            id: 2,
+            serial_no: 12345,
+            post_id: 5,
+            post: {
+              id: 5,
+              site_id: 1,
+              value_id: 2,
+              description: "Engineer",
+              code: "Engineer",
+              is_active: true,
+            },
+          },
+          promotion_date: "2021-03-16",
+          remarks: "Remarks",
         },
         {
           id: 1,
@@ -352,7 +598,22 @@ export default {
             instructor: "Instructor 10",
             hours: "10",
           },
-          enrollment_date: "2021-03-16",
+          program_post_id: 2,
+          program_post: {
+            id: 2,
+            serial_no: 12345,
+            post_id: 5,
+            post: {
+              id: 5,
+              site_id: 1,
+              value_id: 2,
+              description: "Engineer",
+              code: "Engineer",
+              is_active: true,
+            },
+          },
+          promotion_date: "2021-03-16",
+          remarks: "Remarks",
         },
         {
           id: 1,
@@ -377,7 +638,22 @@ export default {
             instructor: "Instructor 10",
             hours: "10",
           },
-          enrollment_date: "2021-03-16",
+          program_post_id: 2,
+          program_post: {
+            id: 2,
+            serial_no: 12345,
+            post_id: 5,
+            post: {
+              id: 5,
+              site_id: 1,
+              value_id: 2,
+              description: "Engineer",
+              code: "Engineer",
+              is_active: true,
+            },
+          },
+          promotion_date: "2021-03-16",
+          remarks: "Remarks",
         },
       ],
     };

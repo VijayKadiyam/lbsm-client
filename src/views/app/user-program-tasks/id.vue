@@ -1,48 +1,68 @@
 <template>
   <div class="main-content">
-    <breadcumb :page="'Create User Program'" :folder="'User Programs'" />
+    <breadcumb :page="'Update User Program Task'" :folder="'User Program Tasks'" />
 
     <b-row class="justify-content-md-center">
       <b-col md="6">
         <b-card>
           <b-form @submit.prevent="submit">
-            <b-form-group label="User">
+            <b-form-group label="Program Task">
               <vue-tags-input
-                v-model="user"
-                :tags="users"
+                v-model="program_task"
+                :tags="program_tasks"
                 class="tag-custom text-15 mb-2"
-                :autocomplete-items="filteredUserItems"
+                :autocomplete-items="filteredProgramTaskItems"
                 :add-only-from-autocomplete="true"
-                @tags-changed="(newTags) => (users = newTags)"
-                placeholder="Type User Name"
+                @tags-changed="(newTags) => (program_tasks = newTags)"
+                placeholder="Type Program Task Name"
               />
             </b-form-group>
-            <b-form-group label="Program">
-              <vue-tags-input
-                v-model="program"
-                :tags="programs"
-                class="tag-custom text-15 mb-2"
-                :autocomplete-items="filteredProgramItems"
-                :add-only-from-autocomplete="true"
-                @tags-changed="(newTags) => (programs = newTags)"
-                placeholder="Type Program Name"
-              />
-            </b-form-group>
-
-            <b-form-group label="Enrollment Date">
-              <b-form-datepicker
-                id="enrollment_date"
-                v-model="enrollment_date"
+            <b-form-group label="Marks Obtained">
+              <b-form-input
                 class="mb-2"
+                label="Marks Obtained"
+                placeholder="Enter Marks Obtained"
+                v-model.trim="$v.marks_obtained.$model"
+              >
+              </b-form-input>
+              <b-alert
+                show
+                variant="danger"
+                class="error mt-1"
+                v-if="!$v.marks_obtained.required"
+                >Field is required</b-alert
+              >
+              <b-alert
+                show
+                variant="danger"
+                class="error mt-1"
+                v-if="!$v.marks_obtained.numeric"
+                >Numeric Values Only</b-alert
+              >
+            </b-form-group>
+            <b-form-group label="Completion Date">
+              <b-form-datepicker
+                id="dob"
+                v-model.trim="completion_date"
+                class="mb-2"
+                placeholder="Completion Date"
               ></b-form-datepicker>
               <b-alert
                 show
                 variant="danger"
                 class="error mt-1"
-                v-if="!$v.enrollment_date.required"
+                v-if="!$v.completion_date.required"
                 >Field is required</b-alert
               >
             </b-form-group>
+            <b-form-group label="Is Completed">
+              <label class="switch switch-success mr-3">
+                <input type="checkbox" checked="checkbox" /><span
+                  class="slider"
+                ></span>
+              </label>
+            </b-form-group>
+
             <b-button
               type="submit"
               variant="primary"
@@ -66,8 +86,9 @@
   </div>
 </template>
 
+
 <script>
-import { required, minLength } from "vuelidate/lib/validators";
+import { numeric, required } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
@@ -75,73 +96,13 @@ export default {
   },
   data() {
     return {
-      enrollment_date: "",
+      marks_obtained: "",
+      is_completed: "",
+      completion_date: "",
       submitStatus: null,
-      peopleAdd: [
-        {
-          multipleName: "Johnn",
-        },
-        {
-          multipleName: "",
-        },
-      ],
-      //   auto complete
-      user: "",
-      users: [],
-
-      userItems: [
-        {
-          id: 1,
-          text: "John",
-        },
-        {
-          id: 2,
-          text: "Jane",
-        },
-        {
-          id: 3,
-          text: "Susan",
-        },
-        {
-          id: 4,
-          text: "Chris",
-        },
-        {
-          id: 5,
-          text: "Dan",
-        },
-        {
-          id: 6,
-          text: "John",
-        },
-        {
-          id: 1,
-          text: "John",
-        },
-        {
-          id: 2,
-          text: "Jane",
-        },
-        {
-          id: 3,
-          text: "Susan",
-        },
-        {
-          id: 4,
-          text: "Chris",
-        },
-        {
-          id: 5,
-          text: "Dan",
-        },
-        {
-          id: 6,
-          text: "John",
-        },
-      ],
-      program: "",
-      programs: [],
-      programItems: [
+      program_task: "",
+      program_tasks: [],
+      program_taskItems: [
         {
           text: "Program Name 1",
         },
@@ -161,36 +122,22 @@ export default {
     };
   },
   computed: {
-    filteredUserItems() {
-      return this.userItems.filter((u) => {
-        return u.text.toLowerCase().indexOf(this.user.toLowerCase()) !== -1;
-      });
-    },
-    filteredProgramItems() {
-      return this.programItems.filter((p) => {
+    filteredProgramTaskItems() {
+      return this.program_taskItems.filter((pt) => {
         return (
-          p.text.toLowerCase().indexOf(this.program.toLowerCase()) !== -1
+          pt.text.toLowerCase().indexOf(this.program_task.toLowerCase()) !== -1
         );
       });
     },
   },
   validations: {
-    enrollment_date: {
+    marks_obtained: {
+      required,
+      numeric,
+    },
+    completion_date: {
       required,
     },
-
-    // add input
-    // peopleAdd: {
-    //   required,
-    //   minLength: minLength(3),
-    //   $each: {
-    //     multipleName: {
-    //       required,
-    //       minLength: minLength(5)
-    //     }
-    //   }
-    // },
-    // validationsGroup:['peopleAdd.multipleName']
   },
 
   methods: {

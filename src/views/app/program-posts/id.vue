@@ -1,10 +1,10 @@
 <template>
   <div class="main-content">
-    <breadcumb :page="'Update Site'" :folder="'Sites'" />
+    <breadcumb :page="'Update Value'" :folder="'Values'" />
 
-    <b-row class="justify-content-md-center">
+    <b-row class="justify-content-md-center"> 
       <b-col md="6">
-        <b-card title="Validate Form">
+        <b-card>
           <b-form @submit.prevent="submit">
             <b-form-group label="Name">
               <b-form-input
@@ -22,50 +22,6 @@
                 v-if="!$v.name.minLength"
                 >Name must have at least
                 {{ $v.name.$params.minLength.min }} letters.</b-alert
-              >
-            </b-form-group>
-            <b-form-group label="Email">
-              <b-form-input
-                class="mb-2"
-                label="Email"
-                placeholder="email address"
-                v-model.trim="$v.email.$model"
-
-              >
-              </b-form-input>
-
-              <b-alert
-                show
-                variant="danger"
-                class="error col-md-6 mt-1"
-                v-if="!$v.email.email"
-                >
-                {{ $v.email.$model }} is invalid.</b-alert
-              >
-            </b-form-group>
-
-            <b-form-group label="Phone">
-              <b-form-input
-                class="mb-2"
-                label="Phone"
-                v-model.trim="$v.phone.$model"
-              >
-              </b-form-input>
-
-              <b-alert
-                show
-                variant="danger"
-                class="error col-md-6 mt-1"
-                v-if="!$v.phone.minLength || !$v.phone.maxLength"
-                >Must be between {{$v.phone.$params.minLength.min}} and {{$v.phone.$params.maxLength.max}}</b-alert
-              >
-              <b-alert
-                show
-                variant="danger"
-                class="error col-md-6 mt-1"
-                v-if="!$v.phone.numeric"
-                >
-                {{ $v.phone.$params.numeric.type }} charaters Only.</b-alert
               >
             </b-form-group>
 

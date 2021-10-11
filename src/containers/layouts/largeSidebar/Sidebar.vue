@@ -380,7 +380,7 @@
           <li class="nav-item">
             <router-link tag="a" class to="/app/users/create">
               <i class="nav-icon i-Split-Vertical"></i>
-              <span class="item-name">Add New Site</span>
+              <span class="item-name">Add New User</span>
             </router-link>
           </li>
           <li class="nav-item">
@@ -418,7 +418,7 @@
           <li class="nav-item">
             <router-link tag="a" class to="/app/programs/create">
               <i class="nav-icon i-Split-Vertical"></i>
-              <span class="item-name">Add New Site</span>
+              <span class="item-name">Add New Program</span>
             </router-link>
           </li>
           <li class="nav-item">
@@ -543,7 +543,7 @@
           <li class="nav-item">
             <router-link tag="a" class to="/app/user-program-posts/create">
               <i class="nav-icon i-Split-Vertical"></i>
-              <span class="item-name">Add New User Programs</span>
+              <span class="item-name">Add New User Program Posts</span>
             </router-link>
           </li>
           <li class="nav-item">

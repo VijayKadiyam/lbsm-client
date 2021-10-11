@@ -34,7 +34,7 @@
         :rows="rows"
         foot-clone
       >
-        <div slot="table-actions-bottom" class="mb-3 ml-4  ">
+        <div slot="table-actions-bottom" class="mb-1 mr-2 pull-right">
           <b-button
             variant="primary"
             class="btn-rounded d-none d-sm-block"

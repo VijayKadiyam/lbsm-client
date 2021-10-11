@@ -34,7 +34,7 @@
         :rows="rows"
         foot-clone
       >
-        <div slot="table-actions-bottom" class="mb-1 mr-2 pull-right">
+        <div slot="table-actions-bottom" class="mb-1 mr-2 mt-3 pull-right">
           <b-button
             variant="primary"
             class="btn-rounded d-none d-sm-block"
@@ -51,7 +51,7 @@
               <b-button
             variant="primary"
             class="btn-rounded d-none d-sm-block"
-            @click="deleteValueList(rows)"
+            @click="deleteValueList(row)"
             >X
           </b-button>
             </span>
@@ -156,11 +156,9 @@ export default {
         is_active: 1,
       });
     },
-    // deleteValueList() {
-    //    return this.rows.filter((i) => {
-    //     return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
-    //   });
-    // },
+    deleteValueList() {
+       this.rows.splice(this.rows.index, 1);
+    },
   },
 };
 </script>

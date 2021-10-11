@@ -125,12 +125,10 @@
 
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
-            <b-button
-              variant="primary"
-              class="btn-rounded d-none d-sm-block"
-              href="/app/user-program/id/user-program-tasks/id"
-              ><i class="i-Add text-white mr-2"></i>
-            </b-button>
+            <a href="/app/user-program/id/user-program-tasks/id">
+              <i class="i-Eraser-2 text-25 text-success mr-2"></i>
+              {{ props.row.button }}</a
+            >
           </span>
           <span v-if="props.column.field == 'program_task'">
             {{ props.row.program_task.task }}

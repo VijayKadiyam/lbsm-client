@@ -87,7 +87,7 @@ export default {
           field: "hours",
         },
         {
-          label: "Active",
+          label: "Task Detail",
           field: "button",
         },
       ],
@@ -95,9 +95,16 @@ export default {
 
       rows: [
         {
-          description: "",
-          code: "",
-          active: "",
+          program_name: "Program 1",
+          description: "Description",
+          instructor: "Instructor",
+          hours: 3,
+        },
+        {
+          program_name: "Program 2",
+          description: "Description",
+          instructor: "Instructor",
+          hours: 3,
         },
       ],
       //   auto complete
@@ -105,19 +112,19 @@ export default {
 
       autocompleteItems: [
         {
-          text: "Country",
+          text: "User 1",
         },
         {
-          text: "State",
+          text: "User 2",
         },
         {
-          text: "City",
+          text: "User 3",
         },
         {
-          text: "Department",
+          text: "User 4",
         },
         {
-          text: "Category",
+          text: "User 5",
         },
       ],
     };

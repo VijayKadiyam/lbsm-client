@@ -8,9 +8,10 @@
           <vue-tags-input
             v-model="user"
             :tags="users"
+            :max-tags="1"
             class="tag-custom text-15"
             :add-only-from-autocomplete="true"
-            :autocomplete-items="filteredItems"
+            :autocomplete-items="filteredUserItems"
             @tags-changed="(newTags) => (users = newTags)"
             placeholder="Type User Name"
           />
@@ -109,8 +110,9 @@ export default {
       ],
       //   auto complete
       user: "",
+      users: [],
 
-      autocompleteItems: [
+      userItems: [
         {
           text: "User 1",
         },
@@ -130,9 +132,9 @@ export default {
     };
   },
   computed: {
-    filteredItems() {
-      return this.autocompleteItems.filter((i) => {
-        return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
+    filteredUserItems() {
+      return this.userItems.filter((i) => {
+        return i.text.toLowerCase().indexOf(this.user.toLowerCase()) !== -1;
       });
     },
   },

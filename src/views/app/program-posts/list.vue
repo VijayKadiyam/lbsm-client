@@ -8,9 +8,10 @@
           <vue-tags-input
             v-model="program"
             :tags="programs"
+            :max-tags="1"
             class="tag-custom text-15"
             :add-only-from-autocomplete="true"
-            :autocomplete-items="filteredItems"
+            :autocomplete-items="filteredProgramItems"
             @tags-changed="(newTags) => (programs = newTags)"
             placeholder="Type Program Name"
           />
@@ -66,6 +67,7 @@
             <vue-tags-input
             v-model="value_list"
             :tags="value_lists"
+            :max-tags="1"
             class="tag-custom text-15"
             :add-only-from-autocomplete="true"
             :autocomplete-items="ValueListfilteredItems"
@@ -112,8 +114,8 @@ export default {
       ],
       //   auto complete
       program: "",
-
-      autocompleteItems: [
+      programs: [],   
+      programItems: [
         {
           text: "Program 1",
         },
@@ -131,7 +133,7 @@ export default {
         },
       ],
       value_list: "",
-
+      value_lists: [],
       valueListItems: [
         {
           text: "Mumbai",
@@ -152,14 +154,14 @@ export default {
     };
   },
   computed: {
-    filteredItems() {
-      return this.autocompleteItems.filter((i) => {
-        return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
+    filteredProgramItems() {
+      return this.programItems.filter((p) => {
+        return p.text.toLowerCase().indexOf(this.program.toLowerCase()) !== -1;
       });
     },
     ValueListfilteredItems() {
-      return this.valueListItems.filter((i) => {
-        return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
+      return this.valueListItems.filter((vl) => {
+        return vl.text.toLowerCase().indexOf(this.value_list.toLowerCase()) !== -1;
       });
     },
   },

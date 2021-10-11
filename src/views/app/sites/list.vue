@@ -20,7 +20,7 @@
         <div slot="table-actions" class="mb-3">
           <!-- <b-button variant="primary" class="btn-rounded d-none d-sm-block" v-b-modal.modal-1  -->
           <b-button variant="primary" class="btn-rounded d-none d-sm-block"  to="/app/sites/create"
-            ><i class="i-Add-User text-white mr-2"> </i>Add Site
+            ><i class="i-Add text-white mr-2"> </i>Add Site
           </b-button>
 
           <!-- <b-modal id="modal-1" title="BootstrapVue">

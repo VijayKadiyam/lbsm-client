@@ -34,11 +34,11 @@
         :rows="rows"
         foot-clone
       >
-        <div slot="table-actions-bottom" class="mb-3">
+        <div slot="table-actions-bottom" class="mb-1 mr-2 mt-3 pull-right">
           <b-button
             variant="primary"
             class="btn-rounded d-none d-sm-block"
-            @click="addEmptyValueList()"
+            @click="addEmptyProgram()"
             ><i class="i-Add text-white mr-2"></i>Add Row
           </b-button>
         </div>
@@ -51,7 +51,7 @@
               <b-button
             variant="primary"
             class="btn-rounded d-none d-sm-block"
-            @click="deleteValueList(rows)"
+            @click="deleteProgram(row)"
             >X
           </b-button>
             </span>
@@ -169,7 +169,7 @@ export default {
     addFile() {
       console.log("hello");
     },
-    addEmptyValueList() {
+    addEmptyProgram() {
       this.rows.push({
         // value_id: this.search,
         // site_id: this.site.id,
@@ -178,11 +178,9 @@ export default {
         is_active: 1,
       });
     },
-    // deleteValueList() {
-    //    return this.rows.filter((i) => {
-    //     return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
-    //   });
-    // },
+    deleteProgram() {
+       this.rows.splice(this.rows.index, 1);
+    },
   },
 };
 </script>

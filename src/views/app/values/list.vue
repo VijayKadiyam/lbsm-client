@@ -19,7 +19,7 @@
       >
         <div slot="table-actions" class="mb-3">
           <b-button variant="primary" class="btn-rounded d-none d-sm-block"  to="/app/values/create"
-            ><i class="i-Add-User text-white mr-2"> </i>Add Value
+            ><i class="i-Add text-white mr-2"> </i>Add Value
           </b-button>
         </div>
 

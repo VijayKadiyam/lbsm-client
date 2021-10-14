@@ -47,29 +47,18 @@
         </b-dropdown>
       </div>
     </div>
-    <search-component
-      :isSearchOpen.sync="isSearchOpen"
-      @closeSearch="toggleSearch"
-    ></search-component>
   </div>
 
   <!-- header top menu end -->
 </template>
 <script>
 import Util from "@/utils";
-import Sidebar from "./Sidebar";
-import searchComponent from "../common/search";
 import { isMobile } from "mobile-device-detect";
 import { mapGetters, mapActions } from "vuex";
 import { mixin as clickaway } from "vue-clickaway";
 
 export default {
   mixins: [clickaway],
-  components: {
-    Sidebar,
-    searchComponent
-  },
-
   data() {
     return {
       isDisplay: true,
@@ -80,9 +69,6 @@ export default {
       isMegaMenuOpen: false
     };
   },
-  mounted() {
-    // document.addEventListener("click", this.closeMegaMenu);
-  },
   computed: {
     ...mapGetters(["getSideBarToggleProperties"])
   },
@@ -90,42 +76,22 @@ export default {
   methods: {
     ...mapActions([
       "changeSecondarySidebarProperties",
-
       "changeSidebarProperties",
       "changeThemeMode",
-      "signOut"
+      "signOut",
     ]),
-
-    // megaMenuToggle() {
-    //   this.isMegaMenuOpen = false;
-
-    //   console.log("work");
-    // },
-
+    ...mapActions({
+      logOut: 'auth/logOut',
+    }),
     handleFullScreen() {
       Util.toggleFullScreen();
     },
     logoutUser() {
-      this.signOut();
-
+      this.logOut()
       this.$router.push("/app/sessions/signIn");
     },
 
-    closeMegaMenu() {
-      this.isMegaMenuOpen = false;
-      // console.log(this.isMouseOnMegaMenu);
-      // if (!this.isMouseOnMegaMenu) {
-      //   this.isMegaMenuOpen = !this.isMegaMenuOpen;
-      // }
-    },
-    toggleMegaMenu() {
-      this.isMegaMenuOpen = !this.isMegaMenuOpen;
-    },
-    toggleSearch() {
-      this.isSearchOpen = !this.isSearchOpen;
-    },
-
-    sideBarToggle(el) {
+    sideBarToggle() {
       if (
         this.getSideBarToggleProperties.isSideNavOpen &&
         this.getSideBarToggleProperties.isSecondarySideNavOpen &&
@@ -150,11 +116,9 @@ export default {
         !this.getSideBarToggleProperties.isSideNavOpen &&
         !this.getSideBarToggleProperties.isSecondarySideNavOpen
       ) {
-        // console.log("4");
 
         this.changeSidebarProperties();
         this.changeSecondarySidebarProperties();
-        // console.log("4");
       }
     }
   }

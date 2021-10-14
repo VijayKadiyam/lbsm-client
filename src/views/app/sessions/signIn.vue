@@ -6,7 +6,7 @@
     <div class="auth-content">
       <div class="card o-hidden">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-12">
             <div class="p-4">
               <div class="auth-logo text-center mb-30">
                 <img :src="logo" />
@@ -39,20 +39,12 @@
                   tag="button"
                   class="btn-rounded btn-block mt-2"
                   variant="primary mt-2"
-                  :disabled="loading"
                 >
-                  SignIn
+                  {{ isLoading == true ? 'Loading...' : 'SignIn' }}
                 </b-button>
                 <div v-once class="typo__p" v-if="loading">
                   <div class="spinner sm spinner-primary mt-3"></div>
                 </div>
-                <b-button
-                  to="signUp"
-                  block
-                  variant="primary mt-2"
-                  class="btn-rounded"
-                  >Create an account</b-button
-                >
               </b-form>
 
               <div class="mt-3 text-center">
@@ -62,67 +54,44 @@
               </div>
             </div>
           </div>
-
-          <b-col
-            md="6"
-            class="text-center"
-            style="backgroundSize: cover;"
-            :style="{ backgroundImage: 'url(' + signInImage + ')' }"
-          >
-            <div class="pr-3 auth-right">
-              <router-link
-                to="signUp"
-                class="btn btn-rounded btn-outline-primary btn-outline-email btn-block btn-icon-text"
-                href="signup.html"
-              >
-                <i class="i-Mail-with-At-Sign"></i> Sign up with Email
-              </router-link>
-              <a
-                class="btn btn-rounded btn-outline-primary btn-outline-google btn-block btn-icon-text"
-              >
-                <i class="i-Google-Plus"></i> Sign up with Google
-              </a>
-              <a
-                class="btn btn-rounded btn-outline-primary btn-block btn-icon-text btn-outline-facebook"
-              >
-                <i class="i-Facebook-2"></i> Sign up with Facebook
-              </a>
-            </div>
-          </b-col>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapActions } from "vuex";
 export default {
   metaInfo: {
-    // if no subcomponents specify a metaInfo.title, this title will be used
     title: "SignIn"
   },
   data() {
     return {
-      email: "ui-lib@gmail.com",
+      email: "admin@gmail.com",
       password: "123456",
-      // // password: "vue006",
       userId: "",
       bgImage: require("@/assets/images/photo-wide-4.jpg"),
       logo: require("@/assets/images/logo.png"),
-      signInImage: require("@/assets/images/photo-long-3.jpg")
+      signInImage: require("@/assets/images/photo-long-3.jpg"),
+      isLoading: false,
     };
   },
   computed: {
     validation() {
       return this.userId.length > 4 && this.userId.length < 13;
     },
-    ...mapGetters(["loggedInUser", "loading", "error"])
   },
 
   methods: {
-    ...mapActions(["login"]),
+    ...mapActions({
+      logIn: 'auth/logIn'
+    }),
     formSubmit() {
-      this.login({ email: this.email, password: this.password });
+      this.isLoading = true
+      this.logIn({ email: this.email, password: this.password })
+        .then(()  =>  {
+          this.isLoading = false
+        })
     },
     makeToast(variant = null, msg) {
       this.$bvToast.toast(msg, {
@@ -133,8 +102,8 @@ export default {
     }
   },
   watch: {
-    loggedInUser(val) {
-      if (val && val.uid && val.uid.length > 0) {
+    user(val) {
+      if (val && val.id) {
         this.makeToast("success", "Successfully Logged In");
 
         setTimeout(() => {

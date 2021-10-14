@@ -33,13 +33,31 @@ Vue.use(GullKit);
 
 firebase.initializeApp(firebaseSettings);
 
+require('@/store/my_modules/subscriber')
+
+require('./mixin.js')
+require('./axios.js')
+require('./directives.js')
+require('./filters.js')
+
 
 
 Vue.config.productionTip = false;
 
-new Vue({
-  store,
-  router,
-  i18n,
-  render: h => h(App)
-}).$mount("#app");
+// new Vue({
+//   store,
+//   router,
+//   i18n,
+//   render: h => h(App)
+// }).$mount("#app");
+
+store.dispatch('auth/attempt', localStorage.getItem('token'))
+  .then(() => {
+    new Vue({
+      store,
+      router,
+      i18n,
+      render: h => h(App)
+    }).$mount('#app')
+  })
+

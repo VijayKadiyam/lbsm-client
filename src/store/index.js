@@ -10,6 +10,9 @@ import cart from "./modules/cart";
 import verticalSidebar from "./modules/verticalSidebar";
 import scrumboard from "./modules/scrumboard";
 
+import auth from './my_modules/auth'
+import errors from './my_modules/errors'
+import settings from './my_modules/settings'
 
 // Load Vuex
 Vue.use(Vuex);
@@ -25,6 +28,10 @@ export default new Vuex.Store({
     invoice,
     cart,
     verticalSidebar,
-    scrumboard
+    scrumboard,
+
+    auth,
+    errors,
+    settings,
   }
 });

@@ -13,7 +13,7 @@
                     class="mb-2"
                     label="First Name"
                     placeholder="Enter First Name"
-                    v-model.trim="$v.first_name.$model"
+                    v-model.trim="$v.form.first_name.$model"
                   >
                   </b-form-input>
 
@@ -21,7 +21,7 @@
                     show
                     variant="danger"
                     class="error mt-1"
-                    v-if="!$v.first_name.required"
+                    v-if="!$v.form.first_name.required"
                     >Field is required</b-alert
                   >
                 </b-form-group>
@@ -32,14 +32,14 @@
                     class="mb-2"
                     label="User Name"
                     placeholder="Enter User Name"
-                    v-model.trim="$v.user_name.$model"
+                    v-model.trim="$v.form.user_name.$model"
                   >
                   </b-form-input>
                   <b-alert
                     show
                     variant="danger"
                     class="error mt-1"
-                    v-if="!$v.user_name.required"
+                    v-if="!$v.form.user_name.required"
                     >Field is required</b-alert
                   >
                 </b-form-group>
@@ -52,7 +52,7 @@
                     class="mb-2"
                     label="Middle Name"
                     placeholder="Enter Middle Name"
-                    v-model="$v.middle_name"
+                    v-model="form.middle_name"
                   >
                   </b-form-input>
                 </b-form-group>
@@ -63,7 +63,7 @@
                     class="mb-2"
                     label="Last Name"
                     placeholder="Enter Last Name"
-                    v-model="$v.last_name"
+                    v-model="form.last_name"
                   >
                   </b-form-input>
                 </b-form-group>
@@ -73,19 +73,14 @@
               <b-col md="6">
                 <b-form-group label="Gender">
                   <b-row>
-                    <b-col md="4">
-                      <label class="radio radio-success mb-2">
-                        <input type="radio" name="radio" />
-                        <span>Male</span>
-                        <span class="checkmark"></span>
+                    <b-col md="8">
+                      <span>Male</span>
+                      <label class="switch switch-success mr-3 ml-3">
+                        <input type="checkbox" checked="checkbox" v-model="form.gender" /><span
+                          class="slider"
+                        ></span>
                       </label>
-                    </b-col>
-                    <b-col md="4">
-                      <label class="radio radio-danger mb-2">
-                        <input type="radio" name="radio" />
-                        <span>Female</span>
-                        <span class="checkmark"></span>
-                      </label>
+                      <span>Female</span>
                     </b-col>
                   </b-row>
                 </b-form-group>
@@ -94,7 +89,7 @@
                 <b-form-group label="Date Of Birth">
                   <b-form-datepicker
                     id="dob"
-                    v-model="dob"
+                    v-model="form.dob"
                     class="mb-2"
                     placeholder="Date Of Birth"
                   ></b-form-datepicker>
@@ -103,12 +98,12 @@
             </b-row>
             <b-row>
               <b-col md="6">
-                <b-form-group label="Password">
+                <b-form-group label="Email">
                   <b-form-input
                     class="mb-2"
-                    label="Name"
-                    type="password"
-                    v-model.trim="$v.password.$model"
+                    label="Email"
+                    placeholder="email address"
+                    v-model.trim="$v.form.email.$model"
                   >
                   </b-form-input>
 
@@ -116,15 +111,22 @@
                     show
                     variant="danger"
                     class="error mt-1"
-                    v-if="!$v.password.minLength"
-                    >Minimum
-                    {{ $v.password.$params.minLength.min }} charaters.</b-alert
+                    v-if="!$v.form.email.email"
+                  >
+                    {{ $v.form.email.$model }} is invalid.</b-alert
+                  >
+                  <b-alert
+                    show
+                    variant="danger"
+                    class="error mt-1"
+                    v-if="!$v.form.email.required"
+                    >Field is required</b-alert
                   >
                 </b-form-group>
               </b-col>
               <b-col md="6">
                 <b-form-group label="Image">
-                  <b-form-file id="file-default" accept="image/*" ></b-form-file>
+                  <b-form-file id="file-default" accept="image/*"></b-form-file>
                 </b-form-group>
               </b-col>
             </b-row>
@@ -153,14 +155,15 @@
 </template>
 
 <script>
+import axios from "axios";
 import {
   email,
-  numeric,
-  between,
+  // numeric,
+  // between,
   required,
-  sameAs,
-  minLength,
-  maxLength,
+  // sameAs,
+  // minLength,
+  // maxLength,
 } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
@@ -169,25 +172,32 @@ export default {
   },
   data() {
     return {
-      first_name: "",
-      middle_name: "",
-      last_name: "",
-      user_name: "",
-      password: "",
-      // email: "",
+      form: {
+        first_name: "",
+        middle_name: "",
+        last_name: "",
+        user_name: "",
+        dob: "",
+        email: "",
+        gender: "",
+        active: 1,
+        role_id: 3,
+      },
       submitStatus: null,
     };
   },
   validations: {
-    first_name: {
-      required,
-    },
-    user_name: {
-      required,
-    },
-    password: {
-      required,
-      minLength: minLength(6),
+    form: {
+      first_name: {
+        required,
+      },
+      user_name: {
+        required,
+      },
+      email: {
+        required,
+        email,
+      },
     },
 
     // add input
@@ -203,17 +213,27 @@ export default {
     // },
     // validationsGroup:['peopleAdd.multipleFirst Name']
   },
-
+  mounted() {
+    this.form.site_id = this.site.id;
+  },
   methods: {
     //   validate form
-    submit() {
+    async submit() {
       console.log("submit!");
 
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
       } else {
-        // do your submit logic here
+        try {
+          console.log(this.form);
+          this.isLoading = true;
+          await axios.post("/users", this.form);
+          this.isLoading = false;
+          // this.$router.push('/main/tickets')
+        } catch (e) {
+          this.isLoading = false;
+        }
         this.submitStatus = "PENDING";
         setTimeout(() => {
           this.submitStatus = "OK";
@@ -228,6 +248,7 @@ export default {
       });
     },
     makeToastTwo(variant = null) {
+      // this.save();
       this.$bvToast.toast("Successfully Submitted", {
         title: `Variant ${variant || "default"}`,
         variant: variant,
@@ -236,7 +257,28 @@ export default {
     },
 
     inputSubmit() {
-      console.log("submitted");
+      // this.save();
+    },
+    async getMasters() {
+      let masters = await axios.get("tickets/masters");
+      masters = masters.data;
+      masters.ticketTypes.forEach((ticket_type) => {
+        this.ticketTypes.push({
+          id: ticket_type.id,
+          name: ticket_type.description,
+        });
+      });
+    },
+    async save() {
+      try {
+        console.log(this.form);
+        this.isLoading = true;
+        await axios.post("/users", this.form);
+        this.isLoading = false;
+        // this.$router.push('/main/tickets')
+      } catch (e) {
+        this.isLoading = false;
+      }
     },
   },
 };

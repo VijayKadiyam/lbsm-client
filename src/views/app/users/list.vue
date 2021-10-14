@@ -26,18 +26,21 @@
           </b-button>
         </div>
 
-        <template slot="table-row" slot-scope="props">
-          <span v-if="props.column.field == 'button'">
-            <a href="/app/users/id">
-              <i class="i-Eraser-2 text-25 text-success mr-2"></i>
-              {{ props.row.button }}</a
-            >
-            <a href="">
-              <i class="i-Close-Window text-25 text-danger"></i>
-              {{ props.row.button }}</a
-            >
+        <template slot="table-row" slot-scope="props" >
+         
+          <span v-if="props.column.field == 'button'" >
+            <span v-for="(user, at) in users" :key="`user${at}`">
+              <a :href="'/app/users/' + user.id">
+                <i class="i-Eraser-2 text-25 text-success mr-2"></i>
+                {{ props.row.button }}</a
+              >
+              <a href="">
+                <i class="i-Close-Window text-25 text-danger"></i>
+                {{ props.row.button }}</a
+              >
+            </span>
           </span>
-            <!-- <span v-else-if="props.column.field == 'first_name'">
+          <!-- <span v-else-if="props.column.field == 'first_name'">
               <a href="/app/users/id">
                 <div class="ul-widget-app__profile-pic">
                   <img
@@ -50,7 +53,7 @@
               </a>
             </span> -->
           <span v-else-if="props.column.field == 'gender'">
-                {{ props.row.gender==0?'Male':'Female' }}
+            {{ props.row.gender == 0 ? "Male" : "Female" }}
           </span>
         </template>
       </vue-good-table>
@@ -59,6 +62,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
@@ -103,158 +107,29 @@ export default {
           thClass: "text-right",
         },
       ],
-      users: [
-        {
-          id: 1,
-          avatar: require("@/assets/images/faces/1.jpg"),
-          first_name: "John",
-          middle_name: "John",
-          last_name: "John",
-          user_name: "John",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jhonwick_23@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 2,
-          avatar: require("@/assets/images/faces/3.jpg"),
-          first_name: "Jane",
-          middle_name: "Jane",
-          last_name: "Jane",
-          user_name: "Jane",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jameswann@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 3,
-          avatar: require("@/assets/images/faces/2.jpg"),
-          first_name: "Susan",
-          middle_name: "Susan",
-          last_name: "Susan",
-          user_name: "Susan",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jameswann@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 4,
-          avatar: require("@/assets/images/faces/1.jpg"),
-          first_name: "Chris",
-          middle_name: "Chris",
-          last_name: "Chris",
-          user_name: "Chris",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jhonwick_23@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 5,
-          avatar: require("@/assets/images/faces/4.jpg"),
-          first_name: "Dan",
-          middle_name: "Dan",
-          last_name: "Dan",
-          user_name: "Dan",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jhonwick_23@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 6,
-          avatar: require("@/assets/images/faces/5.jpg"),
-          first_name: "John",
-          middle_name: "John",
-          last_name: "John",
-          user_name: "John",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jameswann@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 1,
-          avatar: require("@/assets/images/faces/4.jpg"),
-          first_name: "John",
-          middle_name: "John",
-          last_name: "John",
-          user_name: "John",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "dan_brown@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 2,
-          avatar: require("@/assets/images/faces/3.jpg"),
-          first_name: "Jane",
-          middle_name: "Jane",
-          last_name: "Jane",
-          user_name: "Jane",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jameswann@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 3,
-          avatar: require("@/assets/images/faces/2.jpg"),
-          first_name: "Susan",
-          middle_name: "Susan",
-          last_name: "Susan",
-          user_name: "Susan",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "janeswann@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 4,
-          avatar: require("@/assets/images/faces/1.jpg"),
-          first_name: "Chris",
-          middle_name: "Chris",
-          last_name: "Chris",
-          user_name: "Chris",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jaasdameswann@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 5,
-          avatar: require("@/assets/images/faces/5.jpg"),
-          first_name: "Dan",
-          middle_name: "Dan",
-          last_name: "Dan",
-          user_name: "Dan",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "doomwaytne@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 6,
-          avatar: require("@/assets/images/faces/3.jpg"),
-          first_name: "John",
-          middle_name: "John",
-          last_name: "John",
-          user_name: "John",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "sidsacc@gmail.com",
-          phone: "+88012378478",
-        },
-      ],
+      users: [],
+      count: 0,
+      serialNoStarting: 1,
     };
   },
+  mounted() {
+    this.getData();
+    // this.getMasters()
+  },
   methods: {
-    addFile() {
-      console.log("hello");
+    async getData(page = 1) {
+      this.isLoading = true;
+      let users = await axios.get(`users`);
+      // console.log(users)
+      this.users = users.data.data;
+      this.count = users.data.count;
+      this.serialNoStarting = (page - 1) * this.rowsPerPage;
+      this.isLoading = false;
     },
+    // async getMasters() {
+    //   let masters = await axios.get('tickets/masters')
+    //   masters = masters.data
+    // },
   },
 };
 </script>

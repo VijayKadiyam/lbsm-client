@@ -78,7 +78,7 @@ const routes = [
             component: () => import("./views/app/users/create"),
           },
           {
-            path: "id",
+            path: ":id",
             component: () => import("./views/app/users/id"),
           },
         ],

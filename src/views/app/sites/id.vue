@@ -11,17 +11,16 @@
                 class="mb-2"
                 label="Name"
                 placeholder="Enter Name"
-                v-model.trim="$v.name.$model"
+                v-model.trim="$v.form.name.$model"
               >
               </b-form-input>
 
               <b-alert
                 show
                 variant="danger"
-                class="error col-md-6 mt-1"
-                v-if="!$v.name.minLength"
-                >Name must have at least
-                {{ $v.name.$params.minLength.min }} letters.</b-alert
+                class="error mt-1"
+                v-if="!$v.form.name.required"
+                >Field is required</b-alert
               >
             </b-form-group>
             <b-form-group label="Email">
@@ -29,18 +28,24 @@
                 class="mb-2"
                 label="Email"
                 placeholder="email address"
-                v-model.trim="$v.email.$model"
-
+                v-model.trim="$v.form.email.$model"
               >
               </b-form-input>
 
               <b-alert
                 show
                 variant="danger"
-                class="error col-md-6 mt-1"
-                v-if="!$v.email.email"
-                >
-                {{ $v.email.$model }} is invalid.</b-alert
+                class="error mt-1"
+                v-if="!$v.form.email.email"
+              >
+                {{ $v.form.email.$model }} is invalid.</b-alert
+              >
+              <b-alert
+                show
+                variant="danger"
+                class="error mt-1"
+                v-if="!$v.form.email.required"
+                >Field is required</b-alert
               >
             </b-form-group>
 
@@ -48,27 +53,33 @@
               <b-form-input
                 class="mb-2"
                 label="Phone"
-                v-model.trim="$v.phone.$model"
+                v-model.trim="$v.form.phone.$model"
               >
               </b-form-input>
 
               <b-alert
                 show
                 variant="danger"
-                class="error col-md-6 mt-1"
-                v-if="!$v.phone.minLength || !$v.phone.maxLength"
-                >Must be between {{$v.phone.$params.minLength.min}} and {{$v.phone.$params.maxLength.max}}</b-alert
+                class="error mt-1"
+                v-if="!$v.form.phone.minLength || !$v.form.phone.maxLength"
+                >Must be between {{ $v.form.phone.$params.minLength.min }} and
+                {{ $v.form.phone.$params.maxLength.max }}</b-alert
               >
               <b-alert
                 show
                 variant="danger"
-                class="error col-md-6 mt-1"
-                v-if="!$v.phone.numeric"
-                >
-                {{ $v.phone.$params.numeric.type }} charaters Only.</b-alert
+                class="error mt-1"
+                v-if="!$v.form.phone.numeric"
+                >Numeric Values Only.</b-alert
+              >
+              <b-alert
+                show
+                variant="danger"
+                class="error mt-1"
+                v-if="!$v.form.phone.required"
+                >Field is required</b-alert
               >
             </b-form-group>
-
 
             <b-button
               type="submit"
@@ -93,64 +104,62 @@
   </div>
 </template>
 
-
 <script>
-import {email,numeric, between,required, sameAs, minLength,maxLength } from "vuelidate/lib/validators";
+import axios from "axios";
+import {
+  email,
+  numeric,
+  between,
+  required,
+  sameAs,
+  minLength,
+  maxLength,
+} from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Form Component"
+    title: "Update Site",
   },
   data() {
     return {
-      name: "",
-      phone: "",
-      email:"",
+      form: {
+        name: "",
+        phone: "",
+        email: "",
+      },
+      isLoading: false,
       submitStatus: null,
-      peopleAdd: [
-        {
-          multipleName: "Johnn"
-        },
-        {
-          multipleName: ""
-        }
-      ]
     };
   },
   validations: {
-    name: {
-      required,
-      minLength: minLength(4)
+    form: {
+      name: {
+        required,
+      },
+      email: {
+        email,
+        required,
+      },
+      phone: {
+        required,
+        numeric,
+        minLength: minLength(10),
+        maxLength: maxLength(12),
+      },
     },
-    email: {
-      email,
-      required,
-      minLength: minLength(4)
-    },
-    phone: {
-      required,
-      numeric,
-      minLength: minLength(10),
-      maxLength: maxLength(12),
-    },
-
-    // add input
-    // peopleAdd: {
-    //   required,
-    //   minLength: minLength(3),
-    //   $each: {
-    //     multipleName: {
-    //       required,
-    //       minLength: minLength(5)
-    //     }
-    //   }
-    // },
-    // validationsGroup:['peopleAdd.multipleName']
   },
-
+  mounted() {
+    this.getData();
+  },
   methods: {
+    async getData() {
+      this.isLoading = true;
+      let form = await axios.get(`/sites/${this.$route.params.id}`);
+      this.form = form.data.data;
+      this.isLoading = false;
+    },
     //   validate form
-    submit() {
+    async submit() {
       console.log("submit!");
 
       this.$v.$touch();
@@ -158,31 +167,43 @@ export default {
         this.submitStatus = "ERROR";
       } else {
         // do your submit logic here
-        this.submitStatus = "PENDING";
-        setTimeout(() => {
+        try {
+          this.submitStatus = "PENDING";
+        this.isLoading = true;
+        await axios.patch(`/sites/${this.$route.params.id}`, this.form);
           this.submitStatus = "OK";
+        setTimeout(() => {
+        this.$router.push("/app/sites/");
         }, 1000);
+        this.isLoading = false;
+        
+      } catch (e) {
+        this.isLoading = false;
+        this.submitStatus = "ERROR";
+      }
+        
+        
       }
     },
     makeToast(variant = null) {
       this.$bvToast.toast("Please fill the form correctly.", {
         title: `Variant ${variant || "default"}`,
         variant: variant,
-        solid: true
+        solid: true,
       });
     },
     makeToastTwo(variant = null) {
       this.$bvToast.toast("Successfully Submitted", {
         title: `Variant ${variant || "default"}`,
         variant: variant,
-        solid: true
+        solid: true,
       });
     },
 
     inputSubmit() {
       console.log("submitted");
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

@@ -11,37 +11,26 @@
                 class="mb-2"
                 label="Program Name"
                 placeholder="Enter Program Name"
-                v-model.trim="program_name"
+                v-model.trim="$v.form.program_name.$model"
               >
               </b-form-input>
-
-              <!-- <b-alert
+              <b-alert
                 show
                 variant="danger"
-                class="error col-md-6 mt-1"
-                v-if="!program_name.minLength"
-                >Name must have at least
-                {{ program_name.$params.minLength.min }} letters.</b-alert
-              > -->
+                class="error mt-1"
+                v-if="!$v.form.program_name.required"
+                >Field is required</b-alert
+              >
             </b-form-group>
 
             <b-form-group label="Program Description">
               <b-form-textarea
                 id="textarea"
-                v-model="program_description"
+                v-model="form.program_description"
                 placeholder="Program Description"
                 rows="3"
                 max-rows="6"
               ></b-form-textarea>
-
-              <!-- <b-alert
-                show
-                variant="danger"
-                class="error col-md-6 mt-1"
-                v-if="!$v.program_description.minLength"
-                >Name must have at least
-                {{ $v.name.$params.minLength.min }} letters.</b-alert
-              > -->
             </b-form-group>
 
             <b-form-group label="Instructor">
@@ -49,18 +38,9 @@
                 class="mb-2"
                 label="Instructor"
                 placeholder="Enter Instructor"
-                v-model="instrutor"
+                v-model.trim="form.instructor"
               >
               </b-form-input>
-
-              <!-- <b-alert
-                show
-                variant="danger"
-                class="error col-md-6 mt-1"
-                v-if="!instrutor.minLength"
-                >Name must have at least
-                {{ instrutor.$params.minLength.min }} letters.</b-alert
-              > -->
             </b-form-group>
 
             <b-form-group label="Hours">
@@ -68,18 +48,9 @@
                 class="mb-2"
                 label="Hours"
                 placeholder="Enter Hours"
-                v-model="hours"
+                v-model="form.hours"
               >
               </b-form-input>
-
-              <!-- <b-alert
-                show
-                variant="danger"
-                class="error col-md-6 mt-1"
-                v-if="!hours.minLength"
-                >Name must have at least
-                {{ hours.$params.minLength.min }} letters.</b-alert
-              > -->
             </b-form-group>
 
             <b-button
@@ -105,57 +76,46 @@
   </div>
 </template>
 
-
 <script>
-import {
-  required,
-  minLength,
-} from "vuelidate/lib/validators";
+import axios from "axios";
+import { required, minLength } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Progam | Update",
+    title: "Update Program",
   },
   data() {
     return {
-      program_name: "",
-      program_description: "",
-      intructor: "",
-      hours: "",
+      form: {
+        program_name: "",
+        program_description: "",
+        intructor: "",
+        hours: "",
+      },
+
       submitStatus: null,
-      peopleAdd: [
-        {
-          multipleName: "Johnn",
-        },
-        {
-          multipleName: "",
-        },
-      ],
     };
   },
   validations: {
-    program_name: {
-      required,
-      minLength: minLength(4),
+    form: {
+      program_name: {
+        required,
+        minLength: minLength(4),
+      },
     },
-
-    // add input
-    // peopleAdd: {
-    //   required,
-    //   minLength: minLength(3),
-    //   $each: {
-    //     multipleName: {
-    //       required,
-    //       minLength: minLength(5)
-    //     }
-    //   }
-    // },
-    // validationsGroup:['peopleAdd.multipleName']
   },
-
+  mounted() {
+    this.getData();
+  },
   methods: {
+    async getData() {
+      this.isLoading = true;
+      let form = await axios.get(`/programs/${this.$route.params.id}`);
+      this.form = form.data.data;
+      this.isLoading = false;
+    },
     //   validate form
-    submit() {
+    async submit() {
       console.log("submit!");
 
       this.$v.$touch();
@@ -163,10 +123,19 @@ export default {
         this.submitStatus = "ERROR";
       } else {
         // do your submit logic here
-        this.submitStatus = "PENDING";
-        setTimeout(() => {
+        try {
+          this.submitStatus = "PENDING";
+          this.isLoading = true;
+          await axios.patch(`/programs/${this.$route.params.id}`, this.form);
           this.submitStatus = "OK";
-        }, 1000);
+          setTimeout(() => {
+            this.$router.push("/app/programs/");
+          }, 1000);
+          this.isLoading = false;
+        } catch (e) {
+          this.isLoading = false;
+          this.submitStatus = "ERROR";
+        }
       }
     },
     makeToast(variant = null) {

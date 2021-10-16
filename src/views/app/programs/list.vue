@@ -15,7 +15,7 @@
           mode: 'records',
         }"
         styleClass="tableOne vgt-table"
-        :rows="rows"
+        :rows="programs"
       >
       <div slot="table-actions" class="mb-3">
           <b-button variant="primary" class="btn-rounded d-none d-sm-block"  to="/app/programs/create"
@@ -27,17 +27,14 @@
 
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
-            <a href="/app/programs/id">
+            <a :href="'/app/programs/' + props.row.id">
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
               {{ props.row.button }}</a
             >
-            <a href="/app/programs/id/program-tasks">
+            <a :href="'/app/programs/' + props.row.id +'/program-tasks'">
               <i class="i-Add text-25 text-success mr-2"></i>
               </a
             >
-            <!-- <b-button variant="primary" class="btn-rounded d-none d-sm-block"  to=""
-            ><i class="i-Add text-white mr-2"> </i>Program Tasks
-          </b-button>  -->
           </span>
         </template>
       </vue-good-table>
@@ -46,19 +43,15 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Permission Manage",
+    title: "Program List",
   },
   data() {
     return {
-      // foods: ["apple", "orrange"],
       columns: [
-        {
-          label: "Sr No",
-          field: "sr_no",
-        },
         {
           label: "Program Name",
           field: "program_name",
@@ -80,76 +73,24 @@ export default {
           field: "button",
         },
       ],
-      rows: [
-        {
-          program_name: "Program Name - 1",
-          program_description: "Program Description 1",
-          instructor: "Instructor 1",
-          hours: "1",
-        },
-        {
-          program_name: "Program Name - 2",
-          program_description: "Program Description 2",
-          instructor: "Instructor 2",
-          hours: "2",
-        },
-        {
-          program_name: "Program Name - 3",
-          program_description: "Program Description 3",
-          instructor: "Instructor 3",
-          hours: "3",
-        },
-        {
-          program_name: "Program Name - 4",
-          program_description: "Program Description 4",
-          instructor: "Instructor 4",
-          hours: "4",
-        },
-        {
-          program_name: "Program Name - 5",
-          program_description: "Program Description 5",
-          instructor: "Instructor 5",
-          hours: "5",
-        },
-        {
-          program_name: "Program Name - 6",
-          program_description: "Program Description 6",
-          instructor: "Instructor 6",
-          hours: "6",
-        },
-        {
-          program_name: "Program Name - 7",
-          program_description: "Program Description 7",
-          instructor: "Instructor 7",
-          hours: "7",
-        },
-        {
-          program_name: "Program Name - 8",
-          program_description: "Program Description 8",
-          instructor: "Instructor 8",
-          hours: "8",
-        },
-        {
-          program_name: "Program Name - 9",
-          program_description: "Program Description 9",
-          instructor: "Instructor 9",
-          hours: "9",
-        },
-        {
-          program_name: "Program Name - 10",
-          program_description: "Program Description 10",
-          instructor: "Instructor 10",
-          hours: "10",
-        },
-        
-      ],
+      programs: [],
     };
   },
-  methods: {
-    addFile() {
-      console.log("hello");
-    },
+  mounted() {
+    this.getData();
   },
+  methods: {
+    async getData(page = 1) {
+      this.isLoading = true;
+      let programs = await axios.get(
+        `/programs`
+      );
+      this.programs = programs.data.data;
+      this.count = programs.data.count;
+      this.serialNoStarting = (page - 1) * this.rowsPerPage;
+      this.isLoading = false;
+    },
+  }
 };
 </script>
 <style >

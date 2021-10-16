@@ -37,7 +37,7 @@
         :columns="columns"
         :line-numbers="true"
         :search-options="{
-          enabled: false,
+          enabled: true,
           placeholder: 'Search this table',
         }"
         :pagination-options="{

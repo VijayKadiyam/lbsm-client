@@ -17,6 +17,7 @@
                 @tags-changed="(newTags) => (selectedValues = newTags)"
                 placeholder="Type Value Name"
               />
+              {{ searchingStatus }}
             </b-col>
             <b-col md="3">
               <b-button
@@ -25,6 +26,7 @@
                 @click="save()"
                 >Save
               </b-button>
+              {{ savingStatus }}
             </b-col>
           </b-row>
         </b-card>
@@ -35,7 +37,7 @@
         :columns="columns"
         :line-numbers="true"
         :search-options="{
-          enabled: false,
+          enabled: true,
           placeholder: 'Search this table',
         }"
         :pagination-options="{
@@ -59,7 +61,7 @@
             <b-button
               variant="primary"
               class="btn-rounded d-none d-sm-block"
-              @click="deleteValueList(row)"
+              @click="deleteValueList(props.row)"
               >X
             </b-button>
           </span>
@@ -78,6 +80,7 @@
                 label="Description"
                 v-model="props.row.description"
                 placeholder="Enter Description"
+                @change="changeCell(props.row.description, props.row.originalIndex, props.column.field)"
               >
               </b-form-input>
             </span>
@@ -87,6 +90,7 @@
                 label="Code"
                 v-model="props.row.code"
                 placeholder="Enter Code"
+                @change="changeCell(props.row.code, props.row.originalIndex, props.column.field)"
               >
               </b-form-input>
             </span>
@@ -124,14 +128,9 @@ export default {
           field: "checked",
         },
       ],
-      valueLists: [
-        {
-          value_id: "",
-          description: "",
-          code: "",
-          is_active: "",
-        },
-      ],
+      valueLists: [],
+      searchingStatus: '',
+      savingStatus: '',      
       searchTerm: "",
       selectedValues: [],
       valueItems: [],
@@ -165,27 +164,21 @@ export default {
     },
     async search() {
       this.isLoading = true;
+      this.savingStatus = ''
+      this.searchingStatus = 'Searching...'
       if (this.selectedValues.length > 0) {
         this.valueId = this.selectedValues[0].id;
         let valueLists = await axios.get(`/values/${this.valueId}/value_lists`);
         this.valueLists = valueLists.data.data;
-        // console.log(this.valueLists);
       }
-
+      this.searchingStatus = ''
       this.isLoading = false;
     },
-    // async getData() {
-    //   if (this.selectedValues.length > 0) {
-    //     let valueId = this.selectedValues[0].id;
-    //     let valueLists = await axios.get(`/values/${valueId}/value_lists`);
-    //     this.valueLists = valueLists.data.data;
-    //   }
-    // },
+    changeCell(changedData, row, column) {
+        this.valueLists[row][column] = changedData
+    },
     async save() {
-      // this.valueLists= this.props;
-      // this.valueLists.code = this.props.row.code;
-      // this.valueLists.is_active = this.props.row.is_active;
-      // console.log(value);
+      this.savingStatus = 'Saving...'
       if (this.valueLists.length > 0) {
         this.isSaving = true;
         let payload = {
@@ -198,6 +191,7 @@ export default {
         this.valueLists = response.data.data;
         this.isSaving = false;
       }
+      this.savingStatus = 'Saved.'
     },
     addEmptyValueList() {
       this.valueLists.push({
@@ -208,8 +202,8 @@ export default {
         is_active: 1,
       });
     },
-    deleteValueList() {
-      this.valueLists.splice(this.valueLists.index, 1);
+    deleteValueList(row) {
+      this.valueLists = this.valueLists.filter(vL => vL.id != row.id)
     },
   },
 };

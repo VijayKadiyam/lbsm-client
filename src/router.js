@@ -177,9 +177,9 @@ const routes = [
       },
       // Program Tasks
       {
-        path: "/app/programs/id/program-tasks",
+        path: "/app/programs/:program_id/program-tasks",
         component: () => import("./views/app/program-tasks"),
-        redirect: "/app/programs/id/program-tasks/list",
+        redirect: "/app/programs/:program_id/program-tasks/list",
         children: [
           {
             path: "list",

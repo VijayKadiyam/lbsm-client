@@ -229,12 +229,12 @@ export default {
           this.isLoading = true;
           await axios.post("/users", this.form);
           this.isLoading = false;
-          this.$router.push('/app/users')
         } catch (e) {
           this.isLoading = false;
         }
         this.submitStatus = "PENDING";
         setTimeout(() => {
+          this.$router.push('/app/users')
           this.submitStatus = "OK";
         }, 1000);
       }

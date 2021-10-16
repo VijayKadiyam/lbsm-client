@@ -109,9 +109,7 @@ import axios from "axios";
 import {
   email,
   numeric,
-  between,
   required,
-  sameAs,
   minLength,
   maxLength,
 } from "vuelidate/lib/validators";
@@ -169,6 +167,7 @@ export default {
         }
         this.submitStatus = "PENDING";
         setTimeout(() => {
+          this.$router.push("/app/sites/");
           this.submitStatus = "OK";
         }, 1000);
       }

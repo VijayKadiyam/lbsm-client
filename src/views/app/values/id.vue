@@ -97,6 +97,7 @@ mounted() {
       }
         this.submitStatus = "PENDING";
         setTimeout(() => {
+          this.$router.push("/app/values/");
           this.submitStatus = "OK";
         }, 1000);
       }
@@ -123,7 +124,6 @@ mounted() {
       this.isLoading = true
       let form = await axios.get(`/values/${this.$route.params.id}`)
       this.form = form.data.data
-      // console.log(this.form);
       this.isLoading = false
     },
   }

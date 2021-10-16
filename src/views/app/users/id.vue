@@ -237,6 +237,7 @@ mounted() {
       }
         this.submitStatus = "PENDING";
         setTimeout(() => {
+          this.$router.push("/app/users/");
           this.submitStatus = "OK";
         }, 1000);
       }
@@ -263,19 +264,8 @@ mounted() {
       this.isLoading = true
       let form = await axios.get(`/users/${this.$route.params.id}`)
       this.form = form.data.data
-      // console.log(this.form);
       this.isLoading = false
     },
-    // async update() {
-    //   try {
-    //     this.isLoading = true
-    //     await axios.patch(`/tickets/${this.$route.params.ticketId}`, this.form)
-    //     this.isLoading = false
-    //     this.$router.push('/main/tickets')
-    //   } catch(e) {
-    //     this.isLoading = false
-    //   }
-    // }
   },
 };
 </script>

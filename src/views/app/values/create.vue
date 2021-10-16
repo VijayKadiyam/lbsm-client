@@ -88,7 +88,6 @@ export default {
         try {
           this.isLoading = true;
           await axios.post("/values", this.form);
-          this.$router.push('/app/values')
           this.isLoading = false;
           
         } catch (e) {
@@ -96,6 +95,7 @@ export default {
         }
         this.submitStatus = "PENDING";
         setTimeout(() => {
+          this.$router.push('/app/values')
           this.submitStatus = "OK";
         }, 1000);
       }

@@ -109,9 +109,7 @@ import axios from "axios";
 import {
   email,
   numeric,
-  between,
   required,
-  sameAs,
   minLength,
   maxLength,
 } from "vuelidate/lib/validators";

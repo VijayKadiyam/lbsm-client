@@ -5,16 +5,28 @@
     <b-row>
       <b-col md="12" class="mt-4 mb-4">
         <b-card title="Values">
-          <vue-tags-input
-            v-model="value"
-            :tags="values"
-            :max-tags="1"
-            class="tag-custom text-15"
-            :add-only-from-autocomplete="true"
-            :autocomplete-items="filteredValueItems"
-            @tags-changed="(newTags) => (values = newTags)"
-            placeholder="Type Value Name"
-          />
+          <b-row>
+            <b-col md="9">
+              <vue-tags-input
+                v-model="searchTerm"
+                :tags="selectedValues"
+                :max-tags="1"
+                class="tag-custom text-15"
+                :add-only-from-autocomplete="true"
+                :autocomplete-items="filteredValueItems"
+                @tags-changed="(newTags) => (selectedValues = newTags)"
+                placeholder="Type Value Name"
+              />
+            </b-col>
+            <b-col md="3">
+              <b-button
+                variant="primary"
+                class="btn-rounded d-none d-sm-block"
+                @click="save()"
+                >Save
+              </b-button>
+            </b-col>
+          </b-row>
         </b-card>
       </b-col>
     </b-row>
@@ -31,8 +43,7 @@
           mode: 'records',
         }"
         styleClass="tableOne vgt-table"
-        :rows="rows"
-        foot-clone
+        :rows="valueLists"
       >
         <div slot="table-actions-bottom" class="mb-1 mr-2 mt-3 pull-right">
           <b-button
@@ -44,37 +55,41 @@
         </div>
 
         <template slot="table-row" slot-scope="props">
-          <!-- <b-form> -->
           <span v-if="props.column.field == 'sr_no'">
-            <!-- <span @click="deleteValueList(valueList)" v-if="!valueList.id"> -->
-            <!-- <span  > -->
-              <b-button
-            variant="primary"
-            class="btn-rounded d-none d-sm-block"
-            @click="deleteValueList(row)"
-            >X
-          </b-button>
+            <b-button
+              variant="primary"
+              class="btn-rounded d-none d-sm-block"
+              @click="deleteValueList(row)"
+              >X
+            </b-button>
+          </span>
+            <span v-if="props.column.field == 'checked'">
+              <label class="switch switch-success mr-3">
+                <input
+                  type="checkbox"
+                  checked="checkbox"
+                  v-model="props.row.is_active"
+                /><span class="slider"></span>
+              </label>
             </span>
-          <!-- </span> -->
-          <span v-if="props.column.field == 'checked'">
-            <label class="switch switch-success mr-3">
-              <input type="checkbox" checked="checkbox" /><span
-                class="slider"
-              ></span>
-            </label>
-          </span>
-          <span v-if="props.column.field == 'description'">
-            <b-form-input
-              class="mb-2"
-              label="Description"
-              placeholder="Enter Description"
-            >
-            </b-form-input>
-          </span>
-          <span v-if="props.column.field == 'code'">
-            <b-form-input class="mb-2" label="Code" placeholder="Enter Code">
-            </b-form-input>
-          </span>
+            <span v-if="props.column.field == 'description'">
+              <b-form-input
+                class="mb-2"
+                label="Description"
+                v-model="props.row.description"
+                placeholder="Enter Description"
+              >
+              </b-form-input>
+            </span>
+            <span v-if="props.column.field == 'code'">
+              <b-form-input
+                class="mb-2"
+                label="Code"
+                v-model="props.row.code"
+                placeholder="Enter Code"
+              >
+              </b-form-input>
+            </span>
         </template>
       </vue-good-table>
     </b-card>
@@ -82,7 +97,9 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
+  name: 'ValueList',
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
     title: "Value List",
@@ -107,57 +124,92 @@ export default {
           field: "checked",
         },
       ],
-      rows: [
+      valueLists: [
         {
+          value_id: "",
           description: "",
           code: "",
-          active: "",
+          is_active: "",
         },
       ],
-      //   auto complete
-      value: "",
-      values:[],
-      valueItems: [
-        {
-          text: "Country",
-        },
-        {
-          text: "State",
-        },
-        {
-          text: "City",
-        },
-        {
-          text: "Department",
-        },
-        {
-          text: "Category",
-        },
-      ],
+      searchTerm: "",
+      selectedValues: [],
+      valueItems: [],
     };
   },
   computed: {
     filteredValueItems() {
       return this.valueItems.filter((v) => {
-        return v.text.toLowerCase().indexOf(this.value.toLowerCase()) !== -1;
+        return (
+          v.text.toLowerCase().indexOf(this.searchTerm.toLowerCase()) !== -1
+        );
       });
     },
   },
+  watch: {
+    selectedValues: "search",
+  },
+  mounted() {
+    this.getMasters();
+  },
   methods: {
-    addFile() {
-      console.log("hello");
+    async getMasters() {
+      let masters = await axios.get("value_lists/masters");
+      masters = masters.data;
+      masters.values.forEach((value) => {
+        this.valueItems.push({
+          id: value.id,
+          text: value.name,
+        });
+      });
+    },
+    async search() {
+      this.isLoading = true;
+      if (this.selectedValues.length > 0) {
+        this.valueId = this.selectedValues[0].id;
+        let valueLists = await axios.get(`/values/${this.valueId}/value_lists`);
+        this.valueLists = valueLists.data.data;
+        // console.log(this.valueLists);
+      }
+
+      this.isLoading = false;
+    },
+    // async getData() {
+    //   if (this.selectedValues.length > 0) {
+    //     let valueId = this.selectedValues[0].id;
+    //     let valueLists = await axios.get(`/values/${valueId}/value_lists`);
+    //     this.valueLists = valueLists.data.data;
+    //   }
+    // },
+    async save() {
+      // this.valueLists= this.props;
+      // this.valueLists.code = this.props.row.code;
+      // this.valueLists.is_active = this.props.row.is_active;
+      // console.log(value);
+      if (this.valueLists.length > 0) {
+        this.isSaving = true;
+        let payload = {
+          datas: this.valueLists,
+        };
+        let response = await axios.post(
+          `/values/${this.valueId}/value_lists_multiple`,
+          payload
+        );
+        this.valueLists = response.data.data;
+        this.isSaving = false;
+      }
     },
     addEmptyValueList() {
-      this.rows.push({
-        // value_id: this.search,
-        // site_id: this.site.id,
+      this.valueLists.push({
+        value_id: this.valueId,
+        site_id: this.site.id,
         description: "",
         code: "",
         is_active: 1,
       });
     },
     deleteValueList() {
-       this.rows.splice(this.rows.index, 1);
+      this.valueLists.splice(this.valueLists.index, 1);
     },
   },
 };

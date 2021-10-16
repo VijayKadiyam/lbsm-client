@@ -61,7 +61,7 @@
             <b-button
               variant="primary"
               class="btn-rounded d-none d-sm-block"
-              @click="deleteValueList(row)"
+              @click="deleteValueList(props.row)"
               >X
             </b-button>
           </span>
@@ -128,14 +128,7 @@ export default {
           field: "checked",
         },
       ],
-      valueLists: [
-        {
-          value_id: "",
-          description: "",
-          code: "",
-          is_active: "",
-        },
-      ],
+      valueLists: [],
       searchingStatus: '',
       savingStatus: '',      
       searchTerm: "",
@@ -209,8 +202,8 @@ export default {
         is_active: 1,
       });
     },
-    deleteValueList() {
-      this.valueLists.splice(this.valueLists.index, 1);
+    deleteValueList(row) {
+      this.valueLists = this.valueLists.filter(vL => vL.id != row.id)
     },
   },
 };

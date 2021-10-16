@@ -11,7 +11,7 @@
                 class="mb-2"
                 label="Name"
                 placeholder="Enter Name"
-                v-model.trim="$v.name.$model"
+                v-model.trim="$v.form.name.$model"
               >
               </b-form-input>
 
@@ -19,9 +19,9 @@
                 show
                 variant="danger"
                 class="error col-md-6 mt-1"
-                v-if="!$v.name.minLength"
+                v-if="!$v.form.name.minLength"
                 >Name must have at least
-                {{ $v.name.$params.minLength.min }} letters.</b-alert
+                {{ $v.form.name.$params.minLength.min }} letters.</b-alert
               >
             </b-form-group>
 
@@ -51,7 +51,8 @@
 
 
 <script>
-import {email,numeric, between,required, sameAs, minLength,maxLength } from "vuelidate/lib/validators";
+import axios from "axios";
+import {required, minLength} from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
@@ -59,61 +60,41 @@ export default {
   },
   data() {
     return {
-      name: "",
-      phone: "",
-      email:"",
+     form:{
+        name: "",
+     },
       submitStatus: null,
-      peopleAdd: [
-        {
-          multipleName: "Johnn"
-        },
-        {
-          multipleName: ""
-        }
-      ]
+      
     };
   },
   validations: {
-    name: {
+    form:{
+      name: {
       required,
       minLength: minLength(4)
     },
-    email: {
-      email,
-      required,
-      minLength: minLength(4)
-    },
-    phone: {
-      required,
-      numeric,
-      minLength: minLength(10),
-      maxLength: maxLength(12),
-    },
-
-    // add input
-    // peopleAdd: {
-    //   required,
-    //   minLength: minLength(3),
-    //   $each: {
-    //     multipleName: {
-    //       required,
-    //       minLength: minLength(5)
-    //     }
-    //   }
-    // },
-    // validationsGroup:['peopleAdd.multipleName']
+    }
   },
-
+mounted() {
+    this.getData()
+  },
   methods: {
     //   validate form
-    submit() {
+    async submit() {
       console.log("submit!");
 
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
       } else {
-        // do your submit logic here
+        try {
+        this.isLoading = true
+        await axios.patch(`/values/${this.$route.params.id}`, this.form)
+        this.isLoading = false
+        this.$router.push('/app/values')
+      } catch(e) {
+        this.isLoading = false
+      }
         this.submitStatus = "PENDING";
         setTimeout(() => {
           this.submitStatus = "OK";
@@ -137,7 +118,14 @@ export default {
 
     inputSubmit() {
       console.log("submitted");
-    }
+    },
+    async getData() {
+      this.isLoading = true
+      let form = await axios.get(`/values/${this.$route.params.id}`)
+      this.form = form.data.data
+      // console.log(this.form);
+      this.isLoading = false
+    },
   }
 };
 </script>

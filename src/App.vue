@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div
+    :style="{ backgroundImage: 'url(' + bgImage + ')' }"
+  >
+    
     <router-view></router-view>
 
     <customizer></customizer>
@@ -12,7 +15,9 @@ import { mapGetters } from "vuex";
 
 export default {
   data() {
-    return {};
+    return {
+      bgImage: require("@/assets/images/photo-wide-4.jpg"),
+    };
   },
   computed: {
     ...mapGetters(["getThemeMode"]),
@@ -41,6 +46,9 @@ export default {
 </script>
 
 <style>
+  .main-content-wrap {
+    background: transparent !important;
+  }
 </style>
 
 

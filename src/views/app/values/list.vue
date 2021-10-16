@@ -8,24 +8,27 @@
         :line-numbers="true"
         :search-options="{
           enabled: true,
-          placeholder: 'Search this table'
+          placeholder: 'Search this table',
         }"
         :pagination-options="{
           enabled: true,
-          mode: 'records'
+          mode: 'records',
         }"
         styleClass="tableOne vgt-table"
-        :rows="rows"
+        :rows="values"
       >
         <div slot="table-actions" class="mb-3">
-          <b-button variant="primary" class="btn-rounded d-none d-sm-block"  to="/app/values/create"
+          <b-button
+            variant="primary"
+            class="btn-rounded d-none d-sm-block"
+            to="/app/values/create"
             ><i class="i-Add text-white mr-2"> </i>Add Value
           </b-button>
         </div>
 
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
-            <a href="/app/values/id">
+            <a :href="'/app/values/' + props.row.id">
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
               {{ props.row.button }}</a
             >
@@ -37,55 +40,41 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Value | Lists"
+    title: "Value | Lists",
   },
   data() {
     return {
-      foods: ["apple", "orrange"],
       columns: [
         {
           label: "Name",
-          field: "name"
+          field: "name",
         },
         {
           label: "Action",
           field: "button",
-        }
+        },
       ],
-      rows: [
-        {
-          id: 1,
-          name: "CIty",
-        },
-        {
-          id: 2,
-          name: "State",
-         
-        },
-        {
-          id: 3,
-          name: "Category",
-         
-        },
-        {
-          id: 4,
-          name: "Department",
-        },
-        {
-          id: 5,
-          name: "Country",
-        },
-      ]
+      values:[],
     };
   },
+   mounted() {
+    this.getData();
+  },
   methods: {
-    addFile() {
-      console.log("hello");
-    }
-  }
+    async getData() {
+      this.isLoading = true;
+      let values = await axios.get(`values`);
+      this.values = values.data.data;
+      // this.count = users.data.count;
+      // this.serialNoStarting = (page - 1) * this.rowsPerPage;
+      this.isLoading = false;
+    },
+  },
 };
 </script>
 <style >

@@ -29,16 +29,14 @@
         <template slot="table-row" slot-scope="props" >
          
           <span v-if="props.column.field == 'button'" >
-            <span v-for="(user, at) in users" :key="`user${at}`">
-              <a :href="'/app/users/' + user.id">
-                <i class="i-Eraser-2 text-25 text-success mr-2"></i>
-                {{ props.row.button }}</a
-              >
-              <a href="">
-                <i class="i-Close-Window text-25 text-danger"></i>
-                {{ props.row.button }}</a
-              >
-            </span>
+            <a :href="'/app/users/' + props.row.id">
+              <i class="i-Eraser-2 text-25 text-success mr-2"></i>
+              {{ props.row.button }}</a
+            >
+            <a href="">
+              <i class="i-Close-Window text-25 text-danger"></i>
+              {{ props.row.button }}</a
+            >
           </span>
           <!-- <span v-else-if="props.column.field == 'first_name'">
               <a href="/app/users/id">

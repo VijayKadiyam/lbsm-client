@@ -53,14 +53,25 @@
           <b-button
             variant="primary"
             class="btn-rounded d-none d-sm-block"
-            to="/app/programs/id/program-tasks/create"
+            :to="
+              '/app/programs/' +
+                program_tasks[0].program_id +
+                '/program-tasks/create'
+            "
             ><i class="i-Add-User text-white mr-2"> </i>Add Program Task
           </b-button>
         </div>
 
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
-            <a href="/app/programs/id/program-tasks/id">
+            <a
+              :href="
+                '/app/programs/' +
+                  props.row.program_id +
+                  '/program-tasks/' +
+                  props.row.id
+              "
+            >
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
               {{ props.row.button }}</a
             >
@@ -76,6 +87,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
@@ -83,7 +95,6 @@ export default {
   },
   data() {
     return {
-      foods: ["apple", "orrange"],
       columns: [
         {
           label: "Serial No",
@@ -129,348 +140,22 @@ export default {
           thClass: "text-right",
         },
       ],
-      program_tasks: [
-        {
-          id: 1,
-          site_id: 1,
-          program_id: 1,
-          program: {
-            id: 1,
-            program_name: "Program 1",
-            program_description: "Desc",
-            instructor: "inst",
-            hours: "3 hrs",
-          },
-          program_post_id: 2,
-          program_post: {
-            id: 2,
-            serial_no: 12345,
-            post_id: 5,
-          },
-          serial_no: 12345,
-          tast: "John",
-          objective: "John",
-          material: "John",
-          process: "process 1",
-          no_of_contracts: 5,
-          time_required: 30,
-          total_marks: 30,
-          passing_marks: 30,
-        },
-        {
-          id: 2,
-          site_id: 1,
-          program_id: 1,
-          program: {
-            id: 1,
-            program_name: "Program 1",
-            program_description: "Desc",
-            instructor: "inst",
-            hours: "3 hrs",
-          },
-          program_post_id: 2,
-          program_post: {
-            id: 2,
-            serial_no: 12345,
-            post_id: 5,
-          },
-          serial_no: 12345,
-
-          task: "Jane",
-          objective: "Jane",
-          material: "Jane",
-          process: "process 1",
-          no_of_contracts: 5,
-          time_required: 30,
-          total_marks: 30,
-          passing_marks: 30,
-        },
-        {
-          id: 3,
-          site_id: 1,
-          program_id: 1,
-          program: {
-            id: 1,
-            program_name: "Program 1",
-            program_description: "Desc",
-            instructor: "inst",
-            hours: "3 hrs",
-          },
-          program_post_id: 2,
-          program_post: {
-            id: 2,
-            serial_no: 12345,
-            post_id: 5,
-          },
-          serial_no: 12345,
-
-          task: "Susan",
-          objective: "Susan",
-          material: "Susan",
-          process: "process 1",
-          no_of_contracts: 5,
-          time_required: 30,
-          total_marks: 30,
-          passing_marks: 30,
-        },
-        {
-          id: 4,
-          site_id: 1,
-          program_id: 1,
-          program: {
-            id: 1,
-            program_name: "Program 1",
-            program_description: "Desc",
-            instructor: "inst",
-            hours: "3 hrs",
-          },
-          program_post_id: 2,
-          program_post: {
-            id: 2,
-            serial_no: 12345,
-            post_id: 5,
-          },
-          serial_no: 12345,
-
-          task: "Chris",
-          objective: "Chris",
-          material: "Chris",
-          process: "process 1",
-          no_of_contracts: 5,
-          time_required: 30,
-          total_marks: 30,
-          passing_marks: 30,
-        },
-        {
-          id: 5,
-          site_id: 1,
-          program_id: 1,
-          program: {
-            id: 1,
-            program_name: "Program 1",
-            program_description: "Desc",
-            instructor: "inst",
-            hours: "3 hrs",
-          },
-          program_post_id: 2,
-          program_post: {
-            id: 2,
-            serial_no: 12345,
-            post_id: 5,
-          },
-          serial_no: 12345,
-
-          task: "Dan",
-          objective: "Dan",
-          material: "Dan",
-          process: "process 1",
-          no_of_contracts: 5,
-          time_required: 30,
-          total_marks: 30,
-          passing_marks: 30,
-        },
-        {
-          id: 6,
-          site_id: 1,
-          program_id: 1,
-          program: {
-            id: 1,
-            program_name: "Program 1",
-            program_description: "Desc",
-            instructor: "inst",
-            hours: "3 hrs",
-          },
-          program_post_id: 2,
-          program_post: {
-            id: 2,
-            serial_no: 12345,
-            post_id: 5,
-          },
-          serial_no: 12345,
-
-          task: "John",
-          objective: "John",
-          material: "John",
-          process: "process 1",
-          no_of_contracts: 5,
-          time_required: 30,
-          total_marks: 30,
-          passing_marks: 30,
-        },
-        {
-          id: 1,
-          site_id: 1,
-          program_id: 1,
-          program: {
-            id: 1,
-            program_name: "Program 1",
-            program_description: "Desc",
-            instructor: "inst",
-            hours: "3 hrs",
-          },
-          program_post_id: 2,
-          program_post: {
-            id: 2,
-            serial_no: 12345,
-            post_id: 5,
-          },
-          serial_no: 12345,
-
-          task: "John",
-          objective: "John",
-          material: "John",
-          process: "process 1",
-          no_of_contracts: 5,
-          time_required: 30,
-          total_marks: 30,
-          passing_marks: 30,
-        },
-        {
-          id: 2,
-          site_id: 1,
-          program_id: 1,
-          program: {
-            id: 1,
-            program_name: "Program 1",
-            program_description: "Desc",
-            instructor: "inst",
-            hours: "3 hrs",
-          },
-          program_post_id: 2,
-          program_post: {
-            id: 2,
-            serial_no: 12345,
-            post_id: 5,
-          },
-          serial_no: 12345,
-
-          task: "Jane",
-          objective: "Jane",
-          material: "Jane",
-          process: "process 1",
-          no_of_contracts: 5,
-          time_required: 30,
-          total_marks: 30,
-          passing_marks: 30,
-        },
-        {
-          id: 3,
-          site_id: 1,
-          program_id: 1,
-          program: {
-            id: 1,
-            program_name: "Program 1",
-            program_description: "Desc",
-            instructor: "inst",
-            hours: "3 hrs",
-          },
-          program_post_id: 2,
-          program_post: {
-            id: 2,
-            serial_no: 12345,
-            post_id: 5,
-          },
-          serial_no: 12345,
-
-          task: "Susan",
-          objective: "Susan",
-          material: "Susan",
-          process: "process 1",
-          no_of_contracts: 5,
-          time_required: 30,
-          total_marks: 30,
-          passing_marks: 30,
-        },
-        {
-          id: 4,
-          site_id: 1,
-          program_id: 1,
-          program: {
-            id: 1,
-            program_name: "Program 1",
-            program_description: "Desc",
-            instructor: "inst",
-            hours: "3 hrs",
-          },
-          program_post_id: 2,
-          program_post: {
-            id: 2,
-            serial_no: 12345,
-            post_id: 5,
-          },
-          serial_no: 12345,
-
-          task: "Chris",
-          objective: "Chris",
-          material: "Chris",
-          process: "process 1",
-          no_of_contracts: 5,
-          time_required: 30,
-          total_marks: 30,
-          passing_marks: 30,
-        },
-        {
-          id: 5,
-          site_id: 1,
-          program_id: 1,
-          program: {
-            id: 1,
-            program_name: "Program 1",
-            program_description: "Desc",
-            instructor: "inst",
-            hours: "3 hrs",
-          },
-          program_post_id: 2,
-          program_post: {
-            id: 2,
-            serial_no: 12345,
-            post_id: 5,
-          },
-          serial_no: 12345,
-
-          task: "Dan",
-          objective: "Dan",
-          material: "Dan",
-          process: "process 1",
-          no_of_contracts: 5,
-          time_required: 30,
-          total_marks: 30,
-          passing_marks: 30,
-        },
-        {
-          id: 6,
-          site_id: 1,
-          program_id: 1,
-          program: {
-            id: 1,
-            program_name: "Program 1",
-            program_description: "Desc",
-            instructor: "inst",
-            hours: "3 hrs",
-          },
-          program_post_id: 2,
-          program_post: {
-            id: 2,
-            serial_no: 12345,
-            post_id: 5,
-          },
-          serial_no: 12345,
-
-          task: "John",
-          objective: "John",
-          material: "John",
-          process: "process 1",
-          no_of_contracts: 5,
-          time_required: 30,
-          total_marks: 30,
-          passing_marks: 30,
-        },
-      ],
+      program_tasks: [],
     };
   },
+  mounted() {
+    this.getData();
+  },
   methods: {
-    addFile() {
-      console.log("hello");
+    async getData(page = 1) {
+      this.isLoading = true;
+      let program_tasks = await axios.get(
+        `/programs/${this.$route.params.program_id}/program_tasks`
+      );
+      this.program_tasks = program_tasks.data.data;
+      // this.count = program_tasks.data.count;
+      this.serialNoStarting = (page - 1) * this.rowsPerPage;
+      this.isLoading = false;
     },
   },
 };

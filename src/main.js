@@ -4,6 +4,8 @@ import App from "./App.vue";
 import router from "./router";
 // import VueRouter from "vue-router";
 import GullKit from "./plugins/gull.kit";
+import axios from "axios";
+
 // import "babel-polyfill";
 // import es6Promise from "es6-promise";
 // es6Promise.polyfill();
@@ -30,6 +32,7 @@ import InstantSearch from 'vue-instantsearch';
 
 Vue.use(InstantSearch);
 Vue.use(GullKit);
+Vue.use(axios);
 
 firebase.initializeApp(firebaseSettings);
 

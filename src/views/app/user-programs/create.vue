@@ -8,23 +8,25 @@
           <b-form @submit.prevent="submit">
             <b-form-group label="User">
               <vue-tags-input
-                v-model="user"
-                :tags="users"
+                v-model="searchUser"
+                :tags="selectedUser"
+                :max-tags="1"
                 class="tag-custom text-15 mb-2"
                 :autocomplete-items="filteredUserItems"
                 :add-only-from-autocomplete="true"
-                @tags-changed="(newTags) => (users = newTags)"
+                @tags-changed="(newTags) => (selectedUser = newTags)"
                 placeholder="Type User Name"
               />
             </b-form-group>
             <b-form-group label="Program">
               <vue-tags-input
-                v-model="program"
-                :tags="programs"
+                v-model="searchProgram"
+                :tags="selectedProgram"
+                :max-tags="1"
                 class="tag-custom text-15 mb-2"
                 :autocomplete-items="filteredProgramItems"
                 :add-only-from-autocomplete="true"
-                @tags-changed="(newTags) => (programs = newTags)"
+                @tags-changed="(newTags) => (selectedProgram = newTags)"
                 placeholder="Type Program Name"
               />
             </b-form-group>
@@ -32,14 +34,14 @@
             <b-form-group label="Enrollment Date">
               <b-form-datepicker
                 id="enrollment_date"
-                v-model="enrollment_date"
+                v-model.trim="$v.form.enrollment_date.$model"
                 class="mb-2"
               ></b-form-datepicker>
               <b-alert
                 show
                 variant="danger"
                 class="error mt-1"
-                v-if="!$v.enrollment_date.required"
+                v-if="!$v.form.enrollment_date.required"
                 >Field is required</b-alert
               >
             </b-form-group>
@@ -67,146 +69,101 @@
 </template>
 
 <script>
+import axios from "axios";
 import { required, minLength } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Form Component",
+    title: "Create User Program",
   },
   data() {
     return {
-      enrollment_date: "",
+      form: {
+        enrollment_date: "",
+      },
       submitStatus: null,
-      peopleAdd: [
-        {
-          multipleName: "Johnn",
-        },
-        {
-          multipleName: "",
-        },
-      ],
       //   auto complete
-      user: "",
-      users: [],
+      searchUser: "",
+      selectedUser: [],
+      userItems: [],
 
-      userItems: [
-        {
-          id: 1,
-          text: "John",
-        },
-        {
-          id: 2,
-          text: "Jane",
-        },
-        {
-          id: 3,
-          text: "Susan",
-        },
-        {
-          id: 4,
-          text: "Chris",
-        },
-        {
-          id: 5,
-          text: "Dan",
-        },
-        {
-          id: 6,
-          text: "John",
-        },
-        {
-          id: 1,
-          text: "John",
-        },
-        {
-          id: 2,
-          text: "Jane",
-        },
-        {
-          id: 3,
-          text: "Susan",
-        },
-        {
-          id: 4,
-          text: "Chris",
-        },
-        {
-          id: 5,
-          text: "Dan",
-        },
-        {
-          id: 6,
-          text: "John",
-        },
-      ],
-      program: "",
-      programs: [],
-      programItems: [
-        {
-          text: "Program Name 1",
-        },
-        {
-          text: "Program Name 2",
-        },
-        {
-          text: "Program Name 3",
-        },
-        {
-          text: "Program Name 4",
-        },
-        {
-          text: "Program Name 5",
-        },
-      ],
+      searchProgram: "",
+      selectedProgram: [],
+      programItems: [],
     };
   },
   computed: {
     filteredUserItems() {
       return this.userItems.filter((u) => {
-        return u.text.toLowerCase().indexOf(this.user.toLowerCase()) !== -1;
+        return (
+          u.text.toLowerCase().indexOf(this.searchUser.toLowerCase()) !== -1
+        );
       });
     },
     filteredProgramItems() {
       return this.programItems.filter((p) => {
         return (
-          p.text.toLowerCase().indexOf(this.program.toLowerCase()) !== -1
+          p.text.toLowerCase().indexOf(this.searchProgram.toLowerCase()) !== -1
         );
       });
     },
   },
   validations: {
-    enrollment_date: {
-      required,
+    form: {
+      enrollment_date: {
+        required,
+      },
     },
-
-    // add input
-    // peopleAdd: {
-    //   required,
-    //   minLength: minLength(3),
-    //   $each: {
-    //     multipleName: {
-    //       required,
-    //       minLength: minLength(5)
-    //     }
-    //   }
-    // },
-    // validationsGroup:['peopleAdd.multipleName']
   },
-
+  mounted() {
+    this.form.site_id = this.site.id;
+    this.getMasters();
+  },
   methods: {
+    async getMasters() {
+      this.isLoading = true;
+      let masters = await axios.get("user_programs/masters");
+      masters = masters.data;
+      masters.programs.forEach((program) => {
+        this.programItems.push({
+          id: program.id,
+          text: program.program_name,
+        });
+      });
+
+      masters.users.forEach((user) => {
+        this.userItems.push({
+          id: user.id,
+          text: user.user_name,
+        });
+      });
+      this.isLoading = false;
+    },
     //   validate form
-    submit() {
+    async submit() {
       console.log("submit!");
+      this.form.user_id = this.selectedUser[0].id;
+      this.form.program_id = this.selectedProgram[0].id;
 
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
       } else {
         // do your submit logic here
-        this.submitStatus = "PENDING";
-        setTimeout(() => {
+        try {
+          this.isLoading = true;
+          this.submitStatus = "PENDING";
+          console.log(this.form);
+          await axios.post("/user_programs", this.form);
+          this.isLoading = false;
           this.submitStatus = "OK";
-        }, 1000);
+
+          setTimeout(() => {
+            this.$router.push("/app/user-programs/");
+          }, 1000);
+        } catch (e) {
+          this.isLoading = false;
+        }
       }
     },
     makeToast(variant = null) {

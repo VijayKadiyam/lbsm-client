@@ -225,12 +225,6 @@
               <span class="item-name">Add New Site</span>
             </router-link>
           </li>
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/sites/id">
-              <i class="nav-icon i-Receipt-4"></i>
-              <span class="item-name">Id</span>
-            </router-link>
-          </li>
         </ul>
         <!-- Submenu Users -->
         <ul
@@ -248,12 +242,6 @@
             <router-link tag="a" class to="/app/users/create">
               <i class="nav-icon i-Split-Vertical"></i>
               <span class="item-name">Add New User</span>
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/users/id">
-              <i class="nav-icon i-Receipt-4"></i>
-              <span class="item-name">Id</span>
             </router-link>
           </li>
         </ul>
@@ -288,12 +276,6 @@
               <span class="item-name">Add New Program</span>
             </router-link>
           </li>
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/programs/id">
-              <i class="nav-icon i-Receipt-4"></i>
-              <span class="item-name">Id</span>
-            </router-link>
-          </li>
         </ul>
         <!-- Submenu Values -->
         <ul
@@ -313,12 +295,6 @@
               <span class="item-name">Add New Value</span>
             </router-link>
           </li>
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/values/id">
-              <i class="nav-icon i-Receipt-4"></i>
-              <span class="item-name">Id</span>
-            </router-link>
-          </li>
         </ul>
         <!-- Submenu Value-Lists -->
         <ul
@@ -332,18 +308,6 @@
               <span class="item-name">Listing</span>
             </router-link>
           </li>
-          <!-- <li class="nav-item">
-            <router-link tag="a" class to="/app/value-lists/create">
-              <i class="nav-icon i-Split-Vertical"></i>
-              <span class="item-name">Add New Value</span>
-            </router-link>
-          </li> 
-         <li class="nav-item">
-            <router-link tag="a" class to="/app/value-lists/id">
-              <i class="nav-icon i-Receipt-4"></i>
-              <span class="item-name">Id</span>
-            </router-link>
-          </li> -->
         </ul>
         <!-- Submenu Program Posts-->
         <ul
@@ -357,18 +321,6 @@
               <span class="item-name">Listing</span>
             </router-link>
           </li>
-          <!-- <li class="nav-item">
-            <router-link tag="a" class to="/app/value-lists/create">
-              <i class="nav-icon i-Split-Vertical"></i>
-              <span class="item-name">Add New Value</span>
-            </router-link>
-          </li> 
-         <li class="nav-item">
-            <router-link tag="a" class to="/app/value-lists/id">
-              <i class="nav-icon i-Receipt-4"></i>
-              <span class="item-name">Id</span>
-            </router-link>
-          </li> -->
         </ul>
         <!-- Submenu User Program -->
         <ul
@@ -388,12 +340,6 @@
               <span class="item-name">Add New User Programs</span>
             </router-link>
           </li>
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/user-programs/id">
-              <i class="nav-icon i-Receipt-4"></i>
-              <span class="item-name">Id</span>
-            </router-link>
-          </li>
         </ul>
         <!-- Submenu User Program Posts -->
         <ul
@@ -411,12 +357,6 @@
             <router-link tag="a" class to="/app/user-program-posts/create">
               <i class="nav-icon i-Split-Vertical"></i>
               <span class="item-name">Add New User Program Posts</span>
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/user-program-posts/id">
-              <i class="nav-icon i-Receipt-4"></i>
-              <span class="item-name">Id</span>
             </router-link>
           </li>
         </ul>
@@ -446,14 +386,14 @@
 </template>
 
 <script>
-import Topnav from "./TopNav";
+// import Topnav from "./TopNav";
 import { isMobile } from "mobile-device-detect";
 
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
-    Topnav,
+    // Topnav,
   },
 
   data() {

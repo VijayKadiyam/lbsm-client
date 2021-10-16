@@ -33,23 +33,7 @@
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
               {{ props.row.button }}</a
             >
-            <a href="">
-              <i class="i-Close-Window text-25 text-danger"></i>
-              {{ props.row.button }}</a
-            >
           </span>
-          <!-- <span v-else-if="props.column.field == 'first_name'">
-              <a href="/app/users/id">
-                <div class="ul-widget-app__profile-pic">
-                  <img
-                    class="profile-picture avatar-sm mb-2 rounded-circle img-fluid"
-                    :src="props.row.avatar"
-                    alt=""
-                  />
-                  {{ props.row.first_name }}
-                </div>
-              </a>
-            </span> -->
           <span v-else-if="props.column.field == 'gender'">
             {{ props.row.gender == 0 ? "Male" : "Female" }}
           </span>
@@ -68,7 +52,6 @@ export default {
   },
   data() {
     return {
-      foods: ["apple", "orrange"],
       columns: [
         {
           label: "First Name",
@@ -87,8 +70,8 @@ export default {
           field: "email",
         },
         {
-          label: "Phone",
-          field: "phone",
+          label: "Middle Name",
+          field: "middle_name",
         },
         {
           label: "Date Of Birth",
@@ -106,28 +89,20 @@ export default {
         },
       ],
       users: [],
-      count: 0,
-      serialNoStarting: 1,
     };
   },
   mounted() {
     this.getData();
-    // this.getMasters()
   },
   methods: {
-    async getData(page = 1) {
+    async getData() {
       this.isLoading = true;
       let users = await axios.get(`users`);
-      // console.log(users)
       this.users = users.data.data;
-      this.count = users.data.count;
-      this.serialNoStarting = (page - 1) * this.rowsPerPage;
+      // this.count = users.data.count;
+      // this.serialNoStarting = (page - 1) * this.rowsPerPage;
       this.isLoading = false;
     },
-    // async getMasters() {
-    //   let masters = await axios.get('tickets/masters')
-    //   masters = masters.data
-    // },
   },
 };
 </script>

@@ -226,11 +226,10 @@ export default {
         this.submitStatus = "ERROR";
       } else {
         try {
-          console.log(this.form);
           this.isLoading = true;
           await axios.post("/users", this.form);
           this.isLoading = false;
-          // this.$router.push('/main/tickets')
+          this.$router.push('/app/users')
         } catch (e) {
           this.isLoading = false;
         }
@@ -259,27 +258,7 @@ export default {
     inputSubmit() {
       // this.save();
     },
-    async getMasters() {
-      let masters = await axios.get("tickets/masters");
-      masters = masters.data;
-      masters.ticketTypes.forEach((ticket_type) => {
-        this.ticketTypes.push({
-          id: ticket_type.id,
-          name: ticket_type.description,
-        });
-      });
-    },
-    async save() {
-      try {
-        console.log(this.form);
-        this.isLoading = true;
-        await axios.post("/users", this.form);
-        this.isLoading = false;
-        // this.$router.push('/main/tickets')
-      } catch (e) {
-        this.isLoading = false;
-      }
-    },
+    
   },
 };
 </script>

@@ -239,21 +239,21 @@ const routes = [
       {
         path: "/app/user-program-tasks",
         component: () =>
-          import("./views/app/user-program-tasks/user-program-task-list"),
+          import("./views/app/user-program-tasks/user-program-list"),
         redirect: "/app/user-program-tasks/list",
         children: [
           {
             path: "list",
             component: () =>
-              import("./views/app/user-program-tasks/user-program-task-list"),
+              import("./views/app/user-program-tasks/user-program-list"),
           },
         ],
       },
       // User Program Tasks details
       {
-        path: "/app/user-program/id/user-program-tasks",
+        path: "/app/user-program/:user_program_id/user-program-tasks",
         component: () => import("./views/app/user-program-tasks"),
-        redirect: "/app/user-program/id/user-program-tasks/list",
+        redirect: "/app/user-program/:user_program_id/user-program-tasks/list",
         children: [
           {
             path: "list",

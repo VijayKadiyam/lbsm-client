@@ -12,7 +12,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user_program_tasks[0].user.user_name }}
+                  {{ user.user_name }}
                 </p>
               </b-col>
             </b-row>
@@ -22,7 +22,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user_program_tasks[0].user.first_name }}
+                  {{ user.first_name }}
                 </p>
               </b-col>
             </b-row>
@@ -32,7 +32,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user_program_tasks[0].user.email }}
+                  {{ user.email }}
                 </p>
               </b-col>
             </b-row>
@@ -42,7 +42,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user_program_tasks[0].user.phone }}
+                  {{ user.phone }}
                 </p>
               </b-col>
             </b-row>
@@ -58,7 +58,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-20 line-height-1 mb-0">
-                  {{ user_program_tasks[0].program.program_name }}
+                  {{ program.program_name }}
                 </p>
               </b-col>
             </b-row>
@@ -68,7 +68,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-20 line-height-1 mb-0">
-                  {{ user_program_tasks[0].program.program_description }}
+                  {{ program.program_description }}
                 </p>
               </b-col>
             </b-row>
@@ -78,7 +78,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-20 line-height-1 mb-0">
-                  {{ user_program_tasks[0].program.instructor }}
+                  {{ program.instructor }}
                 </p>
               </b-col>
             </b-row>
@@ -88,7 +88,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-20 line-height-1 mb-0">
-                  {{ user_program_tasks[0].program.hours }}
+                  {{ program.hours }}
                 </p>
               </b-col>
             </b-row>
@@ -117,7 +117,11 @@
           <b-button
             variant="primary"
             class="btn-rounded d-none d-sm-block"
-            to="/app/user-program/id/user-program-tasks/create"
+            :to="
+              '/app/user-program/' +
+                user_program.id +
+                '/user-program-tasks/create'
+            "
             ><i class="i-Add text-white mr-2"> </i>Add User Program Task
           </b-button>
         </div>
@@ -125,7 +129,14 @@
 
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
-            <a href="/app/user-program/id/user-program-tasks/id">
+            <a
+              :href="
+                '/app/user-program/' +
+                  prop.row.program_id +
+                  '/user-program-tasks/' +
+                  prop.row.id
+              "
+            >
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
               {{ props.row.button }}</a
             >
@@ -137,7 +148,7 @@
             {{ props.row.marks_obtained }}
           </span>
           <span v-if="props.column.field == 'is_completed'">
-            {{ props.row.is_completed==0?"NO":"YES" }}
+            {{ props.row.is_completed == 0 ? "NO" : "YES" }}
           </span>
           <span v-if="props.column.field == 'completion_date'">
             {{ props.row.completion_date }}
@@ -149,6 +160,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
@@ -156,7 +168,6 @@ export default {
   },
   data() {
     return {
-      // foods: ["apple", "orrange"],
       columns: [
         {
           label: "Program Task",
@@ -173,7 +184,7 @@ export default {
         {
           label: "Completion Date",
           field: "completion_date",
-          type:"date",
+          type: "date",
           dateInputFormat: "yyyy/MM/dd",
           dateOutputFormat: "yyyy-MM-dd",
         },
@@ -182,458 +193,42 @@ export default {
           field: "button",
         },
       ],
-
-      user_program_tasks: [
-        {
-          id: 1,
-          site_id: 1,
-          user_id: 1,
-          user: {
-            id: 1,
-            avatar: require("@/assets/images/faces/1.jpg"),
-            first_name: "John",
-            middle_name: "John",
-            last_name: "John",
-            user_name: "John",
-            gender: 0,
-            dob: "1997-03-30",
-            email: "jhonwick_23@gmail.com",
-            phone: "+88012378478",
-          },
-          program_id: 1,
-          program: {
-            program_name: "Program Name - 10",
-            program_description: "Program Description 10",
-            instructor: "Instructor 10",
-            hours: "10",
-          },
-          program_task_id: 1,
-          program_task: {
-            id: 1,
-            site_id: 1,
-            program_id: 1,
-            program: {
-              id: 1,
-              program_name: "Program 1",
-              program_description: "Desc",
-              instructor: "inst",
-              hours: "3 hrs",
-            },
-            program_post_id: 2,
-            program_post: {
-              id: 2,
-              serial_no: 12345,
-              post_id: 5,
-            },
-            serial_no: 12345,
-            task: "John",
-            objective: "John",
-            material: "John",
-            process: "process 1",
-            no_of_contracts: 5,
-            time_required: 30,
-            total_marks: 30,
-            passing_marks: 30,
-          },
-          marks_obtained: 100,
-          is_completed: 0,
-          completion_date: "2021/01/02",
-        },
-        {
-          id: 1,
-          site_id: 1,
-          user_id: 1,
-          user: {
-            id: 1,
-            avatar: require("@/assets/images/faces/1.jpg"),
-            first_name: "John",
-            middle_name: "John",
-            last_name: "John",
-            user_name: "John",
-            gender: 0,
-            dob: "1997-03-30",
-            email: "jhonwick_23@gmail.com",
-            phone: "+88012378478",
-          },
-          program_id: 1,
-          program: {
-            program_name: "Program Name - 10",
-            program_description: "Program Description 10",
-            instructor: "Instructor 10",
-            hours: "10",
-          },
-          program_task_id: 1,
-          program_task: {
-            id: 1,
-            site_id: 1,
-            program_id: 1,
-            program: {
-              id: 1,
-              program_name: "Program 1",
-              program_description: "Desc",
-              instructor: "inst",
-              hours: "3 hrs",
-            },
-            program_post_id: 2,
-            program_post: {
-              id: 2,
-              serial_no: 12345,
-              post_id: 5,
-            },
-            serial_no: 12345,
-            task: "John",
-            objective: "John",
-            material: "John",
-            process: "process 1",
-            no_of_contracts: 5,
-            time_required: 30,
-            total_marks: 30,
-            passing_marks: 30,
-          },
-          marks_obtained: 100,
-          is_completed: 0,
-          completion_date: "2021/01/02",
-        },
-        {
-          id: 1,
-          site_id: 1,
-          user_id: 1,
-          user: {
-            id: 1,
-            avatar: require("@/assets/images/faces/1.jpg"),
-            first_name: "John",
-            middle_name: "John",
-            last_name: "John",
-            user_name: "John",
-            gender: 0,
-            dob: "1997-03-30",
-            email: "jhonwick_23@gmail.com",
-            phone: "+88012378478",
-          },
-          program_id: 1,
-          program: {
-            program_name: "Program Name - 10",
-            program_description: "Program Description 10",
-            instructor: "Instructor 10",
-            hours: "10",
-          },
-          program_task_id: 1,
-          program_task: {
-            id: 1,
-            site_id: 1,
-            program_id: 1,
-            program: {
-              id: 1,
-              program_name: "Program 1",
-              program_description: "Desc",
-              instructor: "inst",
-              hours: "3 hrs",
-            },
-            program_post_id: 2,
-            program_post: {
-              id: 2,
-              serial_no: 12345,
-              post_id: 5,
-            },
-            serial_no: 12345,
-            task: "John",
-            objective: "John",
-            material: "John",
-            process: "process 1",
-            no_of_contracts: 5,
-            time_required: 30,
-            total_marks: 30,
-            passing_marks: 30,
-          },
-          marks_obtained: 100,
-          is_completed: 0,
-          completion_date: "2021/01/02",
-        },
-        {
-          id: 1,
-          site_id: 1,
-          user_id: 1,
-          user: {
-            id: 1,
-            avatar: require("@/assets/images/faces/1.jpg"),
-            first_name: "John",
-            middle_name: "John",
-            last_name: "John",
-            user_name: "John",
-            gender: 0,
-            dob: "1997-03-30",
-            email: "jhonwick_23@gmail.com",
-            phone: "+88012378478",
-          },
-          program_id: 1,
-          program: {
-            program_name: "Program Name - 10",
-            program_description: "Program Description 10",
-            instructor: "Instructor 10",
-            hours: "10",
-          },
-          program_task_id: 1,
-          program_task: {
-            id: 1,
-            site_id: 1,
-            program_id: 1,
-            program: {
-              id: 1,
-              program_name: "Program 1",
-              program_description: "Desc",
-              instructor: "inst",
-              hours: "3 hrs",
-            },
-            program_post_id: 2,
-            program_post: {
-              id: 2,
-              serial_no: 12345,
-              post_id: 5,
-            },
-            serial_no: 12345,
-            task: "John",
-            objective: "John",
-            material: "John",
-            process: "process 1",
-            no_of_contracts: 5,
-            time_required: 30,
-            total_marks: 30,
-            passing_marks: 30,
-          },
-          marks_obtained: 100,
-          is_completed: 0,
-          completion_date: "2021/01/02",
-        },
-        {
-          id: 1,
-          site_id: 1,
-          user_id: 1,
-          user: {
-            id: 1,
-            avatar: require("@/assets/images/faces/1.jpg"),
-            first_name: "John",
-            middle_name: "John",
-            last_name: "John",
-            user_name: "John",
-            gender: 0,
-            dob: "1997-03-30",
-            email: "jhonwick_23@gmail.com",
-            phone: "+88012378478",
-          },
-          program_id: 1,
-          program: {
-            program_name: "Program Name - 10",
-            program_description: "Program Description 10",
-            instructor: "Instructor 10",
-            hours: "10",
-          },
-          program_task_id: 1,
-          program_task: {
-            id: 1,
-            site_id: 1,
-            program_id: 1,
-            program: {
-              id: 1,
-              program_name: "Program 1",
-              program_description: "Desc",
-              instructor: "inst",
-              hours: "3 hrs",
-            },
-            program_post_id: 2,
-            program_post: {
-              id: 2,
-              serial_no: 12345,
-              post_id: 5,
-            },
-            serial_no: 12345,
-            task: "John",
-            objective: "John",
-            material: "John",
-            process: "process 1",
-            no_of_contracts: 5,
-            time_required: 30,
-            total_marks: 30,
-            passing_marks: 30,
-          },
-          marks_obtained: 100,
-          is_completed: 0,
-          completion_date: "2021/01/02",
-        },
-        {
-          id: 1,
-          site_id: 1,
-          user_id: 1,
-          user: {
-            id: 1,
-            avatar: require("@/assets/images/faces/1.jpg"),
-            first_name: "John",
-            middle_name: "John",
-            last_name: "John",
-            user_name: "John",
-            gender: 0,
-            dob: "1997-03-30",
-            email: "jhonwick_23@gmail.com",
-            phone: "+88012378478",
-          },
-          program_id: 1,
-          program: {
-            program_name: "Program Name - 10",
-            program_description: "Program Description 10",
-            instructor: "Instructor 10",
-            hours: "10",
-          },
-          program_task_id: 1,
-          program_task: {
-            id: 1,
-            site_id: 1,
-            program_id: 1,
-            program: {
-              id: 1,
-              program_name: "Program 1",
-              program_description: "Desc",
-              instructor: "inst",
-              hours: "3 hrs",
-            },
-            program_post_id: 2,
-            program_post: {
-              id: 2,
-              serial_no: 12345,
-              post_id: 5,
-            },
-            serial_no: 12345,
-            task: "John",
-            objective: "John",
-            material: "John",
-            process: "process 1",
-            no_of_contracts: 5,
-            time_required: 30,
-            total_marks: 30,
-            passing_marks: 30,
-          },
-          marks_obtained: 100,
-          is_completed: 0,
-          completion_date: "2021/01/02",
-        },
-        {
-          id: 1,
-          site_id: 1,
-          user_id: 1,
-          user: {
-            id: 1,
-            avatar: require("@/assets/images/faces/1.jpg"),
-            first_name: "John",
-            middle_name: "John",
-            last_name: "John",
-            user_name: "John",
-            gender: 0,
-            dob: "1997-03-30",
-            email: "jhonwick_23@gmail.com",
-            phone: "+88012378478",
-          },
-          program_id: 1,
-          program: {
-            program_name: "Program Name - 10",
-            program_description: "Program Description 10",
-            instructor: "Instructor 10",
-            hours: "10",
-          },
-          program_task_id: 1,
-          program_task: {
-            id: 1,
-            site_id: 1,
-            program_id: 1,
-            program: {
-              id: 1,
-              program_name: "Program 1",
-              program_description: "Desc",
-              instructor: "inst",
-              hours: "3 hrs",
-            },
-            program_post_id: 2,
-            program_post: {
-              id: 2,
-              serial_no: 12345,
-              post_id: 5,
-            },
-            serial_no: 12345,
-            task: "John",
-            objective: "John",
-            material: "John",
-            process: "process 1",
-            no_of_contracts: 5,
-            time_required: 30,
-            total_marks: 30,
-            passing_marks: 30,
-          },
-          marks_obtained: 100,
-          is_completed: 0,
-          completion_date: "2021/01/02",
-        },
-        {
-          id: 1,
-          site_id: 1,
-          user_id: 1,
-          user: {
-            id: 1,
-            avatar: require("@/assets/images/faces/1.jpg"),
-            first_name: "John",
-            middle_name: "John",
-            last_name: "John",
-            user_name: "John",
-            gender: 0,
-            dob: "1997-03-30",
-            email: "jhonwick_23@gmail.com",
-            phone: "+88012378478",
-          },
-          program_id: 1,
-          program: {
-            program_name: "Program Name - 10",
-            program_description: "Program Description 10",
-            instructor: "Instructor 10",
-            hours: "10",
-          },
-          program_task_id: 1,
-          program_task: {
-            id: 1,
-            site_id: 1,
-            program_id: 1,
-            program: {
-              id: 1,
-              program_name: "Program 1",
-              program_description: "Desc",
-              instructor: "inst",
-              hours: "3 hrs",
-            },
-            program_post_id: 2,
-            program_post: {
-              id: 2,
-              serial_no: 12345,
-              post_id: 5,
-            },
-            serial_no: 12345,
-            task: "John",
-            objective: "John",
-            material: "John",
-            process: "process 1",
-            no_of_contracts: 5,
-            time_required: 30,
-            total_marks: 30,
-            passing_marks: 30,
-          },
-          marks_obtained: 100,
-          is_completed: 0,
-          completion_date: "2021/01/02",
-        },
-      ],
+      user: {},
+      program: {},
+      user_program_tasks: [],
     };
   },
-
+  mounted() {
+    this.getData();
+  },
   methods: {
-    addFile() {
-      console.log("hello");
+    async getData(page = 1) {
+      this.isLoading = true;
+
+      let user_program = await axios.get(
+        `/user_programs/${this.$route.params.user_program_id}`
+      );
+      this.user_program = user_program.data.data;
+
+      let user = await axios.get(`/users/${this.user_program.user_id}`);
+      this.user = user.data.data;
+
+      let program = await axios.get(
+        `/programs/${this.user_program.program_id}`
+      );
+      this.program = program.data.data;
+
+      let user_program_tasks = await axios.get(
+        // `/users/${this.user_program.user_id}/programs/${this.user_program.program_id}/user_program_tasks`
+        `/user_programs/${this.user_program.id}/user_program_tasks`
+      );
+      this.user_program_tasks = user_program_tasks.data.data;
+
+      // this.count = user_program_tasks.data.count;
+      this.serialNoStarting = (page - 1) * this.rowsPerPage;
+      this.isLoading = false;
     },
   },
 };
 </script>
-<style >
-</style>
+<style></style>

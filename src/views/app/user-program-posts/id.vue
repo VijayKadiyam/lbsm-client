@@ -4,7 +4,7 @@
       :page="'Update User Program Post'"
       :folder="'User Program Posts'"
     />
-     <!-- User & Program Details card -->
+    <!-- User & Program Details card -->
     <b-row>
       <b-col md="6">
         <b-card class="mb-4">
@@ -15,7 +15,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user_program_post[0].user.user_name }}
+                  {{ user.user_name }}
                 </p>
               </b-col>
             </b-row>
@@ -25,7 +25,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user_program_post[0].user.first_name }}
+                  {{ user.first_name }}
                 </p>
               </b-col>
             </b-row>
@@ -35,7 +35,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user_program_post[0].user.email }}
+                  {{ user.email }}
                 </p>
               </b-col>
             </b-row>
@@ -45,7 +45,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user_program_post[0].user.phone }}
+                  {{ user.phone }}
                 </p>
               </b-col>
             </b-row>
@@ -61,7 +61,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-20 line-height-1 mb-0">
-                  {{ user_program_post[0].program.program_name }}
+                  {{ program.program_name }}
                 </p>
               </b-col>
             </b-row>
@@ -71,7 +71,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-20 line-height-1 mb-0">
-                  {{ user_program_post[0].program.program_description }}
+                  {{ program.program_description }}
                 </p>
               </b-col>
             </b-row>
@@ -81,7 +81,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-20 line-height-1 mb-0">
-                  {{ user_program_post[0].program.instructor }}
+                  {{ program.instructor }}
                 </p>
               </b-col>
             </b-row>
@@ -91,7 +91,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-20 line-height-1 mb-0">
-                  {{ user_program_post[0].program.hours }}
+                  {{ program.hours }}
                 </p>
               </b-col>
             </b-row>
@@ -108,12 +108,13 @@
               <b-col md="6">
                 <b-form-group label="User">
                   <vue-tags-input
-                    v-model="user"
-                    :tags="users"
+                    v-model="searchUser"
+                    :tags="selectedUser"
+                    :max-tags="1"
                     class="tag-custom text-15 mb-2"
                     :autocomplete-items="filteredUserItems"
                     :add-only-from-autocomplete="true"
-                    @tags-changed="(newTags) => (users = newTags)"
+                    @tags-changed="(newTags) => (selectedUser = newTags)"
                     placeholder="Type User Name"
                   />
                 </b-form-group>
@@ -121,12 +122,13 @@
               <b-col md="6">
                 <b-form-group label="Program">
                   <vue-tags-input
-                    v-model="program"
-                    :tags="programs"
+                    v-model="searchProgram"
+                    :tags="selectedProgram"
+                    :max-tags="1"
                     class="tag-custom text-15 mb-2"
                     :autocomplete-items="filteredProgramItems"
                     :add-only-from-autocomplete="true"
-                    @tags-changed="(newTags) => (programs = newTags)"
+                    @tags-changed="(newTags) => (selectedProgram = newTags)"
                     placeholder="Type Program Name"
                   />
                 </b-form-group>
@@ -136,12 +138,13 @@
               <b-col md="6">
                 <b-form-group label="Program Post">
                   <vue-tags-input
-                    v-model="program_post"
-                    :tags="program_posts"
+                    v-model="searchProgramPost"
+                    :tags="selectedProgramPost"
+                    :max-tags="1"
                     class="tag-custom text-15 mb-2"
                     :autocomplete-items="filteredProgramPostItems"
                     :add-only-from-autocomplete="true"
-                    @tags-changed="(newTags) => (program_posts = newTags)"
+                    @tags-changed="(newTags) => (selectedProgramPost = newTags)"
                     placeholder="Type Program Post Name"
                   />
                 </b-form-group>
@@ -150,14 +153,14 @@
                 <b-form-group label="Promotion Date">
                   <b-form-datepicker
                     id="promotion_date"
-                    v-model="promotion_date"
+                    v-model="$v.form.promotion_date.$model"
                     class="mb-2"
                   ></b-form-datepicker>
                   <b-alert
                     show
                     variant="danger"
                     class="error mt-1"
-                    v-if="!$v.promotion_date.required"
+                    v-if="!$v.form.promotion_date.required"
                     >Field is required</b-alert
                   >
                 </b-form-group>
@@ -168,7 +171,7 @@
                 <b-form-group label="Remarks">
                   <b-form-textarea
                     id="textarea"
-                    v-model="remarks"
+                    v-model="form.remarks"
                     placeholder="Remarks"
                     rows="3"
                     max-rows="6"
@@ -200,109 +203,34 @@
 </template>
 
 <script>
+import axios from "axios";
 import { required, minLength } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Form Component",
+    title: "Update User Program Post",
   },
   data() {
     return {
-      promotion_date: "",
+      form: {
+        promotion_date: "",
+      },
+      user: {},
+      program: {},
+      program_post: {},
       submitStatus: null,
       //   auto complete
-      user: "",
-      users: [],
-      userItems: [
-        {
-          id: 1,
-          text: "John",
-        },
-        {
-          id: 2,
-          text: "Jane",
-        },
-        {
-          id: 3,
-          text: "Susan",
-        },
-        {
-          id: 4,
-          text: "Chris",
-        },
-        {
-          id: 5,
-          text: "Dan",
-        },
-        {
-          id: 6,
-          text: "John",
-        },
-        {
-          id: 1,
-          text: "John",
-        },
-        {
-          id: 2,
-          text: "Jane",
-        },
-        {
-          id: 3,
-          text: "Susan",
-        },
-        {
-          id: 4,
-          text: "Chris",
-        },
-        {
-          id: 5,
-          text: "Dan",
-        },
-        {
-          id: 6,
-          text: "John",
-        },
-      ],
+      searchUser: "",
+      selectedUser: [],
+      userItems: [],
 
-      program: "",
-      programs: [],
-      programItems: [
-        {
-          text: "Program Name 1",
-        },
-        {
-          text: "Program Name 2",
-        },
-        {
-          text: "Program Name 3",
-        },
-        {
-          text: "Program Name 4",
-        },
-        {
-          text: "Program Name 5",
-        },
-      ],
+      searchProgram: "",
+      selectedProgram: [],
+      programItems: [],
 
-      program_post: "",
-      program_posts: [],
-      program_postItems: [
-        {
-          text: "Program Post Name 1",
-        },
-        {
-          text: "Program Post Name 2",
-        },
-        {
-          text: "Program Post Name 3",
-        },
-        {
-          text: "Program Post Name 4",
-        },
-        {
-          text: "Program Post Name 5",
-        },
-      ],
+      searchProgramPost: "",
+      selectedProgramPost: [],
+      program_postItems: [],
 
       userdata: [
         {
@@ -512,102 +440,134 @@ export default {
           hours: "10",
         },
       ],
-      user_program_post: [
-        {
-          id: 1,
-          site_id: 1,
-          user_id: 1,
-          user: {
-            id: 1,
-            avatar: require("@/assets/images/faces/1.jpg"),
-            first_name: "John",
-            middle_name: "John",
-            last_name: "John",
-            user_name: "John",
-            gender: 0,
-            dob: "1997-03-30",
-            email: "jhonwick_23@gmail.com",
-            phone: "+88012378478",
-          },
-          program_id: 1,
-          program: {
-            program_name: "Program Name - 1",
-            program_description: "Program Description 1",
-            instructor: "Instructor 1",
-            hours: "1",
-          },
-          program_post_id: 2,
-          program_post: {
-            id: 2,
-            serial_no: 12345,
-            post_id: 5,
-            post: {
-              id: 5,
-              site_id: 1,
-              value_id: 2,
-              description: "Engineer",
-              code: "Engineer",
-              is_active: true,
-            },
-          },
-          promotion_date: "2021-03-16",
-          remarks: "Remarks",
-        },
-      ],
+      // user_program_post:[]
     };
+  },
+  watch: {
+    selectedUser: "searchSelectedUser",
+    selectedProgram: "searchSelectedProgram",
   },
   computed: {
     filteredUserItems() {
       return this.userItems.filter((u) => {
-        return u.text.toLowerCase().indexOf(this.user.toLowerCase()) !== -1;
+        return (
+          u.text.toLowerCase().indexOf(this.searchUser.toLowerCase()) !== -1
+        );
       });
     },
     filteredProgramItems() {
       return this.programItems.filter((p) => {
-        return p.text.toLowerCase().indexOf(this.program.toLowerCase()) !== -1;
+        return (
+          p.text.toLowerCase().indexOf(this.searchProgram.toLowerCase()) !== -1
+        );
       });
     },
     filteredProgramPostItems() {
-      return this.program_postItems.filter((pp) => {
+      // For the Time Being
+      return this.programItems.filter((pp) => {
         return (
-          pp.text.toLowerCase().indexOf(this.program_post.toLowerCase()) !== -1
+          pp.text
+            .toLowerCase()
+            .indexOf(this.searchProgramPost.toLowerCase()) !== -1
         );
       });
     },
   },
   validations: {
-    promotion_date: {
-      required,
+    form: {
+      promotion_date: {
+        required,
+      },
     },
-
-    // add input
-    // peopleAdd: {
-    //   required,
-    //   minLength: minLength(3),
-    //   $each: {
-    //     multipleName: {
-    //       required,
-    //       minLength: minLength(5)
-    //     }
-    //   }
-    // },
-    // validationsGroup:['peopleAdd.multipleName']
+  },
+  mounted() {
+    this.form.site_id = this.site.id;
+    this.getMasters();
+    this.getData();
   },
 
   methods: {
-    //   validate form
-    submit() {
-      console.log("submit!");
+    async getMasters() {
+      this.isLoading = true;
+      let masters = await axios.get("user_program_posts/masters");
+      masters = masters.data;
+      // Programs
+      masters.programs.forEach((program) => {
+        this.programItems.push({
+          id: program.id,
+          text: program.program_name,
+        });
+      });
+      // Program Post
+      masters.program_posts.forEach((programpost) => {
+        this.program_postItems.push({
+          id: programpost.id,
+          text: programpost.serial_no,
+        });
+      });
+      // User
+      masters.users.forEach((user) => {
+        this.userItems.push({
+          id: user.id,
+          text: user.user_name,
+        });
+      });
+      this.isLoading = false;
+    },
+    async getData() {
+      this.isLoading = true;
+      let form = await axios.get(
+        `/user_program_posts/${this.$route.params.id}`
+      );
+      this.form = form.data.data;
 
+      this.user = form.data.data.user;
+      this.selectedUser.push({
+        id: this.user.id,
+        text: this.user.user_name,
+      });
+
+      this.program = form.data.data.program;
+      this.selectedProgram.push({
+        id: this.program.id,
+        text: this.program.program_name,
+      });
+
+      this.program_post = form.data.data.program_post;
+      this.selectedProgramPost.push({
+        id: this.program.id,
+        text: this.program.program_name,
+      });
+      this.isLoading = false;
+    },
+    //   validate form
+    async submit() {
+      console.log("submit!");
+      this.form.user_id = this.selectedUser[0].id;
+      this.form.program_id = this.selectedProgram[0].id;
+      this.form.program_post_id = this.selectedProgramPost[0].id;
+      
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
       } else {
         // do your submit logic here
-        this.submitStatus = "PENDING";
-        setTimeout(() => {
+        try {
+          this.isLoading = true;
+          this.submitStatus = "PENDING";
+          await axios.patch(
+            `/user_program_posts/${this.$route.params.id}`,
+            this.form
+          );
+          this.isLoading = false;
           this.submitStatus = "OK";
-        }, 1000);
+
+          setTimeout(() => {
+            this.$router.push("/app/user-program-posts/");
+          }, 1000);
+        } catch (e) {
+          this.isLoading = false;
+        }
       }
     },
     makeToast(variant = null) {

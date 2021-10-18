@@ -15,7 +15,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ userdata[0].user_name }}
+                  {{ userdata.user_name }}
                 </p>
               </b-col>
             </b-row>
@@ -25,7 +25,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ userdata[0].first_name }}
+                  {{ userdata.first_name }}
                 </p>
               </b-col>
             </b-row>
@@ -35,7 +35,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ userdata[0].email }}
+                  {{ userdata.email }}
                 </p>
               </b-col>
             </b-row>
@@ -45,7 +45,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ userdata[0].phone }}
+                  {{ userdata.phone }}
                 </p>
               </b-col>
             </b-row>
@@ -61,7 +61,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-20 line-height-1 mb-0">
-                  {{ programdata[0].program_name }}
+                  {{ programdata.program_name }}
                 </p>
               </b-col>
             </b-row>
@@ -71,7 +71,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-20 line-height-1 mb-0">
-                  {{ programdata[0].program_description }}
+                  {{ programdata.program_description }}
                 </p>
               </b-col>
             </b-row>
@@ -81,7 +81,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-20 line-height-1 mb-0">
-                  {{ programdata[0].instructor }}
+                  {{ programdata.instructor }}
                 </p>
               </b-col>
             </b-row>
@@ -91,7 +91,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-20 line-height-1 mb-0">
-                  {{ programdata[0].hours }}
+                  {{ programdata.hours }}
                 </p>
               </b-col>
             </b-row>
@@ -108,12 +108,13 @@
               <b-col md="6">
                 <b-form-group label="User">
                   <vue-tags-input
-                    v-model="user"
-                    :tags="users"
+                    v-model="searchUser"
+                    :tags="selectedUser"
+                    :max-tags="1"
                     class="tag-custom text-15 mb-2"
                     :autocomplete-items="filteredUserItems"
                     :add-only-from-autocomplete="true"
-                    @tags-changed="(newTags) => (users = newTags)"
+                    @tags-changed="(newTags) => (selectedUser = newTags)"
                     placeholder="Type User Name"
                   />
                 </b-form-group>
@@ -121,12 +122,13 @@
               <b-col md="6">
                 <b-form-group label="Program">
                   <vue-tags-input
-                    v-model="program"
-                    :tags="programs"
+                    v-model="searchProgram"
+                    :tags="selectedProgram"
+                    :max-tags="1"
                     class="tag-custom text-15 mb-2"
                     :autocomplete-items="filteredProgramItems"
                     :add-only-from-autocomplete="true"
-                    @tags-changed="(newTags) => (programs = newTags)"
+                    @tags-changed="(newTags) => (selectedProgram = newTags)"
                     placeholder="Type Program Name"
                   />
                 </b-form-group>
@@ -136,12 +138,13 @@
               <b-col md="6">
                 <b-form-group label="Program Post">
                   <vue-tags-input
-                    v-model="program_post"
-                    :tags="program_posts"
+                    v-model="searchProgramPost"
+                    :tags="selectedProgramPost"
+                    :max-tags="1"
                     class="tag-custom text-15 mb-2"
                     :autocomplete-items="filteredProgramPostItems"
                     :add-only-from-autocomplete="true"
-                    @tags-changed="(newTags) => (program_posts = newTags)"
+                    @tags-changed="(newTags) => (selectedProgramPost = newTags)"
                     placeholder="Type Program Post Name"
                   />
                 </b-form-group>
@@ -150,14 +153,14 @@
                 <b-form-group label="Promotion Date">
                   <b-form-datepicker
                     id="promotion_date"
-                    v-model="promotion_date"
+                    v-model="$v.form.promotion_date.$model"
                     class="mb-2"
                   ></b-form-datepicker>
                   <b-alert
                     show
                     variant="danger"
                     class="error mt-1"
-                    v-if="!$v.promotion_date.required"
+                    v-if="!$v.form.promotion_date.required"
                     >Field is required</b-alert
                   >
                 </b-form-group>
@@ -168,7 +171,7 @@
                 <b-form-group label="Remarks">
                   <b-form-textarea
                     id="textarea"
-                    v-model="remarks"
+                    v-model="form.remarks"
                     placeholder="Remarks"
                     rows="3"
                     max-rows="6"
@@ -200,376 +203,165 @@
 </template>
 
 <script>
+import axios from "axios";
 import { required, minLength } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Form Component",
+    title: "Create User Program Post",
   },
   data() {
     return {
-      promotion_date: "",
+      form: {
+        promotion_date: "",
+      },
       submitStatus: null,
-      peopleAdd: [
-        {
-          multipleName: "Johnn",
-        },
-        {
-          multipleName: "",
-        },
-      ],
       //   auto complete
-      user: "",
-      users: [],
+      searchUser: "",
+      selectedUser: [],
+      userItems: [],
 
-      userItems: [
-        {
-          id: 1,
-          text: "John",
-        },
-        {
-          id: 2,
-          text: "Jane",
-        },
-        {
-          id: 3,
-          text: "Susan",
-        },
-        {
-          id: 4,
-          text: "Chris",
-        },
-        {
-          id: 5,
-          text: "Dan",
-        },
-        {
-          id: 6,
-          text: "John",
-        },
-        {
-          id: 1,
-          text: "John",
-        },
-        {
-          id: 2,
-          text: "Jane",
-        },
-        {
-          id: 3,
-          text: "Susan",
-        },
-        {
-          id: 4,
-          text: "Chris",
-        },
-        {
-          id: 5,
-          text: "Dan",
-        },
-        {
-          id: 6,
-          text: "John",
-        },
-      ],
-      program: "",
-      programs: [],
-      programItems: [
-        {
-          text: "Program Name 1",
-        },
-        {
-          text: "Program Name 2",
-        },
-        {
-          text: "Program Name 3",
-        },
-        {
-          text: "Program Name 4",
-        },
-        {
-          text: "Program Name 5",
-        },
-      ],
-      program_post: "",
-      program_posts: [],
-      program_postItems: [
-        {
-          text: "Program Post Name 1",
-        },
-        {
-          text: "Program Post Name 2",
-        },
-        {
-          text: "Program Post Name 3",
-        },
-        {
-          text: "Program Post Name 4",
-        },
-        {
-          text: "Program Post Name 5",
-        },
-      ],
-      userdata: [
-        {
-          id: 1,
-          avatar: require("@/assets/images/faces/1.jpg"),
-          first_name: "John",
-          middle_name: "John",
-          last_name: "John",
-          user_name: "John",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jhonwick_23@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 2,
-          avatar: require("@/assets/images/faces/3.jpg"),
-          first_name: "Jane",
-          middle_name: "Jane",
-          last_name: "Jane",
-          user_name: "Jane",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jameswann@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 3,
-          avatar: require("@/assets/images/faces/2.jpg"),
-          first_name: "Susan",
-          middle_name: "Susan",
-          last_name: "Susan",
-          user_name: "Susan",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jameswann@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 4,
-          avatar: require("@/assets/images/faces/1.jpg"),
-          first_name: "Chris",
-          middle_name: "Chris",
-          last_name: "Chris",
-          user_name: "Chris",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jhonwick_23@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 5,
-          avatar: require("@/assets/images/faces/4.jpg"),
-          first_name: "Dan",
-          middle_name: "Dan",
-          last_name: "Dan",
-          user_name: "Dan",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jhonwick_23@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 6,
-          avatar: require("@/assets/images/faces/5.jpg"),
-          first_name: "John",
-          middle_name: "John",
-          last_name: "John",
-          user_name: "John",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jameswann@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 1,
-          avatar: require("@/assets/images/faces/4.jpg"),
-          first_name: "John",
-          middle_name: "John",
-          last_name: "John",
-          user_name: "John",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "dan_brown@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 2,
-          avatar: require("@/assets/images/faces/3.jpg"),
-          first_name: "Jane",
-          middle_name: "Jane",
-          last_name: "Jane",
-          user_name: "Jane",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jameswann@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 3,
-          avatar: require("@/assets/images/faces/2.jpg"),
-          first_name: "Susan",
-          middle_name: "Susan",
-          last_name: "Susan",
-          user_name: "Susan",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "janeswann@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 4,
-          avatar: require("@/assets/images/faces/1.jpg"),
-          first_name: "Chris",
-          middle_name: "Chris",
-          last_name: "Chris",
-          user_name: "Chris",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jaasdameswann@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 5,
-          avatar: require("@/assets/images/faces/5.jpg"),
-          first_name: "Dan",
-          middle_name: "Dan",
-          last_name: "Dan",
-          user_name: "Dan",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "doomwaytne@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 6,
-          avatar: require("@/assets/images/faces/3.jpg"),
-          first_name: "John",
-          middle_name: "John",
-          last_name: "John",
-          user_name: "John",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "sidsacc@gmail.com",
-          phone: "+88012378478",
-        },
-      ],
-      programdata: [
-        {
-          program_name: "Program Name - 1",
-          program_description: "Program Description 1",
-          instructor: "Instructor 1",
-          hours: "1",
-        },
-        {
-          program_name: "Program Name - 2",
-          program_description: "Program Description 2",
-          instructor: "Instructor 2",
-          hours: "2",
-        },
-        {
-          program_name: "Program Name - 3",
-          program_description: "Program Description 3",
-          instructor: "Instructor 3",
-          hours: "3",
-        },
-        {
-          program_name: "Program Name - 4",
-          program_description: "Program Description 4",
-          instructor: "Instructor 4",
-          hours: "4",
-        },
-        {
-          program_name: "Program Name - 5",
-          program_description: "Program Description 5",
-          instructor: "Instructor 5",
-          hours: "5",
-        },
-        {
-          program_name: "Program Name - 6",
-          program_description: "Program Description 6",
-          instructor: "Instructor 6",
-          hours: "6",
-        },
-        {
-          program_name: "Program Name - 7",
-          program_description: "Program Description 7",
-          instructor: "Instructor 7",
-          hours: "7",
-        },
-        {
-          program_name: "Program Name - 8",
-          program_description: "Program Description 8",
-          instructor: "Instructor 8",
-          hours: "8",
-        },
-        {
-          program_name: "Program Name - 9",
-          program_description: "Program Description 9",
-          instructor: "Instructor 9",
-          hours: "9",
-        },
-        {
-          program_name: "Program Name - 10",
-          program_description: "Program Description 10",
-          instructor: "Instructor 10",
-          hours: "10",
-        },
-      ],
+      searchProgram: "",
+      selectedProgram: [],
+      programItems: [],
+
+      searchProgramPost: "",
+      selectedProgramPost: [],
+      program_postItems: [],
+
+      userdata: {
+        id: 1,
+        avatar: require("@/assets/images/faces/1.jpg"),
+        first_name: "John",
+        middle_name: "John",
+        last_name: "John",
+        user_name: "John",
+        gender: 0,
+        dob: "1997-03-30",
+        email: "jhonwick_23@gmail.com",
+        phone: "+88012378478",
+      },
+      programdata: {
+        program_name: "Program Name - 1",
+        program_description: "Program Description 1",
+        instructor: "Instructor 1",
+        hours: "1",
+      },
     };
+  },
+  watch: {
+    selectedUser: "searchSelectedUser",
+    selectedProgram: "searchSelectedProgram",
   },
   computed: {
     filteredUserItems() {
       return this.userItems.filter((u) => {
-        return u.text.toLowerCase().indexOf(this.user.toLowerCase()) !== -1;
+        return (
+          u.text.toLowerCase().indexOf(this.searchUser.toLowerCase()) !== -1
+        );
       });
     },
     filteredProgramItems() {
       return this.programItems.filter((p) => {
-        return p.text.toLowerCase().indexOf(this.program.toLowerCase()) !== -1;
+        return (
+          p.text.toLowerCase().indexOf(this.searchProgram.toLowerCase()) !== -1
+        );
       });
     },
     filteredProgramPostItems() {
-      return this.program_postItems.filter((pp) => {
-        return pp.text.toLowerCase().indexOf(this.program_post.toLowerCase()) !== -1;
+      // For the Time Being
+      return this.programItems.filter((pp) => {
+        return (
+          pp.text
+            .toLowerCase()
+            .indexOf(this.searchProgramPost.toLowerCase()) !== -1
+        );
       });
     },
   },
   validations: {
-    promotion_date: {
-      required,
+    form: {
+      promotion_date: {
+        required,
+      },
     },
-
-    // add input
-    // peopleAdd: {
-    //   required,
-    //   minLength: minLength(3),
-    //   $each: {
-    //     multipleName: {
-    //       required,
-    //       minLength: minLength(5)
-    //     }
-    //   }
-    // },
-    // validationsGroup:['peopleAdd.multipleName']
   },
 
+  mounted() {
+    this.form.site_id = this.site.id;
+    this.getMasters();
+  },
   methods: {
+    async getMasters() {
+      this.isLoading = true;
+      let masters = await axios.get("user_program_posts/masters");
+      masters = masters.data;
+      this.users = masters.users;
+      this.programs = masters.programs;
+      this.program_posts = masters.program_posts;
+      // User
+      this.users.forEach((user) => {
+        this.userItems.push({
+          id: user.id,
+          text: user.user_name,
+        });
+      });
+
+      // Programs
+      this.programs.forEach((program) => {
+        this.programItems.push({
+          id: program.id,
+          text: program.program_name,
+        });
+      });
+      // Program Post
+      this.program_posts.forEach((programpost) => {
+        this.program_postItems.push({
+          id: programpost.id,
+          text: programpost.serial_no,
+        });
+      });
+      this.isLoading = false;
+    },
+    async searchSelectedUser() {
+      if (this.selectedUser.length > 0) {
+        this.user_id = this.selectedUser[0].id;
+        this.userdata = this.users.find((sp) => sp.id == this.user_id);
+      }
+    },
+    async searchSelectedProgram() {
+      if (this.selectedProgram.length > 0) {
+        this.program_id = this.selectedProgram[0].id;
+        this.programdata = this.programs.find((sp) => sp.id == this.program_id);
+      }
+    },
     //   validate form
-    submit() {
+    async submit() {
       console.log("submit!");
+      this.form.user_id = this.selectedUser[0].id;
+      this.form.program_id = this.selectedProgram[0].id;
+      // this.form.program_post_id = this.selectedProgramPost[0].id;
+      this.form.program_post_id = 1;
 
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
       } else {
         // do your submit logic here
-        this.submitStatus = "PENDING";
-        setTimeout(() => {
+        try {
+          this.isLoading = true;
+          this.submitStatus = "PENDING";
+          console.log(this.form);
+          await axios.post("/user_program_posts", this.form);
+          this.isLoading = false;
           this.submitStatus = "OK";
-        }, 1000);
+
+          setTimeout(() => {
+            this.$router.push("/app/user-program-posts/");
+          }, 1000);
+        } catch (e) {
+          this.isLoading = false;
+        }
       }
     },
     makeToast(variant = null) {

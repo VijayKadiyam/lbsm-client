@@ -40,7 +40,7 @@
             <b-button
               variant="primary"
               class="btn-rounded d-none d-sm-block"
-              :to="'/app/user-program/' + props.row.id +'/user-program-tasks'"
+              :to="'/app/user-program/' + props.row.id + '/user-program-tasks'"
               ><i class="i-Eye text-white mr-2"> View Tasks</i>
             </b-button>
           </span>
@@ -93,7 +93,7 @@ export default {
           field: "button",
         },
       ],
-      searchingStatus:'',
+      searchingStatus: "",
       user_programs: [],
       //   auto complete
       searchUser: "",
@@ -120,11 +120,9 @@ export default {
   methods: {
     async getMasters() {
       this.isLoading = true;
-      let masters = await axios.get("user_program_posts/masters");
-      masters = masters.data;
-      this.users = masters.users;
-      this.programs = masters.programs;
-      this.program_posts = masters.program_posts;
+      let users = await axios.get(`users`);
+      this.users = users.data.data;
+
       // User
       this.users.forEach((user) => {
         this.userItems.push({
@@ -145,8 +143,7 @@ export default {
           `/user_programs?search=${this.user_Id}`
         );
         this.user_programs = user_programs.data.data;
-      }else{
-        
+      } else {
         this.user_programs = [];
       }
       this.searchingStatus = "";

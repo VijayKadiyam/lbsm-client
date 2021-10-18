@@ -11,12 +11,12 @@
           <b-form @submit.prevent="submit">
             <b-form-group label="Program Task">
               <vue-tags-input
-                v-model="searchTerm"
-                :tags="programs"
+                v-model="searchProgramTask"
+                :tags="selectedProgramTask"
                 class="tag-custom text-15 mb-2"
                 :autocomplete-items="filteredProgramTaskItems"
                 :add-only-from-autocomplete="true"
-                @tags-changed="(newTags) => (programs = newTags)"
+                @tags-changed="(newTags) => (selectedProgramTask = newTags)"
                 placeholder="Type Program Task Name"
               />
             </b-form-group>
@@ -91,7 +91,6 @@
   </div>
 </template>
 
-
 <script>
 import axios from "axios";
 import { numeric, required } from "vuelidate/lib/validators";
@@ -111,32 +110,18 @@ export default {
         completion_date: "",
       },
       submitStatus: null,
-      program_task: "",
-      program_tasks: [],
-      program_taskItems: [
-        {
-          text: "Program Name 1",
-        },
-        {
-          text: "Program Name 2",
-        },
-        {
-          text: "Program Name 3",
-        },
-        {
-          text: "Program Name 4",
-        },
-        {
-          text: "Program Name 5",
-        },
-      ],
+      searchProgramTask: "",
+      selectedProgramTask: [],
+      program_taskItems: [],
     };
   },
   computed: {
     filteredProgramTaskItems() {
       return this.program_taskItems.filter((pt) => {
         return (
-          pt.text.toLowerCase().indexOf(this.program_task.toLowerCase()) !== -1
+          pt.text
+            .toLowerCase()
+            .indexOf(this.searchProgramTask.toLowerCase()) !== -1
         );
       });
     },
@@ -153,14 +138,25 @@ export default {
     },
   },
   mounted() {
+    this.form.user_program_id = this.$route.params.user_program_id;
+    this.form.site_id = this.site.id;
     this.getData();
   },
   methods: {
     async getData() {
       this.isLoading = true;
-      // let form = await axios.get(`user_programs/${this.$route.params.id}/user_program_tasks`);
-      let form = await axios.get(`/user_program_tasks/${this.$route.params.id}`);
+      let form = await axios.get(
+        `user_programs/${this.$route.params.user_program_id}/user_program_tasks/${this.$route.params.id}`
+      );
+      // let form = await axios.get(`/user_program_tasks/${this.$route.params.id}`);
       this.form = form.data.data;
+      this.user = this.form.user;
+      this.program = this.form.program;
+      this.program_task = this.form.program_task;
+      this.selectedProgramTask.push({
+        id: this.program_task.id,
+        text: this.program_task.task,
+      });
       this.isLoading = false;
     },
     //   validate form
@@ -174,7 +170,10 @@ export default {
         try {
           this.submitStatus = "PENDING";
           this.isLoading = true;
-          await axios.patch(`user_programs/${this.form.id}/user_program_tasks/${this.$route.params.id}`, this.form);
+          await axios.patch(
+            `user_programs/${this.form.id}/user_program_tasks/${this.$route.params.id}`,
+            this.form
+          );
           this.submitStatus = "OK";
           setTimeout(() => {
             this.$router.push("/app/sites/");

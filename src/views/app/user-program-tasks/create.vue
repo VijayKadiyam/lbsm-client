@@ -11,12 +11,12 @@
           <b-form @submit.prevent="submit">
             <b-form-group label="Program Task">
               <vue-tags-input
-                v-model="searchTerm"
-                :tags="programs"
+                v-model="searchProgramTask"
+                :tags="selectedProgramTask"
                 class="tag-custom text-15 mb-2"
                 :autocomplete-items="filteredProgramTaskItems"
                 :add-only-from-autocomplete="true"
-                @tags-changed="(newTags) => (programs = newTags)"
+                @tags-changed="(newTags) => (selectedProgramTask = newTags)"
                 placeholder="Type Program Task Name"
               />
             </b-form-group>
@@ -60,9 +60,11 @@
             </b-form-group>
             <b-form-group label="Is Completed">
               <label class="switch switch-success mr-3">
-                <input type="checkbox" checked="checkbox" v-model="form.is_completed" /><span
-                  class="slider"
-                ></span>
+                <input
+                  type="checkbox"
+                  checked="checkbox"
+                  v-model="form.is_completed"
+                /><span class="slider"></span>
               </label>
             </b-form-group>
 
@@ -89,7 +91,6 @@
   </div>
 </template>
 
-
 <script>
 import axios from "axios";
 import { numeric, required } from "vuelidate/lib/validators";
@@ -102,40 +103,26 @@ export default {
     return {
       form: {
         user_id: 1,
-        program_id : 1,
+        program_id: 1,
         program_task_id: 1,
         marks_obtained: "",
         is_completed: "",
         completion_date: "",
       },
       submitStatus: null,
-      searchTerm: "",
-      programs:[],
+      searchProgramTask: "",
+      selectedProgramTask: [],
+      program_taskItems: [],
       user_program_task: [],
-      programItems: [
-        {
-          text: "Program Name 1",
-        },
-        {
-          text: "Program Name 2",
-        },
-        {
-          text: "Program Name 3",
-        },
-        {
-          text: "Program Name 4",
-        },
-        {
-          text: "Program Name 5",
-        },
-      ],
     };
   },
   computed: {
     filteredProgramTaskItems() {
-      return this.programItems.filter((pt) => {
+      return this.program_taskItems.filter((pt) => {
         return (
-          pt.text.toLowerCase().indexOf(this.searchTerm.toLowerCase()) !== -1
+          pt.text
+            .toLowerCase()
+            .indexOf(this.searchProgramTask.toLowerCase()) !== -1
         );
       });
     },
@@ -151,28 +138,42 @@ export default {
       },
     },
   },
-   mounted() {
+  mounted() {
+    this.form.site_id = this.site.id;
     this.getMasters();
   },
-watch: {
-    programs: "search",
-  },
   methods: {
-     async getMasters() {
-      let masters = await axios.get("program_tasks");
-      this.masters = masters.data.data
-      // masters = masters.data.data;
-      console.log(masters);
-      this.masters.forEach((programTask) => {
-        this.programTaskItems.push({
+    async getMasters() {
+      let user_program = await axios.get(
+        `/user_programs/${this.$route.params.user_program_id}`
+      );
+      this.user_program = user_program.data.data;
+
+      let user = await axios.get(`/users/${this.user_program.user_id}`);
+      this.user = user.data.data;
+
+      let program = await axios.get(
+        `/programs/${this.user_program.program_id}`
+      );
+      this.program = program.data.data;
+
+      let program_tasks = await axios.get(
+        `programs/${this.user_program.program_id}/program_tasks`
+      );
+      this.program_tasks = program_tasks.data.data;
+      this.program_tasks.forEach((programTask) => {
+        this.program_taskItems.push({
           id: programTask.id,
-          text: programTask.name,
+          text: programTask.task,
         });
       });
     },
     //   validate form
     async submit() {
       console.log("submit!");
+      this.form.user_id = this.user_program.user_id;
+      this.form.program_id = this.user_program.program_id;
+      this.form.program_task_id = this.selectedProgramTask[0].id;
 
       this.$v.$touch();
       if (this.$v.$invalid) {
@@ -180,19 +181,22 @@ watch: {
       } else {
         try {
           this.isLoading = true;
-          let user_program_task = await axios.post("/user_program_tasks", this.form);
-          this.user_program_task =user_program_task.data.data
+          console.log(this.form);
+          let user_program_task = await axios.post(
+            `user_programs/${this.user_program.id}/user_program_tasks`,
+            this.form
+          );
           this.isLoading = false;
+          this.submitStatus = "OK";
+
+          setTimeout(() => {
+            this.$router.push(
+              `/app/user-program/${this.$route.params.user_program_id}/user-program-tasks/`
+            );
+          }, 1000);
         } catch (e) {
           this.isLoading = false;
         }
-        this.submitStatus = "PENDING";
-        setTimeout(() => {
-          // this.$router.push(
-          //     `/app/programs/${this.$route.params.program_id}/program-tasks/`
-          //   );
-          this.submitStatus = "OK";
-        }, 1000);
       }
     },
     makeToast(variant = null) {

@@ -1,10 +1,10 @@
 <template>
   <div class="main-content">
-    <breadcumb :page="'Create Site'" :folder="'Sites'" />
+    <breadcumb :page="'Create User'" :folder="'Users'" />
 
     <b-row>
       <b-col md="12">
-        <b-card>
+        <b-card title="User">
           <b-form @submit.prevent="submit">
             <b-row>
               <b-col md="6">
@@ -76,9 +76,11 @@
                     <b-col md="8">
                       <span>Male</span>
                       <label class="switch switch-success mr-3 ml-3">
-                        <input type="checkbox" checked="checkbox" v-model="form.gender" /><span
-                          class="slider"
-                        ></span>
+                        <input
+                          type="checkbox"
+                          checked="checkbox"
+                          v-model="form.gender"
+                        /><span class="slider"></span>
                       </label>
                       <span>Female</span>
                     </b-col>
@@ -126,7 +128,12 @@
               </b-col>
               <b-col md="6">
                 <b-form-group label="Image">
-                  <b-form-file id="file-default" accept="image/*"></b-form-file>
+                  <b-form-file
+                    id="file-default"
+                    name="imagepath"
+                    ref="file"
+                    accept="image/*"
+                  ></b-form-file>
                 </b-form-group>
               </b-col>
             </b-row>
@@ -168,7 +175,7 @@ import {
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Form Component",
+    title: "User Create",
   },
   data() {
     return {
@@ -179,7 +186,7 @@ export default {
         user_name: "",
         dob: "",
         email: "",
-        gender: "",
+        gender: 0,
         active: 1,
         role_id: 3,
       },
@@ -227,17 +234,34 @@ export default {
       } else {
         try {
           this.isLoading = true;
-          await axios.post("/users", this.form);
+          this.current_user = await axios.post("/users", this.form);
+          await this.handleFileUpload();
           this.isLoading = false;
         } catch (e) {
           this.isLoading = false;
         }
         this.submitStatus = "PENDING";
         setTimeout(() => {
-          this.$router.push('/app/users')
+          this.$router.push("/app/users");
           this.submitStatus = "OK";
         }, 1000);
       }
+    },
+    async handleFileUpload() {
+      let attachment = this.$refs.file?.files[0];
+      const userid = this.current_user.data.data.id;
+      let formData = new FormData();
+      formData.append("userid", userid);
+      formData.append("imagepath", attachment);
+      await axios
+        .post("upload_user_image", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .catch(function () {
+          console.log("FAILURE!!");
+        });
     },
     makeToast(variant = null) {
       this.$bvToast.toast("Please fill the form correctly.", {
@@ -258,7 +282,6 @@ export default {
     inputSubmit() {
       // this.save();
     },
-    
   },
 };
 </script>

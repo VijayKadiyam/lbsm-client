@@ -4,7 +4,7 @@
 
     <b-row class="justify-content-md-center">
       <b-col md="6">
-        <b-card title="Validate Form">
+        <b-card title="Site">
           <b-form @submit.prevent="submit">
             <b-form-group label="Name">
               <b-form-input

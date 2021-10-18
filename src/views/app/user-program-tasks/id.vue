@@ -1,6 +1,9 @@
 <template>
   <div class="main-content">
-    <breadcumb :page="'Update User Program Task'" :folder="'User Program Tasks'" />
+    <breadcumb
+      :page="'Update User Program Task'"
+      :folder="'User Program Tasks'"
+    />
 
     <b-row class="justify-content-md-center">
       <b-col md="6">
@@ -8,12 +11,12 @@
           <b-form @submit.prevent="submit">
             <b-form-group label="Program Task">
               <vue-tags-input
-                v-model="program_task"
-                :tags="program_tasks"
+                v-model="searchTerm"
+                :tags="programs"
                 class="tag-custom text-15 mb-2"
                 :autocomplete-items="filteredProgramTaskItems"
                 :add-only-from-autocomplete="true"
-                @tags-changed="(newTags) => (program_tasks = newTags)"
+                @tags-changed="(newTags) => (programs = newTags)"
                 placeholder="Type Program Task Name"
               />
             </b-form-group>
@@ -22,28 +25,28 @@
                 class="mb-2"
                 label="Marks Obtained"
                 placeholder="Enter Marks Obtained"
-                v-model.trim="$v.marks_obtained.$model"
+                v-model.trim="$v.form.marks_obtained.$model"
               >
               </b-form-input>
               <b-alert
                 show
                 variant="danger"
                 class="error mt-1"
-                v-if="!$v.marks_obtained.required"
+                v-if="!$v.form.marks_obtained.required"
                 >Field is required</b-alert
               >
               <b-alert
                 show
                 variant="danger"
                 class="error mt-1"
-                v-if="!$v.marks_obtained.numeric"
+                v-if="!$v.form.marks_obtained.numeric"
                 >Numeric Values Only</b-alert
               >
             </b-form-group>
             <b-form-group label="Completion Date">
               <b-form-datepicker
                 id="dob"
-                v-model.trim="completion_date"
+                v-model.trim="$v.form.completion_date.$model"
                 class="mb-2"
                 placeholder="Completion Date"
               ></b-form-datepicker>
@@ -51,15 +54,17 @@
                 show
                 variant="danger"
                 class="error mt-1"
-                v-if="!$v.completion_date.required"
+                v-if="!$v.form.completion_date.required"
                 >Field is required</b-alert
               >
             </b-form-group>
             <b-form-group label="Is Completed">
               <label class="switch switch-success mr-3">
-                <input type="checkbox" checked="checkbox" /><span
-                  class="slider"
-                ></span>
+                <input
+                  type="checkbox"
+                  checked="checkbox"
+                  v-model="form.is_completed"
+                /><span class="slider"></span>
               </label>
             </b-form-group>
 
@@ -88,6 +93,7 @@
 
 
 <script>
+import axios from "axios";
 import { numeric, required } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
@@ -96,9 +102,14 @@ export default {
   },
   data() {
     return {
-      marks_obtained: "",
-      is_completed: "",
-      completion_date: "",
+      form: {
+        user_id: 1,
+        program_id: 1,
+        program_task_id: 1,
+        marks_obtained: "",
+        is_completed: "",
+        completion_date: "",
+      },
       submitStatus: null,
       program_task: "",
       program_tasks: [],
@@ -131,29 +142,48 @@ export default {
     },
   },
   validations: {
-    marks_obtained: {
-      required,
-      numeric,
-    },
-    completion_date: {
-      required,
+    form: {
+      marks_obtained: {
+        required,
+        numeric,
+      },
+      completion_date: {
+        required,
+      },
     },
   },
-
+  mounted() {
+    this.getData();
+  },
   methods: {
+    async getData() {
+      this.isLoading = true;
+      // let form = await axios.get(`user_programs/${this.$route.params.id}/user_program_tasks`);
+      let form = await axios.get(`/user_program_tasks/${this.$route.params.id}`);
+      this.form = form.data.data;
+      this.isLoading = false;
+    },
     //   validate form
-    submit() {
+    async submit() {
       console.log("submit!");
 
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
       } else {
-        // do your submit logic here
-        this.submitStatus = "PENDING";
-        setTimeout(() => {
+        try {
+          this.submitStatus = "PENDING";
+          this.isLoading = true;
+          await axios.patch(`user_programs/${this.form.id}/user_program_tasks/${this.$route.params.id}`, this.form);
           this.submitStatus = "OK";
-        }, 1000);
+          setTimeout(() => {
+            this.$router.push("/app/sites/");
+          }, 1000);
+          this.isLoading = false;
+        } catch (e) {
+          this.isLoading = false;
+          this.submitStatus = "ERROR";
+        }
       }
     },
     makeToast(variant = null) {

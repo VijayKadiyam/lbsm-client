@@ -9,25 +9,25 @@
           <b-col md="3">
             <p class="text-muted mt-2 mb-0">Program Name</p>
             <p class="text-primary text-24 line-height-1 mb-2">
-              {{ program_tasks[0].program.program_name }}
+              {{ program.program_name }}
             </p>
           </b-col>
           <b-col md="3">
             <p class="text-muted mt-2 mb-0">Program Description</p>
             <p class="text-primary text-24 line-height-1 mb-2">
-              {{ program_tasks[0].program.program_description }}
+              {{ program.program_description }}
             </p>
           </b-col>
           <b-col md="3">
             <p class="text-muted mt-2 mb-0">Instructor</p>
             <p class="text-primary text-24 line-height-1 mb-2">
-              {{ program_tasks[0].program.instructor }}
+              {{ program.instructor }}
             </p>
           </b-col>
           <b-col md="3">
             <p class="text-muted mt-2 mb-0">Hours</p>
             <p class="text-primary text-24 line-height-1 mb-2">
-              {{ program_tasks[0].program.hours }}
+              {{ program.hours }}
             </p>
           </b-col>
         </b-row>
@@ -55,7 +55,7 @@
             class="btn-rounded d-none d-sm-block"
             :to="
               '/app/programs/' +
-                program_tasks[0].program_id +
+                program.id +
                 '/program-tasks/create'
             "
             ><i class="i-Add-User text-white mr-2"> </i>Add Program Task
@@ -141,6 +141,7 @@ export default {
         },
       ],
       program_tasks: [],
+      program:{},
     };
   },
   mounted() {
@@ -153,6 +154,11 @@ export default {
         `/programs/${this.$route.params.program_id}/program_tasks`
       );
       this.program_tasks = program_tasks.data.data;
+
+      let program = await axios.get(
+        `/programs/${this.$route.params.program_id}`
+      );
+      this.program = program.data.data;
       // this.count = program_tasks.data.count;
       this.serialNoStarting = (page - 1) * this.rowsPerPage;
       this.isLoading = false;

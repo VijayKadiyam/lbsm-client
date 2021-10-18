@@ -8,15 +8,16 @@
           <b-row>
             <b-col md="9">
               <vue-tags-input
-                v-model="program"
-                :tags="programs"
+                v-model="searchTerm"
+                :tags="selectedProgram"
                 :max-tags="1"
                 class="tag-custom text-15"
                 :add-only-from-autocomplete="true"
                 :autocomplete-items="filteredProgramItems"
-                @tags-changed="(newTags) => (programs = newTags)"
+                @tags-changed="(newTags) => (selectedProgram = newTags)"
                 placeholder="Type Program Name"
               />
+              {{ searchingStatus }}
             </b-col>
             <b-col md="3">
               <b-button
@@ -25,6 +26,7 @@
                 @click="save()"
                 >Save
               </b-button>
+              {{ savingStatus }}
             </b-col>
           </b-row>
         </b-card>
@@ -43,14 +45,13 @@
           mode: 'records',
         }"
         styleClass="tableOne vgt-table"
-        :rows="rows"
-        foot-clone
+        :rows="programPosts"
       >
         <div slot="table-actions-bottom" class="mb-1 mr-2 mt-3 pull-right">
           <b-button
             variant="primary"
             class="btn-rounded d-none d-sm-block"
-            @click="addEmptyProgram()"
+            @click="addEmptyProgramPost()"
             ><i class="i-Add text-white mr-2"></i>Add Row
           </b-button>
         </div>
@@ -60,7 +61,7 @@
             <b-button
               variant="primary"
               class="btn-rounded d-none d-sm-block"
-              @click="deleteProgram(row)"
+              @click="deleteProgramPost(row)"
               >X
             </b-button>
           </span>
@@ -68,7 +69,15 @@
             <b-form-input
               class="mb-2"
               label="Serial No"
+              v-model="props.row.serial_no"
               placeholder="Enter Serial No"
+              @change="
+                changeCell(
+                  props.row.serial_no,
+                  props.row.originalIndex,
+                  props.column.field
+                )
+              "
             >
             </b-form-input>
           </span>
@@ -80,8 +89,9 @@
               class="tag-custom text-15"
               :add-only-from-autocomplete="true"
               :autocomplete-items="postfilteredItems"
-              @tags-changed="(newTags) => (posts = newTags)"
-              placeholder="Type Value Name"
+              @tags-changed="changeCell(newTags, props, row)"
+             
+              placeholder="Type Post Name"
             />
           </span>
         </template>
@@ -95,11 +105,10 @@ import axios from "axios";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Value List",
+    title: "Program Post",
   },
   data() {
     return {
-      // foods: ["apple", "orrange"],
       columns: [
         {
           label: "Sr No",
@@ -116,35 +125,41 @@ export default {
       ],
       tag: "",
 
-      rows: [
+      programPosts: [
         {
-          description: "",
-          code: "",
+          serial_no: "",
+          post_id: "",
         },
       ],
       //   auto complete
       program: "",
-      programs: [],
+      selectedProgram: [],
       programItems: [],
       post: "",
       posts: [],
       postItems: [],
+      searchingStatus: "",
+      savingStatus: "",
+      searchTerm: "",
     };
   },
   computed: {
     filteredProgramItems() {
       return this.programItems.filter((p) => {
-        return p.text.toLowerCase().indexOf(this.program.toLowerCase()) !== -1;
+        return (
+          p.text.toLowerCase().indexOf(this.searchTerm.toLowerCase()) !== -1
+        );
       });
     },
     postfilteredItems() {
-      return this.postItems.filter((vl) => {
-        return vl.text.toLowerCase().indexOf(this.post.toLowerCase()) !== -1;
+      return this.postItems.filter((pp) => {
+        return pp.text.toLowerCase().indexOf(this.post.toLowerCase()) !== -1;
       });
     },
   },
   watch: {
-    programs: "search",
+    selectedProgram: "search",
+    posts: "search",
   },
   mounted() {
     this.getMasters();
@@ -162,48 +177,63 @@ export default {
       masters.posts.forEach((post) => {
         this.postItems.push({
           id: post.id,
-          text: post.name,
+          text: post.description,
         });
       });
     },
     async search() {
       this.isLoading = true;
-      if (this.programs.length > 0) {
-        this.programId = this.programs[0].id;
-        let programs = await axios.get(
+      this.savingStatus = "";
+      this.searchingStatus = "Searching...";
+      if (this.selectedProgram.length > 0) {
+        this.programId = this.selectedProgram[0].id;
+        let programPosts = await axios.get(
           `/programs/${this.programId}/program_posts`
         );
-        this.programs = programs.data.data;
-          // console.log(this.programs);
+        this.programPosts = programPosts.data.data;
+        // console.log(this.programPosts);
       }
-
+      this.searchingStatus = "";
       this.isLoading = false;
     },
+    changeCell(changedData, row, column) {
+      this.posts = this.newTags;
+      // console.log(changedData);
+      this.programPosts[row][column] = changedData;
+      
+    },
     async save() {
-      if (this.valueLists.length > 0) {
+      this.savingStatus = "Saving...";
+      console.log(this.programPosts);
+      if (this.programPosts.length > 0) {
         this.isSaving = true;
+        this.postId = this.posts[0].id;
+      
+        // console.log(this.postId);
         let payload = {
-          datas: this.valueLists,
+          datas: this.programPosts,
         };
         let response = await axios.post(
-          `/values/${this.valueId}/value_lists_multiple`,
+          `/programs/${this.programId}/program_posts_multiple`,
           payload
         );
-        this.valueLists = response.data.data;
+        this.programPosts = response.data.data;
         this.isSaving = false;
       }
+      this.savingStatus = "Saved.";
     },
-    addEmptyProgram() {
-      this.rows.push({
-        // value_id: this.search,
-        // site_id: this.site.id,
-        description: "",
-        code: "",
+    addEmptyProgramPost() {
+      this.programPosts.push({
+        program_id: this.programId,
+        site_id: this.site.id,
+        serial_no: "",
+        post_id: "",
         is_active: 1,
       });
     },
-    deleteProgram() {
-      this.rows.splice(this.rows.index, 1);
+    deleteProgramPost(row) {
+      this.programPosts = this.programPosts.filter((pp) => pp.id != row.id);
+      // this.progranPosts.splice(this.progranPosts.index, 1);
     },
   },
 };

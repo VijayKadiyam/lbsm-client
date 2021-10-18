@@ -15,7 +15,7 @@
           mode: 'records',
         }"
         styleClass="tableOne vgt-table"
-        :rows="rows"
+        :rows="permissions"
       >
         <div slot="table-actions" class="mb-3">
           <!-- <b-button variant="primary" class="btn-rounded d-none d-sm-block" v-b-modal.modal-1  -->
@@ -89,6 +89,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
@@ -103,12 +104,8 @@ export default {
           field: "sr_no",
         },
         {
-          label: "ID",
-          field: "id",
-        },
-        {
           label: "Permissions",
-          field: "permissions",
+          field: "name",
         },
         {
           label: "Admin",
@@ -127,56 +124,69 @@ export default {
           field: "checkbox",
         },
       ],
-      rows: [
-        {
-          id: "Per-1",
-          permissions: "Permission 1",
-        },
-        {
-          id: "Per-2",
-          permissions: "Permission 2",
-        },
-        {
-          id: "Per-3",
-          permissions: "Permission 3",
-        },
-        {
-          id: "Per-4",
-          permissions: "Permission 4",
-        },
-        {
-          id: "Per-5",
-          permissions: "Permission 5",
-        },
-        {
-          id: "Per-6",
-          permissions: "Permission 6",
-        },
-        {
-          id: "Per-7",
-          permissions: "Permission 7",
-        },
-        {
-          id: "Per-8",
-          permissions: "Permission 8",
-        },
-        {
-          id: "Per-9",
-          permissions: "Permission 9",
-        },
-        {
-          id: "Per-10",
-          permissions: "Permission 10",
-        },
-        
-      ],
+      permissions: [],
+      items: [],
+    loading: true,
+    selected: [],
     };
   },
-  methods: {
-    addFile() {
-      console.log("hello");
-    },
+ async mounted() {
+    let permissions = await axios.get('/permissions');
+    let roles = await axios.get('/roles?search=all');
+    this.permissions = permissions.data.data.filter(p => (p.id != 1) & (p.id != 2) & (p.id != 3) & (p.id != 4) & (p.id != 5))
+    this.roles = roles.data.data
+    this.roles = this.restrictRolesList(this.roles)
+    this.roles.forEach(role => {
+      this.headers.push({
+        text: role.name,
+        value: role.id
+      })
+    });
+    this.updateSelected(this.roles)
+    // this.permissions = this.restrictPermissions(this.permissions)
+    this.permissions.forEach(item => {
+      this.items.push({
+        id: item.id,
+        name: item.name
+      })
+    });
+    this.loading = false
   },
+  methods: {
+    async updatePermission(rowId, columnId) { // rowId is permission and columnId is role
+      // Assign or unassign permission to role
+      let permission_payload = {
+        role_id: columnId,
+        permission_id: rowId,
+      }
+      if(this.selected.indexOf(rowId + '' + columnId) == -1)
+        await axios.post('/assign_permissions', permission_payload)
+      else
+        await axios.post('/unassign_permissions', permission_payload)
+      this.updateSelected();
+    },
+    async updateSelected() {
+      let roles = await axios.get('/roles?search=all');
+      this.roles = roles.data.data
+      this.roles = this.restrictRolesList(this.roles)
+      this.selected = [];
+      roles.data.data.forEach(role => {
+        role.permissions.forEach(per => {
+          this.selected.push(per.id + '' + role.id)
+        })
+      })
+    },
+    restrictRolesList(roles) {
+      roles = roles.filter(role => role.name != 'Super Admin')
+      // roles = roles.filter(role => role.name != 'Admin')
+      return roles;
+    },
+    restrictPermissions(permissions) {
+      permissions = permissions.filter(permission => permission.name != 'Manage Organizations')
+      permissions = permissions.filter(permission => permission.name != 'Super Admin Settings')
+      return permissions;
+    }
+  }
 };
 </script>
 <style >

@@ -97,9 +97,7 @@
       </b-col>
     </b-row>
     <!-- /User & Program Details card -->
-    <!-- <div class="wrapper"> -->
     <b-card>
-      {{ user_program_tasks }}
       <vue-good-table
         :columns="columns"
         :line-numbers="true"
@@ -133,18 +131,18 @@
             <a
               :href="
                 '/app/user-program/' +
-                  prop.row.user_program_id +
+                  user_program.id +
                   '/user-program-tasks/' +
-                  prop.row.id
+                  props.row.id
               "
             >
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
               {{ props.row.button }}</a
             >
           </span>
-          <!-- <span v-if="props.column.field == 'program_task_id'">
+          <span v-if="props.column.field == 'program_task'">
             {{ props.row.program_task.task }}
-          </span> -->
+          </span>
           <span v-if="props.column.field == 'marks_obtained'">
             {{ props.row.marks_obtained }}
           </span>
@@ -171,6 +169,10 @@ export default {
     return {
       columns: [
         {
+          label: "Program Tasks",
+          field: "program_task",
+        },
+        {
           label: "Marks Obtained",
           field: "marks_obtained",
         },
@@ -189,119 +191,9 @@ export default {
       ],
       user: {},
       program: {},
+      user_program:{},
       user_program_tasks: [],
-      dummy_data: [
-        {
-          id: 1,
-          site_id: 1,
-          user_id: 4,
-          program_id: 2,
-          program_task_id: 2,
-          marks_obtained: 15,
-          is_completed: 1,
-          completion_date: "2021-10-18",
-          created_at: "2021-10-18 18:38:36",
-          updated_at: "2021-10-18 18:38:36",
-          user_program_id: "1",
-          user: {
-            id: 4,
-            first_name: "aaa",
-            middle_name: "mmmm",
-            last_name: "llll",
-            user_name: "aaaa",
-            gender: 0,
-            dob: "2021-10-14",
-            email: "bb@aaa.ccc",
-            api_token: null,
-            active: 1,
-            image_path: null,
-            created_at: "2021-10-16 12:42:30",
-            updated_at: "2021-10-16 12:42:30",
-          },
-          program: {
-            id: 2,
-            site_id: 1,
-            program_name: "ABCA",
-            program_description: "ESC",
-            instructor: "NMNMN",
-            hours: 12,
-            created_at: "2021-10-16 12:47:00",
-            updated_at: "2021-10-16 12:47:00",
-          },
-          program_task: {
-            id: 2,
-            site_id: 1,
-            program_id: 2,
-            program_post_id: null,
-            serial_no: 345678,
-            task: "PROGRAMS 2 TASK",
-            objective: "ADA",
-            material: "GYH",
-            process: "DFGDFG",
-            no_of_contracts: 0,
-            time_required: 0,
-            created_at: null,
-            updated_at: null,
-            total_marks: null,
-            passing_marks: null,
-          },
-        },
-        {
-          id: 1,
-          site_id: 1,
-          user_id: 4,
-          program_id: 2,
-          program_task_id: 2,
-          marks_obtained: 15,
-          is_completed: 1,
-          completion_date: "2021-10-18",
-          created_at: "2021-10-18 18:38:36",
-          updated_at: "2021-10-18 18:38:36",
-          user_program_id: "1",
-          user: {
-            id: 4,
-            first_name: "aaa",
-            middle_name: "mmmm",
-            last_name: "llll",
-            user_name: "aaaa",
-            gender: 0,
-            dob: "2021-10-14",
-            email: "bb@aaa.ccc",
-            api_token: null,
-            active: 1,
-            image_path: null,
-            created_at: "2021-10-16 12:42:30",
-            updated_at: "2021-10-16 12:42:30",
-          },
-          program: {
-            id: 2,
-            site_id: 1,
-            program_name: "ABCA",
-            program_description: "ESC",
-            instructor: "NMNMN",
-            hours: 12,
-            created_at: "2021-10-16 12:47:00",
-            updated_at: "2021-10-16 12:47:00",
-          },
-          program_task: {
-            id: 2,
-            site_id: 1,
-            program_id: 2,
-            program_post_id: null,
-            serial_no: 345678,
-            task: "PROGRAMS 2 TASK",
-            objective: "ADA",
-            material: "GYH",
-            process: "DFGDFG",
-            no_of_contracts: 0,
-            time_required: 0,
-            created_at: null,
-            updated_at: null,
-            total_marks: null,
-            passing_marks: null,
-          },
-        },
-      ],
+      
     };
   },
   mounted() {
@@ -310,25 +202,18 @@ export default {
   methods: {
     async getData(page = 1) {
       this.isLoading = true;
-
-      let user_program = await axios.get(
-        `/user_programs/${this.$route.params.user_program_id}`
-      );
-      this.user_program = user_program.data.data;
-
-      let user = await axios.get(`/users/${this.user_program.user_id}`);
-      this.user = user.data.data;
-
-      let program = await axios.get(
-        `/programs/${this.user_program.program_id}`
-      );
-      this.program = program.data.data;
-
+      // User Program Task log
       let user_program_tasks = await axios.get(
-        `/user_programs/${this.user_program.id}/user_program_tasks`
+        `/user_programs/${this.$route.params.user_program_id}/user_program_tasks`
       );
-      this.count = user_program_tasks.data.count;
       this.user_program_tasks = user_program_tasks.data.data;
+      
+      //UserProgram Data
+      let user_program = await axios.get(`/user_programs/${this.$route.params.user_program_id}`);
+      this.user_program = user_program.data.data;
+      this.user = this.user_program.user;
+      this.program = this.user_program.program;
+      
       this.serialNoStarting = (page - 1) * this.rowsPerPage;
       this.isLoading = false;
     },

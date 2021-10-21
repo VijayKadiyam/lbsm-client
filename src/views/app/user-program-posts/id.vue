@@ -15,7 +15,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user.user_name }}
+                  {{ userdata.user_name }}
                 </p>
               </b-col>
             </b-row>
@@ -25,7 +25,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user.first_name }}
+                  {{ userdata.first_name }}
                 </p>
               </b-col>
             </b-row>
@@ -35,7 +35,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user.email }}
+                  {{ userdata.email }}
                 </p>
               </b-col>
             </b-row>
@@ -45,7 +45,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user.phone }}
+                  {{ userdata.phone }}
                 </p>
               </b-col>
             </b-row>
@@ -61,7 +61,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-20 line-height-1 mb-0">
-                  {{ program.program_name }}
+                  {{ programdata.program_name }}
                 </p>
               </b-col>
             </b-row>
@@ -71,7 +71,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-20 line-height-1 mb-0">
-                  {{ program.program_description }}
+                  {{ programdata.program_description }}
                 </p>
               </b-col>
             </b-row>
@@ -81,7 +81,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-20 line-height-1 mb-0">
-                  {{ program.instructor }}
+                  {{ programdata.instructor }}
                 </p>
               </b-col>
             </b-row>
@@ -91,7 +91,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-20 line-height-1 mb-0">
-                  {{ program.hours }}
+                  {{ programdata.hours }}
                 </p>
               </b-col>
             </b-row>
@@ -215,8 +215,6 @@ export default {
       form: {
         promotion_date: "",
       },
-      user: {},
-      program: {},
       program_post: {},
       submitStatus: null,
       //   auto complete
@@ -232,214 +230,8 @@ export default {
       selectedProgramPost: [],
       program_postItems: [],
 
-      userdata: [
-        {
-          id: 1,
-          avatar: require("@/assets/images/faces/1.jpg"),
-          first_name: "John",
-          middle_name: "John",
-          last_name: "John",
-          user_name: "John",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jhonwick_23@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 2,
-          avatar: require("@/assets/images/faces/3.jpg"),
-          first_name: "Jane",
-          middle_name: "Jane",
-          last_name: "Jane",
-          user_name: "Jane",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jameswann@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 3,
-          avatar: require("@/assets/images/faces/2.jpg"),
-          first_name: "Susan",
-          middle_name: "Susan",
-          last_name: "Susan",
-          user_name: "Susan",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jameswann@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 4,
-          avatar: require("@/assets/images/faces/1.jpg"),
-          first_name: "Chris",
-          middle_name: "Chris",
-          last_name: "Chris",
-          user_name: "Chris",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jhonwick_23@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 5,
-          avatar: require("@/assets/images/faces/4.jpg"),
-          first_name: "Dan",
-          middle_name: "Dan",
-          last_name: "Dan",
-          user_name: "Dan",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jhonwick_23@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 6,
-          avatar: require("@/assets/images/faces/5.jpg"),
-          first_name: "John",
-          middle_name: "John",
-          last_name: "John",
-          user_name: "John",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jameswann@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 1,
-          avatar: require("@/assets/images/faces/4.jpg"),
-          first_name: "John",
-          middle_name: "John",
-          last_name: "John",
-          user_name: "John",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "dan_brown@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 2,
-          avatar: require("@/assets/images/faces/3.jpg"),
-          first_name: "Jane",
-          middle_name: "Jane",
-          last_name: "Jane",
-          user_name: "Jane",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jameswann@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 3,
-          avatar: require("@/assets/images/faces/2.jpg"),
-          first_name: "Susan",
-          middle_name: "Susan",
-          last_name: "Susan",
-          user_name: "Susan",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "janeswann@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 4,
-          avatar: require("@/assets/images/faces/1.jpg"),
-          first_name: "Chris",
-          middle_name: "Chris",
-          last_name: "Chris",
-          user_name: "Chris",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "jaasdameswann@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 5,
-          avatar: require("@/assets/images/faces/5.jpg"),
-          first_name: "Dan",
-          middle_name: "Dan",
-          last_name: "Dan",
-          user_name: "Dan",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "doomwaytne@gmail.com",
-          phone: "+88012378478",
-        },
-        {
-          id: 6,
-          avatar: require("@/assets/images/faces/3.jpg"),
-          first_name: "John",
-          middle_name: "John",
-          last_name: "John",
-          user_name: "John",
-          gender: 0,
-          dob: "1997-03-30",
-          email: "sidsacc@gmail.com",
-          phone: "+88012378478",
-        },
-      ],
-      programdata: [
-        {
-          program_name: "Program Name - 1",
-          program_description: "Program Description 1",
-          instructor: "Instructor 1",
-          hours: "1",
-        },
-        {
-          program_name: "Program Name - 2",
-          program_description: "Program Description 2",
-          instructor: "Instructor 2",
-          hours: "2",
-        },
-        {
-          program_name: "Program Name - 3",
-          program_description: "Program Description 3",
-          instructor: "Instructor 3",
-          hours: "3",
-        },
-        {
-          program_name: "Program Name - 4",
-          program_description: "Program Description 4",
-          instructor: "Instructor 4",
-          hours: "4",
-        },
-        {
-          program_name: "Program Name - 5",
-          program_description: "Program Description 5",
-          instructor: "Instructor 5",
-          hours: "5",
-        },
-        {
-          program_name: "Program Name - 6",
-          program_description: "Program Description 6",
-          instructor: "Instructor 6",
-          hours: "6",
-        },
-        {
-          program_name: "Program Name - 7",
-          program_description: "Program Description 7",
-          instructor: "Instructor 7",
-          hours: "7",
-        },
-        {
-          program_name: "Program Name - 8",
-          program_description: "Program Description 8",
-          instructor: "Instructor 8",
-          hours: "8",
-        },
-        {
-          program_name: "Program Name - 9",
-          program_description: "Program Description 9",
-          instructor: "Instructor 9",
-          hours: "9",
-        },
-        {
-          program_name: "Program Name - 10",
-          program_description: "Program Description 10",
-          instructor: "Instructor 10",
-          hours: "10",
-        },
-      ],
+      userdata: {},
+      programdata: {},
       // user_program_post:[]
     };
   },
@@ -463,12 +255,10 @@ export default {
       });
     },
     filteredProgramPostItems() {
-      // For the Time Being
-      return this.programItems.filter((pp) => {
+      return this.program_postItems.filter((a) => {
         return (
-          pp.text
-            .toLowerCase()
-            .indexOf(this.searchProgramPost.toLowerCase()) !== -1
+          a.text.toLowerCase().indexOf(this.searchProgramPost.toLowerCase()) !==
+          -1
         );
       });
     },
@@ -491,25 +281,22 @@ export default {
       this.isLoading = true;
       let masters = await axios.get("user_program_posts/masters");
       masters = masters.data;
-      // Programs
-      masters.programs.forEach((program) => {
-        this.programItems.push({
-          id: program.id,
-          text: program.program_name,
-        });
-      });
-      // Program Post
-      masters.program_posts.forEach((programpost) => {
-        this.program_postItems.push({
-          id: programpost.id,
-          text: programpost.serial_no,
-        });
-      });
+      this.users = masters.users;
+      this.programs = masters.programs;
+      this.program_posts = masters.program_posts;
       // User
-      masters.users.forEach((user) => {
+      this.users.forEach((user) => {
         this.userItems.push({
           id: user.id,
           text: user.user_name,
+        });
+      });
+
+      // Programs
+      this.programs.forEach((program) => {
+        this.programItems.push({
+          id: program.id,
+          text: program.program_name,
         });
       });
       this.isLoading = false;
@@ -521,24 +308,54 @@ export default {
       );
       this.form = form.data.data;
 
-      this.user = form.data.data.user;
+    this.userdata = this.form.user;
       this.selectedUser.push({
-        id: this.user.id,
-        text: this.user.user_name,
+        id: this.userdata.id,
+        text: this.userdata.user_name,
       });
 
-      this.program = form.data.data.program;
+    this.programdata = this.form.program;
       this.selectedProgram.push({
-        id: this.program.id,
-        text: this.program.program_name,
+        id: this.programdata.id,
+        text: this.programdata.program_name,
       });
 
-      this.program_post = form.data.data.program_post;
+    this.program_postdata = this.form.program_post;
       this.selectedProgramPost.push({
-        id: this.program.id,
-        text: this.program.program_name,
+        id: this.program_postdata.id,
+        text: this.program_postdata.post.description,
       });
       this.isLoading = false;
+    },
+    async searchSelectedUser() {
+      if (this.selectedUser.length > 0) {
+        this.user_id = this.selectedUser[0].id;
+        this.userdata = this.users.find((sp) => sp.id == this.user_id);
+      } else {
+        this.userdata = "";
+      }
+    },
+    async searchSelectedProgram() {
+      if (this.selectedProgram.length > 0) {
+        this.program_id = this.selectedProgram[0].id;
+        this.programdata = this.programs.find((sp) => sp.id == this.program_id);
+        let program_posts = await axios.get(
+          `/programs/${this.program_id}/program_posts`
+        );
+        this.program_posts = program_posts.data.data;
+        this.program_posts.forEach((programpost) => {
+          this.program_postItems.push({
+            id: programpost.id,
+            text: programpost.post.description,
+          });
+        });
+      } else {
+        console.log("clean all");
+        this.programdata = "";
+        this.program_posts = [];
+        this.program_postItems = [];
+        this.selectedProgramPost = [];
+      }
     },
     //   validate form
     async submit() {
@@ -546,7 +363,7 @@ export default {
       this.form.user_id = this.selectedUser[0].id;
       this.form.program_id = this.selectedProgram[0].id;
       this.form.program_post_id = this.selectedProgramPost[0].id;
-      
+
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";

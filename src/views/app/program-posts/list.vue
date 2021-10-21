@@ -61,7 +61,7 @@
             <b-button
               variant="primary"
               class="btn-rounded d-none d-sm-block"
-              @click="deleteProgramPost(row)"
+              @click="deleteProgramPost(props.row.originalIndex)"
               >X
             </b-button>
           </span>
@@ -83,14 +83,21 @@
           </span>
           <span v-if="props.column.field == 'post_id'">
             <vue-tags-input
-              v-model="post"
-              :tags="posts"
+              v-model="searchPost"
+              :tags="selectedPost"
               :max-tags="1"
               class="tag-custom text-15"
               :add-only-from-autocomplete="true"
               :autocomplete-items="postfilteredItems"
-              @tags-changed="changeCell(newTags, props, row)"
-             
+              @tags-changed="
+                (newTags) =>
+                  changeCell(
+                    newTags[0]['id'],
+                    props.row.originalIndex,
+                    props.column.field
+                  )
+              "
+              
               placeholder="Type Post Name"
             />
           </span>
@@ -135,8 +142,8 @@ export default {
       program: "",
       selectedProgram: [],
       programItems: [],
-      post: "",
-      posts: [],
+      searchPost: "",
+      selectedPost: [],
       postItems: [],
       searchingStatus: "",
       savingStatus: "",
@@ -153,13 +160,14 @@ export default {
     },
     postfilteredItems() {
       return this.postItems.filter((pp) => {
-        return pp.text.toLowerCase().indexOf(this.post.toLowerCase()) !== -1;
+        return (
+          pp.text.toLowerCase().indexOf(this.searchPost.toLowerCase()) !== -1
+        );
       });
     },
   },
   watch: {
     selectedProgram: "search",
-    posts: "search",
   },
   mounted() {
     this.getMasters();
@@ -191,28 +199,32 @@ export default {
           `/programs/${this.programId}/program_posts`
         );
         this.programPosts = programPosts.data.data;
-        // console.log(this.programPosts);
+        this.programPosts.forEach((programPost) => {
+          // this.selectedPosts = this.newTags
+          // console.log(i);
+          this.selectedPost.push({
+            id: programPost.post.id,
+            text: programPost.post.description,
+          });
+        });
+        // console.log(this.selectedPosts);
       }
       this.searchingStatus = "";
       this.isLoading = false;
     },
     changeCell(changedData, row, column) {
-      this.posts = this.newTags;
-      // console.log(changedData);
+      this.selectedPosts = this.newTags;
       this.programPosts[row][column] = changedData;
-      
+      console.log(this.programPosts);
     },
     async save() {
       this.savingStatus = "Saving...";
-      console.log(this.programPosts);
       if (this.programPosts.length > 0) {
         this.isSaving = true;
-        this.postId = this.posts[0].id;
-      
-        // console.log(this.postId);
         let payload = {
           datas: this.programPosts,
         };
+        console.log(this.programPosts);
         let response = await axios.post(
           `/programs/${this.programId}/program_posts_multiple`,
           payload
@@ -223,6 +235,7 @@ export default {
       this.savingStatus = "Saved.";
     },
     addEmptyProgramPost() {
+      // this.selectedPosts="";
       this.programPosts.push({
         program_id: this.programId,
         site_id: this.site.id,
@@ -232,6 +245,8 @@ export default {
       });
     },
     deleteProgramPost(row) {
+      // this.selectedPosts[row]='';
+      console.log(row);
       this.programPosts = this.programPosts.filter((pp) => pp.id != row.id);
       // this.progranPosts.splice(this.progranPosts.index, 1);
     },

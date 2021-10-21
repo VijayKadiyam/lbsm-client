@@ -15,7 +15,14 @@
             @tags-changed="(newTags) => (selectedUser = newTags)"
             placeholder="Type User Name"
           />
-          {{ searchingStatus }}
+          <!-- {{ searchingStatus }} -->
+          <!-- <div v-if="searchingStatus" class="spinner spinner-primary mr-3"></div> -->
+          <b-progress
+            v-if="searchingStatus"
+            :value="changeValue"
+            :max="max"
+            animated
+          ></b-progress>
         </b-card>
       </b-col>
     </b-row>
@@ -99,6 +106,10 @@ export default {
       searchUser: "",
       selectedUser: [],
       userItems: [],
+
+      // Progress Bar
+      changeValue: 0,
+      changeMax: 100,
     };
   },
   watch: {
@@ -137,7 +148,10 @@ export default {
       this.isLoading = true;
       this.savingStatus = "";
       this.searchingStatus = "Searching...";
+      this.changeValue = 50;
+
       if (this.selectedUser.length > 0) {
+        this.changeValue = 100;
         this.user_Id = this.selectedUser[0].id;
         let user_programs = await axios.get(
           `/user_programs?search=${this.user_Id}`

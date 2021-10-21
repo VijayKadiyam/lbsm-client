@@ -229,24 +229,8 @@ export default {
       selectedProgramPost: [],
       program_postItems: [],
 
-      userdata: {
-        id: 1,
-        avatar: require("@/assets/images/faces/1.jpg"),
-        first_name: "John",
-        middle_name: "John",
-        last_name: "John",
-        user_name: "John",
-        gender: 0,
-        dob: "1997-03-30",
-        email: "jhonwick_23@gmail.com",
-        phone: "+88012378478",
-      },
-      programdata: {
-        program_name: "Program Name - 1",
-        program_description: "Program Description 1",
-        instructor: "Instructor 1",
-        hours: "1",
-      },
+      userdata: {},
+      programdata: {},
     };
   },
   watch: {
@@ -269,12 +253,10 @@ export default {
       });
     },
     filteredProgramPostItems() {
-      // For the Time Being
-      return this.programItems.filter((pp) => {
+      return this.program_postItems.filter((a) => {
         return (
-          pp.text
-            .toLowerCase()
-            .indexOf(this.searchProgramPost.toLowerCase()) !== -1
+          a.text.toLowerCase().indexOf(this.searchProgramPost.toLowerCase()) !==
+          -1
         );
       });
     },
@@ -314,25 +296,36 @@ export default {
           text: program.program_name,
         });
       });
-      // Program Post
-      this.program_posts.forEach((programpost) => {
-        this.program_postItems.push({
-          id: programpost.id,
-          text: programpost.serial_no,
-        });
-      });
       this.isLoading = false;
     },
     async searchSelectedUser() {
       if (this.selectedUser.length > 0) {
         this.user_id = this.selectedUser[0].id;
         this.userdata = this.users.find((sp) => sp.id == this.user_id);
+      } else {
+        this.userdata = "";
       }
     },
     async searchSelectedProgram() {
       if (this.selectedProgram.length > 0) {
         this.program_id = this.selectedProgram[0].id;
         this.programdata = this.programs.find((sp) => sp.id == this.program_id);
+        let program_posts = await axios.get(
+          `/programs/${this.program_id}/program_posts`
+        );
+        this.program_posts = program_posts.data.data;
+        this.program_posts.forEach((programpost) => {
+          this.program_postItems.push({
+            id: programpost.id,
+            text: programpost.post.description,
+          });
+        });
+      } else {
+        console.log('clean all');
+        this.programdata = "";
+        this.program_posts = [];
+        this.program_postItems = [];
+        this.selectedProgramPost=[];
       }
     },
     //   validate form
@@ -340,8 +333,8 @@ export default {
       console.log("submit!");
       this.form.user_id = this.selectedUser[0].id;
       this.form.program_id = this.selectedProgram[0].id;
-      // this.form.program_post_id = this.selectedProgramPost[0].id;
-      this.form.program_post_id = 1;
+      this.form.program_post_id = this.selectedProgramPost[0].id;
+      // this.form.program_post_id = 1;
 
       this.$v.$touch();
       if (this.$v.$invalid) {

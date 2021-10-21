@@ -11,22 +11,32 @@
                 v-model="searchTerm"
                 :tags="selectedValues"
                 :max-tags="1"
-                class="tag-custom text-15"
+                class="tag-custom text-15 mb-2"
                 :add-only-from-autocomplete="true"
                 :autocomplete-items="filteredValueItems"
                 @tags-changed="(newTags) => (selectedValues = newTags)"
                 placeholder="Type Value Name"
               />
-              {{ searchingStatus }}
+              <!-- {{ searchingStatus }} -->
+
+              <b-progress
+                v-if="searchingStatus"
+                :value="changeValue"
+                :max="max"
+                animated
+              ></b-progress>
             </b-col>
             <b-col md="3">
               <b-button
                 variant="primary"
-                class="btn-rounded d-none d-sm-block"
+                class="btn-rounded d-none d-sm-block mb-2"
                 @click="save()"
                 >Save
               </b-button>
-              {{ savingStatus }}
+              <div
+                v-if="savingStatus"
+                class="spinner spinner-primary mr-3"
+              ></div>
             </b-col>
           </b-row>
         </b-card>
@@ -65,35 +75,47 @@
               >X
             </b-button>
           </span>
-            <span v-if="props.column.field == 'checked'">
-              <label class="switch switch-success mr-3">
-                <input
-                  type="checkbox"
-                  checked="checkbox"
-                  v-model="props.row.is_active"
-                /><span class="slider"></span>
-              </label>
-            </span>
-            <span v-if="props.column.field == 'description'">
-              <b-form-input
-                class="mb-2"
-                label="Description"
-                v-model="props.row.description"
-                placeholder="Enter Description"
-                @change="changeCell(props.row.description, props.row.originalIndex, props.column.field)"
-              >
-              </b-form-input>
-            </span>
-            <span v-if="props.column.field == 'code'">
-              <b-form-input
-                class="mb-2"
-                label="Code"
-                v-model="props.row.code"
-                placeholder="Enter Code"
-                @change="changeCell(props.row.code, props.row.originalIndex, props.column.field)"
-              >
-              </b-form-input>
-            </span>
+          <span v-if="props.column.field == 'checked'">
+            <label class="switch switch-success mr-3">
+              <input
+                type="checkbox"
+                checked="checkbox"
+                v-model="props.row.is_active"
+              /><span class="slider"></span>
+            </label>
+          </span>
+          <span v-if="props.column.field == 'description'">
+            <b-form-input
+              class="mb-2"
+              label="Description"
+              v-model="props.row.description"
+              placeholder="Enter Description"
+              @change="
+                changeCell(
+                  props.row.description,
+                  props.row.originalIndex,
+                  props.column.field
+                )
+              "
+            >
+            </b-form-input>
+          </span>
+          <span v-if="props.column.field == 'code'">
+            <b-form-input
+              class="mb-2"
+              label="Code"
+              v-model="props.row.code"
+              placeholder="Enter Code"
+              @change="
+                changeCell(
+                  props.row.code,
+                  props.row.originalIndex,
+                  props.column.field
+                )
+              "
+            >
+            </b-form-input>
+          </span>
         </template>
       </vue-good-table>
     </b-card>
@@ -103,7 +125,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: 'ValueList',
+  name: "ValueList",
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
     title: "Value List",
@@ -129,11 +151,14 @@ export default {
         },
       ],
       valueLists: [],
-      searchingStatus: '',
-      savingStatus: '',      
+      searchingStatus: "",
+      savingStatus: "",
       searchTerm: "",
       selectedValues: [],
       valueItems: [],
+      // Progress Bar
+      changeValue: 0,
+      changeMax: 100,
     };
   },
   computed: {
@@ -164,21 +189,23 @@ export default {
     },
     async search() {
       this.isLoading = true;
-      this.savingStatus = ''
-      this.searchingStatus = 'Searching...'
+      this.savingStatus = "";
+      this.searchingStatus = "Searching...";
+      this.changeValue = 50;
       if (this.selectedValues.length > 0) {
+        this.changeValue = 100;
         this.valueId = this.selectedValues[0].id;
         let valueLists = await axios.get(`/values/${this.valueId}/value_lists`);
         this.valueLists = valueLists.data.data;
       }
-      this.searchingStatus = ''
+      this.searchingStatus = "";
       this.isLoading = false;
     },
     changeCell(changedData, row, column) {
-        this.valueLists[row][column] = changedData
+      this.valueLists[row][column] = changedData;
     },
     async save() {
-      this.savingStatus = 'Saving...'
+      this.savingStatus = "Saving...";
       if (this.valueLists.length > 0) {
         this.isSaving = true;
         let payload = {
@@ -191,7 +218,8 @@ export default {
         this.valueLists = response.data.data;
         this.isSaving = false;
       }
-      this.savingStatus = 'Saved.'
+      this.savingStatus = "Saved.";
+      this.savingStatus = "";
     },
     addEmptyValueList() {
       this.valueLists.push({
@@ -203,10 +231,9 @@ export default {
       });
     },
     deleteValueList(row) {
-      this.valueLists = this.valueLists.filter(vL => vL.id != row.id)
+      this.valueLists = this.valueLists.filter((vL) => vL.id != row.id);
     },
   },
 };
 </script>
-<style >
-</style>
+<style></style>

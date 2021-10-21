@@ -34,9 +34,15 @@
               {{ props.row.button }}</a
             >
           </span>
-          <!-- <span v-if="props.column.field == 'program_post'">
+          <span v-if="props.column.field == 'user'">
+            {{ props.row.user.user_name }}
+          </span>
+          <span v-if="props.column.field == 'program'">
+            {{ props.row.program.program_name }}
+          </span>
+          <span v-if="props.column.field == 'program_post'">
             {{ props.row.program_post.post.description }}
-          </span> -->
+          </span>
           <span v-else-if="props.column.field == 'promotion_date'">
             {{ props.row.promotion_date }}
           </span>
@@ -59,6 +65,14 @@ export default {
   data() {
     return {
       columns: [
+        {
+          label: "User",
+          field: "user",
+        },
+        {
+          label: "Program",
+          field: "program",
+        },
         {
           label: "Program Post",
           field: "program_post",

@@ -90,6 +90,7 @@
                 ref="file"
                 accept="image/*"
               ></b-form-file>
+              
             </b-form-group>
             <b-form-group label="Attach File 4">
               <b-form-file

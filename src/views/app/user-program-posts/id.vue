@@ -204,7 +204,7 @@
 
 <script>
 import axios from "axios";
-import { required, minLength } from "vuelidate/lib/validators";
+import { required } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
@@ -379,9 +379,9 @@ export default {
           this.isLoading = false;
           this.submitStatus = "OK";
 
-          setTimeout(() => {
+          // setTimeout(() => {
             this.$router.push("/app/user-program-posts/");
-          }, 1000);
+          // }, 1000);
         } catch (e) {
           this.isLoading = false;
         }

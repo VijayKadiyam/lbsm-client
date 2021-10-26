@@ -270,18 +270,13 @@
 <script>
 import axios from "axios";
 import {
-  email,
   numeric,
-  between,
   required,
-  sameAs,
-  minLength,
-  maxLength,
 } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Form Component",
+    title: "Program Task | Create",
   },
   data() {
     return {
@@ -371,11 +366,11 @@ export default {
           this.isLoading = false;
           this.submitStatus = "OK";
 
-          setTimeout(() => {
+          // setTimeout(() => {
             this.$router.push(
               `/app/programs/${this.$route.params.program_id}/program-tasks/`
             );
-          }, 1000);
+          // }, 1000);
         } catch (e) {
           this.isLoading = false;
         }

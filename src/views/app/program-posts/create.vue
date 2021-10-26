@@ -3,7 +3,7 @@
     <breadcumb :page="'Create Value'" :folder="'Values'" />
 
     <b-row class="justify-content-md-center">
-      <b-col md="6">
+      <b-col md="9">
         <b-card>
           <b-form @submit.prevent="submit">
             <b-form-group label="Name">
@@ -51,7 +51,7 @@
 
 
 <script>
-import {email,numeric, between,required, sameAs, minLength,maxLength } from "vuelidate/lib/validators";
+import {email,numeric,required, minLength,maxLength } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used

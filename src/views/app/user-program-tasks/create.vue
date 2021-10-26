@@ -6,7 +6,7 @@
     />
 
     <b-row class="justify-content-md-center">
-      <b-col md="6">
+      <b-col md="9">
         <b-card>
           <b-form @submit.prevent="submit">
             <b-form-group label="Program Task">
@@ -132,14 +132,14 @@ import { numeric, required } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Form Component",
+    title: "Program Task | Create",
   },
   data() {
     return {
       form: {
-        user_id: 1,
-        program_id: 1,
-        program_task_id: 1,
+        user_id: "",
+        program_id: "",
+        program_task_id: "",
         marks_obtained: "",
         is_completed: "",
         completion_date: "",
@@ -224,11 +224,11 @@ export default {
           this.isLoading = false;
           this.submitStatus = "OK";
 
-          setTimeout(() => {
+          // setTimeout(() => {
             this.$router.push(
               `/app/user-program/${this.$route.params.user_program_id}/user-program-tasks/`
             );
-          }, 1000);
+          // }, 1000);
         } catch (e) {
           this.isLoading = false;
         }

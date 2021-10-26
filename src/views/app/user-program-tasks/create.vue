@@ -67,6 +67,40 @@
                 /><span class="slider"></span>
               </label>
             </b-form-group>
+            <b-form-group label="Attach File 1">
+              <b-form-file
+                id="file-default"
+                name="imagepath"
+                ref="file"
+                accept="image/*"
+              ></b-form-file>
+            </b-form-group>
+            <b-form-group label="Attach File 2">
+              <b-form-file
+                id="file-default"
+                name="imagepath"
+                ref="file"
+                accept="image/*"
+              ></b-form-file>
+            </b-form-group>
+            <b-form-group label="Attach File 3">
+              <b-form-file
+                id="file-default"
+                name="imagepath"
+                ref="file"
+                accept="image/*"
+              ></b-form-file>
+            </b-form-group>
+            <b-form-group label="Attach File 4">
+              <b-form-file
+                id="file-default"
+                name="imagepath"
+                ref="file"
+                accept="image/*"
+              ></b-form-file>
+            </b-form-group>
+
+            
 
             <b-button
               type="submit"

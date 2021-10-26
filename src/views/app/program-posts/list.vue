@@ -190,6 +190,7 @@ export default {
       });
     },
     async search() {
+      console.log('123')
       this.isLoading = true;
       this.savingStatus = "";
       this.searchingStatus = "Searching...";

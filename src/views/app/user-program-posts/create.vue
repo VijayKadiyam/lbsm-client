@@ -204,7 +204,7 @@
 
 <script>
 import axios from "axios";
-import { required, minLength } from "vuelidate/lib/validators";
+import { required } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
@@ -321,7 +321,7 @@ export default {
           });
         });
       } else {
-        console.log('clean all');
+        // console.log('clean all');
         this.programdata = "";
         this.program_posts = [];
         this.program_postItems = [];
@@ -344,14 +344,14 @@ export default {
         try {
           this.isLoading = true;
           this.submitStatus = "PENDING";
-          console.log(this.form);
+          // console.log(this.form);
           await axios.post("/user_program_posts", this.form);
           this.isLoading = false;
           this.submitStatus = "OK";
 
-          setTimeout(() => {
+          // setTimeout(() => {
             this.$router.push("/app/user-program-posts/");
-          }, 1000);
+          // }, 1000);
         } catch (e) {
           this.isLoading = false;
         }

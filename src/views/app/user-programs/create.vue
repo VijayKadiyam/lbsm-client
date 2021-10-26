@@ -3,7 +3,7 @@
     <breadcumb :page="'Create User Program'" :folder="'User Programs'" />
 
     <b-row class="justify-content-md-center">
-      <b-col md="6">
+      <b-col md="9">
         <b-card>
           <b-form @submit.prevent="submit">
             <b-form-group label="User">
@@ -70,11 +70,11 @@
 
 <script>
 import axios from "axios";
-import { required, minLength } from "vuelidate/lib/validators";
+import { required } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Create User Program",
+    title: "User Program | Create",
   },
   data() {
     return {
@@ -158,9 +158,9 @@ export default {
           this.isLoading = false;
           this.submitStatus = "OK";
 
-          setTimeout(() => {
+          // setTimeout(() => {
             this.$router.push("/app/user-programs/");
-          }, 1000);
+          // }, 1000);
         } catch (e) {
           this.isLoading = false;
         }

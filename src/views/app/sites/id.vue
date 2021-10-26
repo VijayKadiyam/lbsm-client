@@ -3,7 +3,7 @@
     <breadcumb :page="'Update Site'" :folder="'Sites'" />
 
     <b-row class="justify-content-md-center">
-      <b-col md="6">
+      <b-col md="9">
         <b-card title="Validate Form">
           <b-form @submit.prevent="submit">
             <b-form-group label="Name">
@@ -170,9 +170,9 @@ export default {
         this.isLoading = true;
         await axios.patch(`/sites/${this.$route.params.id}`, this.form);
           this.submitStatus = "OK";
-        setTimeout(() => {
+        // setTimeout(() => {
         this.$router.push("/app/sites/");
-        }, 1000);
+        // }, 1000);
         this.isLoading = false;
         
       } catch (e) {

@@ -97,7 +97,6 @@
                     props.column.field
                   )
               "
-              
               placeholder="Type Post Name"
             />
           </span>
@@ -200,7 +199,6 @@ export default {
         );
         this.programPosts = programPosts.data.data;
         this.programPosts.forEach((programPost) => {
-          // this.selectedPosts = this.newTags
           // console.log(i);
           this.selectedPost.push({
             id: programPost.post.id,

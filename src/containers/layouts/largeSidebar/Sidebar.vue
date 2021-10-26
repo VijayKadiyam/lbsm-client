@@ -13,6 +13,7 @@
     >
       <div>
         <ul class="navigation-left">
+          <!-- Dashboard -->
           <li
             @mouseenter="toggleSubMenu"
             :class="{ active: selectedParentMenu == 'dashboards' }"
@@ -27,6 +28,7 @@
 
             <div class="triangle"></div>
           </li>
+          <!-- Site -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -34,12 +36,13 @@
             data-item="sites"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+          <router-link tag="a" class="nav-item-hold" to="/app/sites/list">
               <i class="nav-icon i-File-Clipboard-File--Text"></i>
               <span class="nav-text">Sites</span>
-            </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- Users -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -47,12 +50,13 @@
             data-item="users"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+            <router-link class="nav-item-hold" to="/app/users/list">
               <i class="nav-icon i-File-Clipboard-File--Text"></i>
               <span class="nav-text">Users</span>
-            </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- Permissions -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -60,12 +64,13 @@
             data-item="permissions"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+            <router-link class="nav-item-hold" to="/app/permissions/list">
               <i class="nav-icon text-20 i-Check"></i>
               <span class="nav-text">Permissions</span>
-            </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- Values -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -73,12 +78,13 @@
             data-item="values"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+            <router-link class="nav-item-hold" to="/app/values/list">
               <i class="nav-icon text-20 i-Diploma-2"></i>
               <span class="nav-text">Values</span>
-            </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- value Lists -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -86,12 +92,13 @@
             data-item="value-lists"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+            <router-link class="nav-item-hold" to="/app/value-lists/list">
               <i class="nav-icon text-20 i-Diploma-2"></i>
               <span class="nav-text">Value Lists</span>
-            </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- Programs -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -99,12 +106,13 @@
             data-item="programs"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+            <router-link class="nav-item-hold" to="/app/programs/list">
               <i class="nav-icon text-20 i-Diploma-2"></i>
               <span class="nav-text">Programs</span>
-            </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- Program Post -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -112,12 +120,13 @@
             data-item="program-posts"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+            <router-link class="nav-item-hold" to="/app/program-posts/list">
               <i class="nav-icon text-20 i-Diploma-2"></i>
               <span class="nav-text">Program Posts</span>
-            </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- User Programs -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -125,12 +134,13 @@
             data-item="user-programs"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+            <router-link class="nav-item-hold" to="/app/user-programs/list">
               <i class="nav-icon text-20 i-Diploma-2"></i>
               <span class="nav-text">User Programs</span>
-            </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- User Programs Post -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -138,12 +148,13 @@
             data-item="user-program-posts"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+            <router-link class="nav-item-hold" to="/app/user-program-posts/list">
               <i class="nav-icon text-20 i-Diploma-2"></i>
               <span class="nav-text">User Program Posts</span>
-            </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- User Program Tasks -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -151,10 +162,10 @@
             data-item="user-program-tasks"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+            <router-link class="nav-item-hold" to="/app/user-program-tasks/list">
               <i class="nav-icon text-20 i-Diploma-2"></i>
               <span class="nav-text">User Program Tasks</span>
-            </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
           

@@ -3,7 +3,7 @@
     <breadcumb :page="'Create Site'" :folder="'Sites'" />
 
     <b-row class="justify-content-md-center">
-      <b-col md="6">
+      <b-col md="9">
         <b-card title="Site">
           <b-form @submit.prevent="submit">
             <b-form-group label="Name">
@@ -166,10 +166,10 @@ export default {
           this.isLoading = false;
         }
         this.submitStatus = "PENDING";
-        setTimeout(() => {
-          this.$router.push("/app/sites/");
+        // setTimeout(() => {
           this.submitStatus = "OK";
-        }, 1000);
+          this.$router.push("/app/sites/");
+        // }, 1000);
       }
     },
     makeToast(variant = null) {

@@ -96,10 +96,10 @@ mounted() {
         this.isLoading = false
       }
         this.submitStatus = "PENDING";
-        setTimeout(() => {
+        // setTimeout(() => {
           this.$router.push("/app/values/");
           this.submitStatus = "OK";
-        }, 1000);
+        // }, 1000);
       }
     },
     makeToast(variant = null) {

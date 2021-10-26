@@ -6,7 +6,7 @@
     />
 
     <b-row class="justify-content-md-center">
-      <b-col md="6">
+      <b-col md="9">
         <b-card>
           <b-form @submit.prevent="submit">
             <b-form-group label="Program Task">
@@ -97,7 +97,7 @@ import { numeric, required } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Form Component",
+    title: "User Program Task | Update",
   },
   data() {
     return {
@@ -175,9 +175,9 @@ export default {
             this.form
           );
           this.submitStatus = "OK";
-          setTimeout(() => {
+          // setTimeout(() => {
             this.$router.push("/app/sites/");
-          }, 1000);
+          // }, 1000);
           this.isLoading = false;
         } catch (e) {
           this.isLoading = false;

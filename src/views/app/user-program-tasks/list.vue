@@ -118,8 +118,8 @@
             class="btn-rounded d-none d-sm-block"
             :to="
               '/app/user-program/' +
-                user_program.id +
-                '/user-program-tasks/create'
+              user_program.id +
+              '/user-program-tasks/create'
             "
             ><i class="i-Add text-white mr-2"> </i>Add User Program Task
           </b-button>
@@ -131,9 +131,9 @@
             <a
               :href="
                 '/app/user-program/' +
-                  user_program.id +
-                  '/user-program-tasks/' +
-                  props.row.id
+                user_program.id +
+                '/user-program-tasks/' +
+                props.row.id
               "
             >
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
@@ -151,6 +151,26 @@
           </span>
           <span v-if="props.column.field == 'completion_date'">
             {{ props.row.completion_date }}
+          </span>
+          <span v-if="props.column.field == 'imagepath1'">
+              <a :href="mediaUrl + props.row.imagepath1" target="_blank">
+                {{ props.row.imagepath1 }}
+              </a>
+          </span>
+          <span v-if="props.column.field == 'imagepath2'">
+              <a :href="mediaUrl + props.row.imagepath2" target="_blank">
+                {{ props.row.imagepath2 }}
+              </a>
+          </span>
+          <span v-if="props.column.field == 'imagepath3'">
+              <a :href="mediaUrl + props.row.imagepath3" target="_blank">
+                {{ props.row.imagepath3 }}
+              </a>
+          </span>
+          <span v-if="props.column.field == 'imagepath4'">
+              <a :href="mediaUrl + props.row.imagepath4" target="_blank">
+                {{ props.row.imagepath4 }}
+              </a>
           </span>
         </template>
       </vue-good-table>
@@ -185,15 +205,30 @@ export default {
           field: "completion_date",
         },
         {
+          label: "ImagePath 1",
+          field: "imagepath1",
+        },
+        {
+          label: "ImagePath 2",
+          field: "imagepath2",
+        },
+        {
+          label: "ImagePath 3",
+          field: "imagepath3",
+        },
+        {
+          label: "ImagePath 4",
+          field: "imagepath4",
+        },
+        {
           label: "Action",
           field: "button",
         },
       ],
       user: {},
       program: {},
-      user_program:{},
+      user_program: {},
       user_program_tasks: [],
-      
     };
   },
   mounted() {
@@ -207,13 +242,15 @@ export default {
         `/user_programs/${this.$route.params.user_program_id}/user_program_tasks`
       );
       this.user_program_tasks = user_program_tasks.data.data;
-      
+
       //UserProgram Data
-      let user_program = await axios.get(`/user_programs/${this.$route.params.user_program_id}`);
+      let user_program = await axios.get(
+        `/user_programs/${this.$route.params.user_program_id}`
+      );
       this.user_program = user_program.data.data;
       this.user = this.user_program.user;
       this.program = this.user_program.program;
-      
+
       this.serialNoStarting = (page - 1) * this.rowsPerPage;
       this.isLoading = false;
     },

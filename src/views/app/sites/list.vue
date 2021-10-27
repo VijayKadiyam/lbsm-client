@@ -18,7 +18,8 @@
         :rows="sites"
       >
         <div slot="table-actions" class="mb-3">
-          <b-button variant="primary" class="btn-rounded d-none d-sm-block"  to="/app/sites/create"
+          <b-button va
+          riant="primary" class="btn-rounded d-none d-sm-block"  to="/app/sites/create"
             ><i class="i-Add text-white mr-2"> </i>Add Site
           </b-button>
         </div>

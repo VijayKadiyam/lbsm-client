@@ -58,6 +58,48 @@
                 >Field is required</b-alert
               >
             </b-form-group>
+            <b-row>
+              <b-col md="6">
+                <b-form-group label="ImagePath 1">
+                  <b-form-file
+                    name="imagepath1"
+                    ref="file1"
+                    accept="image/*"
+                  ></b-form-file>
+                </b-form-group>
+              </b-col>
+
+              <b-col md="6">
+                <b-form-group label="ImagePath 2">
+                  <b-form-file
+                    name="imagepath2"
+                    ref="file2"
+                    accept="image/*"
+                  ></b-form-file>
+                </b-form-group>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="6">
+                <b-form-group label="ImagePath 3">
+                  <b-form-file
+                    name="imagepath3"
+                    ref="file3"
+                    accept="image/*"
+                  ></b-form-file>
+                </b-form-group>
+              </b-col>
+
+              <b-col md="6">
+                <b-form-group label="ImagePath 4">
+                  <b-form-file
+                    name="imagepath4"
+                    ref="file4"
+                    accept="image/*"
+                  ></b-form-file>
+                </b-form-group>
+              </b-col>
+            </b-row>
             <b-form-group label="Is Completed">
               <label class="switch switch-success mr-3">
                 <input
@@ -171,9 +213,10 @@ export default {
           this.submitStatus = "PENDING";
           this.isLoading = true;
           await axios.patch(
-            `user_programs/${this.form.id}/user_program_tasks/${this.$route.params.id}`,
+            `user_programs/${this.form.user_program_id}/user_program_tasks/${this.$route.params.id}`,
             this.form
           );
+          await this.handleFileUpload();
           this.submitStatus = "OK";
           // setTimeout(() => {
             this.$router.push("/app/sites/");
@@ -184,6 +227,32 @@ export default {
           this.submitStatus = "ERROR";
         }
       }
+    },
+    async handleFileUpload() {
+      let attachment1 = this.$refs.file1?.files[0];
+      let attachment2 = this.$refs.file2?.files[0];
+      let attachment3 = this.$refs.file3?.files[0];
+      let attachment4 = this.$refs.file4?.files[0];
+      const user_program_task_id = this.form.id;
+      console.log(attachment1);
+      console.log(attachment2);
+      console.log(attachment3);
+      console.log(attachment4);
+      let formData = new FormData();
+      formData.append("user_program_task_id", user_program_task_id);
+      formData.append("imagepath1", attachment1);
+      formData.append("imagepath2", attachment2);
+      formData.append("imagepath3", attachment3);
+      formData.append("imagepath4", attachment4);
+      await axios
+        .post("upload_user_program_task_images", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .catch(function () {
+          console.log("FAILURE!!");
+        });
     },
     makeToast(variant = null) {
       this.$bvToast.toast("Please fill the form correctly.", {

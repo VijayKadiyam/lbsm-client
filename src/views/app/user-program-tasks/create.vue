@@ -110,42 +110,7 @@
                 /><span class="slider"></span>
               </label>
             </b-form-group>
-            <b-form-group label="Attach File 1">
-              <b-form-file
-                id="file-default"
-                name="imagepath"
-                ref="file"
-                accept="image/*"
-              ></b-form-file>
-            </b-form-group>
-            <b-form-group label="Attach File 2">
-              <b-form-file
-                id="file-default"
-                name="imagepath"
-                ref="file"
-                accept="image/*"
-              ></b-form-file>
-            </b-form-group>
-            <b-form-group label="Attach File 3">
-              <b-form-file
-                id="file-default"
-                name="imagepath"
-                ref="file"
-                accept="image/*"
-              ></b-form-file>
-              
-            </b-form-group>
-            <b-form-group label="Attach File 4">
-              <b-form-file
-                id="file-default"
-                name="imagepath"
-                ref="file"
-                accept="image/*"
-              ></b-form-file>
-            </b-form-group>
-
             
-
             <b-button
               type="submit"
               variant="primary"
@@ -264,8 +229,8 @@ export default {
             `user_programs/${this.user_program.id}/user_program_tasks`,
             this.form
           );
-          this.user_program_task = user_program_task.data.data
-           await this.handleFileUpload();
+          this.user_program_task = user_program_task.data.data;
+          await this.handleFileUpload();
           this.isLoading = false;
           this.submitStatus = "OK";
 

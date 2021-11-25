@@ -78,6 +78,10 @@ const routes = [
             component: () => import("./views/app/users/create"),
           },
           {
+            path: "upload",
+            component: () => import("./views/app/users/upload"),
+          },
+          {
             path: ":id",
             component: () => import("./views/app/users/id"),
           },

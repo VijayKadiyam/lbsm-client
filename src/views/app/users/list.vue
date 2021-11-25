@@ -18,6 +18,9 @@
         :rows="users"
       >
         <div slot="table-actions" class="mb-3">
+          <router-link  tag="a" class to="/app/users/upload">
+            <i class="i-Upload text-25 text-success mr-2"></i
+          ></router-link>
           <b-button
             variant="primary"
             class="btn-rounded d-none d-sm-block"
@@ -26,9 +29,8 @@
           </b-button>
         </div>
 
-        <template slot="table-row" slot-scope="props" >
-         
-          <span v-if="props.column.field == 'button'" >
+        <template slot="table-row" slot-scope="props">
+          <span v-if="props.column.field == 'button'">
             <a :href="'/app/users/' + props.row.id">
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
               {{ props.row.button }}</a

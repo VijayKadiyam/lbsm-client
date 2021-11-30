@@ -3,7 +3,7 @@
     <breadcumb :page="'Create Value'" :folder="'Values'" />
 
     <b-row class="justify-content-md-center">
-      <b-col md="6">
+      <b-col md="9">
         <b-card>
           <b-form @submit.prevent="submit">
             <b-form-group label="Name">

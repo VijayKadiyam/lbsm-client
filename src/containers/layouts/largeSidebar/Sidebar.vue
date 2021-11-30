@@ -13,6 +13,7 @@
     >
       <div>
         <ul class="navigation-left">
+          <!-- Dashboard -->
           <li
             @mouseenter="toggleSubMenu"
             :class="{ active: selectedParentMenu == 'dashboards' }"
@@ -29,6 +30,7 @@
             </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- Site -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -45,6 +47,7 @@
               <div class="triangle"></div>
             </router-link>
           </li>
+          <!-- Users -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -61,6 +64,7 @@
             </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- Permissions -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -77,6 +81,7 @@
             </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- Values -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -93,6 +98,7 @@
             </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- value Lists -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -109,6 +115,7 @@
             </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- Programs -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -125,6 +132,7 @@
             </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- Program Post -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -141,6 +149,7 @@
             </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- User Programs -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -157,6 +166,7 @@
             </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- User Programs Post -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -173,6 +183,7 @@
             </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- User Program Tasks -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"

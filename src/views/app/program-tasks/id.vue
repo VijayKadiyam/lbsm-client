@@ -270,18 +270,13 @@
 <script>
 import axios from "axios";
 import {
-  email,
   numeric,
-  between,
   required,
-  sameAs,
-  minLength,
-  maxLength,
 } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Form Component",
+    title: "Program Task | Update",
   },
   data() {
     return {
@@ -365,7 +360,7 @@ export default {
         try {
           this.isLoading = true;
           this.submitStatus = "PENDING";
-          console.log(this.form);
+          // console.log(this.form);
           await axios.patch(
             `/programs/${this.$route.params.program_id}/program_tasks/${this.$route.params.id}`,
             this.form
@@ -373,11 +368,11 @@ export default {
           this.isLoading = false;
           this.submitStatus = "OK";
 
-          setTimeout(() => {
+          // setTimeout(() => {
             this.$router.push(
               `/app/programs/${this.$route.params.program_id}/program-tasks/`
             );
-          }, 1000);
+          // }, 1000);
         } catch (e) {
           this.isLoading = false;
         }

@@ -3,7 +3,7 @@
     <breadcumb :page="'Update Program'" :folder="'Programs'" />
 
     <b-row class="justify-content-md-center">
-      <b-col md="6">
+      <b-col md="9">
         <b-card>
           <b-form @submit.prevent="submit">
             <b-form-group label="Program Name">
@@ -128,9 +128,9 @@ export default {
           this.isLoading = true;
           await axios.patch(`/programs/${this.$route.params.id}`, this.form);
           this.submitStatus = "OK";
-          setTimeout(() => {
+          // setTimeout(() => {
             this.$router.push("/app/programs/");
-          }, 1000);
+          // }, 1000);
           this.isLoading = false;
         } catch (e) {
           this.isLoading = false;

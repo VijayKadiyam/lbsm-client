@@ -6,7 +6,7 @@
     />
 
     <b-row class="justify-content-md-center">
-      <b-col md="6">
+      <b-col md="9">
         <b-card>
           <b-form @submit.prevent="submit">
             <b-form-group label="Program Task">
@@ -58,6 +58,49 @@
                 >Field is required</b-alert
               >
             </b-form-group>
+            <b-row>
+              <b-col md="6">
+                <b-form-group label="ImagePath 1">
+                  <b-form-file
+                    name="imagepath1"
+                    ref="file1"
+                    accept="image/*"
+                  ></b-form-file>
+                </b-form-group>
+              </b-col>
+
+              <b-col md="6">
+                <b-form-group label="ImagePath 2">
+                  <b-form-file
+                    name="imagepath2"
+                    ref="file2"
+                    accept="image/*"
+                  ></b-form-file>
+                </b-form-group>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="6">
+                <b-form-group label="ImagePath 3">
+                  <b-form-file
+                    name="imagepath3"
+                    ref="file3"
+                    accept="image/*"
+                  ></b-form-file>
+                </b-form-group>
+              </b-col>
+
+              <b-col md="6">
+                <b-form-group label="ImagePath 4">
+                  <b-form-file
+                    name="imagepath4"
+                    ref="file4"
+                    accept="image/*"
+                  ></b-form-file>
+                </b-form-group>
+              </b-col>
+            </b-row>
+
             <b-form-group label="Is Completed">
               <label class="switch switch-success mr-3">
                 <input
@@ -67,42 +110,7 @@
                 /><span class="slider"></span>
               </label>
             </b-form-group>
-            <b-form-group label="Attach File 1">
-              <b-form-file
-                id="file-default"
-                name="imagepath"
-                ref="file"
-                accept="image/*"
-              ></b-form-file>
-            </b-form-group>
-            <b-form-group label="Attach File 2">
-              <b-form-file
-                id="file-default"
-                name="imagepath"
-                ref="file"
-                accept="image/*"
-              ></b-form-file>
-            </b-form-group>
-            <b-form-group label="Attach File 3">
-              <b-form-file
-                id="file-default"
-                name="imagepath"
-                ref="file"
-                accept="image/*"
-              ></b-form-file>
-              
-            </b-form-group>
-            <b-form-group label="Attach File 4">
-              <b-form-file
-                id="file-default"
-                name="imagepath"
-                ref="file"
-                accept="image/*"
-              ></b-form-file>
-            </b-form-group>
-
             
-
             <b-button
               type="submit"
               variant="primary"
@@ -132,14 +140,14 @@ import { numeric, required } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Form Component",
+    title: "Program Task | Create",
   },
   data() {
     return {
       form: {
-        user_id: 1,
-        program_id: 1,
-        program_task_id: 1,
+        user_id: "",
+        program_id: "",
+        program_task_id: "",
         marks_obtained: "",
         is_completed: "",
         completion_date: "",
@@ -216,23 +224,47 @@ export default {
       } else {
         try {
           this.isLoading = true;
-          console.log(this.form);
+          // console.log(this.form);
           let user_program_task = await axios.post(
             `user_programs/${this.user_program.id}/user_program_tasks`,
             this.form
           );
+          this.user_program_task = user_program_task.data.data;
+          await this.handleFileUpload();
           this.isLoading = false;
           this.submitStatus = "OK";
 
-          setTimeout(() => {
-            this.$router.push(
-              `/app/user-program/${this.$route.params.user_program_id}/user-program-tasks/`
-            );
-          }, 1000);
+          // setTimeout(() => {
+          this.$router.push(
+            `/app/user-program/${this.$route.params.user_program_id}/user-program-tasks/`
+          );
+          // }, 1000);
         } catch (e) {
           this.isLoading = false;
         }
       }
+    },
+    async handleFileUpload() {
+      let attachment1 = this.$refs.file1?.files[0];
+      let attachment2 = this.$refs.file2?.files[0];
+      let attachment3 = this.$refs.file3?.files[0];
+      let attachment4 = this.$refs.file4?.files[0];
+      const user_program_task_id = this.user_program_task.id;
+      let formData = new FormData();
+      formData.append("user_program_task_id", user_program_task_id);
+      formData.append("imagepath1", attachment1);
+      formData.append("imagepath2", attachment2);
+      formData.append("imagepath3", attachment3);
+      formData.append("imagepath4", attachment4);
+      await axios
+        .post("upload_user_program_task_images", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .catch(function () {
+          console.log("FAILURE!!");
+        });
     },
     makeToast(variant = null) {
       this.$bvToast.toast("Please fill the form correctly.", {

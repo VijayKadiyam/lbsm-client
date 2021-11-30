@@ -241,10 +241,10 @@ export default {
           this.isLoading = false;
         }
         this.submitStatus = "PENDING";
-        setTimeout(() => {
-          this.$router.push("/app/users");
+        // setTimeout(() => {
           this.submitStatus = "OK";
-        }, 1000);
+          this.$router.push("/app/users");
+        // }, 1000);
       }
     },
     async handleFileUpload() {

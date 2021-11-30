@@ -3,7 +3,7 @@
     <breadcumb :page="'Create Program'" :folder="'Programs'" />
 
     <b-row class="justify-content-md-center">
-      <b-col md="6">
+      <b-col md="9">
         <b-card>
           <b-form @submit.prevent="submit">
             <b-form-group label="Program Name">
@@ -118,14 +118,14 @@ export default {
         try {
           this.isLoading = true;
           this.submitStatus = "PENDING";
-          console.log(this.form);
+          // console.log(this.form);
           await axios.post("/programs", this.form);
           this.isLoading = false;
           this.submitStatus = "OK";
 
-          setTimeout(() => {
+          // setTimeout(() => {
             this.$router.push("/app/programs/");
-          }, 1000);
+          // }, 1000);
         } catch (e) {
           this.isLoading = false;
         }

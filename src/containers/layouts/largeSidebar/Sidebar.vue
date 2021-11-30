@@ -19,12 +19,14 @@
             class="nav-item"
             data-item="dashboards"
             :data-submenu="true"
+            v-if="this.userPermissions.indexOf(1) != -1"
           >
-            <a class="nav-item-hold" href="#">
-              <i class="nav-icon i-Bar-Chart"></i>
-              <span class="nav-text">{{ $t("dashboard") }}</span>
-            </a>
-
+            <router-link tag="a" class="nav-item-hold" to="/app/dashboards/dashboard.v5">
+              <a class="nav-item-hold" href="#">
+                <i class="nav-icon i-Bar-Chart"></i>
+                <span class="nav-text">{{ $t("dashboard") }}</span>
+              </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
           <li
@@ -33,12 +35,15 @@
             :class="{ active: selectedParentMenu == 'sites' }"
             data-item="sites"
             :data-submenu="true"
+            v-if="this.userPermissions.indexOf(2) != -1"
           >
-            <a class="nav-item-hold" href="#">
-              <i class="nav-icon i-File-Clipboard-File--Text"></i>
-              <span class="nav-text">Sites</span>
-            </a>
-            <div class="triangle"></div>
+            <router-link tag="a" class="nav-item-hold" to="/app/sites/list">
+              <a class="nav-item-hold" href="#">
+                <i class="nav-icon i-File-Clipboard-File--Text"></i>
+                <span class="nav-text">Sites</span>
+              </a>
+              <div class="triangle"></div>
+            </router-link>
           </li>
           <li
             @mouseenter="toggleSubMenu"
@@ -46,11 +51,14 @@
             :class="{ active: selectedParentMenu == 'users' }"
             data-item="users"
             :data-submenu="true"
+            v-if="this.userPermissions.indexOf(3) != -1"
           >
-            <a class="nav-item-hold" href="#">
-              <i class="nav-icon i-File-Clipboard-File--Text"></i>
-              <span class="nav-text">Users</span>
-            </a>
+            <router-link tag="a" class="nav-item-hold" to="/app/users/list">
+              <a class="nav-item-hold" href="#">
+                <i class="nav-icon i-File-Clipboard-File--Text"></i>
+                <span class="nav-text">Users</span>
+              </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
           <li
@@ -59,11 +67,14 @@
             :class="{ active: selectedParentMenu == 'permissions' }"
             data-item="permissions"
             :data-submenu="true"
+            v-if="this.userPermissions.indexOf(4) != -1"
           >
-            <a class="nav-item-hold" href="#">
-              <i class="nav-icon text-20 i-Check"></i>
-              <span class="nav-text">Permissions</span>
-            </a>
+            <router-link tag="a" class="nav-item-hold" to="/app/permissions/list">
+              <a class="nav-item-hold" href="#">
+                <i class="nav-icon text-20 i-Check"></i>
+                <span class="nav-text">Permissions</span>
+              </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
           <li
@@ -72,11 +83,14 @@
             :class="{ active: selectedParentMenu == 'values' }"
             data-item="values"
             :data-submenu="true"
+            v-if="this.userPermissions.indexOf(5) != -1"
           >
-            <a class="nav-item-hold" href="#">
-              <i class="nav-icon text-20 i-Diploma-2"></i>
-              <span class="nav-text">Values</span>
-            </a>
+            <router-link tag="a" class="nav-item-hold" to="/app/values/list">
+              <a class="nav-item-hold" href="#">
+                <i class="nav-icon text-20 i-Diploma-2"></i>
+                <span class="nav-text">Values</span>
+              </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
           <li
@@ -85,11 +99,14 @@
             :class="{ active: selectedParentMenu == 'value-lists' }"
             data-item="value-lists"
             :data-submenu="true"
+            v-if="this.userPermissions.indexOf(6) != -1"
           >
-            <a class="nav-item-hold" href="#">
-              <i class="nav-icon text-20 i-Diploma-2"></i>
-              <span class="nav-text">Value Lists</span>
-            </a>
+            <router-link tag="a" class="nav-item-hold" to="/app/value-lists/list">
+              <a class="nav-item-hold" href="#">
+                <i class="nav-icon text-20 i-Diploma-2"></i>
+                <span class="nav-text">Value Lists</span>
+              </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
           <li
@@ -98,11 +115,14 @@
             :class="{ active: selectedParentMenu == 'programs' }"
             data-item="programs"
             :data-submenu="true"
+            v-if="this.userPermissions.indexOf(7) != -1"
           >
-            <a class="nav-item-hold" href="#">
-              <i class="nav-icon text-20 i-Diploma-2"></i>
-              <span class="nav-text">Programs</span>
-            </a>
+            <router-link tag="a" class="nav-item-hold" to="/app/programs/list">
+              <a class="nav-item-hold" href="#">
+                <i class="nav-icon text-20 i-Diploma-2"></i>
+                <span class="nav-text">Programs</span>
+              </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
           <li
@@ -111,11 +131,14 @@
             :class="{ active: selectedParentMenu == 'program-posts' }"
             data-item="program-posts"
             :data-submenu="true"
+            v-if="this.userPermissions.indexOf(8) != -1"
           >
-            <a class="nav-item-hold" href="#">
-              <i class="nav-icon text-20 i-Diploma-2"></i>
-              <span class="nav-text">Program Posts</span>
-            </a>
+            <router-link tag="a" class="nav-item-hold" to="/app/program-posts/list">
+              <a class="nav-item-hold" href="#">
+                <i class="nav-icon text-20 i-Diploma-2"></i>
+                <span class="nav-text">Program Posts</span>
+              </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
           <li
@@ -124,11 +147,14 @@
             :class="{ active: selectedParentMenu == 'user-programs' }"
             data-item="user-programs"
             :data-submenu="true"
+            v-if="this.userPermissions.indexOf(9) != -1"
           >
-            <a class="nav-item-hold" href="#">
-              <i class="nav-icon text-20 i-Diploma-2"></i>
-              <span class="nav-text">User Programs</span>
-            </a>
+            <router-link tag="a" class="nav-item-hold" to="/app/user-programs/list">
+              <a class="nav-item-hold" href="#">
+                <i class="nav-icon text-20 i-Diploma-2"></i>
+                <span class="nav-text">User Programs</span>
+              </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
           <li
@@ -137,11 +163,14 @@
             :class="{ active: selectedParentMenu == 'user-program-posts' }"
             data-item="user-program-posts"
             :data-submenu="true"
+            v-if="this.userPermissions.indexOf(10) != -1"
           >
-            <a class="nav-item-hold" href="#">
-              <i class="nav-icon text-20 i-Diploma-2"></i>
-              <span class="nav-text">User Program Posts</span>
-            </a>
+            <router-link tag="a" class="nav-item-hold" to="/app/user-program-posts/list">
+              <a class="nav-item-hold" href="#">
+                <i class="nav-icon text-20 i-Diploma-2"></i>
+                <span class="nav-text">User Program Posts</span>
+              </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
           <li
@@ -150,11 +179,14 @@
             :class="{ active: selectedParentMenu == 'user-program-tasks' }"
             data-item="user-program-tasks"
             :data-submenu="true"
+            v-if="this.userPermissions.indexOf(11) != -1"
           >
-            <a class="nav-item-hold" href="#">
-              <i class="nav-icon text-20 i-Diploma-2"></i>
-              <span class="nav-text">User Program Tasks</span>
-            </a>
+            <router-link tag="a" class="nav-item-hold" to="/app/user-program-tasks/list">
+              <a class="nav-item-hold" href="#">
+                <i class="nav-icon text-20 i-Diploma-2"></i>
+                <span class="nav-text">User Program Tasks</span>
+              </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
           

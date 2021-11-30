@@ -14,7 +14,7 @@ const routes = [
     path: "/",
     component: () => import("./views/app"), //webpackChunkName app
     beforeEnter: authenticate,
-    redirect: "/app/dashboards/dashboard.v1",
+    redirect: "/app/dashboards/dashboard.v5",
 
     children: [
       {
@@ -40,6 +40,11 @@ const routes = [
             path: "dashboard.v4",
             name: "dashboard.v4",
             component: () => import("./views/app/dashboards/dashboard.v4"),
+          },
+          {
+            path: "dashboard.v5",
+            name: "dashboard.v5",
+            component: () => import("./views/app/dashboards/dashboard.v5"),
           },
         ],
       },
@@ -306,7 +311,8 @@ const router = new Router({
   mode: "history",
   linkActiveClass: "open",
   routes,
-  scrollBehavior(to, from, savedPosition) {
+  // scrollBehavior(to, from, savedPosition) {
+  scrollBehavior() {
     return { x: 0, y: 0 };
   },
 });

@@ -60,8 +60,20 @@ export default {
           field: "first_name",
         },
         {
-          label: "User Name",
-          field: "user_name",
+          label: "Last Name",
+          field: "last_name",
+        },
+        {
+          label: "Rank",
+          field: "rank",
+        },
+        {
+          label: "Nationality",
+          field: "nationality",
+        },
+        {
+          label: "Danos ID",
+          field: "unique_id",
         },
         {
           label: "Gender",
@@ -71,17 +83,10 @@ export default {
           label: "Email",
           field: "email",
         },
-        {
-          label: "Middle Name",
-          field: "middle_name",
-        },
-        {
-          label: "Date Of Birth",
-          field: "dob",
-          type: "date",
-          dateInputFormat: "yyyy-MM-dd",
-          dateOutputFormat: "dd-MM-yyyy",
-        },
+        // {
+        //   label: "Date Of Birth",
+        //   field: "dob",
+        // },
         {
           label: "Action",
           field: "button",

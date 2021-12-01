@@ -212,12 +212,12 @@
     >
       <div ref="sidebarChild">
         <!-- Submenu Dashboards -->
-        <ul
+        <!-- <ul
           class="childNav d-none"
           data-parent="dashboards"
           :class="{ 'd-block': selectedParentMenu == 'dashboards' }"
-        >
-          <li class="nav-item">
+        > -->
+          <!-- <li class="nav-item">
             <router-link tag="a" class to="/app/dashboards/dashboard.v1">
               <i class="nav-icon i-Clock-3"></i>
               <span class="item-name">{{
@@ -248,8 +248,8 @@
                 $t("dashboardItems.versionFour")
               }}</span>
             </router-link>
-          </li>
-        </ul>
+          </li> -->
+        <!-- </ul> -->
         <!-- Submenu Sites -->
         <ul
           class="childNav d-none"

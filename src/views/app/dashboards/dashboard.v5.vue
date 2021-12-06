@@ -30,18 +30,20 @@
             v-model="form.year"
             text="Year"
             class="mb-2 mr-2"
-            
           >
-            <b-dropdown-item v-for="year in years" 
-                    :key="year.value" 
-                    :value="year.value"
-                    @click="getData(year.value)">{{ year.value }}</b-dropdown-item>
+            <b-dropdown-item
+              v-for="year in years"
+              :key="year.value"
+              :value="year.value"
+              @click="getData(year.value)"
+              >{{ year.value }}</b-dropdown-item
+            >
             <!-- <b-dropdown-item >2021</b-dropdown-item> -->
           </b-dropdown>
         </b-card>
       </b-col>
     </b-row>
-    
+
     <b-row>
       <b-col lg="12" md="12" sm="12">
         <b-card title="Users management" class="mb-30">
@@ -52,14 +54,16 @@
                 <p class="text-muted mt-2 mb-2">
                   Total Programs Running <br />
                 </p>
-                <p class="text-primary text-24 line-height-1 m-0">{{ program_count || 0}}</p>
+                <p class="text-primary text-24 line-height-1 m-0">
+                  {{ program_count || 0 }}
+                </p>
               </b-card>
             </b-col>
             <b-col lg="4" md="6" sm="6">
               <b-card class="card-icon text-center mb-30">
                 <i class="i-Gear"></i>
                 <p class="text-muted mt-2 mb-2">
-                    Total Tasks Completed
+                  Total Tasks Completed
                 </p>
                 <p class="text-primary text-24 line-height-1 m-0">121</p>
               </b-card>
@@ -68,7 +72,7 @@
               <b-card class="card-icon text-center mb-30">
                 <i class="i-Bell"></i>
                 <p class="text-muted mt-2 mb-2">
-                    Inactive Users
+                  Inactive Users
                 </p>
                 <p class="text-primary text-24 line-height-1 m-0">20</p>
               </b-card>
@@ -79,7 +83,9 @@
                 <p class="text-muted mt-2 mb-2">
                   Deck Cadets
                 </p>
-                <p class="line-height-1 text-title text-18 mt-2 mb-0">{{userCounts[3].count}}</p>
+                <p class="line-height-1 text-title text-18 mt-2 mb-0">
+                  {{ userCounts[3].count }}
+                </p>
               </b-card>
             </b-col>
             <b-col lg="2" md="6" sm="6">
@@ -88,7 +94,9 @@
                 <p class="text-muted mt-2 mb-2">
                   Engine Cadets
                 </p>
-                <p class="line-height-1 text-title text-18 mt-2 mb-0">{{userCounts[4].count || 0}}</p>
+                <p class="line-height-1 text-title text-18 mt-2 mb-0">
+                  {{ userCounts[4].count || 0 }}
+                </p>
               </b-card>
             </b-col>
             <b-col lg="2" md="6" sm="6">
@@ -97,7 +105,9 @@
                 <p class="text-muted mt-2 mb-2">
                   Fourth Engineer
                 </p>
-                <p class="line-height-1 text-title text-18 mt-2 mb-0">{{userCounts[6].count || 0}}</p>
+                <p class="line-height-1 text-title text-18 mt-2 mb-0">
+                  {{ userCounts[6].count || 0 }}
+                </p>
               </b-card>
             </b-col>
             <b-col lg="2" md="6" sm="6">
@@ -106,7 +116,9 @@
                 <p class="text-muted mt-2 mb-2">
                   Third Engineer
                 </p>
-                <p class="line-height-1 text-title text-18 mt-2 mb-0">{{userCounts[11].count || 0}}</p>
+                <p class="line-height-1 text-title text-18 mt-2 mb-0">
+                  {{ userCounts[11].count || 0 }}
+                </p>
               </b-card>
             </b-col>
             <b-col lg="2" md="6" sm="6">
@@ -115,7 +127,9 @@
                 <p class="text-muted mt-2 mb-2">
                   Second Engineer
                 </p>
-                <p class="line-height-1 text-title text-18 mt-2 mb-0">{{userCounts[9].count || 0}}</p>
+                <p class="line-height-1 text-title text-18 mt-2 mb-0">
+                  {{ userCounts[9].count || 0 }}
+                </p>
               </b-card>
             </b-col>
             <b-col lg="2" md="6" sm="6">
@@ -124,7 +138,9 @@
                 <p class="text-muted mt-2 mb-2">
                   Chief Engineer
                 </p>
-                <p class="line-height-1 text-title text-18 mt-2 mb-0">{{userCounts[1].count || 0}}</p>
+                <p class="line-height-1 text-title text-18 mt-2 mb-0">
+                  {{ userCounts[1].count || 0 }}
+                </p>
               </b-card>
             </b-col>
             <b-col lg="4" md="6" sm="6">
@@ -133,7 +149,9 @@
                 <p class="text-muted mt-2 mb-2">
                   Third Officer
                 </p>
-                <p class="line-height-1 text-title text-18 mt-2 mb-0">{{userCounts[12].count + userCounts[13].count }}</p>
+                <p class="line-height-1 text-title text-18 mt-2 mb-0">
+                  {{ userCounts[12].count + userCounts[13].count }}
+                </p>
               </b-card>
             </b-col>
             <b-col lg="4" md="6" sm="6">
@@ -142,7 +160,9 @@
                 <p class="text-muted mt-2 mb-2">
                   Second Officer
                 </p>
-                <p class="line-height-1 text-title text-18 mt-2 mb-0">{{userCounts[10].count || 0}}</p>
+                <p class="line-height-1 text-title text-18 mt-2 mb-0">
+                  {{ userCounts[10].count || 0 }}
+                </p>
               </b-card>
             </b-col>
             <b-col lg="4" md="6" sm="6">
@@ -151,7 +171,9 @@
                 <p class="text-muted mt-2 mb-2">
                   Chief Officer
                 </p>
-                <p class="line-height-1 text-title text-18 mt-2 mb-0">{{userCounts[2].count || 0}}</p>
+                <p class="line-height-1 text-title text-18 mt-2 mb-0">
+                  {{ userCounts[2].count || 0 }}
+                </p>
               </b-card>
             </b-col>
           </b-row>
@@ -161,6 +183,35 @@
     <b-row>
       <b-col md="12" lg="12">
         <b-card title="Total Tasks Performed (2021)" class=" mb-30">
+          <b-dropdown
+            variant="primary"
+            id="dropdown-1"
+            text="Ship"
+            class="mb-2 mr-2"
+          >
+            <b-dropdown-item
+              v-for="ship in ships"
+              :key="ship.value"
+              :value="ship.text"
+              @click="getTotalTaskPerformed(ship.value,'')"
+              >{{ ship.text }}</b-dropdown-item
+            >
+          </b-dropdown>
+          <b-dropdown
+            variant="primary"
+            id="dropdown-1"
+            v-model="form.year"
+            text="Rank"
+            class="mb-2 mr-2"
+          >
+            <b-dropdown-item
+              v-for="year in years"
+              :key="year.value"
+              :value="year.value"
+              @click="getTotalTaskPerformed(year.value)"
+              >{{ year.value }}</b-dropdown-item
+            >
+          </b-dropdown>
           <div id="basicArea-chart" style="min-height: 365px">
             <apexchart
               type="bar"
@@ -184,35 +235,37 @@
         </b-card>
       </b-col>
       <b-col md="12" lg="6" sm="6">
-        <b-card title="SCHEDULES PERFORMANCE - EXPECTED VS COMPLETED" class=" mb-30">
-            <div id="basicArea-chart">
-                <apexchart
-                type="radialBar"
-                height="350"
-                :options="PSCDEfRatio.chartOptions"
-                :series="PSCDEfRatio.series"
-                />
-            </div>
+        <b-card
+          title="SCHEDULES PERFORMANCE - EXPECTED VS COMPLETED"
+          class=" mb-30"
+        >
+          <div id="basicArea-chart">
+            <apexchart
+              type="radialBar"
+              height="350"
+              :options="PSCDEfRatio.chartOptions"
+              :series="PSCDEfRatio.series"
+            />
+          </div>
         </b-card>
-     </b-col>
+      </b-col>
     </b-row>
 
     <div class="col-md-12">
-        <div class="card mb-30">
-          <div class="card-body p-0 ">
-            <h5 class="card-title border-bottom p-3 mb-2">Top Performers</h5>
+      <div class="card mb-30">
+        <div class="card-body p-0 ">
+          <h5 class="card-title border-bottom p-3 mb-2">Top Performers</h5>
 
-            <vue-good-table
-              :columns="columns"
-              :line-numbers="false"
-              styleClass="order-table vgt-table"
-              :rows="rows"
-            >
-            </vue-good-table>
-          </div>
+          <vue-good-table
+            :columns="columns"
+            :line-numbers="false"
+            styleClass="order-table vgt-table"
+            :rows="rows"
+          >
+          </vue-good-table>
         </div>
       </div>
-
+    </div>
   </div>
 </template>
 
@@ -232,18 +285,22 @@ export default {
   },
   data() {
     return {
-        TopBasicCauses,
-        ActivitiesWithPPEIssues,
-        PSCDEfRatio,
-        program_count: '',
-        form: {
-          year:'',
-        },
-        years: [
-          {value: 2020, text:2020},
-          {value: 2021, text:2021},
-        ],
-        columns: [
+      TopBasicCauses,
+      ActivitiesWithPPEIssues,
+      PSCDEfRatio,
+      program_count: "",
+      userCounts: [],
+      ttp: [],
+      ships: [],
+      total_tasks_performed: [],
+      form: {
+        year: "",
+      },
+      years: [
+        { value: 2020, text: 2020 },
+        { value: 2021, text: 2021 },
+      ],
+      columns: [
         {
           label: "Sr. No.",
           field: "sr_no",
@@ -288,61 +345,53 @@ export default {
           thClass: "text-right",
         },
       ],
-        rows: [
-            // {
-            // id: 1,
-            // name: "John",
-            // img:
-            //     '<img src="' +
-            //     require("@/assets/images/products/iphone-1.jpg") +
-            //     '" class="rounded-circle avatar-sm" alt=""> <img src="' +
-            //     require("@/assets/images/products/iphone-2.jpg") +
-            //     '" class="rounded-circle avatar-sm" alt="">',
-            // span:
-            //     '<span class="badge badge-pill badge-outline-primary p-2 ">Delivered</span>',
-            // createdAt: "2019-10-31 ",
-            // score: 0.03343,
-            // action:
-            //     '<button class=" btn btn-outline-primary text-black btn-rounded">View</button>'
-            // },
-            
-        ]
-    }
+      rows: [],
+    };
   },
 
-   mounted() {
-    this.year = '2021';
+  mounted() {
+    this.year = "2021";
     this.getData(this.year);
+    this.getMasters();
   },
   methods: {
     async getData(year) {
-      // console.log(year);
+      this.year=year;
       this.isLoading = true;
-      // this.userCounts = [];
-      let userCounts = await axios.get(
-        `/user_counts?year=${year}`
-      );
+      let userCounts = await axios.get(`/user_counts?year=${year}`);
       this.userCounts = userCounts.data.data;
       this.program_count = userCounts.data.program_count;
 
-      let total_tasks_performed=await axios.get(
-        `/total_tasks_performed?year=${year}`
-      );
-        this.total_tasks_performed = total_tasks_performed.data.data;
-      // this.DeckCadets = this.userCounts[3].count
-      // this.EngineCadets = this.userCounts[4].count
-      // this.FourthEngineer = this.userCounts[6].count
-      // this.ThirdEngineer = this.userCounts[11].count
-      // this.SecondEngineer = this.userCounts[9].count
-      // this.ChiefEngineer = this.userCounts[1].count
-      // this.ThirdOfficer = this.userCounts[12].count + userCounts[13].count
-      // this.SecondOfficer = this.userCounts[10].count
-      // this.ChiefOfficer = this.userCounts[2].count
+      let top_performers = await axios.get(`/top_performers?year=${year}`);
+      this.top_performers = top_performers.data.data;
       // this.count = userCounts.data.count;
       // this.serialNoStarting = (page - 1) * this.rowsPerPage;
+      this.getTotalTaskPerformed("", "", year);
       this.isLoading = false;
     },
-  }
+    async getTotalTaskPerformed(ship, rank) {
+      this.isLoading = true;
+      let total_tasks_performed = await axios.get(
+        `/total_tasks_performed?year=${this.year}&ship=${ship}&rank=${rank}`
+      );
+      this.total_tasks_performed = total_tasks_performed.data.data;
+      this.ttp = [];
+      this.month = [];
+      this.total_tasks_performed.forEach((month) => {
+        this.ttp.push(month);
+      });
+    },
+    async getMasters() {
+      let masters = await axios.get(`user_program_tasks/masters`);
+      masters = masters.data;
+      masters.ships.forEach((ship) => {
+        this.ships.push({
+          value: ship.id,
+          text: ship.description,
+        });
+      });
+    },
+  },
 };
 // const year=this.year;
 // start::TopBasicCauses

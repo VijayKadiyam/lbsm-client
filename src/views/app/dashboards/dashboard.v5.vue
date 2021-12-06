@@ -324,6 +324,11 @@ export default {
       );
       this.userCounts = userCounts.data.data;
       this.program_count = userCounts.data.program_count;
+
+      let total_tasks_performed=await axios.get(
+        `/total_tasks_performed?year=${year}`
+      );
+        this.total_tasks_performed = total_tasks_performed.data.data;
       // this.DeckCadets = this.userCounts[3].count
       // this.EngineCadets = this.userCounts[4].count
       // this.FourthEngineer = this.userCounts[6].count
@@ -339,7 +344,7 @@ export default {
     },
   }
 };
-
+// const year=this.year;
 // start::TopBasicCauses
 export const TopBasicCauses = {
   chartOptions: {
@@ -374,7 +379,7 @@ export const TopBasicCauses = {
     ],
     xaxis: {
       categories: [
-        "January 2021",
+        "January ",
         "February 2021",
         "March 201",
         "April 2021",

@@ -43,7 +43,23 @@
         </b-card>
       </b-col>
     </b-row>
-
+    <b-row>
+      <b-col md="12" lg="6" sm="6">
+        <b-card
+          title="SCHEDULES PERFORMANCE - EXPECTED VS COMPLETED"
+          class=" mb-30"
+        >
+          <div id="basicArea-chart">
+            <apexchart
+              type="radialBar"
+              height="350"
+              :options="PSCDEfRatio.chartOptions"
+              :series="PSCDEfRatio.series"
+            />
+          </div>
+        </b-card>
+      </b-col>
+    </b-row>
     <b-row>
       <b-col lg="12" md="12" sm="12">
         <b-card title="Users management" class="mb-30">
@@ -187,7 +203,7 @@
     <b-row>
       <b-col md="12" lg="12">
         <b-card title="Total Tasks Performed (2021)" class=" mb-30">
-          <b-dropdown
+          <!-- <b-dropdown
             variant="primary"
             id="dropdown-1"
             text="Ship"
@@ -200,22 +216,33 @@
               @click="getTotalTaskPerformed(ship.value, rank)"
               >{{ ship.text }}</b-dropdown-item
             >
-          </b-dropdown>
-          <b-dropdown
-            variant="primary"
-            id="dropdown-1"
-            v-model="form.year"
-            text="Rank"
-            class="mb-2 mr-2"
-          >
-            <b-dropdown-item
-              v-for="rank in ranks"
-              :key="rank.value"
-              :value="rank.text"
-              @click="getTotalTaskPerformed(ship, rank.value)"
-              >{{ rank.text }}</b-dropdown-item
-            >
-          </b-dropdown>
+          </b-dropdown> -->
+          <b-row>
+            <b-col md="12" lg="6" sm="6">
+              <vue-tags-input
+                v-model="searchShip"
+                :tags="selectedShip"
+                class="tag-custom text-15 mb-2"
+                :autocomplete-items="filteredShipItems"
+                :add-only-from-autocomplete="true"
+                @tags-changed="(newTags) => (selectedShip = newTags)"
+                placeholder="Type Ship Name"
+              />
+            </b-col>
+            <b-col md="12" lg="6" sm="6">
+              <vue-tags-input
+                v-model="searchRank"
+                :tags="selectedRank"
+                class="tag-custom text-15 mb-2"
+                :autocomplete-items="filteredRankItems"
+                :add-only-from-autocomplete="true"
+                :max-tags="1"
+                @tags-changed="(newTags) => (selectedRank = newTags)"
+                placeholder="Type Rank Name"
+              />
+            </b-col>
+          </b-row>
+
           <div id="basicArea-chart" style="min-height: 365px">
             <apexchart
               type="bar"
@@ -227,34 +254,6 @@
         </b-card>
       </b-col>
     </b-row>
-    <b-row>
-      <b-col lg="6" md="12">
-        <b-card title="Top 5 Tasks Performed" class=" mb-30">
-          <div class="chart-wrapper" style="height: 500px">
-            <v-chart
-              :options="ActivitiesWithPPEIssues"
-              :autoresize="true"
-            ></v-chart>
-          </div>
-        </b-card>
-      </b-col>
-      <b-col md="12" lg="6" sm="6">
-        <b-card
-          title="SCHEDULES PERFORMANCE - EXPECTED VS COMPLETED"
-          class=" mb-30"
-        >
-          <div id="basicArea-chart">
-            <apexchart
-              type="radialBar"
-              height="350"
-              :options="PSCDEfRatio.chartOptions"
-              :series="PSCDEfRatio.series"
-            />
-          </div>
-        </b-card>
-      </b-col>
-    </b-row>
-
     <div class="col-md-12">
       <div class="card mb-30">
         <div class="card-body p-0 ">
@@ -268,8 +267,8 @@
             styleClass="tableOne vgt-table"
             :rows="top_performers_by_average"
           >
-            <div slot="table-actions" class="mb-3">
-              <b-dropdown
+            <div slot="table-actions" class="mb-3 mr-2">
+              <!-- <b-dropdown
                 variant="primary"
                 id="dropdown-1"
                 v-model="form.year"
@@ -277,13 +276,25 @@
                 class="mb-2 mr-2"
               >
                 <b-dropdown-item
-                  v-for="rank in ranks"
-                  :key="rank.value"
+                  v-for="rank in rankItems"
+                  :key="rank.id"
                   :value="rank.text"
-                  @click="getTopPerformers_by_Average(rank.value)"
+                  @click="getTopPerformers_by_Average(rank.id)"
                   >{{ rank.text }}</b-dropdown-item
                 >
-              </b-dropdown>
+              </b-dropdown> -->
+              <vue-tags-input
+                v-model="searchRank"
+                :tags="selectedTopPerformerByAverageRank"
+                class="tag-custom text-15 mb-2"
+                :autocomplete-items="filteredRankItems"
+                :add-only-from-autocomplete="true"
+                :max-tags="1"
+                @tags-changed="
+                  (newTags) => (selectedTopPerformerByAverageRank = newTags)
+                "
+                placeholder="Type Rank Name"
+              />
             </div>
 
             <template slot="table-row" slot-scope="props">
@@ -309,8 +320,8 @@
             styleClass="tableOne vgt-table"
             :rows="top_performers_by_task"
           >
-            <div slot="table-actions" class="mb-3">
-              <b-dropdown
+            <div slot="table-actions" class="mb-3 mr-2">
+              <!-- <b-dropdown
                 variant="primary"
                 id="dropdown-1"
                 v-model="form.year"
@@ -318,13 +329,25 @@
                 class="mb-2 mr-2"
               >
                 <b-dropdown-item
-                  v-for="rank in ranks"
-                  :key="rank.value"
+                  v-for="rank in rankItems"
+                  :key="rank.id"
                   :value="rank.text"
-                  @click="getTopPerformers_by_Task(rank.value)"
+                  @click="getTopPerformers_by_Task(rank.id)"
                   >{{ rank.text }}</b-dropdown-item
                 >
-              </b-dropdown>
+              </b-dropdown> -->
+              <vue-tags-input
+                v-model="searchRank"
+                :tags="selectedTopPerformerByTaskRank"
+                class="tag-custom text-15 mb-2 "
+                :autocomplete-items="filteredRankItems"
+                :add-only-from-autocomplete="true"
+                :max-tags="1"
+                @tags-changed="
+                  (newTags) => (selectedTopPerformerByTaskRank = newTags)
+                "
+                placeholder="Type Rank Name"
+              />
             </div>
 
             <template slot="table-row" slot-scope="props">
@@ -364,8 +387,6 @@ export default {
       userCounts: [],
       ttp: [],
       ships: [],
-      ranks: [],
-      ship: "",
       rank: "",
       top_performers_by_average: [],
       top_performers_by_task: [],
@@ -377,6 +398,15 @@ export default {
         { value: 2020, text: 2020 },
         { value: 2021, text: 2021 },
       ],
+      searchShip: "",
+      selectedShip: [],
+      shipItems: [],
+
+      searchRank: "",
+      selectedRank: [],
+      selectedTopPerformerByAverageRank: [],
+      selectedTopPerformerByTaskRank: [],
+      rankItems: [],
       columns: [
         {
           label: "First Name",
@@ -413,7 +443,12 @@ export default {
       ],
     };
   },
-
+  watch: {
+    selectedShip: "getTotalTaskPerformed",
+    selectedRank: "getTotalTaskPerformed",
+    selectedTopPerformerByAverageRank: "getTopPerformers_by_Average",
+    selectedTopPerformerByTaskRank: "getTopPerformers_by_Task",
+  },
   mounted() {
     this.year = "2021";
     this.getData(this.year);
@@ -447,8 +482,10 @@ export default {
       this.getTopPerformers_by_Task();
       this.isLoading = false;
     },
-    async getTopPerformers_by_Average(rank) {
-      rank = rank ? rank : "";
+    async getTopPerformers_by_Average() {
+      let rank = this.selectedTopPerformerByAverageRank[0]
+        ? this.selectedTopPerformerByAverageRank[0].id
+        : "";
       this.isLoading = true;
       let top_performers_by_average = await axios.get(
         `/top_performers_by_average?year=${this.year}&rank=${rank}`
@@ -456,8 +493,11 @@ export default {
       this.top_performers_by_average = top_performers_by_average.data.data;
       this.isLoading = false;
     },
-    async getTopPerformers_by_Task(rank) {
-      rank = rank ? rank : "";
+    async getTopPerformers_by_Task() {
+      let rank = this.selectedTopPerformerByTaskRank[0]
+        ? this.selectedTopPerformerByTaskRank[0].id
+        : "";
+
       this.isLoading = true;
       let top_performers_by_task = await axios.get(
         `/top_performers_by_task?year=${this.year}&rank=${rank}`
@@ -465,12 +505,15 @@ export default {
       this.top_performers_by_task = top_performers_by_task.data.data;
       this.isLoading = false;
     },
-    async getTotalTaskPerformed(ship, rank) {
-      this.ship = ship ? ship : "";
-      this.rank = rank ? rank : "";
+    async getTotalTaskPerformed() {
+      this.rank = this.selectedRank[0] ? this.selectedRank[0].id : "";
+      this.ships = [];
+      this.selectedShip.forEach((ship) => {
+        this.ships.push(ship.id);
+      });
       this.isLoading = true;
       let total_tasks_performed = await axios.get(
-        `/total_tasks_performed?year=${this.year}&ship=${this.ship}&rank=${this.rank}`
+        `/total_tasks_performed?year=${this.year}&ship=${this.ships}&rank=${this.rank}`
       );
       this.total_tasks_performed = total_tasks_performed.data.data;
       this.ttp = [];
@@ -483,16 +526,32 @@ export default {
       let masters = await axios.get(`analytics/masters`);
       masters = masters.data;
       masters.ships.forEach((ship) => {
-        this.ships.push({
-          value: ship.id,
+        this.shipItems.push({
+          id: ship.id,
           text: ship.description,
         });
       });
       masters.posts.forEach((rank) => {
-        this.ranks.push({
-          value: rank.id,
+        this.rankItems.push({
+          id: rank.id,
           text: rank.description,
         });
+      });
+    },
+  },
+  computed: {
+    filteredShipItems() {
+      return this.shipItems.filter((pt) => {
+        return (
+          pt.text.toLowerCase().indexOf(this.searchShip.toLowerCase()) !== -1
+        );
+      });
+    },
+    filteredRankItems() {
+      return this.rankItems.filter((pt) => {
+        return (
+          pt.text.toLowerCase().indexOf(this.searchRank.toLowerCase()) !== -1
+        );
       });
     },
   },

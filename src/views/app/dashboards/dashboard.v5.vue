@@ -1,7 +1,15 @@
 <template>
   <div class="main-content">
     <breadcumb :page="'Dashboard'" />
-
+    <b-row>
+      <b-col md="12" class="mb-30">
+        <b-card class="h-100">
+          <h4 class="heading display-4 text-primary text-center">
+            Landbridge Ship Management (HK) Limited
+          </h4>
+        </b-card>
+      </b-col>
+    </b-row>
     <b-row>
       <b-col md="12" class="mb-30">
         <b-card class="h-100">
@@ -57,6 +65,13 @@
               :series="PSCDEfRatio.series"
             />
           </div>
+        </b-card>
+      </b-col>
+      <b-col md="12" lg="6" sm="6">
+        <b-card>
+          <h4 class="heading display-4 text-primary text-center">
+            Competancy management system
+          </h4>
         </b-card>
       </b-col>
     </b-row>
@@ -254,47 +269,48 @@
         </b-card>
       </b-col>
     </b-row>
-    <div class="col-md-12">
-      <div class="card mb-30">
-        <div class="card-body p-0 ">
+
+    <b-row>
+      <b-col md="12" lg="12">
+        <b-card>
           <h5 class="card-title border-bottom p-3 mb-2">
-            Top Performers Based on Marks
+            Top Performers Based on {{ filter_type }}
           </h5>
 
           <vue-good-table
-            :columns="TopPerformerByAveragecolumns"
+            :columns="TopPerformercolumns"
             :line-numbers="true"
             styleClass="tableOne vgt-table"
-            :rows="top_performers_by_average"
+            :rows="top_performers"
           >
-            <div slot="table-actions" class="mb-3 mr-2">
-              <!-- <b-dropdown
-                variant="primary"
-                id="dropdown-1"
-                v-model="form.year"
-                text="Rank"
-                class="mb-2 mr-2"
-              >
-                <b-dropdown-item
-                  v-for="rank in rankItems"
-                  :key="rank.id"
-                  :value="rank.text"
-                  @click="getTopPerformers_by_Average(rank.id)"
-                  >{{ rank.text }}</b-dropdown-item
-                >
-              </b-dropdown> -->
-              <vue-tags-input
-                v-model="searchRank"
-                :tags="selectedTopPerformerByAverageRank"
-                class="tag-custom text-15 mb-2"
-                :autocomplete-items="filteredRankItems"
-                :add-only-from-autocomplete="true"
-                :max-tags="1"
-                @tags-changed="
-                  (newTags) => (selectedTopPerformerByAverageRank = newTags)
-                "
-                placeholder="Type Rank Name"
-              />
+            <div slot="table-actions" class="mb-3">
+              <b-row id="act" class="mr-6">
+                <b-col md="6">
+                  <span>Mark</span>
+                  <label class="switch switch-success mr-1 ml-1">
+                    <input
+                      type="checkbox"
+                      checked="checkbox"
+                      v-model="type"
+                    /><span class="slider"></span>
+                  </label>
+                  <span>Task</span>
+                </b-col>
+                <b-col md="6">
+                  <vue-tags-input
+                    v-model="searchRank"
+                    :tags="selectedTopPerformerRank"
+                    class="tag-custom text-15 mb-2 "
+                    :autocomplete-items="filteredRankItems"
+                    :add-only-from-autocomplete="true"
+                    :max-tags="1"
+                    @tags-changed="
+                      (newTags) => (selectedTopPerformerRank = newTags)
+                    "
+                    placeholder="Type Rank Name"
+                  />
+                </b-col>
+              </b-row>
             </div>
 
             <template slot="table-row" slot-scope="props">
@@ -303,62 +319,9 @@
               </span>
             </template>
           </vue-good-table>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-12">
-      <div class="card mb-30">
-        <div class="card-body p-0 ">
-          <h5 class="card-title border-bottom p-3 mb-2">
-            Top Performers Based on Tasks
-          </h5>
-
-          <vue-good-table
-            :columns="TopPerformerByTaskcolumns"
-            :line-numbers="true"
-            styleClass="tableOne vgt-table"
-            :rows="top_performers_by_task"
-          >
-            <div slot="table-actions" class="mb-3 mr-2">
-              <!-- <b-dropdown
-                variant="primary"
-                id="dropdown-1"
-                v-model="form.year"
-                text="Rank"
-                class="mb-2 mr-2"
-              >
-                <b-dropdown-item
-                  v-for="rank in rankItems"
-                  :key="rank.id"
-                  :value="rank.text"
-                  @click="getTopPerformers_by_Task(rank.id)"
-                  >{{ rank.text }}</b-dropdown-item
-                >
-              </b-dropdown> -->
-              <vue-tags-input
-                v-model="searchRank"
-                :tags="selectedTopPerformerByTaskRank"
-                class="tag-custom text-15 mb-2 "
-                :autocomplete-items="filteredRankItems"
-                :add-only-from-autocomplete="true"
-                :max-tags="1"
-                @tags-changed="
-                  (newTags) => (selectedTopPerformerByTaskRank = newTags)
-                "
-                placeholder="Type Rank Name"
-              />
-            </div>
-
-            <template slot="table-row" slot-scope="props">
-              <span v-if="props.column.field == 'gender'">
-                {{ props.row.gender == 0 ? "Male" : "Female" }}
-              </span>
-            </template>
-          </vue-good-table>
-        </div>
-      </div>
-    </div>
+        </b-card>
+      </b-col>
+    </b-row>
   </div>
 </template>
 
@@ -381,6 +344,7 @@ export default {
       TopBasicCauses,
       ActivitiesWithPPEIssues,
       PSCDEfRatio,
+      type: 0,
       program_count: "",
       inActive_user: "",
       total_task_completed: "",
@@ -388,6 +352,7 @@ export default {
       ttp: [],
       ships: [],
       rank: "",
+      top_performers: [],
       top_performers_by_average: [],
       top_performers_by_task: [],
       total_tasks_performed: [],
@@ -406,7 +371,9 @@ export default {
       selectedRank: [],
       selectedTopPerformerByAverageRank: [],
       selectedTopPerformerByTaskRank: [],
+      selectedTopPerformerRank: [],
       rankItems: [],
+      filter_type: "Marks",
       TopPerformerByAveragecolumns: [
         {
           label: "First Name",
@@ -483,6 +450,48 @@ export default {
         //   field: "dob",
         // },
       ],
+      TopPerformercolumns: [
+        {
+          label: "First Name",
+          field: "first_name",
+        },
+        {
+          label: "Last Name",
+          field: "last_name",
+        },
+        {
+          label: "Rank",
+          field: "rank",
+        },
+        {
+          label: "Nationality",
+          field: "nationality",
+        },
+        {
+          label: "Danos ID",
+          field: "unique_id",
+        },
+        {
+          label: "Gender",
+          field: "gender",
+        },
+        {
+          label: "Email",
+          field: "email",
+        },
+        {
+          label: "Average",
+          field: "average",
+        },
+        {
+          label: "Tasks Performed",
+          field: "task_perfomed",
+        },
+        // {
+        //   label: "Date Of Birth",
+        //   field: "dob",
+        // },
+      ],
     };
   },
   watch: {
@@ -490,6 +499,8 @@ export default {
     selectedRank: "getTotalTaskPerformed",
     selectedTopPerformerByAverageRank: "getTopPerformers_by_Average",
     selectedTopPerformerByTaskRank: "getTopPerformers_by_Task",
+    selectedTopPerformerRank: "getTopPerformers",
+    type: "getTopPerformers",
   },
   mounted() {
     this.year = "2021";
@@ -522,6 +533,7 @@ export default {
       this.getTotalTaskPerformed();
       this.getTopPerformers_by_Average();
       this.getTopPerformers_by_Task();
+      this.getTopPerformers();
       this.isLoading = false;
     },
     async getTopPerformers_by_Average() {
@@ -545,6 +557,20 @@ export default {
         `/top_performers_by_task?year=${this.year}&rank=${rank}`
       );
       this.top_performers_by_task = top_performers_by_task.data.data;
+      this.isLoading = false;
+    },
+    async getTopPerformers() {
+      let rank = this.selectedTopPerformerRank[0]
+        ? this.selectedTopPerformerRank[0].id
+        : "";
+
+      this.isLoading = true;
+      let top_performers = await axios.get(
+        `/top_performers?year=${this.year}&rank=${rank}&type=${this.type}`
+      );
+      this.top_performers = top_performers.data.data;
+      this.filter_type = top_performers.data.filter_type;
+      console.log(top_performers);
       this.isLoading = false;
     },
     async getTotalTaskPerformed() {

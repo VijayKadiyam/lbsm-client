@@ -84,7 +84,7 @@
                   Deck Cadets
                 </p>
                 <p class="line-height-1 text-title text-18 mt-2 mb-0">
-                  {{ userCounts[3].count }}
+                  {{ userCounts[3].count || 0 }}
                 </p>
               </b-card>
             </b-col>
@@ -193,7 +193,7 @@
               v-for="ship in ships"
               :key="ship.value"
               :value="ship.text"
-              @click="getTotalTaskPerformed(ship.value,'')"
+              @click="getTotalTaskPerformed(ship.value, rank)"
               >{{ ship.text }}</b-dropdown-item
             >
           </b-dropdown>
@@ -205,11 +205,11 @@
             class="mb-2 mr-2"
           >
             <b-dropdown-item
-              v-for="year in years"
-              :key="year.value"
-              :value="year.value"
-              @click="getTotalTaskPerformed(year.value)"
-              >{{ year.value }}</b-dropdown-item
+              v-for="rank in ranks"
+              :key="rank.value"
+              :value="rank.text"
+              @click="getTotalTaskPerformed(ship, rank.value)"
+              >{{ rank.text }}</b-dropdown-item
             >
           </b-dropdown>
           <div id="basicArea-chart" style="min-height: 365px">
@@ -254,14 +254,80 @@
     <div class="col-md-12">
       <div class="card mb-30">
         <div class="card-body p-0 ">
-          <h5 class="card-title border-bottom p-3 mb-2">Top Performers</h5>
+          <h5 class="card-title border-bottom p-3 mb-2">
+            Top Performers Based on Marks 
+          </h5>
 
           <vue-good-table
             :columns="columns"
-            :line-numbers="false"
-            styleClass="order-table vgt-table"
-            :rows="rows"
+            :line-numbers="true"
+            styleClass="tableOne vgt-table"
+            :rows="top_performers_by_average"
           >
+            <div slot="table-actions" class="mb-3">
+              <b-dropdown
+                variant="primary"
+                id="dropdown-1"
+                v-model="form.year"
+                text="Rank"
+                class="mb-2 mr-2"
+              >
+                <b-dropdown-item
+                  v-for="rank in ranks"
+                  :key="rank.value"
+                  :value="rank.text"
+                  @click="getTopPerformers_by_Average(rank.value)"
+                  >{{ rank.text }}</b-dropdown-item
+                >
+              </b-dropdown>
+            </div>
+
+            <template slot="table-row" slot-scope="props">
+              <span v-if="props.column.field == 'gender'">
+                {{ props.row.gender == 0 ? "Male" : "Female" }}
+              </span>
+            </template>
+          </vue-good-table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="card mb-30">
+        <div class="card-body p-0 ">
+          <h5 class="card-title border-bottom p-3 mb-2">
+            Top Performers Based on Tasks
+          </h5>
+
+          <vue-good-table
+            :columns="columns"
+            :line-numbers="true"
+            styleClass="tableOne vgt-table"
+            :rows="top_performers_by_task"
+          >
+            <div slot="table-actions" class="mb-3">
+              <b-dropdown
+                variant="primary"
+                id="dropdown-1"
+                v-model="form.year"
+                text="Rank"
+                class="mb-2 mr-2"
+              >
+                <b-dropdown-item
+                  v-for="rank in ranks"
+                  :key="rank.value"
+                  :value="rank.text"
+                  @click="getTopPerformers_by_Task(rank.value)"
+                  >{{ rank.text }}</b-dropdown-item
+                >
+              </b-dropdown>
+            </div>
+
+            <template slot="table-row" slot-scope="props">
+              <span v-if="props.column.field == 'gender'">
+                {{ props.row.gender == 0 ? "Male" : "Female" }}
+              </span>
+            </template>
           </vue-good-table>
         </div>
       </div>
@@ -292,6 +358,11 @@ export default {
       userCounts: [],
       ttp: [],
       ships: [],
+      ranks: [],
+      ship: "",
+      rank: "",
+      top_performers_by_average: [],
+      top_performers_by_task: [],
       total_tasks_performed: [],
       form: {
         year: "",
@@ -301,10 +372,6 @@ export default {
         { value: 2021, text: 2021 },
       ],
       columns: [
-        {
-          label: "Sr. No.",
-          field: "sr_no",
-        },
         {
           label: "First Name",
           field: "first_name",
@@ -337,15 +404,7 @@ export default {
         //   label: "Date Of Birth",
         //   field: "dob",
         // },
-        {
-          label: "Action",
-          field: "button",
-          html: true,
-          tdClass: "text-right",
-          thClass: "text-right",
-        },
       ],
-      rows: [],
     };
   },
 
@@ -356,23 +415,43 @@ export default {
   },
   methods: {
     async getData(year) {
-      this.year=year;
+      this.year = year;
       this.isLoading = true;
       let userCounts = await axios.get(`/user_counts?year=${year}`);
       this.userCounts = userCounts.data.data;
       this.program_count = userCounts.data.program_count;
 
-      let top_performers = await axios.get(`/top_performers?year=${year}`);
-      this.top_performers = top_performers.data.data;
       // this.count = userCounts.data.count;
       // this.serialNoStarting = (page - 1) * this.rowsPerPage;
-      this.getTotalTaskPerformed("", "", year);
+      this.getTotalTaskPerformed();
+      this.getTopPerformers_by_Average();
+      this.getTopPerformers_by_Task();
+      this.isLoading = false;
+    },
+    async getTopPerformers_by_Average(rank) {
+      rank = rank ? rank : "";
+      this.isLoading = true;
+      let top_performers_by_average = await axios.get(
+        `/top_performers_by_average?year=${this.year}&rank=${rank}`
+      );
+      this.top_performers_by_average = top_performers_by_average.data.data;
+      this.isLoading = false;
+    },
+    async getTopPerformers_by_Task(rank) {
+      rank = rank ? rank : "";
+      this.isLoading = true;
+      let top_performers_by_task = await axios.get(
+        `/top_performers_by_task?year=${this.year}&rank=${rank}`
+      );
+      this.top_performers_by_task = top_performers_by_task.data.data;
       this.isLoading = false;
     },
     async getTotalTaskPerformed(ship, rank) {
+      this.ship = ship ? ship : "";
+      this.rank = rank ? rank : "";
       this.isLoading = true;
       let total_tasks_performed = await axios.get(
-        `/total_tasks_performed?year=${this.year}&ship=${ship}&rank=${rank}`
+        `/total_tasks_performed?year=${this.year}&ship=${this.ship}&rank=${this.rank}`
       );
       this.total_tasks_performed = total_tasks_performed.data.data;
       this.ttp = [];
@@ -382,12 +461,18 @@ export default {
       });
     },
     async getMasters() {
-      let masters = await axios.get(`user_program_tasks/masters`);
+      let masters = await axios.get(`analytics/masters`);
       masters = masters.data;
       masters.ships.forEach((ship) => {
         this.ships.push({
           value: ship.id,
           text: ship.description,
+        });
+      });
+      masters.posts.forEach((rank) => {
+        this.ranks.push({
+          value: rank.id,
+          text: rank.description,
         });
       });
     },

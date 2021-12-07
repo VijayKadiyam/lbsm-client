@@ -262,7 +262,7 @@
           </h5>
 
           <vue-good-table
-            :columns="columns"
+            :columns="TopPerformerByAveragecolumns"
             :line-numbers="true"
             styleClass="tableOne vgt-table"
             :rows="top_performers_by_average"
@@ -315,7 +315,7 @@
           </h5>
 
           <vue-good-table
-            :columns="columns"
+            :columns="TopPerformerByTaskcolumns"
             :line-numbers="true"
             styleClass="tableOne vgt-table"
             :rows="top_performers_by_task"
@@ -407,7 +407,7 @@ export default {
       selectedTopPerformerByAverageRank: [],
       selectedTopPerformerByTaskRank: [],
       rankItems: [],
-      columns: [
+      TopPerformerByAveragecolumns: [
         {
           label: "First Name",
           field: "first_name",
@@ -435,6 +435,48 @@ export default {
         {
           label: "Email",
           field: "email",
+        },
+        {
+          label: "Average",
+          field: "average",
+        },
+        // {
+        //   label: "Date Of Birth",
+        //   field: "dob",
+        // },
+      ],
+      TopPerformerByTaskcolumns: [
+        {
+          label: "First Name",
+          field: "first_name",
+        },
+        {
+          label: "Last Name",
+          field: "last_name",
+        },
+        {
+          label: "Rank",
+          field: "rank",
+        },
+        {
+          label: "Nationality",
+          field: "nationality",
+        },
+        {
+          label: "Danos ID",
+          field: "unique_id",
+        },
+        {
+          label: "Gender",
+          field: "gender",
+        },
+        {
+          label: "Email",
+          field: "email",
+        },
+        {
+          label: "Tasks Performed",
+          field: "task_perfomed",
         },
         // {
         //   label: "Date Of Birth",

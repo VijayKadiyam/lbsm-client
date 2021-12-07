@@ -65,7 +65,9 @@
                 <p class="text-muted mt-2 mb-2">
                   Total Tasks Completed
                 </p>
-                <p class="text-primary text-24 line-height-1 m-0">121</p>
+                <p class="text-primary text-24 line-height-1 m-0">
+                  {{ total_task_completed || 0 }}
+                </p>
               </b-card>
             </b-col>
             <b-col lg="4" md="6" sm="6">
@@ -74,7 +76,9 @@
                 <p class="text-muted mt-2 mb-2">
                   Inactive Users
                 </p>
-                <p class="text-primary text-24 line-height-1 m-0">20</p>
+                <p class="text-primary text-24 line-height-1 m-0">
+                  {{ inActive_user || 0 }}
+                </p>
               </b-card>
             </b-col>
             <b-col lg="2" md="6" sm="6">
@@ -255,7 +259,7 @@
       <div class="card mb-30">
         <div class="card-body p-0 ">
           <h5 class="card-title border-bottom p-3 mb-2">
-            Top Performers Based on Marks 
+            Top Performers Based on Marks
           </h5>
 
           <vue-good-table
@@ -355,6 +359,8 @@ export default {
       ActivitiesWithPPEIssues,
       PSCDEfRatio,
       program_count: "",
+      inActive_user: "",
+      total_task_completed: "",
       userCounts: [],
       ttp: [],
       ships: [],
@@ -420,9 +426,22 @@ export default {
       let userCounts = await axios.get(`/user_counts?year=${year}`);
       this.userCounts = userCounts.data.data;
       this.program_count = userCounts.data.program_count;
+      this.inActive_user = userCounts.data.inActive_user;
+      this.total_task_completed = userCounts.data.total_task_completed;
 
       // this.count = userCounts.data.count;
       // this.serialNoStarting = (page - 1) * this.rowsPerPage;
+
+      // this.DeckCadets = this.userCounts[3].count
+      // this.EngineCadets = this.userCounts[4].count
+      // this.FourthEngineer = this.userCounts[6].count
+      // this.ThirdEngineer = this.userCounts[11].count
+      // this.SecondEngineer = this.userCounts[9].count
+      // this.ChiefEngineer = this.userCounts[1].count
+      // this.ThirdOfficer = this.userCounts[12].count + userCounts[13].count
+      // this.SecondOfficer = this.userCounts[10].count
+      // this.ChiefOfficer = this.userCounts[2].count
+      // this.count = userCounts.data.count;
       this.getTotalTaskPerformed();
       this.getTopPerformers_by_Average();
       this.getTopPerformers_by_Task();

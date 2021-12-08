@@ -18,15 +18,24 @@
         :rows="users"
       >
         <div slot="table-actions" class="mb-3">
-          <router-link  tag="a" class to="/app/users/upload">
-            <i class="i-Upload text-25 text-success mr-2"></i
-          ></router-link>
-          <b-button
-            variant="primary"
-            class="btn-rounded d-none d-sm-block"
-            to="/app/users/create"
-            ><i class="i-Add text-white mr-2"> </i>Add User
-          </b-button>
+          <b-row>
+            <router-link tag="a" class to="/app/users/upload">
+              <i class="i-Upload text-25 text-success mr-2"></i
+            ></router-link>
+            <b-button
+              @click="$router.back()"
+              variant="primary"
+              class="btn-rounded d-none d-sm-block mr-2"
+              ><i class="i-Arrow-Back-3"></i> BACK</b-button
+            >
+
+            <b-button
+              variant="primary"
+              class="btn-rounded d-none d-sm-block"
+              to="/app/users/create"
+              ><i class="i-Add text-white mr-2"> </i>Add User
+            </b-button>
+          </b-row>
         </div>
 
         <template slot="table-row" slot-scope="props">

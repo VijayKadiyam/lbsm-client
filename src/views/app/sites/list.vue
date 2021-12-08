@@ -18,10 +18,18 @@
         :rows="sites"
       >
         <div slot="table-actions" class="mb-3">
-          <b-button va
-          riant="primary" class="btn-rounded d-none d-sm-block"  to="/app/sites/create"
+          <b-row>
+          <b-button
+              @click="$router.back()"
+              variant="primary"
+              class="btn-rounded d-none d-sm-block mr-2"
+              ><i class="i-Arrow-Back-3"></i> BACK</b-button
+            >
+          <b-button variant="primary" class="btn-rounded d-none d-sm-block"  to="/app/sites/create"
             ><i class="i-Add text-white mr-2"> </i>Add Site
           </b-button>
+        </b-row>  
+
         </div>
 
         <template slot="table-row" slot-scope="props">

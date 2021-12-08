@@ -112,102 +112,41 @@
                 </p>
               </b-card>
             </b-col>
-            <b-col lg="2" md="6" sm="6">
-              <b-card class="card-icon-big text-center mb-30">
+          </b-row>
+          <b-row>
+            <b-col
+              md="6"
+              sm="6"
+              lg="2"
+              v-for="(user, r) in userRankCount"
+              :key="`user${r}`"
+            >
+              <b-card class="card-icon-big text-center mb-30" v-if="r <= 5">
                 <i class="i-Add-User"></i>
                 <p class="text-muted mt-2 mb-2">
-                  Deck Cadets
+                  {{ user.rank +'s' }}
                 </p>
                 <p class="line-height-1 text-title text-18 mt-2 mb-0">
-                  {{ userCounts[3].count || 0 }}
+                  {{ user.userCount || 0 }}
                 </p>
               </b-card>
             </b-col>
-            <b-col lg="2" md="6" sm="6">
-              <b-card class="card-icon-big text-center mb-30">
+          </b-row>
+          <b-row>
+            <b-col
+              md="6"
+              sm="6"
+              lg="4"
+              v-for="(user, r) in userRankCount"
+              :key="`user${r}`"
+            >
+              <b-card class="card-icon-big text-center mb-30" v-if="r > 5">
                 <i class="i-Add-User"></i>
                 <p class="text-muted mt-2 mb-2">
-                  Engine Cadets
+                  {{ user.rank +'s'}}
                 </p>
                 <p class="line-height-1 text-title text-18 mt-2 mb-0">
-                  {{ userCounts[4].count || 0 }}
-                </p>
-              </b-card>
-            </b-col>
-            <b-col lg="2" md="6" sm="6">
-              <b-card class="card-icon-big text-center mb-30">
-                <i class="i-Add-User"></i>
-                <p class="text-muted mt-2 mb-2">
-                  Fourth Engineer
-                </p>
-                <p class="line-height-1 text-title text-18 mt-2 mb-0">
-                  {{ userCounts[6].count || 0 }}
-                </p>
-              </b-card>
-            </b-col>
-            <b-col lg="2" md="6" sm="6">
-              <b-card class="card-icon-big text-center mb-30">
-                <i class="i-Add-User"></i>
-                <p class="text-muted mt-2 mb-2">
-                  Third Engineer
-                </p>
-                <p class="line-height-1 text-title text-18 mt-2 mb-0">
-                  {{ userCounts[11].count || 0 }}
-                </p>
-              </b-card>
-            </b-col>
-            <b-col lg="2" md="6" sm="6">
-              <b-card class="card-icon-big text-center mb-30">
-                <i class="i-Add-User"></i>
-                <p class="text-muted mt-2 mb-2">
-                  Second Engineer
-                </p>
-                <p class="line-height-1 text-title text-18 mt-2 mb-0">
-                  {{ userCounts[9].count || 0 }}
-                </p>
-              </b-card>
-            </b-col>
-            <b-col lg="2" md="6" sm="6">
-              <b-card class="card-icon-big text-center mb-30">
-                <i class="i-Add-User"></i>
-                <p class="text-muted mt-2 mb-2">
-                  Chief Engineer
-                </p>
-                <p class="line-height-1 text-title text-18 mt-2 mb-0">
-                  {{ userCounts[1].count || 0 }}
-                </p>
-              </b-card>
-            </b-col>
-            <b-col lg="4" md="6" sm="6">
-              <b-card class="card-icon-big text-center mb-30">
-                <i class="i-Add-User"></i>
-                <p class="text-muted mt-2 mb-2">
-                  Third Officer
-                </p>
-                <p class="line-height-1 text-title text-18 mt-2 mb-0">
-                  {{ userCounts[12].count + userCounts[13].count }}
-                </p>
-              </b-card>
-            </b-col>
-            <b-col lg="4" md="6" sm="6">
-              <b-card class="card-icon-big text-center mb-30">
-                <i class="i-Add-User"></i>
-                <p class="text-muted mt-2 mb-2">
-                  Second Officer
-                </p>
-                <p class="line-height-1 text-title text-18 mt-2 mb-0">
-                  {{ userCounts[10].count || 0 }}
-                </p>
-              </b-card>
-            </b-col>
-            <b-col lg="4" md="6" sm="6">
-              <b-card class="card-icon-big text-center mb-30">
-                <i class="i-Add-User"></i>
-                <p class="text-muted mt-2 mb-2">
-                  Chief Officer
-                </p>
-                <p class="line-height-1 text-title text-18 mt-2 mb-0">
-                  {{ userCounts[2].count || 0 }}
+                  {{ user.userCount || 0 }}
                 </p>
               </b-card>
             </b-col>
@@ -351,6 +290,7 @@ export default {
       userCounts: [],
       ttp: [],
       ships: [],
+      userRankCount: [],
       rank: "",
       top_performers: [],
       top_performers_by_average: [],
@@ -517,25 +457,89 @@ export default {
       this.inActive_user = userCounts.data.inActive_user;
       this.total_task_completed = userCounts.data.total_task_completed;
 
-      // this.count = userCounts.data.count;
-      // this.serialNoStarting = (page - 1) * this.rowsPerPage;
+      let ThirdOfficerA = 0;
+      let ThirdOfficerB = 0;
+      let ThirdOfficer = {};
+      let FourthEngineerA = 0;
+      let FourthEngineerB = 0;
+      let FourthEngineer = {};
+      this.userCounts.forEach((user) => {
+        if (
+          user.rank != null &&
+          user.rank != "" &&
+          user.rank != "ETO" &&
+          user.rank != "Master"
+        ) {
+          const rank = user.rank;
 
-      // this.DeckCadets = this.userCounts[3].count
-      // this.EngineCadets = this.userCounts[4].count
-      // this.FourthEngineer = this.userCounts[6].count
-      // this.ThirdEngineer = this.userCounts[11].count
-      // this.SecondEngineer = this.userCounts[9].count
-      // this.ChiefEngineer = this.userCounts[1].count
-      // this.ThirdOfficer = this.userCounts[12].count + userCounts[13].count
-      // this.SecondOfficer = this.userCounts[10].count
-      // this.ChiefOfficer = this.userCounts[2].count
-      // this.count = userCounts.data.count;
+          switch (rank) {
+            case "Deck Cadet":
+              user.id = 1;
+              break;
+            case "Engine Cadet":
+              user.id = 2;
+              break;
+            case "Third Officer A":
+              ThirdOfficerA = user.userCount;
+              break;
+            case "Third Officer B":
+              ThirdOfficerB = user.userCount;
+              break;
+            case "Fourth Engineer A":
+              FourthEngineerA = user.userCount;
+              break;
+            case "Second Engineer":
+              user.id = 5;
+              break;
+            case "Fourth Engineer B":
+              FourthEngineerB = user.userCount;
+              break;
+            case "Chief Engineer":
+              user.id = 6;
+              break;
+            case "Third Engineer":
+              user.id = 4;
+              break;
+            case "Second Officer":
+              user.id = 8;
+              break;
+            case "Chief Officer":
+              user.id = 9;
+              break;
+            default:
+              console.log("Try looking up for a hint.");
+          }
+          if (user.id) {
+            this.userRankCount.push(user);
+          }
+        }
+      });
+
+      ThirdOfficer = {
+        id: 7,
+        rank: "Third Officer",
+        userCount: ThirdOfficerA + ThirdOfficerB,
+      };
+      this.userRankCount.push(ThirdOfficer);
+      FourthEngineer = {
+        id: 3,
+        rank: "Forth Engineer",
+        userCount: FourthEngineerA + FourthEngineerB,
+      };
+      this.userRankCount.push(FourthEngineer);
+
+      this.userRankCount.sort((a, b) => a.id - b.id);
+
+      console.log(this.userRankCount);
       this.getTotalTaskPerformed();
       this.getTopPerformers_by_Average();
       this.getTopPerformers_by_Task();
       this.getTopPerformers();
       this.isLoading = false;
     },
+    //     sortedArray(){
+    //     return this.userRankCount.sort((a, b) => a.id - b.id );
+    // },
     async getTopPerformers_by_Average() {
       let rank = this.selectedTopPerformerByAverageRank[0]
         ? this.selectedTopPerformerByAverageRank[0].id

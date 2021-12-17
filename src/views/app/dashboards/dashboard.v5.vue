@@ -4,16 +4,18 @@
     <b-row>
       <b-col md="12" class="mb-30">
         <b-card class="h-100">
-          <h4 class="heading display-4 text-primary text-center">
-            Landbridge Ship Management (HK) Limited
-          </h4>
+          <div
+            class="p-4 rounded d-flex align-items-center bg-primary text-white text-center"
+          >
+              <h4 class="text-30 mb-1 text-white text-center">Competancy management system</h4>
+          </div>
         </b-card>
       </b-col>
     </b-row>
-    <b-row>
+    <!-- <b-row>
       <b-col md="12" class="mb-30">
         <b-card class="h-100">
-          <!-- <b-dropdown
+          <b-dropdown
             variant="primary"
             id="dropdown-1"
             text="Month"
@@ -31,7 +33,7 @@
             <b-dropdown-item>October</b-dropdown-item>
             <b-dropdown-item>November</b-dropdown-item>
             <b-dropdown-item>December</b-dropdown-item>
-          </b-dropdown> -->
+          </b-dropdown>
           <b-dropdown
             variant="primary"
             id="dropdown-1"
@@ -50,31 +52,7 @@
           </b-dropdown>
         </b-card>
       </b-col>
-    </b-row>
-    <b-row>
-      <b-col md="12" lg="6" sm="6">
-        <b-card
-          title="SCHEDULES PERFORMANCE - EXPECTED VS COMPLETED"
-          class=" mb-30"
-        >
-          <div id="basicArea-chart">
-            <apexchart
-              type="radialBar"
-              height="350"
-              :options="PSCDEfRatio.chartOptions"
-              :series="PSCDEfRatio.series"
-            />
-          </div>
-        </b-card>
-      </b-col>
-      <b-col md="12" lg="6" sm="6">
-        <b-card>
-          <h4 class="heading display-4 text-primary text-center">
-            Competancy management system
-          </h4>
-        </b-card>
-      </b-col>
-    </b-row>
+    </b-row> -->
     <b-row>
       <b-col lg="12" md="12" sm="12">
         <b-card title="Users management" class="mb-30">
@@ -153,6 +131,30 @@
           </b-row>
         </b-card>
       </b-col>
+    </b-row>
+    <b-row>
+      <b-col md="12" lg="6" sm="6">
+        <b-card
+          title="SCHEDULES PERFORMANCE - EXPECTED VS COMPLETED"
+          class=" mb-30"
+        >
+          <div id="basicArea-chart">
+            <apexchart
+              type="radialBar"
+              height="350"
+              :options="PSCDEfRatio.chartOptions"
+              :series="PSCDEfRatio.series"
+            />
+          </div>
+        </b-card>
+      </b-col>
+      <!-- <b-col md="12" lg="6" sm="6">
+        <b-card>
+          <h4 class="heading display-4 text-primary text-center">
+            Competancy management system
+          </h4>
+        </b-card>
+      </b-col> -->
     </b-row>
     <b-row>
       <b-col md="12" lg="12">

@@ -1,5 +1,5 @@
 <template>
-  <div class="main-header">
+  <div class="main-header" style="background-color: lightgrey;">
     <div class="logo">
       <img src="@/assets/images/aaibuzz-logo1.png" alt />
     </div>
@@ -9,6 +9,8 @@
       <div></div>
       <div></div>
     </div>
+
+    <h2>Landbridge Ship Management (HK) Limited</h2>
 
 
     <div style="margin: auto"></div>

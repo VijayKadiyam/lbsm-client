@@ -11,7 +11,8 @@
       ref="myData"
       class="sidebar-left rtl-ps-none ps scroll"
     >
-      <div>
+      <div
+      >
         <ul class="navigation-left">
           <!-- Dashboard -->
           <li

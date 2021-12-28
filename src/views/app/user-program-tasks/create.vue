@@ -233,8 +233,11 @@ export default {
       );
       this.program = program.data.data;
 
-      let program_tasks = await axios.get(
-        `programs/${this.user_program.program_id}/program_tasks`
+      // let program_tasks = await axios.get(
+      //   `programs/${this.user_program.program_id}/program_tasks`
+      // );
+      let program_tasks = await axios.post(
+        `program_tasks/filter?user_id=${this.user_program.user_id}`
       );
       this.program_tasks = program_tasks.data.data;
       this.program_tasks.forEach((programTask) => {

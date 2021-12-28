@@ -39,6 +39,20 @@
           <b-form @submit.prevent="submit">
             <b-row>
               <b-col md="6">
+                <b-form-group label="Program Post">
+                  <vue-tags-input
+                    v-model="searchProgramPost"
+                    :tags="selectedProgramPost"
+                    :max-tags="1"
+                    class="tag-custom text-15 mb-2"
+                    :autocomplete-items="filteredProgramPostItems"
+                    :add-only-from-autocomplete="true"
+                    @tags-changed="(newTags) => (selectedProgramPost = newTags)"
+                    placeholder="Type Program Post Name"
+                  />
+                </b-form-group>
+              </b-col>
+              <b-col md="6">
                 <b-form-group label="Serial Number">
                   <b-form-input
                     class="mb-2"
@@ -54,15 +68,10 @@
                     v-if="!$v.form.serial_no.required"
                     >Field is required</b-alert
                   >
-                  <b-alert
-                    show
-                    variant="danger"
-                    class="error mt-1"
-                    v-if="!$v.form.serial_no.numeric"
-                    >Numeric Values Only</b-alert
-                  >
                 </b-form-group>
               </b-col>
+            </b-row>
+            <b-row>
               <b-col md="6">
                 <b-form-group label="Task">
                   <b-form-input
@@ -81,8 +90,6 @@
                   >
                 </b-form-group>
               </b-col>
-            </b-row>
-            <b-row>
               <b-col md="6">
                 <b-form-group label="Objective">
                   <b-form-input
@@ -101,6 +108,8 @@
                   >
                 </b-form-group>
               </b-col>
+            </b-row>
+            <b-row>
               <b-col md="6">
                 <b-form-group label="Material">
                   <b-form-input
@@ -119,8 +128,6 @@
                   >
                 </b-form-group>
               </b-col>
-            </b-row>
-            <b-row>
               <b-col md="6">
                 <b-form-group label="Process">
                   <b-form-input
@@ -139,6 +146,8 @@
                   >
                 </b-form-group>
               </b-col>
+            </b-row>
+            <b-row>
               <b-col md="6">
                 <b-form-group label="No Of Contracts">
                   <b-form-input
@@ -155,17 +164,8 @@
                     v-if="!$v.form.no_of_contracts.required"
                     >Field is required</b-alert
                   >
-                  <b-alert
-                    show
-                    variant="danger"
-                    class="error mt-1"
-                    v-if="!$v.form.no_of_contracts.numeric"
-                    >Numeric Values Only</b-alert
-                  >
                 </b-form-group>
               </b-col>
-            </b-row>
-            <b-row>
               <b-col md="6">
                 <b-form-group label="Time Required">
                   <b-form-input
@@ -186,11 +186,13 @@
                     show
                     variant="danger"
                     class="error mt-1"
-                    v-if="!$v.form.time_required.numeric"
-                    >Numeric Values Only</b-alert
+                    v-if="!$v.form.time_required.decimal"
+                    >Decimals Values Only</b-alert
                   >
                 </b-form-group>
               </b-col>
+            </b-row>
+            <b-row>
               <b-col md="6">
                 <b-form-group label="Total Marks">
                   <b-form-input
@@ -216,8 +218,6 @@
                   >
                 </b-form-group>
               </b-col>
-            </b-row>
-            <b-row>
               <b-col md="6">
                 <b-form-group label="Passing Marks">
                   <b-form-input
@@ -269,10 +269,7 @@
 
 <script>
 import axios from "axios";
-import {
-  numeric,
-  required,
-} from "vuelidate/lib/validators";
+import { numeric, required, decimal } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
@@ -282,6 +279,7 @@ export default {
     return {
       form: {
         program_id: "",
+        program_post_id: "",
         serial_no: "",
         task: "",
         objective: "",
@@ -294,13 +292,18 @@ export default {
       },
       submitStatus: null,
       program: [],
+      program_posts: [],
+
+      searchProgramPost: "",
+      selectedProgramPost: [],
+      program_postItems: [],
     };
   },
   validations: {
     form: {
       serial_no: {
         required,
-        numeric,
+        // numeric,p
       },
       task: {
         required,
@@ -316,11 +319,10 @@ export default {
       },
       no_of_contracts: {
         required,
-        numeric,
       },
       time_required: {
         required,
-        numeric,
+        decimal,
       },
       total_marks: {
         required,
@@ -344,12 +346,21 @@ export default {
         `/programs/${this.$route.params.program_id}`
       );
       this.program = program.data.data;
+      this.program_posts = this.program.program_posts;
+      this.program_posts.forEach((programpost) => {
+        this.program_postItems.push({
+          id: programpost.id,
+          text: programpost.post.description,
+        });
+      });
       this.isLoading = false;
     },
     //   validate form
     async submit() {
       console.log("submit!");
-
+      if (this.selectedProgramPost[0]) {
+        this.form.program_post_id = this.selectedProgramPost[0].id;
+      }
       this.$v.form.$touch();
       if (this.$v.form.$invalid) {
         this.submitStatus = "ERROR";
@@ -367,9 +378,9 @@ export default {
           this.submitStatus = "OK";
 
           // setTimeout(() => {
-            this.$router.push(
-              `/app/programs/${this.$route.params.program_id}/program-tasks/`
-            );
+          this.$router.push(
+            `/app/programs/${this.$route.params.program_id}/program-tasks/`
+          );
           // }, 1000);
         } catch (e) {
           this.isLoading = false;
@@ -393,6 +404,16 @@ export default {
 
     inputSubmit() {
       console.log("submitted");
+    },
+  },
+  computed: {
+    filteredProgramPostItems() {
+      return this.program_postItems.filter((a) => {
+        return (
+          a.text.toLowerCase().indexOf(this.searchProgramPost.toLowerCase()) !==
+          -1
+        );
+      });
     },
   },
 };

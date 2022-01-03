@@ -80,6 +80,36 @@
               {{ props.row.button }}</a
             > -->
           </span>
+          <span v-if="props.column.field == 'program_post' && props.row.program_post">
+            {{props.row.program_post.post.description}}
+          </span>
+          <span v-if="props.column.field == 'task' ">
+            {{props.row.task || ""  }}
+          </span>
+          <span v-if="props.column.field == 'objective' ">
+            {{props.row.objective || ""  }}
+          </span>
+          <span v-if="props.column.field == 'material' ">
+            {{props.row.material || ""  }}
+          </span>
+          <span v-if="props.column.field == 'process' ">
+            {{props.row.process || ""  }}
+          </span>
+          <span v-if="props.column.field == 'no_of_contracts' ">
+            {{props.row.no_of_contracts || ""  }}
+          </span>
+          <span v-if="props.column.field == 'time_required' ">
+            {{props.row.time_required || ""  }}
+          </span>
+          <span v-if="props.column.field == 'total_marks' ">
+            {{props.row.total_marks || ""  }}
+          </span>
+          <span v-if="props.column.field == 'passing_marks' ">
+            {{props.row.passing_marks || ""  }}
+          </span>
+          <span v-if="props.column.field == 'serial_no' ">
+            {{props.row.serial_no || ""  }}
+          </span>
         </template>
       </vue-good-table>
     </b-card>
@@ -99,6 +129,10 @@ export default {
         {
           label: "Serial No",
           field: "serial_no",
+        },
+        {
+          label: "Program Post",
+          field: "program_post",
         },
         {
           label: "Task",

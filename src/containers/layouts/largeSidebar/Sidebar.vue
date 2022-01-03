@@ -12,7 +12,7 @@
       class="sidebar-left rtl-ps-none ps scroll"
     >
       <div
-      >
+       style="background-color: lightgray;">
         <ul class="navigation-left">
           <!-- Dashboard -->
           <li

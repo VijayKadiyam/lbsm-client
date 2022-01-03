@@ -77,7 +77,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 body {
   margin: 0;
-  font-family: "Nunito", sans-serif;
+  font-family: "DM Sans", sans-serif;
   font-size: 0.813rem;
   font-weight: 400;
   line-height: 1.5;
@@ -16993,7 +16993,9 @@ span.fa.fa-chevron-right:before {
   .breadcrumb h1 {
     font-size: 1.5rem;
     line-height: 1;
-    margin: 0; }
+    margin: 0; 
+    color: white;
+  }
   .breadcrumb ul {
     list-style: none;
     padding: 0;

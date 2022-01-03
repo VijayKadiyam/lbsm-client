@@ -2,12 +2,34 @@
   <div class="main-content">
     <breadcumb :page="'Dashboard'" />
     <b-row>
-      <b-col md="12" class="mb-30">
+      <b-col md="6" class="mb-30">
         <b-card class="h-100">
           <div
-            class="p-4 rounded d-flex align-items-center bg-primary text-white text-center"
+            class="rounded bg-primary text-white"
+            style="padding: 3.5rem !important;"
           >
-              <h4 class="text-30 mb-1 text-white text-center">Competancy management system</h4>
+            <h4 class="text-30 mb-1 text-white text-right">
+              Competancy
+              <br />
+              Management
+              <br />
+              System
+            </h4>
+          </div>
+        </b-card>
+      </b-col>
+      <b-col md="6" lg="6" sm="6">
+        <b-card
+          title="SCHEDULES PERFORMANCE - EXPECTED VS COMPLETED"
+          class="mb-30"
+        >
+          <div id="basicArea-chart">
+            <apexchart
+              type="radialBar"
+              height="350"
+              :options="PSCDEfRatio.chartOptions"
+              :series="PSCDEfRatio.series"
+            />
           </div>
         </b-card>
       </b-col>
@@ -48,7 +70,6 @@
               @click="getData(year.value)"
               >{{ year.value }}</b-dropdown-item
             >
-            <!-- <b-dropdown-item >2021</b-dropdown-item> -->
           </b-dropdown>
         </b-card>
       </b-col>
@@ -71,9 +92,7 @@
             <b-col lg="4" md="6" sm="6">
               <b-card class="card-icon text-center mb-30">
                 <i class="i-Gear"></i>
-                <p class="text-muted mt-2 mb-2">
-                  Total Tasks Completed
-                </p>
+                <p class="text-muted mt-2 mb-2">Total Tasks Completed</p>
                 <p class="text-primary text-24 line-height-1 m-0">
                   {{ total_task_completed || 0 }}
                 </p>
@@ -82,9 +101,7 @@
             <b-col lg="4" md="6" sm="6">
               <b-card class="card-icon text-center mb-30">
                 <i class="i-Bell"></i>
-                <p class="text-muted mt-2 mb-2">
-                  Inactive Users
-                </p>
+                <p class="text-muted mt-2 mb-2">Inactive Users</p>
                 <p class="text-primary text-24 line-height-1 m-0">
                   {{ inActive_user || 0 }}
                 </p>
@@ -102,7 +119,7 @@
               <b-card class="card-icon-big text-center mb-30" v-if="r <= 5">
                 <i class="i-Add-User"></i>
                 <p class="text-muted mt-2 mb-2">
-                  {{ user.rank +'s' }}
+                  {{ user.rank + "s" }}
                 </p>
                 <p class="line-height-1 text-title text-18 mt-2 mb-0">
                   {{ user.userCount || 0 }}
@@ -121,7 +138,7 @@
               <b-card class="card-icon-big text-center mb-30" v-if="r > 5">
                 <i class="i-Add-User"></i>
                 <p class="text-muted mt-2 mb-2">
-                  {{ user.rank +'s'}}
+                  {{ user.rank + "s" }}
                 </p>
                 <p class="line-height-1 text-title text-18 mt-2 mb-0">
                   {{ user.userCount || 0 }}
@@ -132,11 +149,11 @@
         </b-card>
       </b-col>
     </b-row>
-    <b-row>
+    <!-- <b-row>
       <b-col md="12" lg="6" sm="6">
         <b-card
           title="SCHEDULES PERFORMANCE - EXPECTED VS COMPLETED"
-          class=" mb-30"
+          class="mb-30"
         >
           <div id="basicArea-chart">
             <apexchart
@@ -148,17 +165,10 @@
           </div>
         </b-card>
       </b-col>
-      <!-- <b-col md="12" lg="6" sm="6">
-        <b-card>
-          <h4 class="heading display-4 text-primary text-center">
-            Competancy management system
-          </h4>
-        </b-card>
-      </b-col> -->
-    </b-row>
+    </b-row> -->
     <b-row>
       <b-col md="12" lg="12">
-        <b-card title="Total Tasks Performed (2021)" class=" mb-30">
+        <b-card title="Total Tasks Performed (2021)" class="mb-30">
           <!-- <b-dropdown
             variant="primary"
             id="dropdown-1"
@@ -241,7 +251,7 @@
                   <vue-tags-input
                     v-model="searchRank"
                     :tags="selectedTopPerformerRank"
-                    class="tag-custom text-15 mb-2 "
+                    class="tag-custom text-15 mb-2"
                     :autocomplete-items="filteredRankItems"
                     :add-only-from-autocomplete="true"
                     :max-tags="1"
@@ -827,5 +837,8 @@ table.tableOne.vgt-table {
 }
 table.vgt-table td {
   padding: 8px;
+}
+.breadcrumb h1 {
+  color: white;
 }
 </style>

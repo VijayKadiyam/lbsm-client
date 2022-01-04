@@ -1,20 +1,34 @@
 <template>
   <div class="main-content">
-    <breadcumb :page="'Dashboard'" />
+    <!-- <breadcumb :page="'Dashboard'" /> -->
     <b-row>
-      <b-col md="6" class="mb-30">
+      <b-col md="12" class="mb-30">
         <b-card class="h-100">
           <div
-            class="rounded bg-primary text-white"
-            style="padding: 3.5rem !important;"
+            class="p-4 rounded text-white"
+            style="background-color: lightgray"
           >
-            <h4 class="text-30 mb-1 text-white text-right">
-              Competancy
-              <br />
-              Management
-              <br />
-              System
-            </h4>
+            <h2 class="text-40 mb-1 text-black text-center">
+              Competancy Management System
+            </h2>
+          </div>
+        </b-card>
+      </b-col>
+    </b-row>
+
+    <b-row>
+      <b-col md="6" lg="6" sm="6">
+        <b-card
+          title="SCHEDULES PERFORMANCE - EXPECTED VS COMPLETED"
+          class="mb-30"
+        >
+          <div id="basicArea-chart">
+            <apexchart
+              type="radialBar"
+              height="350"
+              :options="PSCDEfRatio.chartOptions"
+              :series="PSCDEfRatio.series"
+            />
           </div>
         </b-card>
       </b-col>
@@ -280,10 +294,10 @@
 import axios from "axios";
 
 export default {
-  metaInfo: {
-    // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Dashboard v5",
-  },
+  // metaInfo: {
+  //   // if no subcomponents specify a metaInfo.title, this title will be used
+  //   title: "Dashboard v5",
+  // },
   props: {
     title: {
       type: String,

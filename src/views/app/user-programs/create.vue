@@ -134,7 +134,15 @@ export default {
       masters.users.forEach((user) => {
         this.userItems.push({
           id: user.id,
-          text: user.user_name,
+          text:
+            user.first_name +
+            " " +
+            user.last_name +
+            " (Rank - " +
+            user.rank +
+            ") (Danos - " +
+            user.unique_id +
+            ")",
         });
       });
       this.isLoading = false;
@@ -159,7 +167,7 @@ export default {
           this.submitStatus = "OK";
 
           // setTimeout(() => {
-            this.$router.push("/app/user-programs/");
+          this.$router.push("/app/user-programs/");
           // }, 1000);
         } catch (e) {
           this.isLoading = false;

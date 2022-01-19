@@ -138,7 +138,15 @@ export default {
       this.users.forEach((user) => {
         this.userItems.push({
           id: user.id,
-          text: user.user_name,
+          text:
+            user.first_name +
+            " " +
+            user.last_name +
+            " (Rank - " +
+            user.rank +
+            ") (Danos - " +
+            user.unique_id +
+            ")",
         });
       });
 

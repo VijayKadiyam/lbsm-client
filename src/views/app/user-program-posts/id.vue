@@ -31,6 +31,36 @@
             </b-row>
             <b-row>
               <b-col md="3">
+                <p class="text-muted mt-2 mb-0">Last Name</p>
+              </b-col>
+              <b-col md="9">
+                <p class="text-primary text-24 line-height-1 mb-2">
+                  {{ userdata.last_name }}
+                </p>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="3">
+                <p class="text-muted mt-2 mb-0">Rank</p>
+              </b-col>
+              <b-col md="9">
+                <p class="text-primary text-24 line-height-1 mb-2">
+                  {{ userdata.rank }}
+                </p>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="3">
+                <p class="text-muted mt-2 mb-0">Danos</p>
+              </b-col>
+              <b-col md="9">
+                <p class="text-primary text-24 line-height-1 mb-2">
+                  {{ userdata.unique_id }}
+                </p>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="3">
                 <p class="text-muted mt-2 mb-0">Email</p>
               </b-col>
               <b-col md="9">

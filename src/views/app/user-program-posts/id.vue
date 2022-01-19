@@ -288,7 +288,15 @@ export default {
       this.users.forEach((user) => {
         this.userItems.push({
           id: user.id,
-          text: user.user_name,
+          text:
+            user.first_name +
+            " " +
+            user.last_name +
+            " (Rank - " +
+            user.rank +
+            ") (Danos - " +
+            user.unique_id +
+            ")",
         });
       });
 
@@ -308,19 +316,19 @@ export default {
       );
       this.form = form.data.data;
 
-    this.userdata = this.form.user;
+      this.userdata = this.form.user;
       this.selectedUser.push({
         id: this.userdata.id,
         text: this.userdata.user_name,
       });
 
-    this.programdata = this.form.program;
+      this.programdata = this.form.program;
       this.selectedProgram.push({
         id: this.programdata.id,
         text: this.programdata.program_name,
       });
 
-    this.program_postdata = this.form.program_post;
+      this.program_postdata = this.form.program_post;
       this.selectedProgramPost.push({
         id: this.program_postdata.id,
         text: this.program_postdata.post.description,
@@ -380,7 +388,7 @@ export default {
           this.submitStatus = "OK";
 
           // setTimeout(() => {
-            this.$router.push("/app/user-program-posts/");
+          this.$router.push("/app/user-program-posts/");
           // }, 1000);
         } catch (e) {
           this.isLoading = false;

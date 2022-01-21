@@ -9,7 +9,7 @@
             style="background-color: lightgray"
           >
             <h2 class="text-40 mb-1 text-black text-center">
-              Competancy Management System
+              Competency Management System
             </h2>
           </div>
         </b-card>

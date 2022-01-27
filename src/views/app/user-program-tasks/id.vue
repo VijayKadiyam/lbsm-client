@@ -75,7 +75,6 @@
                   <b-form-file
                     name="imagepath1"
                     ref="file1"
-                    accept="image/*"
                   ></b-form-file>
                 </b-form-group>
               </b-col>
@@ -85,7 +84,6 @@
                   <b-form-file
                     name="imagepath2"
                     ref="file2"
-                    accept="image/*"
                   ></b-form-file>
                 </b-form-group>
               </b-col>
@@ -96,7 +94,6 @@
                   <b-form-file
                     name="imagepath3"
                     ref="file3"
-                    accept="image/*"
                   ></b-form-file>
                 </b-form-group>
               </b-col>
@@ -106,7 +103,6 @@
                   <b-form-file
                     name="imagepath4"
                     ref="file4"
-                    accept="image/*"
                   ></b-form-file>
                 </b-form-group>
               </b-col>

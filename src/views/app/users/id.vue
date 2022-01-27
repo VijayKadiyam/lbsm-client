@@ -126,13 +126,13 @@
                   >
                     {{ $v.form.email.$model }} is invalid.</b-alert
                   >
-                  <b-alert
+                  <!-- <b-alert
                     show
                     variant="danger"
                     class="error mt-1"
                     v-if="!$v.form.email.required"
                     >Field is required</b-alert
-                  >
+                  > -->
                 </b-form-group>
               </b-col>
               <b-col md="6">
@@ -143,6 +143,33 @@
                     ref="file"
                     accept="image/*"
                   ></b-form-file>
+                </b-form-group>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="6">
+                <b-form-group label="Rank">
+                  <vue-tags-input
+                    v-model="searchRank"
+                    :tags="selectedRank"
+                    :max-tags="1"
+                    class="tag-custom text-15 mb-2"
+                    :autocomplete-items="filteredRankItems"
+                    :add-only-from-autocomplete="true"
+                    @tags-changed="(newTags) => (selectedRank = newTags)"
+                    placeholder="Type Rank Name"
+                  />
+                </b-form-group>
+              </b-col>
+              <b-col md="6">
+                <b-form-group label="Danos Id">
+                  <b-form-input
+                    class="mb-2"
+                    label="Danos"
+                    placeholder="Danos Id"
+                    v-model="form.unique_id"
+                  >
+                  </b-form-input>
                 </b-form-group>
               </b-col>
             </b-row>
@@ -200,6 +227,9 @@ export default {
         active: 1,
         role_id: 4,
       },
+      searchRank: "",
+      selectedRank: [],
+      RankItems: [],
       submitStatus: null,
     };
   },
@@ -212,7 +242,7 @@ export default {
         required,
       },
       email: {
-        required,
+        // required,
         email,
       },
     },
@@ -231,14 +261,34 @@ export default {
     // validationsGroup:['peopleAdd.multipleFirst Name']
   },
   mounted() {
+    this.getMasters();
     // this.form.site_id = this.site.id
     this.getData();
   },
+  computed: {
+    filteredRankItems() {
+      return this.RankItems.filter((u) => {
+        return (
+          u.text.toLowerCase().indexOf(this.searchRank.toLowerCase()) !== -1
+        );
+      });
+    },
+  },
   methods: {
+    async getMasters() {
+      let masters = await axios.get("users/masters");
+      masters = masters.data;
+      masters.ranks.forEach((rank) => {
+        this.RankItems.push({
+          id: rank.id,
+          text: rank.description,
+        });
+      });
+    },
     //   validate form
     async submit() {
       console.log("submit!");
-
+       this.form.rank_id = this.selectedRank[0].id;
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
@@ -296,8 +346,14 @@ export default {
     },
     async getData() {
       this.isLoading = true;
+      
       let form = await axios.get(`/users/${this.$route.params.id}`);
       this.form = form.data.data;
+      this.rankdata = this.RankItems.find((sp) => sp.id == this.form.rank_id);
+      this.selectedRank.push({
+        id: this.rankdata.id,
+        text: this.rankdata.text,
+      });
       this.isLoading = false;
     },
   },

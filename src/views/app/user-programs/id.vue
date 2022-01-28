@@ -136,11 +136,11 @@ export default {
         this.userItems.push({
           id: user.id,
           text:
-            user.first_name +
+            user.user_name +
             " " +
             user.last_name +
             " (Rank - " +
-            user.rank +
+            user.rank.description +
             ") (Danos - " +
             user.unique_id +
             ")",
@@ -154,7 +154,15 @@ export default {
       this.form = form.data.data;
       this.selectedUser.push({
         id: this.form.user.id,
-        text: this.form.user.user_name,
+        text:
+          this.form.user.user_name +
+          " " +
+          this.form.user.last_name +
+          " (Rank - " +
+          this.form.user.rank.description +
+          ") (Danos - " +
+          this.form.user.unique_id +
+          ")",
       });
       this.selectedProgram.push({
         id: this.form.program.id,

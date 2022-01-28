@@ -72,38 +72,26 @@
             <b-row>
               <b-col md="6">
                 <b-form-group label="ImagePath 1">
-                  <b-form-file
-                    name="imagepath1"
-                    ref="file1"
-                  ></b-form-file>
+                  <b-form-file name="imagepath1" ref="file1"></b-form-file>
                 </b-form-group>
               </b-col>
 
               <b-col md="6">
                 <b-form-group label="ImagePath 2">
-                  <b-form-file
-                    name="imagepath2"
-                    ref="file2"
-                  ></b-form-file>
+                  <b-form-file name="imagepath2" ref="file2"></b-form-file>
                 </b-form-group>
               </b-col>
             </b-row>
             <b-row>
               <b-col md="6">
                 <b-form-group label="ImagePath 3">
-                  <b-form-file
-                    name="imagepath3"
-                    ref="file3"
-                  ></b-form-file>
+                  <b-form-file name="imagepath3" ref="file3"></b-form-file>
                 </b-form-group>
               </b-col>
 
               <b-col md="6">
                 <b-form-group label="ImagePath 4">
-                  <b-form-file
-                    name="imagepath4"
-                    ref="file4"
-                  ></b-form-file>
+                  <b-form-file name="imagepath4" ref="file4"></b-form-file>
                 </b-form-group>
               </b-col>
             </b-row>
@@ -229,7 +217,7 @@ export default {
       this.program_tasks.forEach((programTask) => {
         this.program_taskItems.push({
           id: programTask.id,
-          text: programTask.task,
+          text: programTask.serial_no + "-" + programTask.task,
         });
       });
     },
@@ -246,7 +234,7 @@ export default {
       this.program_task = this.form.program_task;
       this.selectedProgramTask.push({
         id: this.program_task.id,
-        text: this.program_task.task,
+        text: this.program_task.serial_no + "-" + this.program_task.task,
       });
       this.selectedShip.push({
         id: this.ship.id,
@@ -307,7 +295,7 @@ export default {
             "Content-Type": "multipart/form-data",
           },
         })
-        .catch(function () {
+        .catch(function() {
           console.log("FAILURE!!");
         });
     },

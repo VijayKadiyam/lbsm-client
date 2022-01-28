@@ -239,7 +239,7 @@ export default {
       this.program_tasks.forEach((programTask) => {
         this.program_taskItems.push({
           id: programTask.id,
-          text: programTask.task,
+          text: programTask.serial_no +"-"+ programTask.task,
         });
       });
     },

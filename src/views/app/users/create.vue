@@ -174,6 +174,22 @@
                 </b-form-group>
               </b-col>
             </b-row>
+            <b-row>
+              <b-col md="6">
+                <b-form-group label="Nationality">
+                  <vue-tags-input
+                    v-model="searchNationality"
+                    :tags="selectedNationality"
+                    :max-tags="1"
+                    class="tag-custom text-15 mb-2"
+                    :autocomplete-items="filteredNationalityItems"
+                    :add-only-from-autocomplete="true"
+                    @tags-changed="(newTags) => (selectedNationality = newTags)"
+                    placeholder="Type Nationality Name"
+                  />
+                </b-form-group>
+              </b-col>
+            </b-row>
 
             <b-button
               type="submit"
@@ -230,6 +246,10 @@ export default {
       searchRank: "",
       selectedRank: [],
       RankItems: [],
+
+      searchNationality: "",
+      selectedNationality: [],
+      nationalityItems: [],
       submitStatus: null,
     };
   },
@@ -272,6 +292,14 @@ export default {
         );
       });
     },
+    filteredNationalityItems() {
+      return this.nationalityItems.filter((u) => {
+        return (
+          u.text.toLowerCase().indexOf(this.searchNationality.toLowerCase()) !==
+          -1
+        );
+      });
+    },
   },
   methods: {
     async getMasters() {
@@ -283,11 +311,22 @@ export default {
           text: rank.description,
         });
       });
+      masters.nationalities.forEach((nationality) => {
+        this.nationalityItems.push({
+          id: nationality.id,
+          text: nationality.description,
+        });
+      });
     },
     //   validate form
     async submit() {
       console.log("submit!");
-       this.form.rank_id = this.selectedRank[0].id;
+      if (this.selectedRank[0]) {
+        this.form.rank_id = this.selectedRank[0].id;
+      }
+      if (this.selectedNationality[0]) {
+        this.form.nationality = this.selectedNationality[0].text;
+      }
 
       this.$v.$touch();
       if (this.$v.$invalid) {

@@ -135,11 +135,11 @@ export default {
         this.userItems.push({
           id: user.id,
           text:
-            user.first_name +
+            user.user_name +
             " " +
             user.last_name +
             " (Rank - " +
-            user.rank +
+            user.rank.description +
             ") (Danos - " +
             user.unique_id +
             ")",

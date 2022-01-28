@@ -178,6 +178,9 @@
           </span>
           <span v-if="props.column.field == 'marks_obtained'">
             {{ props.row.marks_obtained }}
+            <b-badge v-if="props.row.marks_obtained < 5" variant="danger  m-2"
+              >FAILED</b-badge
+            >
           </span>
           <span v-if="props.column.field == 'is_completed'">
             {{ props.row.is_completed == 0 ? "NO" : "YES" }}

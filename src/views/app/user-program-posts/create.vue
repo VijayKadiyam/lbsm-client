@@ -45,7 +45,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ userdata.rank }}
+                  {{ userdata.rank?userdata.rank.description:"" }}
                 </p>
               </b-col>
             </b-row>
@@ -259,7 +259,9 @@ export default {
       selectedProgramPost: [],
       program_postItems: [],
 
-      userdata: {},
+      userdata: {
+        rank: {},
+      },
       programdata: {},
     };
   },
@@ -316,11 +318,11 @@ export default {
         this.userItems.push({
           id: user.id,
           text:
-            user.first_name +
+            user.user_name +
             " " +
             user.last_name +
             " (Rank - " +
-            user.rank +
+            user.rank.description +
             ") (Danos - " +
             user.unique_id +
             ")",
@@ -342,6 +344,7 @@ export default {
         this.userdata = this.users.find((sp) => sp.id == this.user_id);
       } else {
         this.userdata = "";
+        this.selectedUser = [];
       }
     },
     async searchSelectedProgram() {

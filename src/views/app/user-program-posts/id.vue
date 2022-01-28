@@ -45,7 +45,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ userdata.rank }}
+                  {{ userdata.rank ? userdata.rank.description : "" }}
                 </p>
               </b-col>
             </b-row>
@@ -319,11 +319,11 @@ export default {
         this.userItems.push({
           id: user.id,
           text:
-            user.first_name +
+            user.user_name +
             " " +
             user.last_name +
             " (Rank - " +
-            user.rank +
+            user.rank.description +
             ") (Danos - " +
             user.unique_id +
             ")",
@@ -349,7 +349,15 @@ export default {
       this.userdata = this.form.user;
       this.selectedUser.push({
         id: this.userdata.id,
-        text: this.userdata.user_name,
+        text:
+          this.userdata.user_name +
+          " " +
+          this.userdata.last_name +
+          " (Rank - " +
+          this.userdata.rank.description +
+          ") (Danos - " +
+          this.userdata.unique_id +
+          ")",
       });
 
       this.programdata = this.form.program;

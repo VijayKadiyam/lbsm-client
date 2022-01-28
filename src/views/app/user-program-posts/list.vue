@@ -35,7 +35,7 @@
             >
           </span>
           <span v-if="props.column.field == 'user'">
-            {{ props.row.user.user_name }}
+            {{ props.row.user.first_name +" "+ props.row.user.last_name }}
           </span>
           <span v-if="props.column.field == 'program'">
             {{ props.row.program.program_name }}

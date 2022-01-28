@@ -42,7 +42,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user.rank }}
+                  {{ user.rank ? user.rank.description : "" }}
                 </p>
               </b-col>
             </b-row>

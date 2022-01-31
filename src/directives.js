@@ -1,5 +1,6 @@
 import Vue from 'vue'
 
+
 Vue.directive("uppercase", {
   twoWay: true,
   // TODO: unbind

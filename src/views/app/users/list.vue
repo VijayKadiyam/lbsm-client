@@ -48,7 +48,7 @@
           <span v-else-if="props.column.field == 'gender'">
             {{ props.row.gender == 0 ? "Male" : "Female" }}
           </span>
-          <span v-else-if="props.column.field == 'rank'">
+          <span v-else-if="props.column.field == 'rank' && props.row.rank">
             {{ props.row.rank.description }}
           </span>
         </template>

@@ -315,6 +315,7 @@ export default {
       this.program_posts = masters.program_posts;
       // User
       this.users.forEach((user) => {
+        let rank_desc = user.rank ? user.rank.description : "";
         this.userItems.push({
           id: user.id,
           text:
@@ -322,7 +323,7 @@ export default {
             " " +
             user.last_name +
             " (Rank - " +
-            user.rank.description +
+            rank_desc +
             ") (Danos - " +
             user.unique_id +
             ")",

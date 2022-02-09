@@ -136,9 +136,18 @@ export default {
 
       // User
       this.users.forEach((user) => {
+        let rank_desc = user.rank ? user.rank.description : "";
         this.userItems.push({
           id: user.id,
-          text: user.user_name,
+          text:
+            user.user_name +
+            " " +
+            user.last_name +
+            " (Rank - " +
+            rank_desc +
+            ") (Danos - " +
+            user.unique_id +
+            ")",
         });
       });
 

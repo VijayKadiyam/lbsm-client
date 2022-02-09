@@ -34,10 +34,15 @@
               {{ props.row.button }}</a
             >
           </span>
-          <span v-if="props.column.field == 'user'">
-            {{ props.row.user.user_name || "" }}
+          <span v-if="props.column.field == 'user_name' && props.row.user">
+            {{ props.row.user.first_name + ' ' + props.row.user.last_name|| "" }}
           </span>
-          <span v-if="props.column.field == 'program'">
+          <!-- <span v-if="props.column.field == 'rank' && props.row.user">
+            {{ props.row.user.rank|| "" }}
+          </span> -->
+          <span
+            v-if="props.column.field == 'program_name' && props.row.program"
+          >
             {{ props.row.program.program_name || "" }}
           </span>
           <span v-else-if="props.column.field == 'enrollment_date'">
@@ -61,11 +66,15 @@ export default {
       columns: [
         {
           label: "User Name",
-          field: "user",
+          field: "user_name",
         },
+        // {
+        //   label: "Rank",
+        //   field: "rank",
+        // },
         {
           label: "Program Name",
-          field: "program",
+          field: "program_name",
         },
         {
           label: "Enrollment Date",

@@ -31,6 +31,36 @@
             </b-row>
             <b-row>
               <b-col md="3">
+                <p class="text-muted mt-2 mb-0">Last Name</p>
+              </b-col>
+              <b-col md="9">
+                <p class="text-primary text-24 line-height-1 mb-2">
+                  {{ userdata.last_name }}
+                </p>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="3">
+                <p class="text-muted mt-2 mb-0">Rank</p>
+              </b-col>
+              <b-col md="9">
+                <p class="text-primary text-24 line-height-1 mb-2">
+                  {{ userdata.rank?userdata.rank.description:"" }}
+                </p>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="3">
+                <p class="text-muted mt-2 mb-0">Danos</p>
+              </b-col>
+              <b-col md="9">
+                <p class="text-primary text-24 line-height-1 mb-2">
+                  {{ userdata.unique_id }}
+                </p>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="3">
                 <p class="text-muted mt-2 mb-0">Email</p>
               </b-col>
               <b-col md="9">
@@ -229,7 +259,9 @@ export default {
       selectedProgramPost: [],
       program_postItems: [],
 
-      userdata: {},
+      userdata: {
+        rank: {},
+      },
       programdata: {},
     };
   },
@@ -283,9 +315,18 @@ export default {
       this.program_posts = masters.program_posts;
       // User
       this.users.forEach((user) => {
+        let rank_desc = user.rank ? user.rank.description : "";
         this.userItems.push({
           id: user.id,
-          text: user.user_name,
+          text:
+            user.user_name +
+            " " +
+            user.last_name +
+            " (Rank - " +
+            rank_desc +
+            ") (Danos - " +
+            user.unique_id +
+            ")",
         });
       });
 
@@ -304,6 +345,7 @@ export default {
         this.userdata = this.users.find((sp) => sp.id == this.user_id);
       } else {
         this.userdata = "";
+        this.selectedUser = [];
       }
     },
     async searchSelectedProgram() {
@@ -325,7 +367,7 @@ export default {
         this.programdata = "";
         this.program_posts = [];
         this.program_postItems = [];
-        this.selectedProgramPost=[];
+        this.selectedProgramPost = [];
       }
     },
     //   validate form
@@ -350,7 +392,7 @@ export default {
           this.submitStatus = "OK";
 
           // setTimeout(() => {
-            this.$router.push("/app/user-program-posts/");
+          this.$router.push("/app/user-program-posts/");
           // }, 1000);
         } catch (e) {
           this.isLoading = false;

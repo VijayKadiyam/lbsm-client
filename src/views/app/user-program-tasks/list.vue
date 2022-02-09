@@ -28,6 +28,36 @@
             </b-row>
             <b-row>
               <b-col md="3">
+                <p class="text-muted mt-2 mb-0">Last Name</p>
+              </b-col>
+              <b-col md="9">
+                <p class="text-primary text-24 line-height-1 mb-2">
+                  {{ user.last_name }}
+                </p>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="3">
+                <p class="text-muted mt-2 mb-0">Rank</p>
+              </b-col>
+              <b-col md="9">
+                <p class="text-primary text-24 line-height-1 mb-2">
+                  {{ user.rank ? user.rank.description : "" }}
+                </p>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="3">
+                <p class="text-muted mt-2 mb-0">Danos</p>
+              </b-col>
+              <b-col md="9">
+                <p class="text-primary text-24 line-height-1 mb-2">
+                  {{ user.unique_id }}
+                </p>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="3">
                 <p class="text-muted mt-2 mb-0">Email</p>
               </b-col>
               <b-col md="9">
@@ -148,6 +178,9 @@
           </span>
           <span v-if="props.column.field == 'marks_obtained'">
             {{ props.row.marks_obtained }}
+            <b-badge v-if="props.row.marks_obtained < 5" variant="danger  m-2"
+              >FAILED</b-badge
+            >
           </span>
           <span v-if="props.column.field == 'is_completed'">
             {{ props.row.is_completed == 0 ? "NO" : "YES" }}

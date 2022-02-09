@@ -4,7 +4,7 @@
     <b-row>
       <b-col md="12">
         <b-card title="User Update">
-           <b-row>
+          <b-row>
             <b-col md="12">
               <b-button
                 style="float: right; margin-top: -45px"
@@ -126,13 +126,13 @@
                   >
                     {{ $v.form.email.$model }} is invalid.</b-alert
                   >
-                  <b-alert
+                  <!-- <b-alert
                     show
                     variant="danger"
                     class="error mt-1"
                     v-if="!$v.form.email.required"
                     >Field is required</b-alert
-                  >
+                  > -->
                 </b-form-group>
               </b-col>
               <b-col md="6">
@@ -146,7 +146,49 @@
                 </b-form-group>
               </b-col>
             </b-row>
-
+            <b-row>
+              <b-col md="6">
+                <b-form-group label="Rank">
+                  <vue-tags-input
+                    v-model="searchRank"
+                    :tags="selectedRank"
+                    :max-tags="1"
+                    class="tag-custom text-15 mb-2"
+                    :autocomplete-items="filteredRankItems"
+                    :add-only-from-autocomplete="true"
+                    @tags-changed="(newTags) => (selectedRank = newTags)"
+                    placeholder="Type Rank Name"
+                  />
+                </b-form-group>
+              </b-col>
+              <b-col md="6">
+                <b-form-group label="Danos Id">
+                  <b-form-input
+                    class="mb-2"
+                    label="Danos"
+                    placeholder="Danos Id"
+                    v-model="form.unique_id"
+                  >
+                  </b-form-input>
+                </b-form-group>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="6">
+                <b-form-group label="Nationality">
+                  <vue-tags-input
+                    v-model="searchNationality"
+                    :tags="selectedNationality"
+                    :max-tags="1"
+                    class="tag-custom text-15 mb-2"
+                    :autocomplete-items="filteredNationalityItems"
+                    :add-only-from-autocomplete="true"
+                    @tags-changed="(newTags) => (selectedNationality = newTags)"
+                    placeholder="Type Nationality Name"
+                  />
+                </b-form-group>
+              </b-col>
+            </b-row>
             <b-button
               type="submit"
               variant="primary"
@@ -200,6 +242,13 @@ export default {
         active: 1,
         role_id: 4,
       },
+      searchRank: "",
+      selectedRank: [],
+      RankItems: [],
+
+      searchNationality: "",
+      selectedNationality: [],
+      nationalityItems: [],
       submitStatus: null,
     };
   },
@@ -212,7 +261,7 @@ export default {
         required,
       },
       email: {
-        required,
+        // required,
         email,
       },
     },
@@ -231,14 +280,53 @@ export default {
     // validationsGroup:['peopleAdd.multipleFirst Name']
   },
   mounted() {
+    this.getMasters();
     // this.form.site_id = this.site.id
     this.getData();
   },
+  computed: {
+    filteredRankItems() {
+      return this.RankItems.filter((u) => {
+        return (
+          u.text.toLowerCase().indexOf(this.searchRank.toLowerCase()) !== -1
+        );
+      });
+    },
+    filteredNationalityItems() {
+      return this.nationalityItems.filter((u) => {
+        return (
+          u.text.toLowerCase().indexOf(this.searchNationality.toLowerCase()) !==
+          -1
+        );
+      });
+    },
+  },
   methods: {
+    async getMasters() {
+      let masters = await axios.get("users/masters");
+      masters = masters.data;
+      masters.ranks.forEach((rank) => {
+        this.RankItems.push({
+          id: rank.id,
+          text: rank.description,
+        });
+      });
+      masters.nationalities.forEach((nationality) => {
+        this.nationalityItems.push({
+          id: nationality.id,
+          text: nationality.description,
+        });
+      });
+    },
     //   validate form
     async submit() {
       console.log("submit!");
-
+      if (this.selectedRank[0]) {
+        this.form.rank_id = this.selectedRank[0].id;
+      }
+      if (this.selectedNationality[0]) {
+        this.form.nationality = this.selectedNationality[0].text;
+      }
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
@@ -255,8 +343,8 @@ export default {
         }
         this.submitStatus = "PENDING";
         // setTimeout(() => {
-          this.submitStatus = "OK";
-          this.$router.push("/app/users/");
+        this.submitStatus = "OK";
+        this.$router.push("/app/users/");
         // }, 1000);
       }
     },
@@ -272,7 +360,7 @@ export default {
             "Content-Type": "multipart/form-data",
           },
         })
-        .catch(function () {
+        .catch(function() {
           console.log("FAILURE!!");
         });
     },
@@ -296,8 +384,21 @@ export default {
     },
     async getData() {
       this.isLoading = true;
+
       let form = await axios.get(`/users/${this.$route.params.id}`);
       this.form = form.data.data;
+      this.form.nationality=this.form.nationality.toUpperCase()
+      this.rankdata = this.RankItems.find((sp) => sp.id == this.form.rank_id);
+      this.selectedRank.push({
+        id: this.rankdata.id,
+        text: this.rankdata.text,
+      });
+
+      this.Nationalitydata = this.nationalityItems.find((sp) => sp.text == this.form.nationality);
+      this.selectedNationality.push({
+        id: this.Nationalitydata.id,
+        text: this.Nationalitydata.text,
+      });
       this.isLoading = false;
     },
   },

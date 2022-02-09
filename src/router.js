@@ -278,6 +278,25 @@ const routes = [
           },
         ],
       },
+      // KARCO Tasks
+      {
+        path: "/app/karco-tasks",
+        component: () =>
+          import("./views/app/karco-tasks"),
+        redirect: "/app/karco-tasks/list",
+        children: [
+          {
+            path: "list",
+            component: () =>
+              import("./views/app/karco-tasks/list"),
+          },
+          {
+            path: "upload",
+            component: () =>
+              import("./views/app/karco-tasks/upload"),
+          },
+        ],
+      },
     ],
   },
   // sessions

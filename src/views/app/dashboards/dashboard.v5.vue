@@ -292,7 +292,7 @@
 
 <script>
 import axios from "axios";
-
+// import 
 export default {
   // metaInfo: {
   //   // if no subcomponents specify a metaInfo.title, this title will be used
@@ -469,7 +469,7 @@ export default {
     type: "getTopPerformers",
   },
   mounted() {
-    this.year = "2021";
+    this.year ="2022";
     this.getData(this.year);
     this.getMasters();
   },
@@ -556,7 +556,6 @@ export default {
 
       this.userRankCount.sort((a, b) => a.id - b.id);
 
-      console.log(this.userRankCount);
       this.getTotalTaskPerformed();
       this.getTopPerformers_by_Average();
       this.getTopPerformers_by_Task();
@@ -600,7 +599,6 @@ export default {
       );
       this.top_performers = top_performers.data.data;
       this.filter_type = top_performers.data.filter_type;
-      console.log(top_performers);
       this.isLoading = false;
     },
     async getTotalTaskPerformed() {
@@ -614,6 +612,7 @@ export default {
         `/total_tasks_performed?year=${this.year}&ship=${this.ships}&rank=${this.rank}`
       );
       this.total_tasks_performed = total_tasks_performed.data.data;
+      this.total_karco_tasks_performed = total_tasks_performed.data.total_karco_tasks_performed;
       this.ttp = [];
       this.month = [];
       this.total_tasks_performed.forEach((month) => {

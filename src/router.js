@@ -297,6 +297,25 @@ const routes = [
           },
         ],
       },
+      // Videotel Tasks
+      {
+        path: "/app/videotel-tasks",
+        component: () =>
+          import("./views/app/videotel-tasks"),
+        redirect: "/app/videotel-tasks/list",
+        children: [
+          {
+            path: "list",
+            component: () =>
+              import("./views/app/videotel-tasks/list"),
+          },
+          {
+            path: "upload",
+            component: () =>
+              import("./views/app/videotel-tasks/upload"),
+          },
+        ],
+      },
     ],
   },
   // sessions

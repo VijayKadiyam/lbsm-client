@@ -613,6 +613,7 @@ export default {
       );
       this.total_tasks_performed = total_tasks_performed.data.data;
       this.total_karco_tasks_performed = total_tasks_performed.data.total_karco_tasks_performed;
+      this.total_videotel_tasks_performed = total_tasks_performed.data.total_videotel_tasks_performed;
       this.ttp = [];
       this.month = [];
       this.total_tasks_performed.forEach((month) => {

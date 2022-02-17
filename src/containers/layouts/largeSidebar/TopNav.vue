@@ -29,7 +29,7 @@
         >
           <template slot="button-content">
             <img
-              src="@/assets/images/faces/1.jpg"
+              src="@/assets/images/faces/0.png"
               id="userDropdown"
               alt
               data-toggle="dropdown"
@@ -40,7 +40,7 @@
 
           <div class="dropdown-menu-right" aria-labelledby="userDropdown">
             <div class="dropdown-header">
-              <i class="i-Lock-User mr-1"></i> Timothy Carlson
+              <!-- <i class="i-Lock-User mr-1"></i> Timothy Carlson -->
             </div>
             <a class="dropdown-item" href="#" @click.prevent="logoutUser"
               >Sign out</a

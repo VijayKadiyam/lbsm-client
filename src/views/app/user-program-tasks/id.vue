@@ -50,7 +50,7 @@
                 show
                 variant="danger"
                 class="error mt-1"
-                v-if="!$v.form.marks_obtained.numeric"
+                v-if="!$v.form.marks_obtained.decimal"
                 >Numeric Values Only</b-alert
               >
             </b-form-group>
@@ -130,7 +130,7 @@
 
 <script>
 import axios from "axios";
-import { numeric, required } from "vuelidate/lib/validators";
+import { decimal, required } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
@@ -180,7 +180,7 @@ export default {
     form: {
       marks_obtained: {
         required,
-        numeric,
+        decimal,
       },
       completion_date: {
         required,

@@ -174,7 +174,7 @@
             {{ props.row.ship.description }}
           </span>
           <span v-if="props.column.field == 'program_task'">
-            {{ props.row.program_task.task }}
+            {{ props.row.program_task.serial_no +" - "+props.row.program_task.task }}
           </span>
           <span v-if="props.column.field == 'marks_obtained'">
             {{ props.row.marks_obtained }}

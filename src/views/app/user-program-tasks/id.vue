@@ -20,6 +20,36 @@
                 placeholder="Type Ship Name"
               />
             </b-form-group>
+            <b-form-group label="From Date">
+              <b-form-datepicker
+                id="from_date"
+                v-model.trim="$v.form.from_date.$model"
+                class="mb-2"
+                placeholder="From Date"
+              ></b-form-datepicker>
+              <b-alert
+                show
+                variant="danger"
+                class="error mt-1"
+                v-if="!$v.form.from_date.required"
+                >Field is required</b-alert
+              >
+            </b-form-group>
+            <b-form-group label="To Date">
+              <b-form-datepicker
+                id="to_date"
+                v-model.trim="$v.form.to_date.$model"
+                class="mb-2"
+                placeholder="To Date"
+              ></b-form-datepicker>
+              <b-alert
+                show
+                variant="danger"
+                class="error mt-1"
+                v-if="!$v.form.to_date.required"
+                >Field is required</b-alert
+              >
+            </b-form-group>
             <b-form-group label="Program Task">
               <vue-tags-input
                 v-model="searchProgramTask"
@@ -139,12 +169,14 @@ export default {
   data() {
     return {
       form: {
-        user_id: 1,
-        program_id: 1,
-        program_task_id: 1,
+        user_id: "",
+        program_id: "",
+        program_task_id: "",
         marks_obtained: "",
         is_completed: "",
         completion_date: "",
+        from_date: "",
+        to_date: "",
         ship_id: "",
       },
       submitStatus: null,
@@ -183,6 +215,12 @@ export default {
         decimal,
       },
       completion_date: {
+        required,
+      },
+      from_date: {
+        required,
+      },
+      to_date: {
         required,
       },
     },

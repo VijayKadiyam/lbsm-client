@@ -213,6 +213,12 @@
           <span v-if="props.column.field == 'ship' && props.row.ship">
             {{ props.row.ship.description }}
           </span>
+          <span v-if="props.column.field == 'from_date'">
+            {{ props.row.from_date }}
+          </span>
+          <span v-if="props.column.field == 'to_date'">
+            {{ props.row.to_date }}
+          </span>
           <span v-if="props.column.field == 'program_task'">
             {{
               props.row.program_task.serial_no +
@@ -273,6 +279,14 @@ export default {
           field: "ship",
         },
         {
+          label: "From Date",
+          field: "from_date",
+        },
+        {
+          label: "To Date",
+          field: "to_date",
+        },
+        {
           label: "Program Tasks",
           field: "program_task",
         },
@@ -313,6 +327,9 @@ export default {
       program: {},
       user_program: {},
       user_program_tasks: [],
+      total_completed_task: '',
+      total_pending_task: '',
+      average_score: '',
     };
   },
   mounted() {

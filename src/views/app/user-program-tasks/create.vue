@@ -20,6 +20,36 @@
                 placeholder="Type Ship Name"
               />
             </b-form-group>
+            <b-form-group label="From Date">
+              <b-form-datepicker
+                id="dob"
+                v-model.trim="$v.form.from_date.$model"
+                class="mb-2"
+                placeholder="From Date"
+              ></b-form-datepicker>
+              <b-alert
+                show
+                variant="danger"
+                class="error mt-1"
+                v-if="!$v.form.from_date.required"
+                >Field is required</b-alert
+              >
+            </b-form-group>
+            <b-form-group label="To Date">
+              <b-form-datepicker
+                id="dob"
+                v-model.trim="$v.form.to_date.$model"
+                class="mb-2"
+                placeholder="To Date"
+              ></b-form-datepicker>
+              <b-alert
+                show
+                variant="danger"
+                class="error mt-1"
+                v-if="!$v.form.to_date.required"
+                >Field is required</b-alert
+              >
+            </b-form-group>
             <b-form-group label="Program Task">
               <vue-tags-input
                 v-model="searchProgramTask"
@@ -72,38 +102,26 @@
             <b-row>
               <b-col md="6">
                 <b-form-group label="ImagePath 1">
-                  <b-form-file
-                    name="imagepath1"
-                    ref="file1"
-                  ></b-form-file>
+                  <b-form-file name="imagepath1" ref="file1"></b-form-file>
                 </b-form-group>
               </b-col>
 
               <b-col md="6">
                 <b-form-group label="ImagePath 2">
-                  <b-form-file
-                    name="imagepath2"
-                    ref="file2"
-                  ></b-form-file>
+                  <b-form-file name="imagepath2" ref="file2"></b-form-file>
                 </b-form-group>
               </b-col>
             </b-row>
             <b-row>
               <b-col md="6">
                 <b-form-group label="ImagePath 3">
-                  <b-form-file
-                    name="imagepath3"
-                    ref="file3"
-                  ></b-form-file>
+                  <b-form-file name="imagepath3" ref="file3"></b-form-file>
                 </b-form-group>
               </b-col>
 
               <b-col md="6">
                 <b-form-group label="ImagePath 4">
-                  <b-form-file
-                    name="imagepath4"
-                    ref="file4"
-                  ></b-form-file>
+                  <b-form-file name="imagepath4" ref="file4"></b-form-file>
                 </b-form-group>
               </b-col>
             </b-row>
@@ -158,6 +176,8 @@ export default {
         marks_obtained: "",
         is_completed: "",
         completion_date: "",
+        from_date: "",
+        to_date: "",
         ship_id: "",
       },
       submitStatus: null,
@@ -197,6 +217,12 @@ export default {
         decimal,
       },
       completion_date: {
+        required,
+      },
+      from_date: {
+        required,
+      },
+      to_date: {
         required,
       },
     },
@@ -239,7 +265,7 @@ export default {
       this.program_tasks.forEach((programTask) => {
         this.program_taskItems.push({
           id: programTask.id,
-          text: programTask.serial_no +"-"+ programTask.task,
+          text: programTask.serial_no + "-" + programTask.task,
         });
       });
     },

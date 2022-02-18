@@ -126,6 +126,46 @@
         </b-card>
       </b-col>
     </b-row>
+    <b-row>
+      <b-col md="12">
+        <b-card class="mb-4">
+          <div class="content">
+            <b-row>
+              <b-col md="4"
+                ><b-col md="6">
+                  <p class="text-muted mt-2 mb-0">Task Completed</p>
+                </b-col>
+                <b-col md="6">
+                  <p class="text-primary text-24 line-height-1 mb-2">
+                    {{ total_completed_task ? total_completed_task : 0 }}
+                  </p>
+                </b-col></b-col
+              >
+              <b-col md="4"
+                ><b-col md="6">
+                  <p class="text-muted mt-2 mb-0">Pending Task</p>
+                </b-col>
+                <b-col md="6">
+                  <p class="text-primary text-24 line-height-1 mb-2">
+                    {{ total_pending_task ? total_pending_task : 0 }}
+                  </p>
+                </b-col></b-col
+              >
+              <b-col md="4"
+                ><b-col md="6">
+                  <p class="text-muted mt-2 mb-0">Average Score</p>
+                </b-col>
+                <b-col md="6">
+                  <p class="text-primary text-24 line-height-1 mb-2">
+                    {{ average_score ? average_score : 0 }}
+                  </p>
+                </b-col></b-col
+              >
+            </b-row>
+          </div>
+        </b-card>
+      </b-col>
+    </b-row>
     <!-- /User & Program Details card -->
     <b-card>
       <vue-good-table
@@ -174,7 +214,11 @@
             {{ props.row.ship.description }}
           </span>
           <span v-if="props.column.field == 'program_task'">
-            {{ props.row.program_task.serial_no +" - "+props.row.program_task.task }}
+            {{
+              props.row.program_task.serial_no +
+                " - " +
+                props.row.program_task.task
+            }}
           </span>
           <span v-if="props.column.field == 'marks_obtained'">
             {{ props.row.marks_obtained }}
@@ -282,6 +326,11 @@ export default {
         `/user_programs/${this.$route.params.user_program_id}/user_program_tasks`
       );
       this.user_program_tasks = user_program_tasks.data.data;
+      this.total_completed_task = user_program_tasks.data.total_completed_task;
+      this.total_pending_task = user_program_tasks.data.total_pending_task;
+      this.average_score = user_program_tasks.data.average_score;
+
+      // console.log(this.user_program_tasks);
 
       //UserProgram Data
       let user_program = await axios.get(
@@ -290,7 +339,7 @@ export default {
       this.user_program = user_program.data.data;
       this.user = this.user_program.user;
       this.program = this.user_program.program;
-
+      // console.log(this.user);
       this.serialNoStarting = (page - 1) * this.rowsPerPage;
       this.isLoading = false;
     },

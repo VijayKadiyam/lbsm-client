@@ -131,36 +131,46 @@
         <b-card class="mb-4">
           <div class="content">
             <b-row>
-              <b-col md="4"
-                ><b-col md="6">
+              <b-col md="3"
+                ><b-col md="8">
                   <p class="text-muted mt-2 mb-0">Task Completed</p>
                 </b-col>
-                <b-col md="6">
+                <b-col md="4">
                   <p class="text-primary text-24 line-height-1 mb-2">
                     {{ total_completed_task ? total_completed_task : 0 }}
                   </p>
                 </b-col></b-col
               >
-              <b-col md="4"
-                ><b-col md="6">
+              <b-col md="3"
+                ><b-col md="8">
                   <p class="text-muted mt-2 mb-0">Pending Task</p>
                 </b-col>
-                <b-col md="6">
+                <b-col md="4">
                   <p class="text-primary text-24 line-height-1 mb-2">
                     {{ total_pending_task ? total_pending_task : 0 }}
                   </p>
-                </b-col></b-col
-              >
-              <b-col md="4"
-                ><b-col md="6">
+                </b-col>
+                </b-col>
+              <b-col md="3"
+                ><b-col md="8">
+                  <p class="text-muted mt-2 mb-0">Pending Program Task</p>
+                </b-col>
+                <b-col md="4">
+                  <p class="text-primary text-24 line-height-1 mb-2">
+                    {{ total_pending_program_tasks ? total_pending_program_tasks : 0 }}
+                  </p>
+                </b-col>
+                </b-col>
+              <b-col md="3"
+                ><b-col md="8">
                   <p class="text-muted mt-2 mb-0">Average Score</p>
                 </b-col>
-                <b-col md="6">
+                <b-col md="4">
                   <p class="text-primary text-24 line-height-1 mb-2">
-                    {{ average_score ? average_score : 0 }}
+                    {{ average_score ? average_score.toFixed(1) : 0 }}
                   </p>
-                </b-col></b-col
-              >
+                </b-col>
+                </b-col>
             </b-row>
           </div>
         </b-card>
@@ -329,6 +339,7 @@ export default {
       user_program_tasks: [],
       total_completed_task: '',
       total_pending_task: '',
+      total_pending_program_tasks: '',
       average_score: '',
     };
   },
@@ -345,6 +356,7 @@ export default {
       this.user_program_tasks = user_program_tasks.data.data;
       this.total_completed_task = user_program_tasks.data.total_completed_task;
       this.total_pending_task = user_program_tasks.data.total_pending_task;
+      this.total_pending_program_tasks = user_program_tasks.data.total_pending_program_tasks;
       this.average_score = user_program_tasks.data.average_score;
 
       // console.log(this.user_program_tasks);

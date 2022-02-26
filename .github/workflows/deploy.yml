@@ -32,4 +32,5 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           script: |
             cd /var/www/vhosts/test
+            npm run build
             echo 'Post Deployment'

@@ -278,6 +278,44 @@ const routes = [
           },
         ],
       },
+      // KARCO Tasks
+      {
+        path: "/app/karco-tasks",
+        component: () =>
+          import("./views/app/karco-tasks"),
+        redirect: "/app/karco-tasks/list",
+        children: [
+          {
+            path: "list",
+            component: () =>
+              import("./views/app/karco-tasks/list"),
+          },
+          {
+            path: "upload",
+            component: () =>
+              import("./views/app/karco-tasks/upload"),
+          },
+        ],
+      },
+      // Videotel Tasks
+      {
+        path: "/app/videotel-tasks",
+        component: () =>
+          import("./views/app/videotel-tasks"),
+        redirect: "/app/videotel-tasks/list",
+        children: [
+          {
+            path: "list",
+            component: () =>
+              import("./views/app/videotel-tasks/list"),
+          },
+          {
+            path: "upload",
+            component: () =>
+              import("./views/app/videotel-tasks/upload"),
+          },
+        ],
+      },
     ],
   },
   // sessions

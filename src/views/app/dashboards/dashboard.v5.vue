@@ -222,15 +222,19 @@
               />
             </b-col>
           </b-row>
-
-          <div id="basicArea-chart" style="min-height: 365px">
+          <!-- <b-card title="Multiple Bar chart 2" class=" mb-30"> -->
+          <div class="chart-wrapper" style="height: 300px">
+            <v-chart :options="multipleBar2" :autoresize="true"></v-chart>
+          </div>
+          <!-- </b-card> -->
+          <!-- <div id="basicArea-chart" style="min-height: 365px">
             <apexchart
               type="bar"
               height="350"
               :options="TopBasicCauses.chartOptions"
               :series="TopBasicCauses.chartOptions.series"
             />
-          </div>
+          </div> -->
         </b-card>
       </b-col>
     </b-row>
@@ -293,6 +297,7 @@
 <script>
 import axios from "axios";
 
+// import
 export default {
   // metaInfo: {
   //   // if no subcomponents specify a metaInfo.title, this title will be used
@@ -306,6 +311,7 @@ export default {
   },
   data() {
     return {
+      multipleBar2,
       TopBasicCauses,
       ActivitiesWithPPEIssues,
       PSCDEfRatio,
@@ -467,9 +473,10 @@ export default {
     selectedTopPerformerByTaskRank: "getTopPerformers_by_Task",
     selectedTopPerformerRank: "getTopPerformers",
     type: "getTopPerformers",
+    
   },
   mounted() {
-    this.year = "2021";
+    this.year = "2022";
     this.getData(this.year);
     this.getMasters();
   },
@@ -556,7 +563,6 @@ export default {
 
       this.userRankCount.sort((a, b) => a.id - b.id);
 
-      console.log(this.userRankCount);
       this.getTotalTaskPerformed();
       this.getTopPerformers_by_Average();
       this.getTopPerformers_by_Task();
@@ -600,7 +606,6 @@ export default {
       );
       this.top_performers = top_performers.data.data;
       this.filter_type = top_performers.data.filter_type;
-      console.log(top_performers);
       this.isLoading = false;
     },
     async getTotalTaskPerformed() {
@@ -610,10 +615,28 @@ export default {
         this.ships.push(ship.id);
       });
       this.isLoading = true;
+
       let total_tasks_performed = await axios.get(
         `/total_tasks_performed?year=${this.year}&ship=${this.ships}&rank=${this.rank}`
       );
       this.total_tasks_performed = total_tasks_performed.data.data;
+      this.total_tasks_performed.forEach((data) => {
+        multipleBar2.series[0].data.push(data);
+      });
+      // console.log(multipleBar2.series[1].data);
+
+      this.total_karco_tasks_performed =
+        total_tasks_performed.data.total_karco_tasks_performed;
+        // multipleBar2.setOption();
+      this.total_karco_tasks_performed.forEach((data) => {
+        multipleBar2.series[1].data.push(data);
+      });
+
+      this.total_videotel_tasks_performed =
+        total_tasks_performed.data.total_videotel_tasks_performed;
+      this.total_videotel_tasks_performed.forEach((data) => {
+        multipleBar2.series[2].data.push(data);
+      });
       this.ttp = [];
       this.month = [];
       this.total_tasks_performed.forEach((month) => {
@@ -839,6 +862,208 @@ export const PSCDEfRatio = {
     },
     labels: ["Average Results"],
   },
+};
+
+// Multibar 2 Chart
+var dark_heading = "#c2c6dc";
+export const multipleBar2 = {
+  
+  tooltip: {
+    trigger: "axis",
+    axisPointer: {
+      type: "shadow",
+    },
+  },
+  grid: {
+    top: "8%",
+    left: "3%",
+    right: "4%",
+    bottom: "3%",
+    containLabel: true,
+  },
+  yAxis: {
+    type: "value",
+    min: 0,
+    max: 500,
+    interval: 100,
+    axisLabel: {
+      formatter: "{value}",
+      color: dark_heading,
+      fontSize: 12,
+      fontStyle: "normal",
+      fontWeight: 400,
+    },
+    axisLine: {
+      show: false,
+      lineStyle: {
+        color: dark_heading,
+        width: 1,
+      },
+    },
+    axisTick: {
+      show: false,
+      lineStyle: {
+        color: dark_heading,
+        width: 1,
+      },
+    },
+    splitLine: {
+      lineStyle: {
+        color: "#ddd",
+        width: 1,
+        opacity: 0.5,
+      },
+    },
+  },
+  xAxis: {
+    type: "category",
+    boundaryGap: true,
+    data: [
+      "JANUARY",
+      "FEBRUARY",
+      "MARCH",
+      "APRIL",
+      "MAY",
+      "JUNE",
+      "JULY",
+      "AUGUST",
+      "SEPTEMBER",
+      "OCTOBER",
+      "NOVEMBER",
+      "DECEMBER",
+    ],
+    axisLabel: {
+      formatter: "{value}",
+      color: dark_heading,
+      fontSize: 12,
+      fontStyle: "normal",
+      fontWeight: 400,
+    },
+    axisLine: {
+      show: false,
+      lineStyle: {
+        color: dark_heading,
+        width: 1,
+      },
+    },
+    axisTick: {
+      show: false,
+      lineStyle: {
+        color: dark_heading,
+        width: 1,
+      },
+    },
+    splitLine: {
+      show: false,
+      lineStyle: {
+        color: dark_heading,
+        width: 1,
+      },
+    },
+  },
+  series: [
+    {
+      color: "#3182bd",
+      name: "Rest",
+      type: "bar",
+      barGap: 0,
+      label: {
+        normal: {
+          show: false,
+          position: "insideBottom",
+          distance: 5,
+          align: "left",
+          verticalAlign: "middle",
+          rotate: 90,
+          formatter: "{c}  {name|{a}}",
+          fontSize: 14,
+          fontWeight: "bold",
+          rich: {
+            name: {
+              color: "#fff",
+            },
+          },
+        },
+      },
+      data: [],
+      // data: [320, 332, 301, 334, 390, 350, 215, 332, 301, 334, 390, 350],
+    },
+    {
+      color: "#74c475",
+      name: "KARCO",
+      type: "bar",
+      label: {
+        normal: {
+          show: false,
+          position: "insideBottom",
+          distance: 5,
+          align: "left",
+          verticalAlign: "middle",
+          rotate: 90,
+          formatter: "{c}  {name|{a}}",
+          fontSize: 14,
+          fontWeight: "bold",
+          rich: {
+            name: {
+              color: "#fff",
+            },
+          },
+        },
+      },
+      data: [],
+      // data: [220, 182, 191, 234, 290, 190, 210, 182, 191, 234, 290, 190],
+    },
+    {
+      color: "#e6550d",
+      name: "Videotel",
+      type: "bar",
+      label: {
+        normal: {
+          show: false,
+          position: "insideBottom",
+          distance: 5,
+          align: "left",
+          verticalAlign: "middle",
+          rotate: 90,
+          formatter: "{c}  {name|{a}}",
+          fontSize: 14,
+          fontWeight: "bold",
+          rich: {
+            name: {
+              color: "#fff",
+            },
+          },
+        },
+      },
+      data: [],
+      // data: [150, 232, 201, 154, 190, 150, 130, 232, 201, 154, 190, 150],
+    },
+    // {
+    //   color: "#756bb1",
+    //   name: "Wetland",
+    //   type: "bar",
+    //   label: {
+    //     normal: {
+    //       show: false,
+    //       position: "insideBottom",
+    //       distance: 5,
+    //       align: "left",
+    //       verticalAlign: "middle",
+    //       rotate: 90,
+    //       formatter: "{c}  {name|{a}}",
+    //       fontSize: 14,
+    //       fontWeight: "bold",
+    //       rich: {
+    //         name: {
+    //           color: "#fff",
+    //         },
+    //       },
+    //     },
+    //   },
+    //   data: [98, 77, 101, 99, 40, 30, 50],
+    // },
+  ],
+
 };
 </script>
 

@@ -201,6 +201,40 @@
             </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- KARCO Tasks -->
+          <li
+            @mouseenter="toggleSubMenu"
+            class="nav-item"
+            :class="{ active: selectedParentMenu == 'karco-tasks' }"
+            data-item="karco-tasks"
+            :data-submenu="true"
+          >
+            <!-- v-if="this.userPermissions.indexOf(11) != -1" -->
+            <router-link tag="a" class="nav-item-hold" to="/app/karco-tasks/list">
+              <a class="nav-item-hold" href="#">
+                <i class="nav-icon text-20 i-Diploma-2"></i>
+                <span class="nav-text">KARCO Tasks</span>
+              </a>
+            </router-link>
+            <div class="triangle"></div>
+          </li>
+          <!-- VideoTel Tasks -->
+          <li
+            @mouseenter="toggleSubMenu"
+            class="nav-item"
+            :class="{ active: selectedParentMenu == 'videotel-tasks' }"
+            data-item="videotel-tasks"
+            :data-submenu="true"
+          >
+            <!-- v-if="this.userPermissions.indexOf(11) != -1" -->
+            <router-link tag="a" class="nav-item-hold" to="/app/videotel-tasks/list">
+              <a class="nav-item-hold" href="#">
+                <i class="nav-icon text-20 i-Diploma-2"></i>
+                <span class="nav-text">VideoTel Tasks</span>
+              </a>
+            </router-link>
+            <div class="triangle"></div>
+          </li>
           
         </ul>
       </div>
@@ -414,6 +448,44 @@
             <router-link tag="a" class to="/app/user-program-tasks/list">
               <i class="nav-icon i-File-Clipboard-Text--Image"></i>
               <span class="item-name">Listing</span>
+            </router-link>
+          </li>
+        </ul>
+         <!-- Submenu KARCO Tasks -->
+        <ul
+          class="childNav d-none"
+          data-parent="karco-tasks"
+          :class="{ 'd-block': selectedParentMenu == 'karco-tasks' }"
+        >
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/karco-tasks/list">
+              <i class="nav-icon i-File-Clipboard-Text--Image"></i>
+              <span class="item-name">Listing</span>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/karco-tasks/upload">
+              <i class="nav-icon i-File-Clipboard-Text--Image"></i>
+              <span class="item-name">Upload</span>
+            </router-link>
+          </li>
+        </ul>
+         <!-- Submenu Videotel Tasks -->
+        <ul
+          class="childNav d-none"
+          data-parent="videotel-tasks"
+          :class="{ 'd-block': selectedParentMenu == 'videotel-tasks' }"
+        >
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/videotel-tasks/list">
+              <i class="nav-icon i-File-Clipboard-Text--Image"></i>
+              <span class="item-name">Listing</span>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/videotel-tasks/upload">
+              <i class="nav-icon i-File-Clipboard-Text--Image"></i>
+              <span class="item-name">Upload</span>
             </router-link>
           </li>
         </ul>

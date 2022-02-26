@@ -46,10 +46,22 @@
             >
           </span>
           <span v-else-if="props.column.field == 'gender'">
-            {{ props.row.gender == 0 ? "Male" : "Female" }}
+            {{ props.row.gender == 0 ? "MALE" : "FEMALE" }}
           </span>
           <span v-else-if="props.column.field == 'rank' && props.row.rank">
-            {{ props.row.rank.description }}
+            {{ props.row.rank.description.toUpperCase() }}
+          </span>
+          <span v-else-if="props.column.field == 'first_name'">
+            {{ props.row.first_name.toUpperCase() }}
+          </span>
+          <span v-else-if="props.column.field == 'last_name' ">
+            {{ props.row.last_name ? props.row.last_name.toUpperCase() : ''  }}
+          </span>
+          <span v-else-if="props.column.field == 'nationality' ">
+            {{ props.row.nationality ? props.row.nationality.toUpperCase() : ''  }}
+          </span>
+          <span v-else-if="props.column.field == 'email' ">
+            {{ props.row.email ? props.row.email.toUpperCase() : ''  }}
           </span>
         </template>
       </vue-good-table>

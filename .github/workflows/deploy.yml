@@ -32,5 +32,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           script: |
             cd /var/www/vhosts/lbsm/lbsm-client
+            git add .
+            git commit -m "Latest commit"
             npm run build
             echo 'Post Deployment'

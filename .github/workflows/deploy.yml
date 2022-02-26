@@ -31,6 +31,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           username: ${{ secrets.SSH_USERNAME }}
           script: |
-            cd /var/www/vhosts/test
+            cd /var/www/vhosts/lbsm/lbsm-client
             npm run build
             echo 'Post Deployment'

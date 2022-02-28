@@ -131,7 +131,7 @@
         <b-card class="mb-4">
           <div class="content">
             <b-row>
-              <b-col md="3"
+              <b-col md="4"
                 ><b-col md="8">
                   <p class="text-muted mt-2 mb-0">Task Completed</p>
                 </b-col>
@@ -141,27 +141,21 @@
                   </p>
                 </b-col></b-col
               >
-              <b-col md="3"
+              <b-col md="4"
                 ><b-col md="8">
                   <p class="text-muted mt-2 mb-0">Pending Task</p>
                 </b-col>
                 <b-col md="4">
                   <p class="text-primary text-24 line-height-1 mb-2">
-                    {{ total_pending_task ? total_pending_task : 0 }}
+                    {{
+                      total_pending_program_tasks
+                        ? total_pending_program_tasks
+                        : 0
+                    }}
                   </p>
                 </b-col>
-                </b-col>
-              <b-col md="3"
-                ><b-col md="8">
-                  <p class="text-muted mt-2 mb-0">Pending Program Task</p>
-                </b-col>
-                <b-col md="4">
-                  <p class="text-primary text-24 line-height-1 mb-2">
-                    {{ total_pending_program_tasks ? total_pending_program_tasks : 0 }}
-                  </p>
-                </b-col>
-                </b-col>
-              <b-col md="3"
+              </b-col>
+              <b-col md="4"
                 ><b-col md="8">
                   <p class="text-muted mt-2 mb-0">Average Score</p>
                 </b-col>
@@ -170,7 +164,7 @@
                     {{ average_score ? average_score.toFixed(1) : 0 }}
                   </p>
                 </b-col>
-                </b-col>
+              </b-col>
             </b-row>
           </div>
         </b-card>
@@ -323,10 +317,10 @@ export default {
       program: {},
       user_program: {},
       user_program_tasks: [],
-      total_completed_task: '',
-      total_pending_task: '',
-      total_pending_program_tasks: '',
-      average_score: '',
+      total_completed_task: "",
+      total_pending_task: "",
+      total_pending_program_tasks: "",
+      average_score: "",
     };
   },
   mounted() {
@@ -335,26 +329,30 @@ export default {
   methods: {
     async getData(page = 1) {
       this.isLoading = true;
-      // User Program Task log
-      let user_program_tasks = await axios.get(
-        `/user_programs/${this.$route.params.user_program_id}/user_program_tasks`
-      );
-      this.user_program_tasks = user_program_tasks.data.data;
-      this.total_completed_task = user_program_tasks.data.total_completed_task;
-      this.total_pending_task = user_program_tasks.data.total_pending_task;
-      this.total_pending_program_tasks = user_program_tasks.data.total_pending_program_tasks;
-      this.average_score = user_program_tasks.data.average_score;
 
-      // console.log(this.user_program_tasks);
-
-      //UserProgram Data
       let user_program = await axios.get(
         `/user_programs/${this.$route.params.user_program_id}`
       );
       this.user_program = user_program.data.data;
       this.user = this.user_program.user;
       this.program = this.user_program.program;
-      // console.log(this.user);
+      // User Program Task log
+      let user_program_tasks = await axios.get(
+        `/user_programs/${this.$route.params.user_program_id}/user_program_tasks?user_id=${this.user.id}`
+      );
+      this.user_program_tasks = user_program_tasks.data.data;
+      this.total_completed_task = user_program_tasks.data.total_completed_task;
+      this.total_pending_task = user_program_tasks.data.total_pending_task;
+      this.total_pending_program_tasks =
+        user_program_tasks.data.total_pending_program_tasks;
+      this.average_score = user_program_tasks.data.average_score;
+
+      // console.log(this.user_program_tasks);
+
+      //UserProgram Data
+
+      console.log(this.user.id);
+      // let post_id = this.user_program
       this.serialNoStarting = (page - 1) * this.rowsPerPage;
       this.isLoading = false;
     },

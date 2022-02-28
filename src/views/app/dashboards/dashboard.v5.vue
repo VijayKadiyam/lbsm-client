@@ -286,6 +286,55 @@
               <span v-if="props.column.field == 'gender'">
                 {{ props.row.gender == 0 ? "Male" : "Female" }}
               </span>
+              <span
+                v-if="
+                  props.column.field == 'first_name' && props.row.first_name
+                "
+              >
+                {{
+                  props.row.first_name ? props.row.first_name.toUpperCase() : ""
+                }}
+              </span>
+              <span
+                v-if="props.column.field == 'last_name' && props.row.last_name"
+              >
+                {{
+                  props.row.last_name ? props.row.last_name.toUpperCase() : ""
+                }}
+              </span>
+              <span v-if="props.column.field == 'rank' && props.row.rank">
+                {{ props.row.rank ? props.row.rank.toUpperCase() : "" }}
+              </span>
+              <span
+                v-if="
+                  props.column.field == 'nationality' && props.row.nationality
+                "
+              >
+                {{
+                  props.row.nationality
+                    ? props.row.nationality.toUpperCase()
+                    : ""
+                }}
+              </span>
+              <span
+                v-if="props.column.field == 'unique_id' && props.row.unique_id"
+              >
+                {{ props.row.unique_id ? props.row.unique_id : "" }}
+              </span>
+              <span v-if="props.column.field == 'email' && props.row.email">
+                {{ props.row.email ? props.row.email.toUpperCase() : "" }}
+              </span>
+              <span v-if="props.column.field == 'average' && props.row.average">
+                {{ props.row.average ? props.row.average : "" }}
+              </span>
+              <span
+                v-if="
+                  props.column.field == 'task_perfomed' &&
+                    props.row.task_perfomed
+                "
+              >
+                {{ props.row.task_perfomed ? props.row.task_perfomed : "" }}
+              </span>
             </template>
           </vue-good-table>
         </b-card>
@@ -473,7 +522,6 @@ export default {
     selectedTopPerformerByTaskRank: "getTopPerformers_by_Task",
     selectedTopPerformerRank: "getTopPerformers",
     type: "getTopPerformers",
-    
   },
   mounted() {
     this.year = "2022";
@@ -627,7 +675,7 @@ export default {
 
       this.total_karco_tasks_performed =
         total_tasks_performed.data.total_karco_tasks_performed;
-        // multipleBar2.setOption();
+      // multipleBar2.setOption();
       this.total_karco_tasks_performed.forEach((data) => {
         multipleBar2.series[1].data.push(data);
       });
@@ -867,7 +915,6 @@ export const PSCDEfRatio = {
 // Multibar 2 Chart
 var dark_heading = "#c2c6dc";
 export const multipleBar2 = {
-  
   tooltip: {
     trigger: "axis",
     axisPointer: {
@@ -1063,7 +1110,6 @@ export const multipleBar2 = {
     //   data: [98, 77, 101, 99, 40, 30, 50],
     // },
   ],
-
 };
 </script>
 

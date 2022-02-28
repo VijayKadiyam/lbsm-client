@@ -183,16 +183,9 @@
                 <b-form-group label="Promotion Date">
                   <b-form-datepicker
                     id="promotion_date"
-                    v-model="$v.form.promotion_date.$model"
+                    v-model="form.promotion_date"
                     class="mb-2"
                   ></b-form-datepicker>
-                  <b-alert
-                    show
-                    variant="danger"
-                    class="error mt-1"
-                    v-if="!$v.form.promotion_date.required"
-                    >Field is required</b-alert
-                  >
                 </b-form-group>
               </b-col>
             </b-row>
@@ -234,7 +227,7 @@
 
 <script>
 import axios from "axios";
-import { required } from "vuelidate/lib/validators";
+// import { required } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
@@ -295,9 +288,9 @@ export default {
   },
   validations: {
     form: {
-      promotion_date: {
-        required,
-      },
+      // promotion_date: {
+      //   required,
+      // },
     },
   },
 

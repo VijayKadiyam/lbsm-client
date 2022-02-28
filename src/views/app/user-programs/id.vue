@@ -34,16 +34,9 @@
             <b-form-group label="Enrollment Date">
               <b-form-datepicker
                 id="enrollment_date"
-                v-model.trim="$v.form.enrollment_date.$model"
+                v-model="form.enrollment_date"
                 class="mb-2"
               ></b-form-datepicker>
-              <b-alert
-                show
-                variant="danger"
-                class="error mt-1"
-                v-if="!$v.form.enrollment_date.required"
-                >Field is required</b-alert
-              >
             </b-form-group>
             <b-button
               type="submit"
@@ -70,7 +63,7 @@
 
 <script>
 import axios from "axios";
-import { required } from "vuelidate/lib/validators";
+// import { required } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
@@ -110,9 +103,9 @@ export default {
   },
   validations: {
     form: {
-      enrollment_date: {
-        required,
-      },
+      // enrollment_date: {
+      //   required,
+      // },
     },
   },
   mounted() {

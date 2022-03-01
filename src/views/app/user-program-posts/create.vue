@@ -45,7 +45,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ userdata.rank?userdata.rank.description:"" }}
+                  {{ userdata.rank ? userdata.rank.description : "" }}
                 </p>
               </b-col>
             </b-row>
@@ -380,7 +380,17 @@ export default {
           this.isLoading = true;
           this.submitStatus = "PENDING";
           // console.log(this.form);
-          await axios.post("/user_program_posts", this.form);
+          let UserProgramPost = await axios.post(
+            "/user_program_posts",
+            this.form
+          );
+          this.UserProgramPost = UserProgramPost.data.data;
+          this.$swal({
+            type: "error",
+            title: "Oops...",
+            text: `${this.UserProgramPost}`,
+            footer: "",
+          });
           this.isLoading = false;
           this.submitStatus = "OK";
 

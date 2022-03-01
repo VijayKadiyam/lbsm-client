@@ -384,15 +384,17 @@ export default {
             "/user_program_posts",
             this.form
           );
-          this.UserProgramPost = UserProgramPost.data.data;
-          this.$swal({
-            type: "error",
-            title: "Oops...",
-            text: `${this.UserProgramPost}`,
-            footer: "",
-          });
-          this.isLoading = false;
-          this.submitStatus = "OK";
+          this.UserProgramPost = UserProgramPost.data.msg;
+          if (this.UserProgramPost) {
+            this.$swal({
+              type: "error",
+              title: "Oops...",
+              text: `${this.UserProgramPost}`,
+              footer: "",
+            });
+            this.isLoading = false;
+            this.submitStatus = "OK";
+          }
 
           // setTimeout(() => {
           this.$router.push("/app/user-program-posts/");

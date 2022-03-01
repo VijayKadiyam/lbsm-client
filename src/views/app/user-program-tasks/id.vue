@@ -228,18 +228,42 @@ export default {
       );
       // let form = await axios.get(`/user_program_tasks/${this.$route.params.id}`);
       this.form = form.data.data;
-      this.user = this.form.user;
-      this.program = this.form.program;
-      this.ship = this.form.ship;
-      this.program_task = this.form.program_task;
-      this.selectedProgramTask.push({
-        id: this.program_task.id,
-        text: this.program_task.serial_no + "-" + this.program_task.task,
+
+      let masters = await axios.get(`user_program_tasks/masters`);
+      masters = masters.data;
+      masters.ships.forEach((ship) => {
+        if (ship.id == this.form.ship_id) {
+          this.selectedShip.push({
+            id: ship.id,
+            text: ship.description,
+          });
+        }
       });
-      this.selectedShip.push({
-        id: this.ship.id,
-        text: this.ship.description,
+      let user_program = await axios.get(
+        `/user_programs/${this.$route.params.user_program_id}`
+      );
+      this.user_program = user_program.data.data;
+      // let program_tasks = await axios.get(
+      //   `programs/${this.user_program.program_id}/program_tasks`
+      // );
+      let sprogram_tasks = await axios.post(
+        `program_tasks/filter?user_id=${this.user_program.user_id}`
+      );
+      this.selectprogram_tasks = sprogram_tasks.data.data;
+      this.selectprogram_tasks.forEach((programTask) => {
+        console.log(this.form.program_task_id + " - " + programTask.id);
+        if (programTask.id == this.form.program_task_id) {
+          this.selectedProgramTask.push({
+            id: programTask.id,
+            text: programTask.serial_no + "-" + programTask.task,
+          });
+        }
       });
+
+      // this.selectedShip.push({
+      //   id: this.ship.id,
+      //   text: this.ship.description,
+      // });
       this.isLoading = false;
     },
     //   validate form
@@ -248,6 +272,9 @@ export default {
       if (this.selectedShip[0]) {
         this.form.ship_id = this.selectedShip[0].id;
       }
+      if (this.selectedProgramTask[0]) {
+        this.form.program_task_id = this.selectedProgramTask[0].id;
+      }
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
@@ -255,6 +282,7 @@ export default {
         try {
           this.submitStatus = "PENDING";
           this.isLoading = true;
+          console.log(this.form);
           await axios.patch(
             `user_programs/${this.form.user_program_id}/user_program_tasks/${this.$route.params.id}`,
             this.form

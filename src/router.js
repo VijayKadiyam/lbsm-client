@@ -316,6 +316,26 @@ const routes = [
           },
         ],
       },
+      // User Ships
+      {
+        path: "/app/user-ships",
+        component: () => import("./views/app/user-ships"),
+        redirect: "/app/user-ships/list",
+        children: [
+          {
+            path: "list",
+            component: () => import("./views/app/user-ships/list"),
+          },
+          {
+            path: "create",
+            component: () => import("./views/app/user-ships/create"),
+          },
+          {
+            path: ":id",
+            component: () => import("./views/app/user-ships/id"),
+          },
+        ],
+      },
     ],
   },
   // sessions

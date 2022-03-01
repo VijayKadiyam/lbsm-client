@@ -129,6 +129,51 @@
     <b-row>
       <b-col md="12">
         <b-card class="mb-4">
+          <div class="content" v-for="(user_ship, at) in user_ships"
+                        :key="`userShip${at}`">
+            <b-row>
+              <b-col md="4"
+                ><b-col md="4">
+                  <p class="text-muted mt-2 mb-0">Vessel Name</p>
+                </b-col>
+                <b-col md="8">
+                  <p class="text-primary text-18 line-height-1 mb-2">
+                    {{ user_ship.ship.description ? user_ship.ship.description : 0 }}
+                  </p>
+                </b-col></b-col
+              >
+              <b-col md="4"
+                ><b-col md="4">
+                  <p class="text-muted mt-2 mb-0">From Date</p>
+                </b-col>
+                <b-col md="8">
+                  <p class="text-primary text-18 line-height-1 mb-2">
+                    {{
+                      user_ship.from_date
+                        ? user_ship.from_date
+                        : ''
+                    }}
+                  </p>
+                </b-col>
+              </b-col>
+              <b-col md="4"
+                ><b-col md="4">
+                  <p class="text-muted mt-2 mb-0">To date</p>
+                </b-col>
+                <b-col md="8">
+                  <p class="text-primary text-18 line-height-1 mb-2">
+                    {{ user_ship.to_date ? user_ship.to_date : '' }}
+                  </p>
+                </b-col>
+              </b-col>
+            </b-row>
+          </div>
+        </b-card>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col md="12">
+        <b-card class="mb-4">
           <div class="content">
             <b-row>
               <b-col md="4"
@@ -346,6 +391,7 @@ export default {
       this.total_pending_program_tasks =
         user_program_tasks.data.total_pending_program_tasks;
       this.average_score = user_program_tasks.data.average_score;
+      this.user_ships = user_program_tasks.data.user_ships;
 
       // console.log(this.user_program_tasks);
 

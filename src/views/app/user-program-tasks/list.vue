@@ -301,6 +301,9 @@
               {{ props.row.imagepath4 }}
             </a>
           </span>
+           <span v-else-if="props.column.field == 'active'">
+            {{ props.row.active == 1 ? "YES" : "NO" }}
+          </span>
         </template>
       </vue-good-table>
     </b-card>
@@ -352,6 +355,10 @@ export default {
         {
           label: "ImagePath 4",
           field: "imagepath4",
+        },
+        {
+          label: "Active",
+          field: "active",
         },
         {
           label: "Action",

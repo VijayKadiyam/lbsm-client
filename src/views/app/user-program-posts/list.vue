@@ -49,6 +49,9 @@
           <span v-else-if="props.column.field == 'remarks'">
             {{ props.row.remarks }}
           </span>
+           <span v-else-if="props.column.field == 'active'">
+            {{ props.row.active == 1 ? "YES" : "NO" }}
+          </span>
         </template>
       </vue-good-table>
     </b-card>
@@ -87,6 +90,10 @@ export default {
         {
           label: "Remarks",
           field: "remarks",
+        },
+        {
+          label: "Active",
+          field: "active",
         },
         {
           label: "Action",

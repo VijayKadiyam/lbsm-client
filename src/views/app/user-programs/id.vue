@@ -38,6 +38,21 @@
                 class="mb-2"
               ></b-form-datepicker>
             </b-form-group>
+            <b-form-group label="Active">
+                  <b-row>
+                    <b-col md="8">
+                      <span>IN ACTIVE</span>
+                      <label class="switch switch-success mr-3 ml-3">
+                        <input
+                          type="checkbox"
+                          checked="checkbox"
+                          v-model="form.active"
+                        /><span class="slider"></span>
+                      </label>
+                      <span>ACTIVE</span>
+                    </b-col>
+                  </b-row>
+                </b-form-group>
             <b-button
               type="submit"
               variant="primary"

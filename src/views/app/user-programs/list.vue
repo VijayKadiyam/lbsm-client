@@ -48,6 +48,9 @@
           <span v-else-if="props.column.field == 'enrollment_date'">
             {{ props.row.enrollment_date }}
           </span>
+           <span v-else-if="props.column.field == 'active'">
+            {{ props.row.active == 1 ? "YES" : "NO" }}
+          </span>
         </template>
       </vue-good-table>
     </b-card>
@@ -82,6 +85,10 @@ export default {
           type: "date",
           dateInputFormat: "yyyy-MM-dd",
           dateOutputFormat: "yyyy/MM/dd",
+        },
+        {
+          label: "Active",
+          field: "active",
         },
         {
           label: "Action",

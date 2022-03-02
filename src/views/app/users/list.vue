@@ -63,6 +63,9 @@
           <span v-else-if="props.column.field == 'email' ">
             {{ props.row.email ? props.row.email.toUpperCase() : ''  }}
           </span>
+         <span v-else-if="props.column.field == 'active'">
+            {{ props.row.active == 1 ? "YES" : "NO" }}
+          </span>
         </template>
       </vue-good-table>
     </b-card>
@@ -107,10 +110,10 @@ export default {
           label: "Email",
           field: "email",
         },
-        // {
-        //   label: "Date Of Birth",
-        //   field: "dob",
-        // },
+        {
+          label: "Active",
+          field: "active",
+        },
         {
           label: "Action",
           field: "button",

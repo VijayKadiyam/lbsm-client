@@ -188,6 +188,23 @@
                   />
                 </b-form-group>
               </b-col>
+              <b-col md="6">
+                <b-form-group label="Active">
+                  <b-row>
+                    <b-col md="8">
+                      <span>IN ACTIVE</span>
+                      <label class="switch switch-success mr-3 ml-3">
+                        <input
+                          type="checkbox"
+                          checked="checkbox"
+                          v-model="form.active"
+                        /><span class="slider"></span>
+                      </label>
+                      <span>ACTIVE</span>
+                    </b-col>
+                  </b-row>
+                </b-form-group>
+              </b-col>
             </b-row>
             <b-button
               type="submit"
@@ -312,7 +329,7 @@ export default {
         gender: "",
         password: "",
         email: "",
-        active: 1,
+        // active: 1,
         role_id: 4,
       },
       userShip: {

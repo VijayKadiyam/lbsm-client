@@ -303,7 +303,7 @@
                 }}
               </span>
               <span v-if="props.column.field == 'rank' && props.row.rank">
-                {{ props.row.rank ? props.row.rank.toUpperCase() : "" }}
+                {{ props.row.rank ? props.row.rank.description.toUpperCase() : "" }}
               </span>
               <span
                 v-if="

@@ -206,6 +206,79 @@
               <div class="spinner sm spinner-primary mt-3"></div>
             </div>
           </b-form>
+
+          <hr />
+          <h4>User Ship</h4>
+          <br />
+          <b-row>
+            <b-col md="4">
+              <b-form-group label="Ship">
+                <vue-tags-input
+                  v-model="searchShip"
+                  :tags="selectedShip"
+                  class="tag-custom text-15 mb-2"
+                  :autocomplete-items="filteredShipItems"
+                  :add-only-from-autocomplete="true"
+                  @tags-changed="(newTags) => (selectedShip = newTags)"
+                  placeholder="Type Ship Name"
+                />
+              </b-form-group>
+            </b-col>
+            <b-col md="3">
+              <b-form-group label="From Date">
+                <b-form-datepicker
+                  id="from_date"
+                  v-model="userShip.from_date"
+                  class="mb-2"
+                  placeholder="From Date"
+                ></b-form-datepicker>
+              </b-form-group>
+            </b-col>
+            <b-col md="3">
+              <b-form-group label="To Date">
+                <b-form-datepicker
+                  id="to_date"
+                  v-model="userShip.to_date"
+                  class="mb-2"
+                  placeholder="To Date"
+                ></b-form-datepicker>
+              </b-form-group>
+            </b-col>
+            <b-col md="2">
+              <br />
+              <b-button @click="saveUserShip" variant="primary">
+                Save
+              </b-button>
+            </b-col>
+          </b-row>
+          <hr />
+          <b-card>
+            <vue-good-table
+              :columns="columns"
+              :line-numbers="true"
+              :search-options="{
+                enabled: true,
+                placeholder: 'Search this table',
+              }"
+              :pagination-options="{
+                enabled: true,
+                mode: 'records',
+              }"
+              styleClass="tableOne vgt-table"
+              :rows="user_ships"
+            >
+              <template slot="table-row" slot-scope="props">
+                <span v-if="props.column.field == 'button'">
+                  <b-button
+                    @click="deleteUserShip(props.row.id)"
+                    variant="primary"
+                  >
+                    Delete
+                  </b-button>
+                </span>
+              </template>
+            </vue-good-table>
+          </b-card>
         </b-card>
       </b-col>
     </b-row>
@@ -242,14 +315,44 @@ export default {
         active: 1,
         role_id: 4,
       },
+      userShip: {
+        user_id: "",
+        from_date: "",
+        to_date: "",
+        ship_id: "",
+      },
       searchRank: "",
       selectedRank: [],
       RankItems: [],
+
+      searchShip: "",
+      selectedShip: [],
+      shipItems: [],
 
       searchNationality: "",
       selectedNationality: [],
       nationalityItems: [],
       submitStatus: null,
+
+      columns: [
+        {
+          label: "Ship",
+          field: "ship.description",
+        },
+        {
+          label: "From Date",
+          field: "from_date",
+        },
+        {
+          label: "To Date",
+          field: "to_date",
+        },
+        {
+          label: "Action",
+          field: "button",
+        },
+      ],
+      user_ships: [],
     };
   },
   validations: {
@@ -283,6 +386,7 @@ export default {
     this.getMasters();
     // this.form.site_id = this.site.id
     this.getData();
+    this.getUserShipData();
   },
   computed: {
     filteredRankItems() {
@@ -297,6 +401,13 @@ export default {
         return (
           u.text.toLowerCase().indexOf(this.searchNationality.toLowerCase()) !==
           -1
+        );
+      });
+    },
+    filteredShipItems() {
+      return this.shipItems.filter((pt) => {
+        return (
+          pt.text.toLowerCase().indexOf(this.searchShip.toLowerCase()) !== -1
         );
       });
     },
@@ -315,6 +426,15 @@ export default {
         this.nationalityItems.push({
           id: nationality.id,
           text: nationality.description,
+        });
+      });
+
+      let Shipmasters = await axios.get(`user_ships/masters`);
+      Shipmasters = Shipmasters.data;
+      Shipmasters.ships.forEach((ship) => {
+        this.shipItems.push({
+          id: ship.id,
+          text: ship.description,
         });
       });
     },
@@ -387,19 +507,68 @@ export default {
 
       let form = await axios.get(`/users/${this.$route.params.id}`);
       this.form = form.data.data;
-      this.form.nationality=this.form.nationality.toUpperCase()
+      this.form.nationality = this.form.nationality.toUpperCase();
       this.rankdata = this.RankItems.find((sp) => sp.id == this.form.rank_id);
       this.selectedRank.push({
         id: this.rankdata.id,
         text: this.rankdata.text,
       });
 
-      this.Nationalitydata = this.nationalityItems.find((sp) => sp.text == this.form.nationality);
+      this.Nationalitydata = this.nationalityItems.find(
+        (sp) => sp.text == this.form.nationality
+      );
       this.selectedNationality.push({
         id: this.Nationalitydata.id,
         text: this.Nationalitydata.text,
       });
+
       this.isLoading = false;
+    },
+    async getUserShipData() {
+      this.isLoading = true;
+
+      // User Program Task log
+      let user_ships = await axios.get(
+        `/user_ships?user_id=${this.$route.params.id}`
+      );
+      this.user_ships = user_ships.data.data;
+      // this.serialNoStarting = (page - 1) * this.rowsPerPage;
+      this.isLoading = false;
+    },
+    async saveUserShip() {
+      if (this.selectedShip[0]) {
+        this.userShip.ship_id = this.selectedShip[0].id;
+      }
+      
+        this.userShip.user_id =this.$route.params.id;
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        this.submitStatus = "ERROR";
+      } else {
+        try {
+          this.isLoading = true;
+          // console.log(this.form);
+          let user_ships = await axios.post(`user_ships`, this.userShip);
+          this.user_ships = user_ships.data.data;
+          this.userShip = user_ships.data.data;
+          this.isLoading = false;
+          this.searchShip = ''
+          this.userShip.from_date = ''
+          this.userShip.to_date = ''
+          this.submitStatus = "OK";
+
+          // setTimeout(() => {
+          // this.$router.push(`/app/user-ships/`);
+          // }, 1000);
+        } catch (e) {
+          this.isLoading = false;
+        }
+      }
+      this.getUserShipData();
+    },
+    async deleteUserShip(UserShipId) {
+      await axios.delete(`/user_ships/${UserShipId}`);
+      this.getUserShipData();
     },
   },
 };

@@ -235,22 +235,22 @@
             </router-link>
             <div class="triangle"></div>
           </li>
-          <li
+          <!-- <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
             :class="{ active: selectedParentMenu == 'user-ships' }"
             data-item="user-ships"
             :data-submenu="true"
-          >
+          > -->
             <!-- v-if="this.userPermissions.indexOf(11) != -1" -->
-            <router-link tag="a" class="nav-item-hold" to="/app/user-ships/list">
+            <!-- <router-link tag="a" class="nav-item-hold" to="/app/user-ships/list">
               <a class="nav-item-hold" href="#">
                 <i class="nav-icon text-20 i-Diploma-2"></i>
                 <span class="nav-text">User Ships</span>
               </a>
             </router-link>
             <div class="triangle"></div>
-          </li>
+          </li> -->
           
         </ul>
       </div>
@@ -506,7 +506,7 @@
           </li>
         </ul>
         <!-- Submenu User Ships -->
-        <ul
+        <!-- <ul
           class="childNav d-none"
           data-parent="user-ships"
           :class="{ 'd-block': selectedParentMenu == 'user-ships' }"
@@ -523,7 +523,7 @@
               <span class="item-name">Add New User Ship</span>
             </router-link>
           </li>
-        </ul>
+        </ul> -->
         
       </div>
     </vue-perfect-scrollbar>

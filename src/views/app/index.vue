@@ -3,6 +3,7 @@
     <!-- <keep-alive> -->
     <component :is="getThemeMode.layout"></component>
     <!-- </keep-alive> -->
+    
   </div>
 </template>
 

@@ -4,5 +4,6 @@ cd /var/www/vhosts/lbsm/lbsm-client
 
 npm run build
 
+
 # pm2 delete lbsm 
 # pm2 start npm --name lbsm -- start

@@ -94,6 +94,7 @@ export default {
     return {
       form: {},
       crudeKarcoTasks: [],
+      isLoading:false,
       columns: [
         {
           label: "Vessel Name",
@@ -203,7 +204,7 @@ export default {
 
           alert("Uploaded Successfully");
         })
-        .catch(function () {
+        .catch(function() {
           console.log("FAILURE!!");
         });
       this.isLoading = false;

@@ -78,6 +78,14 @@
           <span v-if="props.column.field == 'score'">
             {{ props.row.score }}
           </span>
+          <span v-if="props.column.field == 'delete'">
+            <b-button
+              variant="primary"
+              class="btn-rounded d-none d-sm-block"
+              @click="deleteVideotel(props.row.id)"
+              >Delete
+            </b-button>
+          </span>
         </template>
       </vue-good-table>
     </b-card>
@@ -138,6 +146,10 @@ export default {
           label: "Score",
           field: "score",
         },
+        {
+          label: "Action",
+          field: "delete",
+        },
       ],
       videotel_tasks: [],
     };
@@ -153,6 +165,23 @@ export default {
       // this.count = videotel_tasks.data.count;
       // this.serialNoStarting = (page - 1) * this.rowsPerPage;
       this.isLoading = false;
+    },
+    async deleteVideotel(id) {
+      this.$swal({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.value) {
+          axios.post(`delete_videotel_tasks/${id}`);
+          this.$swal("Deleted!", "Your file has been deleted.", "success");
+          this.getData();
+        }
+      });
     },
   },
 };

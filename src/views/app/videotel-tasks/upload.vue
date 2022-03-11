@@ -94,6 +94,7 @@ export default {
     return {
       form: {},
       crudeVideotelTasks: [],
+      isLoading:false,
       columns: [
         {
           label: "Location",

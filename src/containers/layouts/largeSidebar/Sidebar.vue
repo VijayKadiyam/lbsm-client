@@ -213,7 +213,7 @@
             <router-link tag="a" class="nav-item-hold" to="/app/karco-tasks/list">
               <a class="nav-item-hold" href="#">
                 <i class="nav-icon text-20 i-Diploma-2"></i>
-                <span class="nav-text">KARCO Tasks</span>
+                <span class="nav-text">KARCO</span>
               </a>
             </router-link>
             <div class="triangle"></div>
@@ -230,7 +230,7 @@
             <router-link tag="a" class="nav-item-hold" to="/app/videotel-tasks/list">
               <a class="nav-item-hold" href="#">
                 <i class="nav-icon text-20 i-Diploma-2"></i>
-                <span class="nav-text">VideoTel Tasks</span>
+                <span class="nav-text">VideoTel</span>
               </a>
             </router-link>
             <div class="triangle"></div>

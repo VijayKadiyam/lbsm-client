@@ -393,6 +393,7 @@ export default {
         `/user_programs/${this.$route.params.user_program_id}/user_program_tasks?user_id=${this.user.id}`
       );
       this.user_program_tasks = user_program_tasks.data.data;
+      console.log(this.user_program_tasks);
       this.total_completed_task = user_program_tasks.data.total_completed_task;
       this.total_pending_task = user_program_tasks.data.total_pending_task;
       this.total_pending_program_tasks =

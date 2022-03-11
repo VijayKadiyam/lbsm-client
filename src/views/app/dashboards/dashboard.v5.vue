@@ -931,8 +931,8 @@ export const multipleBar2 = {
   yAxis: {
     type: "value",
     min: 0,
-    max: 500,
-    interval: 100,
+    max: 200,
+    interval: 50,
     axisLabel: {
       formatter: "{value}",
       color: dark_heading,
@@ -1011,7 +1011,7 @@ export const multipleBar2 = {
   series: [
     {
       color: "#3182bd",
-      name: "Rest",
+      name: "CPP",
       type: "bar",
       barGap: 0,
       label: {

@@ -303,7 +303,9 @@
                 }}
               </span>
               <span v-if="props.column.field == 'rank' && props.row.rank">
-                {{ props.row.rank ? props.row.rank.description.toUpperCase() : "" }}
+                {{
+                  props.row.rank ? props.row.rank.description.toUpperCase() : ""
+                }}
               </span>
               <span
                 v-if="
@@ -330,7 +332,7 @@
               <span
                 v-if="
                   props.column.field == 'task_perfomed' &&
-                    props.row.task_perfomed
+                  props.row.task_perfomed
                 "
               >
                 {{ props.row.task_perfomed ? props.row.task_perfomed : "" }}
@@ -668,20 +670,24 @@ export default {
         `/total_tasks_performed?year=${this.year}&ship=${this.ships}&rank=${this.rank}`
       );
       this.total_tasks_performed = total_tasks_performed.data.data;
+      multipleBar2.series[0].data = [];
       this.total_tasks_performed.forEach((data) => {
         multipleBar2.series[0].data.push(data);
       });
-      // console.log(multipleBar2.series[1].data);
+      console.log("Multiple Bar");
+      console.log(multipleBar2);
 
       this.total_karco_tasks_performed =
         total_tasks_performed.data.total_karco_tasks_performed;
       // multipleBar2.setOption();
+      multipleBar2.series[1].data = [];
       this.total_karco_tasks_performed.forEach((data) => {
         multipleBar2.series[1].data.push(data);
       });
 
       this.total_videotel_tasks_performed =
         total_tasks_performed.data.total_videotel_tasks_performed;
+      multipleBar2.series[2].data = [];
       this.total_videotel_tasks_performed.forEach((data) => {
         multipleBar2.series[2].data.push(data);
       });

@@ -2,6 +2,48 @@
   <div class="main-content">
     <breadcumb :page="'Videotel Tasks List'" :folder="'Videotel Tasks'" />
     <!-- <div class="wrapper"> -->
+      <b-card>
+      <b-row class="col-md-12">
+        <b-col md="5">
+          <b-form-group label="Month">
+            <vue-tags-input
+              v-model="searchMonth"
+              :tags="selectedMonth"
+              :max-tags="1"
+              class="tag-custom text-15 mb-2"
+              :autocomplete-items="filteredMonthItems"
+              :add-only-from-autocomplete="true"
+              @tags-changed="(newTags) => (selectedMonth = newTags)"
+              placeholder="Type Month Name"
+            />
+          </b-form-group>
+        </b-col>
+        <b-col md="5">
+          <b-form-group label="Year">
+            <vue-tags-input
+              v-model="searchYear"
+              :tags="selectedYear"
+              :max-tags="1"
+              class="tag-custom text-15 mb-2"
+              :autocomplete-items="filteredYearItems"
+              :add-only-from-autocomplete="true"
+              @tags-changed="(newTags) => (selectedYear = newTags)"
+              placeholder="Type Month Name"
+            />
+          </b-form-group>
+        </b-col>
+        <b-col md="2">
+          <b-button
+            style="margin-top: 22px;"
+            variant="primary"
+            class="btn-rounded d-none d-sm-block"
+            @click="filterVideotel()"
+            >Search
+          </b-button>
+        </b-col>
+      </b-row>
+    </b-card>
+    <br />
     <b-card>
       <vue-good-table
         :columns="columns"
@@ -152,7 +194,48 @@ export default {
         },
       ],
       videotel_tasks: [],
+
+      searchMonth: "",
+      selectedMonth: [],
+      monthItems: [
+        { text: "JANUARY", id: 1 },
+        { text: "FEBRUARY", id: 2 },
+        { text: "MARCH", id: 3 },
+        { text: "APRIL", id: 4 },
+        { text: "MAY", id: 5 },
+        { text: "JUNE", id: 6 },
+        { text: "JULY", id: 7 },
+        { text: "AUGUST", id: 8 },
+        { text: "SEPTEMBER", id: 9 },
+        { text: "OCTOBER", id: 10 },
+        { text: "NOVEMBER", id: 11 },
+        { text: "DECEMBER", id: 12 },
+      ],
+
+      searchYear: "",
+      selectedYear: [],
+      yearItems: [
+        { text: "2020", id: 2020 },
+        { text: "2021", id: 2021 },
+        { text: "2022", id: 2022 },
+      ],
     };
+  },
+  computed: {
+    filteredMonthItems() {
+      return this.monthItems.filter((u) => {
+        return (
+          u.text.toLowerCase().indexOf(this.searchMonth.toLowerCase()) !== -1
+        );
+      });
+    },
+    filteredYearItems() {
+      return this.yearItems.filter((u) => {
+        return (
+          u.text.toLowerCase().indexOf(this.searchYear.toLowerCase()) !== -1
+        );
+      });
+    },
   },
   mounted() {
     this.getData();
@@ -182,6 +265,31 @@ export default {
           this.getData();
         }
       });
+    },
+    async searchSelectedMonth() {
+      if (this.selectedMonth.length > 0) {
+        this.month = this.selectedMonth[0].id;
+        this.monthdata = this.months.find((sp) => sp.id == this.month);
+      } else {
+        this.monthdata = "";
+        this.selectedMonth = [];
+      }
+    },
+    async searchSelectedYear() {
+      if (this.selectedYear.length > 0) {
+        this.year = this.selectedYear[0].id;
+        this.yeardata = this.years.find((sp) => sp.id == this.year);
+      } else {
+        this.yeardata = "";
+        this.selectedYear = [];
+      }
+    },
+    async filterVideotel(){
+      this.month = this.selectedMonth[0].id;
+      this.year = this.selectedYear[0].id;
+
+      let videotel_tasks = await axios.get(`videotel_tasks?month=${this.month}&year=${this.year}`);
+      this.videotel_tasks = videotel_tasks.data.data;
     },
   },
 };

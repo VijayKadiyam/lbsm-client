@@ -249,6 +249,14 @@
           <vue-good-table
             :columns="TopPerformercolumns"
             :line-numbers="true"
+            :search-options="{
+              enabled: true,
+              placeholder: 'Search this table',
+            }"
+            :pagination-options="{
+              enabled: true,
+              mode: 'records',
+            }"
             styleClass="tableOne vgt-table"
             :rows="top_performers"
           >
@@ -332,7 +340,7 @@
               <span
                 v-if="
                   props.column.field == 'task_perfomed' &&
-                  props.row.task_perfomed
+                    props.row.task_perfomed
                 "
               >
                 {{ props.row.task_perfomed ? props.row.task_perfomed : "" }}

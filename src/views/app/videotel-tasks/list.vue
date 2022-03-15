@@ -28,7 +28,7 @@
               :autocomplete-items="filteredYearItems"
               :add-only-from-autocomplete="true"
               @tags-changed="(newTags) => (selectedYear = newTags)"
-              placeholder="Type Month Name"
+              placeholder="Type Year"
             />
           </b-form-group>
         </b-col>

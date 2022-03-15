@@ -94,7 +94,7 @@ export default {
     return {
       form: {},
       crudeVideotelTasks: [],
-      isLoading:false,
+      isLoading: false,
       columns: [
         {
           label: "Location",
@@ -181,10 +181,11 @@ export default {
         .then((response) => {
           if (response.data.data) this.crudeVideotelTasks = response.data.data;
           this.isLoading = false;
+          this.$swal("Done", "Uploaded Successfully.", "success");
 
-          alert("Uploaded Successfully");
+          // alert("Uploaded Successfully");
         })
-        .catch(function () {
+        .catch(function() {
           console.log("FAILURE!!");
         });
       this.isLoading = false;
@@ -199,7 +200,8 @@ export default {
             this.form.is_existing_batch ? 1 : 0
           }`
         );
-        alert("Processed Successfully");
+        this.$swal("Done", "Processed Successfully.", "success");
+        // alert("Processed Successfully");
         await axios.get("truncate_videotel_tasks");
         this.crudeVideotelTasks = [];
         this.isLoading = false;

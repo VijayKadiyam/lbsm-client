@@ -94,7 +94,7 @@ export default {
     return {
       form: {},
       crudeKarcoTasks: [],
-      isLoading:false,
+      isLoading: false,
       columns: [
         {
           label: "Vessel Name",
@@ -201,8 +201,8 @@ export default {
         .then((response) => {
           if (response.data.data) this.crudeKarcoTasks = response.data.data;
           this.isLoading = false;
-
-          alert("Uploaded Successfully");
+          this.$swal("Done", "Uploaded Successfully.", "success");
+          // alert("Uploaded Successfully");
         })
         .catch(function() {
           console.log("FAILURE!!");
@@ -219,7 +219,9 @@ export default {
             this.form.is_existing_batch ? 1 : 0
           }`
         );
-        alert("Processed Successfully");
+        this.$swal("Done", "Processed Successfully.", "success");
+
+        // alert("Processed Successfully");
         await axios.get("truncate_karco_tasks");
         this.crudeKarcoTasks = [];
         this.isLoading = false;

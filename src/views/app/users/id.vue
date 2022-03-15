@@ -296,6 +296,79 @@
               </template>
             </vue-good-table>
           </b-card>
+          <hr />
+          <h4>User I-Test</h4>
+          <br />
+          <b-row>
+            <b-col md="3">
+              <b-form-group label="Date">
+                <b-form-datepicker
+                  id="date"
+                  v-model="useritest.date"
+                  class="mb-2"
+                  placeholder="Date"
+                ></b-form-datepicker>
+              </b-form-group>
+            </b-col>
+            <b-col md="3">
+               <b-form-group label="Percentage">
+                  <b-form-input
+                    class="mb-2"
+                    label="Percentage"
+                    placeholder="Enter Percentage"
+                    v-model="useritest.percentage"
+                  >
+                  </b-form-input>
+               </b-form-group>
+            </b-col>
+            <b-col md="4">
+              <b-form-group label="Status">
+                <vue-tags-input
+                  v-model="searchStatus"
+                  :tags="selectedStatus"
+                  class="tag-custom text-15 mb-2"
+                  :autocomplete-items="filteredStatusItems"
+                  :add-only-from-autocomplete="true"
+                  @tags-changed="(newTags) => (selectedStatus = newTags)"
+                  placeholder="Type Status"
+                />
+              </b-form-group>
+            </b-col>
+            <b-col md="2">
+              <br />
+              <b-button @click="saveUserITest" variant="primary">
+                Save
+              </b-button>
+            </b-col>
+          </b-row>
+          <hr />
+          <b-card>
+            <vue-good-table
+              :columns="userItestcolumns"
+              :line-numbers="true"
+              :search-options="{
+                enabled: true,
+                placeholder: 'Search this table',
+              }"
+              :pagination-options="{
+                enabled: true,
+                mode: 'records',
+              }"
+              styleClass="tableOne vgt-table"
+              :rows="useritest"
+            >
+              <template slot="table-row" slot-scope="props">
+                <span v-if="props.column.field == 'button'">
+                  <b-button
+                    @click="deleteUserItest(props.row.id)"
+                    variant="primary"
+                  >
+                    Delete
+                  </b-button>
+                </span>
+              </template>
+            </vue-good-table>
+          </b-card>
         </b-card>
       </b-col>
     </b-row>
@@ -338,6 +411,12 @@ export default {
         to_date: "",
         ship_id: "",
       },
+      useritest: {
+        user_id: "",
+        date: "",
+        status: "",
+        percentage: "",
+      },
       searchRank: "",
       selectedRank: [],
       RankItems: [],
@@ -349,6 +428,14 @@ export default {
       searchNationality: "",
       selectedNationality: [],
       nationalityItems: [],
+
+      searchStatus: "",
+      selectedStatus: [],
+      statusItems: [
+        { text: "Fail", id: "Fail" },
+        { text: "Pass", id: "Pass" },
+      ],
+
       submitStatus: null,
 
       columns: [
@@ -363,6 +450,24 @@ export default {
         {
           label: "To Date",
           field: "to_date",
+        },
+        {
+          label: "Action",
+          field: "button",
+        },
+      ],
+      userItestcolumns: [
+        {
+          label: "Date",
+          field: "date",
+        },
+        {
+          label: "Percetage",
+          field: "percentage",
+        },
+        {
+          label: "Status",
+          field: "status",
         },
         {
           label: "Action",
@@ -425,6 +530,13 @@ export default {
       return this.shipItems.filter((pt) => {
         return (
           pt.text.toLowerCase().indexOf(this.searchShip.toLowerCase()) !== -1
+        );
+      });
+    },
+    filteredStatusItems() {
+      return this.statusItems.filter((pt) => {
+        return (
+          pt.text.toLowerCase().indexOf(this.searchStatus.toLowerCase()) !== -1
         );
       });
     },
@@ -556,8 +668,8 @@ export default {
       if (this.selectedShip[0]) {
         this.userShip.ship_id = this.selectedShip[0].id;
       }
-      
-        this.userShip.user_id =this.$route.params.id;
+
+      this.userShip.user_id = this.$route.params.id;
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
@@ -569,9 +681,9 @@ export default {
           this.user_ships = user_ships.data.data;
           this.userShip = user_ships.data.data;
           this.isLoading = false;
-          this.searchShip = ''
-          this.userShip.from_date = ''
-          this.userShip.to_date = ''
+          this.searchShip = "";
+          this.userShip.from_date = "";
+          this.userShip.to_date = "";
           this.submitStatus = "OK";
 
           // setTimeout(() => {
@@ -586,6 +698,52 @@ export default {
     async deleteUserShip(UserShipId) {
       await axios.delete(`/user_ships/${UserShipId}`);
       this.getUserShipData();
+    },
+    async getUserITestData() {
+      this.isLoading = true;
+
+      // User Program Task log
+      let useritest = await axios.get(
+        `/user_i_tests?user_id=${this.$route.params.id}`
+      );
+      this.useritest = useritest.data.data;
+      // this.serialNoStarting = (page - 1) * this.rowsPerPage;
+      this.isLoading = false;
+    },
+    async saveUserITest() {
+      if (this.selectedStatus[0]) {
+        this.useritest.status = this.selectedStatus[0].id;
+      }
+
+      this.useritest.user_id = this.$route.params.id;
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        this.submitStatus = "ERROR";
+      } else {
+        try {
+          this.isLoading = true;
+          // console.log(this.form);
+          let useritest = await axios.post(`user_i_tests`, this.useritest);
+          this.useritest = useritest.data.data;
+          this.useritest = useritest.data.data;
+          this.isLoading = false;
+          this.searchStatus = "";
+          this.useritest.date = "";
+          this.useritest.percentage = "";
+          this.submitStatus = "OK";
+
+          // setTimeout(() => {
+          // this.$router.push(`/app/user-ships/`);
+          // }, 1000);
+        } catch (e) {
+          this.isLoading = false;
+        }
+      }
+      this.getUserITestData();
+    },
+    async deleteUserItest(UserITestId) {
+      await axios.delete(`/user_i_tests/${UserITestId}`);
+      this.getUserITestData();
     },
   },
 };

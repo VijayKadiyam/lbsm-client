@@ -129,8 +129,11 @@
     <b-row>
       <b-col md="12">
         <b-card class="mb-4">
-          <div class="content" v-for="(user_ship, at) in user_ships"
-                        :key="`userShip${at}`">
+          <div
+            class="content"
+            v-for="(user_ship, at) in user_ships"
+            :key="`userShip${at}`"
+          >
             <b-row>
               <b-col md="4"
                 ><b-col md="4">
@@ -138,7 +141,11 @@
                 </b-col>
                 <b-col md="8">
                   <p class="text-primary text-18 line-height-1 mb-2">
-                    {{ user_ship.ship.description ? user_ship.ship.description : 0 }}
+                    {{
+                      user_ship.ship.description
+                        ? user_ship.ship.description
+                        : 0
+                    }}
                   </p>
                 </b-col></b-col
               >
@@ -148,11 +155,7 @@
                 </b-col>
                 <b-col md="8">
                   <p class="text-primary text-18 line-height-1 mb-2">
-                    {{
-                      user_ship.from_date
-                        ? user_ship.from_date
-                        : ''
-                    }}
+                    {{ user_ship.from_date ? user_ship.from_date : "" }}
                   </p>
                 </b-col>
               </b-col>
@@ -162,7 +165,7 @@
                 </b-col>
                 <b-col md="8">
                   <p class="text-primary text-18 line-height-1 mb-2">
-                    {{ user_ship.to_date ? user_ship.to_date : '' }}
+                    {{ user_ship.to_date ? user_ship.to_date : "" }}
                   </p>
                 </b-col>
               </b-col>
@@ -276,7 +279,7 @@
             >
           </span>
           <span v-if="props.column.field == 'remark'">
-             {{ props.row.remark }}
+            {{ props.row.remark }}
           </span>
           <span v-if="props.column.field == 'is_completed'">
             {{ props.row.is_completed == 0 ? "NO" : "YES" }}
@@ -285,26 +288,42 @@
             {{ props.row.completion_date }}
           </span>
           <span v-if="props.column.field == 'imagepath1'">
-            <a :href="mediaUrl + props.row.imagepath1" target="_blank">
-              {{ props.row.imagepath1 }}
+            <a
+              :href="mediaUrl + props.row.imagepath1"
+              v-if="props.row.imagepath1 != null"
+              target="_blank"
+            >
+              <i class="i-File-Pictures text-25"></i>
             </a>
           </span>
           <span v-if="props.column.field == 'imagepath2'">
-            <a :href="mediaUrl + props.row.imagepath2" target="_blank">
-              {{ props.row.imagepath2 }}
+            <a
+              :href="mediaUrl + props.row.imagepath2"
+              v-if="props.row.imagepath2 != null"
+              target="_blank"
+            >
+              <i class="i-File-Pictures text-25"></i>
             </a>
           </span>
           <span v-if="props.column.field == 'imagepath3'">
-            <a :href="mediaUrl + props.row.imagepath3" target="_blank">
-              {{ props.row.imagepath3 }}
+            <a
+              :href="mediaUrl + props.row.imagepath3"
+              v-if="props.row.imagepath3 != null"
+              target="_blank"
+            >
+              <i class="i-File-Pictures text-25"></i>
             </a>
           </span>
           <span v-if="props.column.field == 'imagepath4'">
-            <a :href="mediaUrl + props.row.imagepath4" target="_blank">
-              {{ props.row.imagepath4 }}
+            <a
+              :href="mediaUrl + props.row.imagepath4"
+              v-if="props.row.imagepath4 != null"
+              target="_blank"
+            >
+              <i class="i-File-Pictures text-25"></i>
             </a>
           </span>
-           <span v-else-if="props.column.field == 'active'">
+          <span v-else-if="props.column.field == 'active'">
             {{ props.row.active == 1 ? "YES" : "NO" }}
           </span>
         </template>

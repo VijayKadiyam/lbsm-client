@@ -231,7 +231,9 @@ export default {
     },
     async truncatePendingDocuments() {
       await axios.get("truncate_karco_tasks");
-      alert("Truncated Successfully");
+        this.$swal("Done", "Truncated Successfully.", "success");
+
+      // alert("Truncated Successfully");
       this.crudeKarcoTasks = [];
     },
     makeToast(variant = null) {

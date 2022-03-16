@@ -123,6 +123,7 @@
             </b-col>
           </b-row>
           <b-row>
+            <b-col md="1"></b-col>
             <b-col
               md="6"
               sm="6"
@@ -130,9 +131,9 @@
               v-for="(user, r) in userRankCount"
               :key="`user${r}`"
             >
-              <b-card class="card-icon-big text-center mb-30" v-if="r <= 5">
+              <b-card class="card-icon-big text-center mb-30" v-if="r <= 5 && user.rank != 'Chief Engineer'">
                 <i class="i-Add-User"></i>
-                <p class="text-muted mt-2 mb-2">
+                <p class="text-muted mt-2 mb-2" >
                   {{ user.rank + "s" }}
                 </p>
                 <p class="line-height-1 text-title text-18 mt-2 mb-0">
@@ -140,6 +141,7 @@
                 </p>
               </b-card>
             </b-col>
+            <b-col md="1"></b-col>
           </b-row>
           <b-row>
             <b-col

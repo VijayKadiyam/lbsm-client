@@ -54,6 +54,15 @@
                 >Numeric Values Only</b-alert
               >
             </b-form-group>
+             <b-form-group label="Remark">
+              <b-form-input
+                class="mb-2"
+                label="Remark"
+                placeholder="Enter Remark"
+                v-model="form.remark"
+              >
+              </b-form-input>
+             </b-form-group>
             <b-form-group label="Completion Date">
               <b-form-datepicker
                 id="dob"

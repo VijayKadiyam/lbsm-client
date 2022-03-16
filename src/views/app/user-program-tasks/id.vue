@@ -54,7 +54,7 @@
                 >Numeric Values Only</b-alert
               >
             </b-form-group>
-             <b-form-group label="Remark">
+            <b-form-group label="Remark">
               <b-form-input
                 class="mb-2"
                 label="Remark"
@@ -62,7 +62,7 @@
                 v-model="form.remark"
               >
               </b-form-input>
-             </b-form-group>
+            </b-form-group>
             <b-form-group label="Completion Date">
               <b-form-datepicker
                 id="dob"
@@ -83,12 +83,72 @@
                 <b-form-group label="Attachment 1">
                   <b-form-file name="imagepath1" ref="file1"></b-form-file>
                 </b-form-group>
+                <b-row>
+                  <b-col md="6">
+                    <center>
+                      <a
+                        :href="mediaUrl + form.imagepath1"
+                        v-if="form.imagepath1 != null"
+                        target="_blank"
+                      >
+                        <i class="i-File-Pictures text-25"></i>
+                        <br />
+                        <span>View Attachment 1</span>
+                      </a>
+                    </center>
+                  </b-col>
+                  <b-col md="6">
+                    <center>
+                      <a
+                        href="#"
+                        v-if="form.imagepath1 != null"
+                        @click="
+                          DeleteImage(form.id, form.imagepath1, 'imagepath1')
+                        "
+                      >
+                        <i class="i-Close-Window text-25"></i>
+                        <br />
+                        <span>Remove Attachment 1</span>
+                      </a>
+                    </center>
+                  </b-col>
+                </b-row>
               </b-col>
 
               <b-col md="6">
                 <b-form-group label="Attachment 2">
                   <b-form-file name="imagepath2" ref="file2"></b-form-file>
                 </b-form-group>
+                <b-row>
+                  <b-col md="6">
+                    <center>
+                      <a
+                        :href="mediaUrl + form.imagepath2"
+                        v-if="form.imagepath2 != null"
+                        target="_blank"
+                      >
+                        <i class="i-File-Pictures text-25"></i>
+                        <br />
+                        <span>View Attachment 2</span>
+                      </a>
+                    </center>
+                  </b-col>
+                  <b-col md="6">
+                    <center>
+                      <a
+                        href="#"
+                        v-if="form.imagepath2 != null"
+                        @click="
+                          DeleteImage(form.id, form.imagepath2, 'imagepath2')
+                        "
+                      >
+                        <i class="i-Close-Window text-25"></i>
+                        <br />
+                        <span>Remove Attachment 2</span>
+                      </a>
+                    </center>
+                  </b-col>
+                </b-row>
               </b-col>
             </b-row>
             <b-row>
@@ -96,12 +156,72 @@
                 <b-form-group label="Attachment 3">
                   <b-form-file name="imagepath3" ref="file3"></b-form-file>
                 </b-form-group>
+                <b-row>
+                  <b-col md="6">
+                    <center>
+                      <a
+                        :href="mediaUrl + form.imagepath3"
+                        v-if="form.imagepath3 != null"
+                        target="_blank"
+                      >
+                        <i class="i-File-Pictures text-25"></i>
+                        <br />
+                        <span>View Attachment 3</span>
+                      </a>
+                    </center>
+                  </b-col>
+                  <b-col md="6">
+                    <center>
+                      <a
+                        href="#"
+                        v-if="form.imagepath3 != null"
+                        @click="
+                          DeleteImage(form.id, form.imagepath3, 'imagepath3')
+                        "
+                      >
+                        <i class="i-Close-Window text-25"></i>
+                        <br />
+                        <span>Remove Attachment 3</span>
+                      </a>
+                    </center>
+                  </b-col>
+                </b-row>
               </b-col>
 
               <b-col md="6">
                 <b-form-group label="Attachment 4">
                   <b-form-file name="imagepath4" ref="file4"></b-form-file>
                 </b-form-group>
+                <b-row>
+                  <b-col md="6">
+                    <center>
+                      <a
+                        :href="mediaUrl + form.imagepath4"
+                        v-if="form.imagepath4 != null"
+                        target="_blank"
+                      >
+                        <i class="i-File-Pictures text-25"></i>
+                        <br />
+                        <span>View Attachment 4</span>
+                      </a>
+                    </center>
+                  </b-col>
+                  <b-col md="6">
+                    <center>
+                      <a
+                        href="#"
+                        v-if="form.imagepath4 != null"
+                        @click="
+                          DeleteImage(form.id, form.imagepath4, 'imagepath4')
+                        "
+                      >
+                        <i class="i-Close-Window text-25"></i>
+                        <br />
+                        <span>Remove Attachment 4</span>
+                      </a>
+                    </center>
+                  </b-col>
+                </b-row>
               </b-col>
             </b-row>
             <b-row>
@@ -227,41 +347,14 @@ export default {
     async getMasters() {
       let masters = await axios.get(`user_program_tasks/masters`);
       masters = masters.data;
-      masters.ships.forEach((ship) => {
+      this.ships = masters.ships
+      this.ships.forEach((ship) => {
         this.shipItems.push({
           id: ship.id,
           text: ship.description,
         });
       });
-      let user_program = await axios.get(
-        `/user_programs/${this.$route.params.user_program_id}`
-      );
-      this.user_program = user_program.data.data;
-      // let program_tasks = await axios.get(
-      //   `programs/${this.user_program.program_id}/program_tasks`
-      // );
-      let program_tasks = await axios.post(
-        `program_tasks/filter?user_id=${this.user_program.user_id}`
-      );
-      this.program_tasks = program_tasks.data.data;
-      this.program_tasks.forEach((programTask) => {
-        this.program_taskItems.push({
-          id: programTask.id,
-          text: programTask.serial_no + "-" + programTask.task,
-        });
-      });
-    },
-    async getData() {
-      this.isLoading = true;
-      let form = await axios.get(
-        `user_programs/${this.$route.params.user_program_id}/user_program_tasks/${this.$route.params.id}`
-      );
-      // let form = await axios.get(`/user_program_tasks/${this.$route.params.id}`);
-      this.form = form.data.data;
-
-      let masters = await axios.get(`user_program_tasks/masters`);
-      masters = masters.data;
-      masters.ships.forEach((ship) => {
+      this.ships.forEach((ship) => {
         if (ship.id == this.form.ship_id) {
           this.selectedShip.push({
             id: ship.id,
@@ -273,15 +366,18 @@ export default {
         `/user_programs/${this.$route.params.user_program_id}`
       );
       this.user_program = user_program.data.data;
-      // let program_tasks = await axios.get(
-      //   `programs/${this.user_program.program_id}/program_tasks`
-      // );
-      let sprogram_tasks = await axios.post(
+      let program_tasks = await axios.post(
         `program_tasks/filter?user_id=${this.user_program.user_id}`
       );
-      this.selectprogram_tasks = sprogram_tasks.data.data;
-      this.selectprogram_tasks.forEach((programTask) => {
-        console.log(this.form.program_task_id + " - " + programTask.id);
+      this.program_tasks = program_tasks.data.data;
+      this.program_tasks.forEach((programTask) => {
+        this.program_taskItems.push({
+          id: programTask.id,
+          text: programTask.serial_no + "-" + programTask.task,
+        });
+      });
+
+      this.program_tasks.forEach((programTask) => {
         if (programTask.id == this.form.program_task_id) {
           this.selectedProgramTask.push({
             id: programTask.id,
@@ -289,11 +385,20 @@ export default {
           });
         }
       });
+    },
+    async getData() {
+      this.isLoading = true;
+      let form = await axios.get(
+        `user_programs/${this.$route.params.user_program_id}/user_program_tasks/${this.$route.params.id}`
+      );
+      this.form = form.data.data;
 
-      // this.selectedShip.push({
-      //   id: this.ship.id,
-      //   text: this.ship.description,
-      // });
+      // console.log(this.ships);
+      
+      let user_program = await axios.get(
+        `/user_programs/${this.$route.params.user_program_id}`
+      );
+      this.user_program = user_program.data.data;
       this.isLoading = false;
     },
     //   validate form
@@ -356,6 +461,30 @@ export default {
         .catch(function() {
           console.log("FAILURE!!");
         });
+    },
+    async DeleteImage(id, imageName, imageField) {
+      // alert(data.id + ' - ' + imageField);
+      this.$swal({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Remove it!",
+      }).then((result) => {
+        if (result.value) {
+          axios.post(
+            `user_programs/delete_image?user_program_task_id=${id}&imageField=${imageField}&imageName=${imageName}`
+          );
+         this.getData()
+          this.$swal(
+            "Deleted!",
+            "Your attachment has been removed.",
+            "success"
+          );
+        }
+      });
     },
     makeToast(variant = null) {
       this.$bvToast.toast("Please fill the form correctly.", {

@@ -211,7 +211,8 @@ export default {
     },
     async truncatePendingDocuments() {
       await axios.get("truncate_videotel_tasks");
-      alert("Truncated Successfully");
+      this.$swal("Done", "Truncated Successfully.", "success");
+      // alert("Truncated Successfully");
       this.crudeVideotelTasks = [];
     },
     makeToast(variant = null) {

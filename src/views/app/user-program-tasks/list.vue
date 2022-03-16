@@ -341,19 +341,19 @@ export default {
           field: "completion_date",
         },
         {
-          label: "ImagePath 1",
+          label: "Attachment 1",
           field: "imagepath1",
         },
         {
-          label: "ImagePath 2",
+          label: "Attachment 2",
           field: "imagepath2",
         },
         {
-          label: "ImagePath 3",
+          label: "Attachment 3",
           field: "imagepath3",
         },
         {
-          label: "ImagePath 4",
+          label: "Attachment 4",
           field: "imagepath4",
         },
         {

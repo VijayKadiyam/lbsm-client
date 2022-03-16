@@ -71,26 +71,26 @@
             </b-form-group>
             <b-row>
               <b-col md="6">
-                <b-form-group label="ImagePath 1">
+                <b-form-group label="Attachment 1">
                   <b-form-file name="imagepath1" ref="file1"></b-form-file>
                 </b-form-group>
               </b-col>
 
               <b-col md="6">
-                <b-form-group label="ImagePath 2">
+                <b-form-group label="Attachment 2">
                   <b-form-file name="imagepath2" ref="file2"></b-form-file>
                 </b-form-group>
               </b-col>
             </b-row>
             <b-row>
               <b-col md="6">
-                <b-form-group label="ImagePath 3">
+                <b-form-group label="Attachment 3">
                   <b-form-file name="imagepath3" ref="file3"></b-form-file>
                 </b-form-group>
               </b-col>
 
               <b-col md="6">
-                <b-form-group label="ImagePath 4">
+                <b-form-group label="Attachment 4">
                   <b-form-file name="imagepath4" ref="file4"></b-form-file>
                 </b-form-group>
               </b-col>

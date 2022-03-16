@@ -137,7 +137,7 @@
                 </b-form-group>
               </b-col>
               <b-col md="6">
-                <b-form-group label="Image">
+                <b-form-group label="Attachment">
                   <b-form-file
                     id="file-default"
                     name="imagepath"

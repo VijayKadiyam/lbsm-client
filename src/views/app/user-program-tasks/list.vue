@@ -275,6 +275,9 @@
               >FAILED</b-badge
             >
           </span>
+          <span v-if="props.column.field == 'remark'">
+             {{ props.row.remark }}
+          </span>
           <span v-if="props.column.field == 'is_completed'">
             {{ props.row.is_completed == 0 ? "NO" : "YES" }}
           </span>
@@ -331,6 +334,10 @@ export default {
         {
           label: "Marks Obtained",
           field: "marks_obtained",
+        },
+        {
+          label: "Remark",
+          field: "remark",
         },
         {
           label: "is Completed",

@@ -4,7 +4,7 @@
     <!-- <div class="wrapper"> -->
     <b-card>
       <vue-good-table
-        :columns="columns"
+         :columns="columns"
         :line-numbers="true"
         :search-options="{
           enabled: true,
@@ -34,13 +34,13 @@
               {{ props.row.button }}</a
             >
           </span>
-          <span v-if="props.column.field == 'user'">
+          <span v-if="props.column.field == 'user.first_name'">
             {{ props.row.user.first_name +" "+ props.row.user.last_name }}
           </span>
-          <span v-if="props.column.field == 'program'">
+          <span v-if="props.column.field == 'program.program_name'">
             {{ props.row.program.program_name }}
           </span>
-          <span v-if="props.column.field == 'program_post'">
+          <span v-if="props.column.field == 'program_post.post.description'">
             {{ props.row.program_post.post.description }}
           </span>
           <span v-else-if="props.column.field == 'promotion_date'">
@@ -70,15 +70,15 @@ export default {
       columns: [
         {
           label: "User",
-          field: "user",
+          field: "user.first_name",
         },
         {
           label: "Program",
-          field: "program",
+          field: "program.program_name",
         },
         {
           label: "Program Post",
-          field: "program_post",
+          field: "program_post.post.description",
         },
         {
           label: "Promotion Date",

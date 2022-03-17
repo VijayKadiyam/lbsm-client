@@ -15,79 +15,90 @@
         </b-card>
       </b-col>
     </b-row>
+    <b-card>
+      <b-row>
+        <b-col md="4">
+          <b-form-group label="Period">
+            <vue-tags-input
+              v-model="searchPeriod"
+              :tags="selectedPeriod"
+              class="tag-custom text-15 mb-2"
+              :autocomplete-items="filteredPeriodItems"
+              :add-only-from-autocomplete="true"
+              @tags-changed="(newTags) => (selectedPeriod = newTags)"
+              placeholder="Type Period"
+            />
+          </b-form-group>
+        </b-col>
+        <b-col md="3">
+          <b-form-group label="From Date">
+            <b-form-datepicker
+              id="from_date"
+              v-model="kpi.from_date"
+              class="mb-2"
+              placeholder="From Date"
+            ></b-form-datepicker>
+          </b-form-group>
+        </b-col>
+        <b-col md="3">
+          <b-form-group label="To Date">
+            <b-form-datepicker
+              id="to_date"
+              v-model="kpi.to_date"
+              class="mb-2"
+              placeholder="To Date"
+            ></b-form-datepicker>
+          </b-form-group>
+        </b-col>
 
-    <b-row>
-      <b-col md="6" lg="6" sm="6">
-        <b-card
-          title="SCHEDULES PERFORMANCE - EXPECTED VS COMPLETED"
-          class="mb-30"
-        >
-          <div id="basicArea-chart">
-            <apexchart
-              type="radialBar"
-              height="350"
-              :options="PSCDEfRatio.chartOptions"
-              :series="PSCDEfRatio.series"
-            />
-          </div>
-        </b-card>
-      </b-col>
-      <b-col md="6" lg="6" sm="6">
-        <b-card
-          title="SCHEDULES PERFORMANCE - EXPECTED VS COMPLETED"
-          class="mb-30"
-        >
-          <div id="basicArea-chart">
-            <apexchart
-              type="radialBar"
-              height="350"
-              :options="PSCDEfRatio.chartOptions"
-              :series="PSCDEfRatio.series"
-            />
-          </div>
-        </b-card>
-      </b-col>
-    </b-row>
-    <!-- <b-row>
-      <b-col md="12" class="mb-30">
-        <b-card class="h-100">
-          <b-dropdown
-            variant="primary"
-            id="dropdown-1"
-            text="Month"
-            class="mb-2 mr-2"
-          >
-            <b-dropdown-item>January</b-dropdown-item>
-            <b-dropdown-item>February</b-dropdown-item>
-            <b-dropdown-item>March</b-dropdown-item>
-            <b-dropdown-item>April</b-dropdown-item>
-            <b-dropdown-item>May</b-dropdown-item>
-            <b-dropdown-item>June</b-dropdown-item>
-            <b-dropdown-item>July</b-dropdown-item>
-            <b-dropdown-item>August</b-dropdown-item>
-            <b-dropdown-item>September</b-dropdown-item>
-            <b-dropdown-item>October</b-dropdown-item>
-            <b-dropdown-item>November</b-dropdown-item>
-            <b-dropdown-item>December</b-dropdown-item>
-          </b-dropdown>
-          <b-dropdown
-            variant="primary"
-            id="dropdown-1"
-            v-model="form.year"
-            text="Year"
-            class="mb-2 mr-2"
-          >
-            <b-dropdown-item
-              v-for="year in years"
-              :key="year.value"
-              :value="year.value"
-              @click="getData(year.value)"
-              >{{ year.value }}</b-dropdown-item
-            >
-          </b-dropdown>
-        </b-card>
-      </b-col>
-    </b-row> -->
+        <b-col md="2">
+          <br />
+          <b-button @click="kpiData" variant="primary">
+            Search
+          </b-button>
+        </b-col>
+      </b-row>
+      <!-- <br> -->
+      <b-row>
+        <b-col md="4" lg="4" sm="4">
+          <b-card title="CPP TASKS KPI" class="mb-30">
+            <div id="basicArea-chart">
+              <apexchart
+                type="radialBar"
+                height="350"
+                :options="CPP.chartOptions"
+                :series="CPP.series"
+              />
+            </div>
+          </b-card>
+        </b-col>
+        <b-col md="4" lg="4" sm="4">
+          <b-card title="KARCO CBT KPI" class="mb-30">
+            <div id="basicArea-chart">
+              <apexchart
+                type="radialBar"
+                height="350"
+                :options="KARCO.chartOptions"
+                :series="KARCO.series"
+              />
+            </div>
+          </b-card>
+        </b-col>
+        <b-col md="4" lg="4" sm="4">
+          <b-card title="Videotel CBT KPI" class="mb-30">
+            <div id="basicArea-chart">
+              <apexchart
+                type="radialBar"
+                height="350"
+                :options="VIDEOTEL.chartOptions"
+                :series="VIDEOTEL.series"
+              />
+            </div>
+          </b-card>
+        </b-col>
+      </b-row>
+    </b-card>
+    <br />
     <b-row>
       <b-col lg="12" md="12" sm="12">
         <b-card title="Users management" class="mb-30">
@@ -131,9 +142,12 @@
               v-for="(user, r) in userRankCount"
               :key="`user${r}`"
             >
-              <b-card class="card-icon-big text-center mb-30" v-if="r <= 5 && user.rank != 'Chief Engineer'">
+              <b-card
+                class="card-icon-big text-center mb-30"
+                v-if="r <= 5 && user.rank != 'Chief Engineer'"
+              >
                 <i class="i-Add-User"></i>
-                <p class="text-muted mt-2 mb-2" >
+                <p class="text-muted mt-2 mb-2">
                   {{ user.rank + "s" }}
                 </p>
                 <p class="line-height-1 text-title text-18 mt-2 mb-0">
@@ -165,23 +179,6 @@
         </b-card>
       </b-col>
     </b-row>
-    <!-- <b-row>
-      <b-col md="12" lg="6" sm="6">
-        <b-card
-          title="SCHEDULES PERFORMANCE - EXPECTED VS COMPLETED"
-          class="mb-30"
-        >
-          <div id="basicArea-chart">
-            <apexchart
-              type="radialBar"
-              height="350"
-              :options="PSCDEfRatio.chartOptions"
-              :series="PSCDEfRatio.series"
-            />
-          </div>
-        </b-card>
-      </b-col>
-    </b-row> -->
     <b-row>
       <b-col md="12" lg="12">
         <b-card title="Total Tasks Performed (2021)" class="mb-30">
@@ -228,15 +225,6 @@
           <div class="chart-wrapper" style="height: 300px">
             <v-chart :options="multipleBar2" :autoresize="true"></v-chart>
           </div>
-          <!-- </b-card> -->
-          <!-- <div id="basicArea-chart" style="min-height: 365px">
-            <apexchart
-              type="bar"
-              height="350"
-              :options="TopBasicCauses.chartOptions"
-              :series="TopBasicCauses.chartOptions.series"
-            />
-          </div> -->
         </b-card>
       </b-col>
     </b-row>
@@ -373,9 +361,9 @@ export default {
   data() {
     return {
       multipleBar2,
-      TopBasicCauses,
-      ActivitiesWithPPEIssues,
-      PSCDEfRatio,
+      CPP,
+      KARCO,
+      VIDEOTEL,
       type: 0,
       program_count: "",
       inActive_user: "",
@@ -392,6 +380,10 @@ export default {
       form: {
         year: "",
       },
+      kpi: {
+        from_date: "",
+        to_date: "",
+      },
       years: [
         { value: 2020, text: 2020 },
         { value: 2021, text: 2021 },
@@ -399,6 +391,16 @@ export default {
       searchShip: "",
       selectedShip: [],
       shipItems: [],
+
+      searchPeriod: "",
+      selectedPeriod: [],
+      periodItems: [
+        { id: "30", text: "Month" },
+        { id: "90", text: "3 Month" },
+        { id: "180", text: "6 Month" },
+        { id: "365", text: "12 Month" },
+        { id: "730", text: "24 Month" },
+      ],
 
       searchRank: "",
       selectedRank: [],
@@ -627,6 +629,7 @@ export default {
       this.getTopPerformers_by_Average();
       this.getTopPerformers_by_Task();
       this.getTopPerformers();
+      this.kpiData();
       this.isLoading = false;
     },
     //     sortedArray(){
@@ -684,8 +687,8 @@ export default {
       this.total_tasks_performed.forEach((data) => {
         multipleBar2.series[0].data.push(data);
       });
-      console.log("Multiple Bar");
-      console.log(multipleBar2);
+      // console.log("Multiple Bar");
+      // console.log(multipleBar2);
 
       this.total_karco_tasks_performed =
         total_tasks_performed.data.total_karco_tasks_performed;
@@ -723,6 +726,33 @@ export default {
         });
       });
     },
+    async kpiData() {
+      if (this.selectedPeriod[0]) {
+        this.period = this.selectedPeriod[0] ? this.selectedPeriod[0].id : "";
+      } else {
+        this.period = 90;
+      }
+
+      this.isLoading = true;
+
+      let kpi_data = await axios.get(
+        `/kpi_data?year=${this.year}&from_date=${this.kpi.from_date}&to_date=${this.kpi.to_date}&period=${this.period}`
+      );
+      this.kpi_CPP = kpi_data.data.kpi_CPP_count;
+      this.kpi_karco_tasks = kpi_data.data.kpi_karco_tasks_count;
+      this.kpi_videotel_tasks = kpi_data.data.kpi_videotel_tasks_count;
+
+      CPP.series = [];
+      CPP.series.push(this.kpi_CPP);
+
+      KARCO.series = [];
+      KARCO.series.push(this.kpi_karco_tasks);
+
+      VIDEOTEL.series = [];
+      VIDEOTEL.series.push(this.kpi_videotel_tasks);
+      
+      this.isLoading = false;
+    },
   },
   computed: {
     filteredShipItems() {
@@ -739,151 +769,114 @@ export default {
         );
       });
     },
+    filteredPeriodItems() {
+      return this.periodItems.filter((pt) => {
+        return (
+          pt.text.toLowerCase().indexOf(this.searchPeriod.toLowerCase()) !== -1
+        );
+      });
+    },
   },
 };
 // const year=this.year;
-// start::TopBasicCauses
-export const TopBasicCauses = {
+
+// start::CPP
+export const CPP = {
+  series: [],
   chartOptions: {
-    chart: {
-      height: 350,
-      type: "bar",
-    },
-    colors: [
-      "#008FFB",
-      "#00E396",
-      "#FEB019",
-      "#FF4560",
-      "#775DD0",
-      "#546E7A",
-      "#26a69a",
-      "#D10CE8",
-    ],
     plotOptions: {
-      bar: {
-        columnWidth: "45%",
-        distributed: true,
-        endingShape: "rounded",
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    series: [
-      {
-        data: [9, 6, 5, 4, 2, 2, 1, 4, 5, 10, 3, 5],
-      },
-    ],
-    xaxis: {
-      categories: [
-        "January ",
-        "February 2021",
-        "March 201",
-        "April 2021",
-        "May 2021",
-        "June 2021",
-        "July 2021",
-        "August 2021",
-        "September 2021",
-        "October 2021",
-        "November 2021",
-        "December 2021",
-      ],
-      labels: {
-        style: {
-          colors: [
-            "#008FFB",
-            "#00E396",
-            "#FEB019",
-            "#FF4560",
-            "#775DD0",
-            "#546E7A",
-            "#26a69a",
-            "#D10CE8",
-          ],
-          fontSize: "14px",
+      radialBar: {
+        startAngle: -90,
+        endAngle: 90,
+        track: {
+          background: "#e7e7e7",
+          strokeWidth: "97%",
+          margin: 5, // margin is in pixels
+          shadow: {
+            enabled: true,
+            top: 2,
+            left: 0,
+            color: "#999",
+            opacity: 1,
+            blur: 2,
+          },
+        },
+        dataLabels: {
+          name: {
+            show: false,
+          },
+          value: {
+            offsetY: 15,
+            fontSize: "22px",
+          },
         },
       },
     },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "light",
+        shadeIntensity: 0.4,
+        inverseColors: false,
+        opacityFrom: 1,
+        opacityTo: 1,
+        stops: [0, 50, 53, 91],
+      },
+    },
+    labels: ["Average Results"],
   },
 };
 
-// start::ActivitiesWithPPEIssues
-export const ActivitiesWithPPEIssues = {
-  color: ["#c13018", "#f36d12", "#ebcb37", "#a0b967", "#0d94bc", "#04a9f4"],
-  grid: {
-    left: "3%",
-    right: "4%",
-    bottom: "3%",
-    containLabel: true,
+// start::KARCO
+export const KARCO = {
+  series: [],
+  chartOptions: {
+    plotOptions: {
+      radialBar: {
+        startAngle: -90,
+        endAngle: 90,
+        track: {
+          background: "#e7e7e7",
+          strokeWidth: "97%",
+          margin: 5, // margin is in pixels
+          shadow: {
+            enabled: true,
+            top: 2,
+            left: 0,
+            color: "#999",
+            opacity: 1,
+            blur: 2,
+          },
+        },
+        dataLabels: {
+          name: {
+            show: false,
+          },
+          value: {
+            offsetY: 15,
+            fontSize: "22px",
+          },
+        },
+      },
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "light",
+        shadeIntensity: 0.4,
+        inverseColors: false,
+        opacityFrom: 1,
+        opacityTo: 1,
+        stops: [0, 50, 53, 91],
+      },
+    },
+    labels: ["Average Results"],
   },
-  tooltip: {
-    show: true,
-    backgroundColor: "rgba(0, 0, 0, .8)",
-  },
-  xAxis: [
-    {
-      axisLine: {
-        show: false,
-      },
-      splitLine: {
-        show: false,
-      },
-    },
-  ],
-  yAxis: [
-    {
-      axisLine: {
-        show: false,
-      },
-      splitLine: {
-        show: false,
-      },
-    },
-  ],
-
-  series: [
-    {
-      name: "Activities with PPE Issues",
-      type: "pie",
-      radius: "50%",
-      center: "50%",
-      data: [
-        {
-          value: 11,
-          name: "Painting",
-        },
-        {
-          value: 6,
-          name: "Working Overside",
-        },
-        {
-          value: 4,
-          name: "Working Aloft",
-        },
-        {
-          value: 8,
-          name: "Chemical Handling",
-        },
-        {
-          value: 5,
-          name: "Buffing/Grinding",
-        },
-      ],
-      itemStyle: {
-        emphasis: {
-          shadowBlur: 10,
-          shadowOffsetX: 0,
-          shadowColor: "rgba(0, 0, 0, 0.5)",
-        },
-      },
-    },
-  ],
 };
 
-// start::PSCDEfRatio
-export const PSCDEfRatio = {
-  series: [50],
+// start::VIDEOTEL
+export const VIDEOTEL = {
+  series: [],
   chartOptions: {
     plotOptions: {
       radialBar: {

@@ -625,11 +625,11 @@ export default {
 
       this.userRankCount.sort((a, b) => a.id - b.id);
 
+      this.kpiData();
       this.getTotalTaskPerformed();
       this.getTopPerformers_by_Average();
       this.getTopPerformers_by_Task();
       this.getTopPerformers();
-      this.kpiData();
       this.isLoading = false;
     },
     //     sortedArray(){

@@ -336,6 +336,18 @@ const routes = [
           },
         ],
       },
+      // Report pdf
+      {
+        path: "/app/reports",
+        component: () => import("./views/app/reports"),
+        redirect: "/app/reports/user-report",
+        children: [
+          {
+            path: "user-report",
+            component: () => import("./views/app/reports/user-report"),
+          },
+        ],
+      },
     ],
   },
   // sessions
@@ -367,6 +379,17 @@ const routes = [
     path: "*",
     component: () => import("./views/app/pages/notFound"),
   },
+  // {
+  //   path: "/app/reports",
+  //   component: () => import("./views/app/reports"),
+  //   redirect: "/app/reports/user-report",
+  //   children: [
+  //     {
+  //       path: "user-report",
+  //       component: () => import("./views/app/reports/user-report"),
+  //     }
+  //   ],
+  // },
 ];
 
 const router = new Router({

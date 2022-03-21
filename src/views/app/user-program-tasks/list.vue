@@ -3,6 +3,21 @@
     <breadcumb :page="'User Program Task'" :folder="'User Program Tasks'" />
     <!-- User & Program Details Card -->
     <b-row>
+      <b-col>
+        <b-button
+          variant="primary"
+          class="btn-rounded d-none d-sm-block"
+          style="float: right"
+          v-if="(is_generating = true)"
+          @click="generatePDF(user.id)"
+        >
+          <span v-if="user_reports == 0"> Generate Report.. </span>
+          <span v-else> Download Report </span>
+        </b-button>
+      </b-col>
+    </b-row>
+    <br />
+    <b-row>
       <b-col md="6">
         <b-card class="mb-4">
           <div class="content">
@@ -240,8 +255,8 @@
             class="btn-rounded d-none d-sm-block"
             :to="
               '/app/user-program/' +
-                user_program.id +
-                '/user-program-tasks/create'
+              user_program.id +
+              '/user-program-tasks/create'
             "
             ><i class="i-Add text-white mr-2"> </i>Add User Program Task
           </b-button>
@@ -253,9 +268,9 @@
             <a
               :href="
                 '/app/user-program/' +
-                  user_program.id +
-                  '/user-program-tasks/' +
-                  props.row.id
+                user_program.id +
+                '/user-program-tasks/' +
+                props.row.id
               "
             >
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
@@ -268,8 +283,8 @@
           <span v-if="props.column.field == 'program_task'">
             {{
               props.row.program_task.serial_no +
-                " - " +
-                props.row.program_task.task
+              " - " +
+              props.row.program_task.task
             }}
           </span>
           <span v-if="props.column.field == 'marks_obtained'">
@@ -329,11 +344,137 @@
         </template>
       </vue-good-table>
     </b-card>
+    <br />
+    <section id="mydiv" v-if="user_reports != 0">
+      <b-card>
+        <center>
+          <b-col md="3">
+            <img src="@/assets/images/aaibuzz-logo1.png" alt />
+          </b-col>
+          <b-col md="9"><h4>Landbridge Ship Management (HK) Limited</h4></b-col>
+        </center>
+        <hr />
+        <b-col md="12">
+          <h4>User Details</h4>
+
+          <table class="table table-response">
+            <tr>
+              <th>Sr No</th>
+              <th>Name</th>
+              <th>Rank</th>
+              <th>Danos</th>
+              <th>Email</th>
+            </tr>
+            <tr
+              v-for="(userDetail, at) in user_reports"
+              :key="`userDetail${at}`"
+            >
+              <td>{{ at + 1 }}</td>
+              <td>{{ userDetail.first_name + " " + userDetail.last_name }}</td>
+              <td>{{ userDetail.rank.description }}</td>
+              <td>{{ userDetail.unique_id }}</td>
+              <td>{{ userDetail ? userDetail.email : "" }}</td>
+            </tr>
+          </table>
+        </b-col>
+        <br />
+        <b-col md="12">
+          <h4>User Program Details</h4>
+
+          <table class="table table-response">
+            <tr>
+              <th>Sr No</th>
+              <th>Program Name</th>
+              <th>Program Description</th>
+            </tr>
+            <tr
+              v-for="(userProgramDetail, at) in user_reports[0].user_programs"
+              :key="`userProgramDetail${at}`"
+            >
+              <td>{{ at + 1 }}</td>
+              <td>{{ userProgramDetail.program.program_name }}</td>
+              <td>{{ userProgramDetail.program.program_description }}</td>
+            </tr>
+          </table>
+        </b-col>
+        <b-col md="12">
+          <h4>User Program Posts</h4>
+          <table class="table table-response">
+            <tr>
+              <th>Sr No</th>
+              <th>Post Name</th>
+            </tr>
+            <tr
+              v-for="(userProgramPostDetail, at) in user_reports[0]
+                .user_program_posts"
+              :key="`userProgramPostDetail${at}`"
+            >
+              <td>{{ at + 1 }}</td>
+              <td>{{ userProgramPostDetail.program_post.post.description }}</td>
+            </tr>
+          </table>
+        </b-col>
+        <br />
+        <b-col md="12">
+          <h4>User Program Tasks</h4>
+          <table class="table table-response">
+            <tr>
+              <th>Sr No</th>
+              <th>Task Name</th>
+              <th>Marks Obtained</th>
+              <th>Is Completed</th>
+              <th>Completed Date</th>
+              <th>Remark</th>
+            </tr>
+            <tr
+              v-for="(userProgramTaskDetail, at) in user_reports[0]
+                .user_program_tasks"
+              :key="`userProgramTaskDetail${at}`"
+            >
+              <td>{{ at + 1 }}</td>
+              <td>
+                {{
+                  userProgramTaskDetail.program_task.serial_no +
+                  " - " +
+                  userProgramTaskDetail.program_task.task
+                }}
+              </td>
+              <td>{{ userProgramTaskDetail.marks_obtained }}</td>
+              <td>{{ userProgramTaskDetail.is_completed ? "YES" : "NO" }}</td>
+              <td>{{ userProgramTaskDetail.completion_date }}</td>
+              <td>{{ userProgramTaskDetail.remark }}</td>
+            </tr>
+          </table>
+        </b-col>
+        <br />
+        <b-col md="12">
+          <h4>User Ships</h4>
+          <table class="table table-response">
+            <tr>
+              <th>Sr No</th>
+              <th>Vessel Name</th>
+              <th>From Date</th>
+              <th>To Date</th>
+            </tr>
+            <tr
+              v-for="(userShipDetail, at) in user_reports[0].user_ships"
+              :key="`userShipDetail${at}`"
+            >
+              <td>{{ at + 1 }}</td>
+              <td>{{ userShipDetail.ship.code }}</td>
+              <td>{{ userShipDetail.from_date }}</td>
+              <td>{{ userShipDetail.to_date }}</td>
+            </tr>
+          </table>
+        </b-col>
+      </b-card>
+    </section>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import html2pdf from "html2pdf.js";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
@@ -394,15 +535,19 @@ export default {
       user: {},
       program: {},
       user_program: {},
+      user_ships: {},
       user_program_tasks: [],
+      user_reports: [],
       total_completed_task: "",
       total_pending_task: "",
       total_pending_program_tasks: "",
       average_score: "",
+      is_generating: false,
     };
   },
   mounted() {
     this.getData();
+    // this.generatePDF();
   },
   methods: {
     async getData(page = 1) {
@@ -413,13 +558,13 @@ export default {
       );
       this.user_program = user_program.data.data;
       this.user = this.user_program.user;
+      // console.log(this.user.id);
       this.program = this.user_program.program;
       // User Program Task log
       let user_program_tasks = await axios.get(
         `/user_programs/${this.$route.params.user_program_id}/user_program_tasks?user_id=${this.user.id}`
       );
       this.user_program_tasks = user_program_tasks.data.data;
-      console.log(this.user_program_tasks);
       this.total_completed_task = user_program_tasks.data.total_completed_task;
       this.total_pending_task = user_program_tasks.data.total_pending_task;
       this.total_pending_program_tasks =
@@ -427,14 +572,28 @@ export default {
       this.average_score = user_program_tasks.data.average_score;
       this.user_ships = user_program_tasks.data.user_ships;
 
-      // console.log(this.user_program_tasks);
-
-      //UserProgram Data
-
-      console.log(this.user.id);
-      // let post_id = this.user_program
       this.serialNoStarting = (page - 1) * this.rowsPerPage;
       this.isLoading = false;
+      // this.generatePDF()
+    },
+    async generatePDF(user_id) {
+      this.is_generating = true;
+      // console.log(this.user.id);
+      let user_reports = await axios.get(`/user_reports?user_id=${user_id}`);
+      this.user_reports = user_reports.data.data;
+      if (this.user_reports != 0) {
+        var element = document.getElementById("mydiv");
+        var opt = {
+          margin: 0,
+          filename: "User-report.pdf",
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: "in", format: "A4", orientation: "portrait" },
+        };
+        html2pdf().set(opt).from(element).save();
+        this.is_generating = false;
+      }
+      // this.user_reports = [];
     },
   },
 };

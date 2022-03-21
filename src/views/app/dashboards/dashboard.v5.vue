@@ -395,7 +395,7 @@ export default {
       searchPeriod: "",
       selectedPeriod: [],
       periodItems: [
-        { id: "30", text: "Month" },
+        { id: "30", text: "1 Month" },
         { id: "90", text: "3 Month" },
         { id: "180", text: "6 Month" },
         { id: "365", text: "12 Month" },

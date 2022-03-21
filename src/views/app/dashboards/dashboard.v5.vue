@@ -147,7 +147,10 @@
                 v-if="r <= 5 && user.rank != 'Chief Engineer'"
               >
                 <i class="i-Add-User"></i>
-                <p class="text-muted mt-2 mb-2">
+                <p class="text-muted mt-2 mb-2" v-if="user.rank == 'Forth Engineer'">
+                  {{ "Fourth Engineers" }}
+                </p>
+                <p class="text-muted mt-2 mb-2" v-else>
                   {{ user.rank + "s" }}
                 </p>
                 <p class="line-height-1 text-title text-18 mt-2 mb-0">

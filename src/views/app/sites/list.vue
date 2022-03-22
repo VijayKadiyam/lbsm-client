@@ -34,9 +34,9 @@
 
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
-            <a :href="'/app/sites/' + props.row.id">
+            <router-link :to="'/app/sites/' + props.row.id">
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
-              {{ props.row.button }}</a
+              {{ props.row.button }}</router-link
             >
           </span>
           <span v-else-if="props.column.field == 'name'">

@@ -4,7 +4,7 @@
 
     <b-row class="justify-content-md-center">
       <b-col md="9">
-        <b-card title="Site">
+        <b-card title="Site Create">
           <b-row>
             <b-col md="12">
               <b-button

@@ -18,19 +18,27 @@
         :rows="values"
       >
         <div slot="table-actions" class="mb-3">
+          <b-row>
+            <b-button
+              @click="$router.back()"
+              variant="primary"
+              class="btn-rounded d-none d-sm-block mr-2"
+              ><i class="i-Arrow-Back-3"></i> BACK</b-button
+            >
           <b-button
             variant="primary"
             class="btn-rounded d-none d-sm-block"
             to="/app/values/create"
             ><i class="i-Add text-white mr-2"> </i>Add Value
           </b-button>
+          </b-row>
         </div>
 
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
-            <a :href="'/app/values/' + props.row.id">
+            <router-link :to="'/app/values/' + props.row.id">
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
-              {{ props.row.button }}</a
+              {{ props.row.button }}</router-link
             >
           </span>
         </template>

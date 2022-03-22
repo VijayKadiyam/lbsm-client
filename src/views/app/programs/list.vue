@@ -17,24 +17,33 @@
         styleClass="tableOne vgt-table"
         :rows="programs"
       >
-      <div slot="table-actions" class="mb-3">
-          <b-button variant="primary" class="btn-rounded d-none d-sm-block"  to="/app/programs/create"
-            ><i class="i-Add text-white mr-2"> </i>Add Program
-          </b-button>
-        </div>
         <div slot="table-actions" class="mb-3">
+          <b-row>
+            <b-button
+              @click="$router.back()"
+              variant="primary"
+              class="btn-rounded d-none d-sm-block mr-2"
+              ><i class="i-Arrow-Back-3"></i> BACK</b-button
+            >
+            <b-button
+              variant="primary"
+              class="btn-rounded d-none d-sm-block"
+              to="/app/programs/create"
+              ><i class="i-Add text-white mr-2"> </i>Add Program
+            </b-button>
+          </b-row>
         </div>
+        <div slot="table-actions" class="mb-3"></div>
 
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
-            <a :href="'/app/programs/' + props.row.id">
+            <router-link :to="'/app/programs/' + props.row.id">
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
-              {{ props.row.button }}</a
+              {{ props.row.button }}</router-link
             >
-            <a :href="'/app/programs/' + props.row.id +'/program-tasks'">
+            <router-link :to="'/app/programs/' + props.row.id + '/program-tasks'">
               <i class="i-Add text-25 text-success mr-2"></i>
-              </a
-            >
+            </router-link>
           </span>
         </template>
       </vue-good-table>
@@ -82,16 +91,13 @@ export default {
   methods: {
     async getData(page = 1) {
       this.isLoading = true;
-      let programs = await axios.get(
-        `/programs`
-      );
+      let programs = await axios.get(`/programs`);
       this.programs = programs.data.data;
       this.count = programs.data.count;
       this.serialNoStarting = (page - 1) * this.rowsPerPage;
       this.isLoading = false;
     },
-  }
+  },
 };
 </script>
-<style >
-</style>
+<style></style>

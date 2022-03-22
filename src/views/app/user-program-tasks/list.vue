@@ -250,23 +250,31 @@
         :rows="user_program_tasks"
       >
         <div slot="table-actions" class="mb-3">
-          <b-button
-            variant="primary"
-            class="btn-rounded d-none d-sm-block"
-            :to="
-              '/app/user-program/' +
-              user_program.id +
-              '/user-program-tasks/create'
-            "
-            ><i class="i-Add text-white mr-2"> </i>Add User Program Task
-          </b-button>
+          <b-row>
+            <b-button
+              class="btn-rounded d-none d-sm-block"
+              @click="$router.back()"
+              variant="primary"
+              ><i class="i-Arrow-Back-3"></i> Back</b-button
+            >
+            <b-button
+              variant="primary"
+              class="btn-rounded d-none d-sm-block"
+              :to="
+                '/app/user-program/' +
+                user_program.id +
+                '/user-program-tasks/create'
+              "
+              ><i class="i-Add text-white mr-2"> </i>Add User Program Task
+            </b-button>
+          </b-row>
         </div>
         <div slot="table-actions" class="mb-3"></div>
 
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
-            <a
-              :href="
+            <router-link
+              :to="
                 '/app/user-program/' +
                 user_program.id +
                 '/user-program-tasks/' +
@@ -274,7 +282,7 @@
               "
             >
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
-              {{ props.row.button }}</a
+              {{ props.row.button }}</router-link
             >
           </span>
           <span v-if="props.column.field == 'ship' && props.row.ship">

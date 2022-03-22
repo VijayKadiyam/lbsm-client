@@ -4,7 +4,7 @@
     <!-- <div class="wrapper"> -->
     <b-card>
       <vue-good-table
-         :columns="columns"
+        :columns="columns"
         :line-numbers="true"
         :search-options="{
           enabled: true,
@@ -18,24 +18,32 @@
         :rows="user_program_posts"
       >
         <div slot="table-actions" class="mb-3">
-          <b-button
-            variant="primary"
-            class="btn-rounded d-none d-sm-block"
-            to="/app/user-program-posts/create"
-            ><i class="i-Add text-white mr-2"> </i>Add User Program Post
-          </b-button>
+          <b-row>
+            <b-button
+              class="btn-rounded d-none d-sm-block"
+              @click="$router.back()"
+              variant="primary"
+              ><i class="i-Arrow-Back-3"></i> Back</b-button
+            >
+            <b-button
+              variant="primary"
+              class="btn-rounded d-none d-sm-block"
+              to="/app/user-program-posts/create"
+              ><i class="i-Add text-white mr-2"> </i>Add User Program Post
+            </b-button>
+          </b-row>
         </div>
         <div slot="table-actions" class="mb-3"></div>
 
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
-            <a :href="'/app/user-program-posts/' + props.row.id">
+            <router-link :to="'/app/user-program-posts/' + props.row.id">
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
-              {{ props.row.button }}</a
+              {{ props.row.button }}</router-link
             >
           </span>
           <span v-if="props.column.field == 'user.first_name'">
-            {{ props.row.user.first_name +" "+ props.row.user.last_name }}
+            {{ props.row.user.first_name + " " + props.row.user.last_name }}
           </span>
           <span v-if="props.column.field == 'program.program_name'">
             {{ props.row.program.program_name }}
@@ -49,7 +57,7 @@
           <span v-else-if="props.column.field == 'remarks'">
             {{ props.row.remarks }}
           </span>
-           <span v-else-if="props.column.field == 'active'">
+          <span v-else-if="props.column.field == 'active'">
             {{ props.row.active == 1 ? "YES" : "NO" }}
           </span>
         </template>

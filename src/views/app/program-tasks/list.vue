@@ -50,65 +50,73 @@
         :rows="program_tasks"
       >
         <div slot="table-actions" class="mb-3">
-          <b-button
-            variant="primary"
-            class="btn-rounded d-none d-sm-block"
-            :to="
-              '/app/programs/' +
-                program.id +
-                '/program-tasks/create'
-            "
-            ><i class="i-Add-User text-white mr-2"> </i>Add Program Task
-          </b-button>
+          <b-row>
+            <b-button
+              @click="$router.back()"
+              class="btn-rounded d-none d-sm-block"
+              variant="primary"
+              ><i class="i-Arrow-Back-3"></i> Back</b-button
+            >
+            <b-button
+              variant="primary"
+              class="btn-rounded d-none d-sm-block"
+              :to="'/app/programs/' + program.id + '/program-tasks/create'"
+              ><i class="i-Add-User text-white mr-2"> </i>Add Program Task
+            </b-button>
+          </b-row>
         </div>
 
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
-            <a
-              :href="
+            <router-link
+              :to="
                 '/app/programs/' +
-                  props.row.program_id +
-                  '/program-tasks/' +
-                  props.row.id
+                props.row.program_id +
+                '/program-tasks/' +
+                props.row.id
               "
             >
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
-              {{ props.row.button }}</a
+              {{ props.row.button }}</router-link
             >
             <!-- <a href="">
               <i class="i-Close-Window text-25 text-danger"></i>
               {{ props.row.button }}</a
             > -->
           </span>
-          <span v-if="props.column.field == 'program_post' && props.row.program_post">
-            {{props.row.program_post.post.description}}
+          <span
+            v-if="
+              props.column.field == 'program_post' && props.row.program_post
+            "
+          >
+            {{ props.row.program_post.post.description }}
           </span>
-          <span v-if="props.column.field == 'task' ">
-            {{props.row.task || ""  }}
+          <span v-if="props.column.field == 'task'">
+            {{ props.row.task || "" }}
           </span>
-          <span v-if="props.column.field == 'objective' ">
-            {{props.row.objective || ""  }}
+          <span v-if="props.column.field == 'objective'">
+            {{ props.row.objective || "" }}
           </span>
-          <span v-if="props.column.field == 'material' ">
-            {{props.row.material || ""  }}
+          <span v-if="props.column.field == 'material'">
+            {{ props.row.material || "" }}
           </span>
-          <span v-if="props.column.field == 'process' ">
-            {{props.row.process || ""  }}
+          <span v-if="props.column.field == 'process'">
+            {{ props.row.process || "" }}
           </span>
-          <span v-if="props.column.field == 'no_of_contracts' ">
-            {{props.row.no_of_contracts || ""  }}
+          <span v-if="props.column.field == 'no_of_contracts'">
+            {{ props.row.no_of_contracts || "" }}
           </span>
-          <span v-if="props.column.field == 'time_required' ">
-            {{props.row.time_required || ""  }}
+          <span v-if="props.column.field == 'time_required'">
+            {{ props.row.time_required || "" }}
           </span>
-          <span v-if="props.column.field == 'total_marks' ">
-            {{props.row.total_marks || ""  }}
+          <span v-if="props.column.field == 'total_marks'">
+            {{ props.row.total_marks || "" }}
           </span>
-          <span v-if="props.column.field == 'passing_marks' ">
-            {{props.row.passing_marks || ""  }}
+          <span v-if="props.column.field == 'passing_marks'">
+            {{ props.row.passing_marks || "" }}
           </span>
-          <span v-if="props.column.field == 'serial_no' ">
-            {{props.row.serial_no || ""  }}
+          <span v-if="props.column.field == 'serial_no'">
+            {{ props.row.serial_no || "" }}
           </span>
         </template>
       </vue-good-table>
@@ -175,7 +183,7 @@ export default {
         },
       ],
       program_tasks: [],
-      program:{},
+      program: {},
     };
   },
   mounted() {

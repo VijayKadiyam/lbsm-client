@@ -35,7 +35,17 @@
     <!-- /Program Details card -->
     <b-row>
       <b-col md="12">
-        <b-card>
+        <b-card title="Program Task Create">
+          <b-row>
+            <b-col md="12">
+              <b-button
+                style="float: right; margin-top: -45px"
+                @click="$router.back()"
+                variant="primary"
+                ><i class="i-Arrow-Back-3"></i> Back</b-button
+              >
+            </b-col>
+          </b-row>
           <b-form @submit.prevent="submit">
             <b-row>
               <b-col md="6">

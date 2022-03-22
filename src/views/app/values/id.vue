@@ -4,7 +4,17 @@
 
     <b-row class="justify-content-md-center"> 
       <b-col md="6">
-        <b-card>
+        <b-card title="Value Update">
+          <b-row>
+            <b-col md="12">
+              <b-button
+                style="float: right; margin-top: -45px"
+                @click="$router.back()"
+                variant="primary"
+                ><i class="i-Arrow-Back-3"></i> Back</b-button
+              >
+            </b-col>
+          </b-row>
           <b-form @submit.prevent="submit">
             <b-form-group label="Name">
               <b-form-input

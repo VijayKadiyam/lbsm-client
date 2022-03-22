@@ -18,24 +18,34 @@
         :rows="user_programs"
       >
         <div slot="table-actions" class="mb-3">
+          <b-row>
+            <b-button
+              @click="$router.back()"
+              class="btn-rounded d-none d-sm-block"
+              variant="primary"
+              ><i class="i-Arrow-Back-3"></i> Back</b-button
+            >
           <b-button
             variant="primary"
             class="btn-rounded d-none d-sm-block"
             to="/app/user-programs/create"
             ><i class="i-Add text-white mr-2"> </i>Add User Program
           </b-button>
+          </b-row>
         </div>
         <div slot="table-actions" class="mb-3"></div>
 
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
-            <a :href="'/app/user-programs/' + props.row.id">
+            <router-link :to="'/app/user-programs/' + props.row.id">
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
-              {{ props.row.button }}</a
+              {{ props.row.button }}</router-link
             >
           </span>
           <span v-if="props.column.field == 'user_name' && props.row.user">
-            {{ props.row.user.first_name + ' ' + props.row.user.last_name|| "" }}
+            {{
+              props.row.user.first_name + " " + props.row.user.last_name || ""
+            }}
           </span>
           <!-- <span v-if="props.column.field == 'rank' && props.row.user">
             {{ props.row.user.rank|| "" }}
@@ -48,7 +58,7 @@
           <span v-else-if="props.column.field == 'enrollment_date'">
             {{ props.row.enrollment_date }}
           </span>
-           <span v-else-if="props.column.field == 'active'">
+          <span v-else-if="props.column.field == 'active'">
             {{ props.row.active == 1 ? "YES" : "NO" }}
           </span>
         </template>

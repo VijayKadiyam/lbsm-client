@@ -53,14 +53,24 @@
 
         <b-col md="2">
           <br />
-          <b-button @click="kpiData" variant="primary">
-            Search
-          </b-button>
+          <b-button @click="kpiData" variant="primary"> Search </b-button>
         </b-col>
       </b-row>
       <!-- <br> -->
       <b-row>
         <b-col md="4" lg="4" sm="4">
+        <b-card title="CPP TASKS KPI " class=" mb-30">
+          <div id="basicArea-chart">
+            <apexchart
+              type="radialBar"
+              height="350"
+              :options="CPP.chartOptions"
+              :series="CPP.series"
+            />
+          </div>
+        </b-card>
+      </b-col>
+        <!-- <b-col md="4" lg="4" sm="4">
           <b-card title="CPP TASKS KPI" class="mb-30">
             <div id="basicArea-chart">
               <apexchart
@@ -71,7 +81,7 @@
               />
             </div>
           </b-card>
-        </b-col>
+        </b-col> -->
         <b-col md="4" lg="4" sm="4">
           <b-card title="KARCO CBT KPI" class="mb-30">
             <div id="basicArea-chart">
@@ -147,7 +157,10 @@
                 v-if="r <= 5 && user.rank != 'Chief Engineer'"
               >
                 <i class="i-Add-User"></i>
-                <p class="text-muted mt-2 mb-2" v-if="user.rank == 'Forth Engineer'">
+                <p
+                  class="text-muted mt-2 mb-2"
+                  v-if="user.rank == 'Forth Engineer'"
+                >
                   {{ "Fourth Engineers" }}
                 </p>
                 <p class="text-muted mt-2 mb-2" v-else>
@@ -333,7 +346,7 @@
               <span
                 v-if="
                   props.column.field == 'task_perfomed' &&
-                    props.row.task_perfomed
+                  props.row.task_perfomed
                 "
               >
                 {{ props.row.task_perfomed ? props.row.task_perfomed : "" }}
@@ -753,7 +766,7 @@ export default {
 
       VIDEOTEL.series = [];
       VIDEOTEL.series.push(this.kpi_videotel_tasks);
-      
+
       this.isLoading = false;
     },
   },
@@ -782,51 +795,91 @@ export default {
   },
 };
 // const year=this.year;
+// start::gradientRadial
 
 // start::CPP
 export const CPP = {
   series: [],
   chartOptions: {
+    chart: {
+      toolbar: {
+        show: true,
+      },
+    },
     plotOptions: {
       radialBar: {
-        startAngle: -90,
-        endAngle: 90,
-        track: {
-          background: "#e7e7e7",
-          strokeWidth: "97%",
-          margin: 5, // margin is in pixels
-          shadow: {
+        startAngle: -135,
+        endAngle: 225,
+        hollow: {
+          margin: 0,
+          size: "70%",
+          background: "#fff", //inner section
+          position: "front",
+          dropShadow: {
             enabled: true,
-            top: 2,
+            top: 3,
             left: 0,
-            color: "#999",
-            opacity: 1,
-            blur: 2,
+            blur: 4,
+            opacity: 0.24,
           },
         },
+        track: {
+          background: "#fff",
+          strokeWidth: "67%",
+          margin: 0, // margin is in pixels
+          dropShadow: {
+            enabled: true,
+            top: -3,
+            left: 0,
+            blur: 4,
+            opacity: 0.35,
+          },
+        },
+
         dataLabels: {
           name: {
-            show: false,
+            offsetY: -10,
+            show: true,
+            color: "#888", //label
+            fontSize: "17px",
           },
           value: {
-            offsetY: 15,
-            fontSize: "22px",
+            formatter: function (val) {
+              return parseInt(val);
+            },
+            color: "#111", //value
+            fontSize: "36px",
+            show: true,
           },
         },
       },
     },
     fill: {
+      colors: [
+        function ({ value }) {
+          if (value <= 100) {
+            return "red";
+          } else {
+            return "green";
+          }
+        },
+      ],
       type: "gradient",
       gradient: {
-        shade: "light",
-        shadeIntensity: 0.4,
+        shade: "dark",
+        type: "horizontal",
+        shadeIntensity: 0.5,
+        gradientToColors: [""],
         inverseColors: false,
         opacityFrom: 1,
         opacityTo: 1,
-        stops: [0, 50, 53, 91],
+        stops: [0, 100],
       },
     },
-    labels: ["Average Results"],
+    stroke: {
+      lineCap: "round",
+    },
+    labels: ["Percent"],
   },
 };
 
@@ -834,46 +887,85 @@ export const CPP = {
 export const KARCO = {
   series: [],
   chartOptions: {
+    chart: {
+      toolbar: {
+        show: true,
+      },
+    },
     plotOptions: {
       radialBar: {
-        startAngle: -90,
-        endAngle: 90,
-        track: {
-          background: "#e7e7e7",
-          strokeWidth: "97%",
-          margin: 5, // margin is in pixels
-          shadow: {
+        startAngle: -135,
+        endAngle: 225,
+        hollow: {
+          margin: 0,
+          size: "70%",
+          background: "#fff", //inner section
+          position: "front",
+          dropShadow: {
             enabled: true,
-            top: 2,
+            top: 3,
             left: 0,
-            color: "#999",
-            opacity: 1,
-            blur: 2,
+            blur: 4,
+            opacity: 0.24,
           },
         },
+        track: {
+          background: "#fff",
+          strokeWidth: "67%",
+          margin: 0, // margin is in pixels
+          dropShadow: {
+            enabled: true,
+            top: -3,
+            left: 0,
+            blur: 4,
+            opacity: 0.35,
+          },
+        },
+
         dataLabels: {
           name: {
-            show: false,
+            offsetY: -10,
+            show: true,
+            color: "#888", //label
+            fontSize: "17px",
           },
           value: {
-            offsetY: 15,
-            fontSize: "22px",
+            formatter: function (val) {
+              return parseInt(val);
+            },
+            color: "#111", //value
+            fontSize: "36px",
+            show: true,
           },
         },
       },
     },
     fill: {
+      colors: [
+        function ({ value }) {
+          if (value <= 100) {
+            return "red";
+          } else {
+            return "green";
+          }
+        },
+      ],
       type: "gradient",
       gradient: {
-        shade: "light",
-        shadeIntensity: 0.4,
+        shade: "dark",
+        type: "horizontal",
+        shadeIntensity: 0.5,
+        gradientToColors: [""],
         inverseColors: false,
         opacityFrom: 1,
         opacityTo: 1,
-        stops: [0, 50, 53, 91],
+        stops: [0, 100],
       },
     },
-    labels: ["Average Results"],
+    stroke: {
+      lineCap: "round",
+    },
+    labels: ["Percent"],
   },
 };
 
@@ -881,46 +973,85 @@ export const KARCO = {
 export const VIDEOTEL = {
   series: [],
   chartOptions: {
+    chart: {
+      toolbar: {
+        show: true,
+      },
+    },
     plotOptions: {
       radialBar: {
-        startAngle: -90,
-        endAngle: 90,
-        track: {
-          background: "#e7e7e7",
-          strokeWidth: "97%",
-          margin: 5, // margin is in pixels
-          shadow: {
+        startAngle: -135,
+        endAngle: 225,
+        hollow: {
+          margin: 0,
+          size: "70%",
+          background: "#fff", //inner section
+          position: "front",
+          dropShadow: {
             enabled: true,
-            top: 2,
+            top: 3,
             left: 0,
-            color: "#999",
-            opacity: 1,
-            blur: 2,
+            blur: 4,
+            opacity: 0.24,
           },
         },
+        track: {
+          background: "#fff",
+          strokeWidth: "67%",
+          margin: 0, // margin is in pixels
+          dropShadow: {
+            enabled: true,
+            top: -3,
+            left: 0,
+            blur: 4,
+            opacity: 0.35,
+          },
+        },
+
         dataLabels: {
           name: {
-            show: false,
+            offsetY: -10,
+            show: true,
+            color: "#888", //label
+            fontSize: "17px",
           },
           value: {
-            offsetY: 15,
-            fontSize: "22px",
+            formatter: function (val) {
+              return parseInt(val);
+            },
+            color: "#111", //value
+            fontSize: "36px",
+            show: true,
           },
         },
       },
     },
     fill: {
+      colors: [
+        function ({ value }) {
+          if (value <= 100) {
+            return "red";
+          } else {
+            return "green";
+          }
+        },
+      ],
       type: "gradient",
       gradient: {
-        shade: "light",
-        shadeIntensity: 0.4,
+        shade: "dark",
+        type: "horizontal",
+        shadeIntensity: 0.5,
+        gradientToColors: [""],
         inverseColors: false,
         opacityFrom: 1,
         opacityTo: 1,
-        stops: [0, 50, 53, 91],
+        stops: [0, 100],
       },
     },
-    labels: ["Average Results"],
+    stroke: {
+      lineCap: "round",
+    },
+    labels: ["Percent"],
   },
 };
 

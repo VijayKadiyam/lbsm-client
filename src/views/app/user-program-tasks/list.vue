@@ -11,7 +11,7 @@
           v-if="(is_generating = true)"
           @click="generatePDF(user.id)"
         >
-          <span v-if="user_reports == 0"> Generate Report.. </span>
+          <span v-if="user_reports == 0"> Generate Report </span>
           <span v-else> Download Report </span>
         </b-button>
       </b-col>
@@ -355,12 +355,31 @@
     <br />
     <section id="mydiv" v-if="user_reports != 0">
       <b-card>
+        <!-- <b-row> -->
+        <img src="@/assets/images/aaibuzz-logo1.png" alt />
+        <p style="float: right">Date Of Report: {{ reportDate }}</p>
         <center>
-          <b-col md="3">
-            <img src="@/assets/images/aaibuzz-logo1.png" alt />
-          </b-col>
-          <b-col md="9"><h4>Landbridge Ship Management (HK) Limited</h4></b-col>
+          <h4>Landbridge Ship Management (HK) Limited</h4>
+          <h4>CPP Performance Report</h4>
         </center>
+        <!-- <b-col md="12">
+            <b-row>
+              <b-col md="1">
+                <img src="@/assets/images/aaibuzz-logo1.png" alt />
+              </b-col>
+              <b-col md="11">
+                <h4>Landbridge Ship Management (HK) Limited</h4>
+              </b-col>
+            </b-row>
+          </b-col>
+
+          <b-col md="12">
+            <center>
+              <h4>CPP Performance Report</h4>
+               <h4 style="margin-top: 50px">CPP Performance Report</h4> 
+             </center>
+          </b-col> -->
+        <!-- </b-row> -->
         <hr />
         <b-col md="12">
           <h4>User Details</h4>
@@ -385,7 +404,6 @@
             </tr>
           </table>
         </b-col>
-        <br />
         <b-col md="12">
           <h4>User Program Details</h4>
 
@@ -400,34 +418,18 @@
               :key="`userProgramDetail${at}`"
             >
               <td>{{ at + 1 }}</td>
-              <td>{{ userProgramDetail.program.program_name }}</td>
-              <td>{{ userProgramDetail.program.program_description }}</td>
+              <td>{{ userProgramDetail ? userProgramDetail.program.program_name : ''}}</td>
+              <td>{{ userProgramDetail ? userProgramDetail.program.program_description : ''}}</td>
             </tr>
           </table>
         </b-col>
-        <b-col md="12">
-          <h4>User Program Posts</h4>
-          <table class="table table-response">
-            <tr>
-              <th>Sr No</th>
-              <th>Post Name</th>
-            </tr>
-            <tr
-              v-for="(userProgramPostDetail, at) in user_reports[0]
-                .user_program_posts"
-              :key="`userProgramPostDetail${at}`"
-            >
-              <td>{{ at + 1 }}</td>
-              <td>{{ userProgramPostDetail.program_post.post.description }}</td>
-            </tr>
-          </table>
-        </b-col>
-        <br />
+
         <b-col md="12">
           <h4>User Program Tasks</h4>
           <table class="table table-response">
             <tr>
               <th>Sr No</th>
+              <th>Vessel Name</th>
               <th>Task Name</th>
               <th>Marks Obtained</th>
               <th>Is Completed</th>
@@ -441,40 +443,127 @@
             >
               <td>{{ at + 1 }}</td>
               <td>
+                {{ userProgramTaskDetail ? userProgramTaskDetail.ship.code : '' }}
+              </td>
+              <td>
                 {{
-                  userProgramTaskDetail.program_task.serial_no +
+                  userProgramTaskDetail ? userProgramTaskDetail.program_task.serial_no : '' +
                   " - " +
-                  userProgramTaskDetail.program_task.task
+                  userProgramTaskDetail ? userProgramTaskDetail.program_task.task : ''
                 }}
               </td>
-              <td>{{ userProgramTaskDetail.marks_obtained }}</td>
+              <td>
+                {{ userProgramTaskDetail ? userProgramTaskDetail.marks_obtained : ''}} 
+                <b-badge
+                  v-if="userProgramTaskDetail.marks_obtained < 5"
+                  variant="danger  m-2"
+                  >FAILED</b-badge
+                >
+              </td>
               <td>{{ userProgramTaskDetail.is_completed ? "YES" : "NO" }}</td>
-              <td>{{ userProgramTaskDetail.completion_date }}</td>
-              <td>{{ userProgramTaskDetail.remark }}</td>
+              <td>{{ userProgramTaskDetail ? userProgramTaskDetail.completion_date : '' }}</td>
+              <td>{{ userProgramTaskDetail ? userProgramTaskDetail.remark : '' }}</td>
             </tr>
           </table>
         </b-col>
-        <br />
+
         <b-col md="12">
-          <h4>User Ships</h4>
+          <b-row>
+            <b-col md="4"
+              ><b-col md="8">
+                <p class="text-muted mt-2 mb-0">Task Completed</p>
+              </b-col>
+              <b-col md="4">
+                <p class="text-primary text-24 line-height-1 mb-2">
+                  {{ total_completed_task ? total_completed_task : 0 }}
+                </p>
+              </b-col></b-col
+            >
+            <b-col md="4"
+              ><b-col md="8">
+                <p class="text-muted mt-2 mb-0">Pending Task</p>
+              </b-col>
+              <b-col md="4">
+                <p class="text-primary text-24 line-height-1 mb-2">
+                  {{
+                    total_pending_program_tasks
+                      ? total_pending_program_tasks
+                      : 0
+                  }}
+                </p>
+              </b-col>
+            </b-col>
+            <b-col md="4"
+              ><b-col md="8">
+                <p class="text-muted mt-2 mb-0">Average Score</p>
+              </b-col>
+              <b-col md="4">
+                <p class="text-primary text-24 line-height-1 mb-2">
+                  {{ average_score ? average_score.toFixed(1) : 0 }}
+                </p>
+              </b-col>
+            </b-col>
+          </b-row>
+        </b-col>
+
+        <b-col md="12">
+          <h4>KARCO Task Details</h4>
           <table class="table table-response">
             <tr>
               <th>Sr No</th>
               <th>Vessel Name</th>
-              <th>From Date</th>
-              <th>To Date</th>
+              <th>Video Title</th>
+              <!-- <th>Obtained Marks</th>
+              <th>Total Marks</th> -->
+              <th>Percentage</th>
+              <th>Done On</th>
+              <th>Assessment Status</th>
             </tr>
             <tr
-              v-for="(userShipDetail, at) in user_reports[0].user_ships"
-              :key="`userShipDetail${at}`"
+              v-for="(userKARCODetail, at) in user_reports[0].karco_tasks_report"
+              :key="`userKARCODetail${at}`"
             >
               <td>{{ at + 1 }}</td>
-              <td>{{ userShipDetail.ship.code }}</td>
-              <td>{{ userShipDetail.from_date }}</td>
-              <td>{{ userShipDetail.to_date }}</td>
+              <td>{{ userKARCODetail ? userKARCODetail.ship.code : '' }}</td>
+              <td>{{ userKARCODetail ? userKARCODetail.video_title : '' }}</td>
+              <!-- <td>{{ userKARCODetail ? userKARCODetail.obtained_marks : '' }}</td>
+              <td>{{ userKARCODetail ? userKARCODetail.total_marks : '' }}</td> -->
+              <td>{{ userKARCODetail ? userKARCODetail.percentage : '' }}</td>
+              <td>{{ userKARCODetail ? userKARCODetail.done_on : '' }}</td>
+              <td>{{ userKARCODetail ? userKARCODetail.assessment_status : '' }}</td>
             </tr>
           </table>
         </b-col>
+        
+        <b-col md="12">
+          <h4>Videotel Task Details</h4>
+          <table class="table table-response">
+            <tr>
+              <th>Sr No</th>
+              <th>Vessel Name</th>
+              <th>Training Title</th>
+              <th>Type</th>
+              <th>Date</th>
+              <th>Score</th>
+            </tr>
+            <tr
+              v-for="(userVideotelDetail, at) in user_reports[0].videotel_tasks_report"
+              :key="`userVideotelDetail${at}`"
+            >
+              <td>{{ at + 1 }}</td>
+              <td>{{ userVideotelDetail ? userVideotelDetail.ship.code : '' }}</td>
+              <td>{{ userVideotelDetail ? userVideotelDetail.training_title : '' }}</td>
+              <td>{{ userVideotelDetail ? userVideotelDetail.type : '' }}</td>
+              <td>{{ userVideotelDetail ? userVideotelDetail.date : '' }}</td>
+              <td>{{ userVideotelDetail ? userVideotelDetail.score : '' }}</td>
+            </tr>
+          </table>
+        </b-col>
+        
+        
+        <div class="parent">
+          <div class="child">End Of Report</div>
+        </div>
       </b-card>
     </section>
   </div>
@@ -483,6 +572,7 @@
 <script>
 import axios from "axios";
 import html2pdf from "html2pdf.js";
+import moment from "moment";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
@@ -555,6 +645,7 @@ export default {
   },
   mounted() {
     this.getData();
+    this.reportDate = moment(new Date()).format("DD/MM/YYYY");
     // this.generatePDF();
   },
   methods: {
@@ -592,11 +683,12 @@ export default {
       if (this.user_reports != 0) {
         var element = document.getElementById("mydiv");
         var opt = {
-          margin: 0,
+          margin: [0.25, 0, 0.25, 0],
           filename: "User-report.pdf",
           image: { type: "jpeg", quality: 0.98 },
           html2canvas: { scale: 2 },
           jsPDF: { unit: "in", format: "A4", orientation: "portrait" },
+          pagebreak: [{avoid: 'table'},{avoid: 'h2'}, {avoid: 'tr'}, {avoid: 'td'}]
         };
         html2pdf().set(opt).from(element).save();
         this.is_generating = false;
@@ -606,4 +698,16 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+.parent {
+  height: 100px;
+  /* border: 5px solid #000; */
+  display: flex;
+}
+.child {
+  height: 40px;
+  width: 100%;
+  /* background: #f00; */
+  align-self: flex-end;
+  text-align: center;
+}</style>

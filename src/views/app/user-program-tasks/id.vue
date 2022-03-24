@@ -357,7 +357,7 @@ export default {
     async getMasters() {
       let masters = await axios.get(`user_program_tasks/masters`);
       masters = masters.data;
-      this.ships = masters.ships
+      this.ships = masters.ships;
       this.ships.forEach((ship) => {
         this.shipItems.push({
           id: ship.id,
@@ -375,26 +375,40 @@ export default {
       let user_program = await axios.get(
         `/user_programs/${this.$route.params.user_program_id}`
       );
+      let user = await axios.get(`/users/${this.user_program.user_id}`);
+      this.user = user.data.data;
+
       this.user_program = user_program.data.data;
-      let program_tasks = await axios.post(
-        `program_tasks/filter?user_id=${this.user_program.user_id}`
-      );
-      this.program_tasks = program_tasks.data.data;
-      this.program_tasks.forEach((programTask) => {
-        this.program_taskItems.push({
-          id: programTask.id,
-          text: programTask.serial_no + "-" + programTask.task,
+      this.user_program_posts = user.data.data.user_program_posts;
+      this.user_program_posts.forEach((userProgramPost) => {
+        userProgramPost.program_post.program_tasks.forEach((ProgramTask) => {
+          this.program_taskItems.push({
+            id: ProgramTask.id,
+            text: ProgramTask.serial_no + "-" + ProgramTask.task,
+          });
         });
       });
 
-      this.program_tasks.forEach((programTask) => {
-        if (programTask.id == this.form.program_task_id) {
-          this.selectedProgramTask.push({
-            id: programTask.id,
-            text: programTask.serial_no + "-" + programTask.task,
-          });
-        }
+      this.user_program_posts = user.data.data.user_program_posts;
+      this.user_program_posts.forEach((userProgramPost) => {
+        userProgramPost.program_post.program_tasks.forEach((ProgramTask) => {
+          if (ProgramTask.id == this.form.program_task_id) {
+            this.selectedProgramTask.push({
+              id: ProgramTask.id,
+              text: ProgramTask.serial_no + "-" + ProgramTask.task,
+            });
+          }
+        });
       });
+
+      // this.program_tasks.forEach((programTask) => {
+      //   if (programTask.id == this.form.program_task_id) {
+      //     this.selectedProgramTask.push({
+      //       id: programTask.id,
+      //       text: programTask.serial_no + "-" + programTask.task,
+      //     });
+      //   }
+      // });
     },
     async getData() {
       this.isLoading = true;
@@ -404,7 +418,7 @@ export default {
       this.form = form.data.data;
 
       // console.log(this.ships);
-      
+
       let user_program = await axios.get(
         `/user_programs/${this.$route.params.user_program_id}`
       );
@@ -468,7 +482,7 @@ export default {
             "Content-Type": "multipart/form-data",
           },
         })
-        .catch(function() {
+        .catch(function () {
           console.log("FAILURE!!");
         });
     },
@@ -487,7 +501,7 @@ export default {
           axios.post(
             `user_programs/delete_image?user_program_task_id=${id}&imageField=${imageField}&imageName=${imageName}`
           );
-         this.getData()
+          this.getData();
           this.$swal(
             "Deleted!",
             "Your attachment has been removed.",

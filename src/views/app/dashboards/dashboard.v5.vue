@@ -59,7 +59,8 @@
       <!-- <br> -->
       <b-row>
         <b-col md="4" lg="4" sm="4">
-        <b-card title="CPP TASKS KPI " class=" mb-30">
+        <b-card title="CPP TASKS KPI" class=" mb-30">
+          <h3>{{ total_kpi_CPP + '/20' }}</h3>
           <div id="basicArea-chart">
             <apexchart
               type="radialBar"
@@ -84,6 +85,7 @@
         </b-col> -->
         <b-col md="4" lg="4" sm="4">
           <b-card title="KARCO CBT KPI" class="mb-30">
+            <h3>{{ total_kpi_karco_tasks + '/100' }}</h3>
             <div id="basicArea-chart">
               <apexchart
                 type="radialBar"
@@ -96,6 +98,7 @@
         </b-col>
         <b-col md="4" lg="4" sm="4">
           <b-card title="Videotel CBT KPI" class="mb-30">
+            <h3>{{ total_kpi_videotel_tasks + '/100' }}</h3>
             <div id="basicArea-chart">
               <apexchart
                 type="radialBar"
@@ -381,6 +384,9 @@ export default {
       KARCO,
       VIDEOTEL,
       type: 0,
+      total_kpi_CPP: 0,
+      total_kpi_karco_tasks: 0,
+      total_kpi_videotel_tasks: 0,
       program_count: "",
       inActive_user: "",
       total_task_completed: "",
@@ -758,6 +764,10 @@ export default {
       this.kpi_karco_tasks = kpi_data.data.kpi_karco_tasks_count;
       this.kpi_videotel_tasks = kpi_data.data.kpi_videotel_tasks_count;
 
+      this.total_kpi_CPP = kpi_data.data.kpi_CPP;
+      this.total_kpi_karco_tasks = kpi_data.data.kpi_karco_tasks;
+      this.total_kpi_videotel_tasks = kpi_data.data.kpi_videotel_tasks;
+
       CPP.series = [];
       CPP.series.push(this.kpi_CPP);
 
@@ -857,8 +867,8 @@ export const CPP = {
     fill: {
       colors: [
         function ({ value }) {
-          if (value <= 100) {
-            return "red";
+          if (value < 100) {
+            return "orange";
           } else {
             return "green";
           }
@@ -943,8 +953,8 @@ export const KARCO = {
     fill: {
       colors: [
         function ({ value }) {
-          if (value <= 100) {
-            return "red";
+          if (value < 100) {
+            return "orange";
           } else {
             return "green";
           }
@@ -1029,8 +1039,8 @@ export const VIDEOTEL = {
     fill: {
       colors: [
         function ({ value }) {
-          if (value <= 100) {
-            return "red";
+          if (value < 100) {
+            return "orange";
           } else {
             return "green";
           }

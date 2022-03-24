@@ -239,14 +239,16 @@ export default {
       // let program_tasks = await axios.get(
       //   `programs/${this.user_program.program_id}/program_tasks`
       // );
-      let program_tasks = await axios.post(
-        `program_tasks/filter?user_id=${this.user_program.user_id}`
-      );
-      this.program_tasks = program_tasks.data.data;
-      this.program_tasks.forEach((programTask) => {
-        this.program_taskItems.push({
-          id: programTask.id,
-          text: programTask.serial_no + "-" + programTask.task,
+      // let program_tasks = await axios.post(
+      //   `program_tasks/filter?user_id=${this.user_program.user_id}`
+      // );
+      this.user_program_posts = user.data.data.user_program_posts;
+      this.user_program_posts.forEach((userProgramPost) => {
+        userProgramPost.program_post.program_tasks.forEach((ProgramTask) => {
+          this.program_taskItems.push({
+            id: ProgramTask.id,
+            text: ProgramTask.serial_no + "-" + ProgramTask.task,
+          });
         });
       });
     },
@@ -303,7 +305,7 @@ export default {
             "Content-Type": "multipart/form-data",
           },
         })
-        .catch(function() {
+        .catch(function () {
           console.log("FAILURE!!");
         });
     },

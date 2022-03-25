@@ -59,18 +59,18 @@
       <!-- <br> -->
       <b-row>
         <b-col md="4" lg="4" sm="4">
-        <b-card title="CPP TASKS KPI" class=" mb-30">
-          <h3>{{ total_kpi_CPP + '/20' }}</h3>
-          <div id="basicArea-chart">
-            <apexchart
-              type="radialBar"
-              height="350"
-              :options="CPP.chartOptions"
-              :series="CPP.series"
-            />
-          </div>
-        </b-card>
-      </b-col>
+          <b-card title="CPP TASKS KPI" class="mb-30" style="height: 310px;">
+            <h3>{{ total_kpi_CPP + "/20" }}</h3>
+            <div id="basicArea-chart">
+              <apexchart
+                type="radialBar"
+                height="350"
+                :options="CPP.chartOptions"
+                :series="CPP.series"
+              />
+            </div>
+          </b-card>
+        </b-col>
         <!-- <b-col md="4" lg="4" sm="4">
           <b-card title="CPP TASKS KPI" class="mb-30">
             <div id="basicArea-chart">
@@ -84,8 +84,8 @@
           </b-card>
         </b-col> -->
         <b-col md="4" lg="4" sm="4">
-          <b-card title="KARCO CBT KPI" class="mb-30">
-            <h3>{{ total_kpi_karco_tasks + '/100' }}</h3>
+          <b-card title="KARCO CBT KPI" class="mb-30" style="height: 310px;">
+            <h3>{{ total_kpi_karco_tasks + "/100" }}</h3>
             <div id="basicArea-chart">
               <apexchart
                 type="radialBar"
@@ -97,8 +97,8 @@
           </b-card>
         </b-col>
         <b-col md="4" lg="4" sm="4">
-          <b-card title="Videotel CBT KPI" class="mb-30">
-            <h3>{{ total_kpi_videotel_tasks + '/100' }}</h3>
+          <b-card title="Videotel CBT KPI" class="mb-30" style="height: 310px;">
+            <h3>{{ total_kpi_videotel_tasks + "/100" }}</h3>
             <div id="basicArea-chart">
               <apexchart
                 type="radialBar"
@@ -810,56 +810,31 @@ export default {
 // start::CPP
 export const CPP = {
   series: [],
-  chartOptions: {
-    chart: {
-      toolbar: {
-        show: true,
-      },
-    },
+   chartOptions: {
     plotOptions: {
       radialBar: {
-        startAngle: -135,
-        endAngle: 225,
-        hollow: {
-          margin: 0,
-          size: "70%",
-          background: "#fff", //inner section
-          position: "front",
-          dropShadow: {
-            enabled: true,
-            top: 3,
-            left: 0,
-            blur: 4,
-            opacity: 0.24,
-          },
-        },
+        startAngle: -90,
+        endAngle: 90,
         track: {
-          background: "#fff",
-          strokeWidth: "67%",
-          margin: 0, // margin is in pixels
-          dropShadow: {
+          background: "#e7e7e7",
+          strokeWidth: "97%",
+          margin: 5, // margin is in pixels
+          shadow: {
             enabled: true,
-            top: -3,
+            top: 2,
             left: 0,
-            blur: 4,
-            opacity: 0.35,
+            color: "#999",
+            opacity: 1,
+            blur: 2,
           },
         },
-
         dataLabels: {
           name: {
-            offsetY: -10,
-            show: true,
-            color: "#888", //label
-            fontSize: "17px",
+            show: false,
           },
           value: {
-            formatter: function (val) {
-              return parseInt(val);
-            },
-            color: "#111", //value
-            fontSize: "36px",
-            show: true,
+            offsetY: 15,
+            fontSize: "22px",
           },
         },
       },
@@ -876,20 +851,16 @@ export const CPP = {
       ],
       type: "gradient",
       gradient: {
-        shade: "dark",
-        type: "horizontal",
-        shadeIntensity: 0.5,
-        gradientToColors: [""],
+        shade: "light",
+        shadeIntensity: 0.4,
         inverseColors: false,
+        gradientToColors: [""],
         opacityFrom: 1,
         opacityTo: 1,
-        stops: [0, 100],
+        stops: [0, 50, 53, 91],
       },
     },
-    stroke: {
-      lineCap: "round",
-    },
-    labels: ["Percent"],
+    labels: ["Average Results"],
   },
 };
 
@@ -897,55 +868,30 @@ export const CPP = {
 export const KARCO = {
   series: [],
   chartOptions: {
-    chart: {
-      toolbar: {
-        show: true,
-      },
-    },
     plotOptions: {
       radialBar: {
-        startAngle: -135,
-        endAngle: 225,
-        hollow: {
-          margin: 0,
-          size: "70%",
-          background: "#fff", //inner section
-          position: "front",
-          dropShadow: {
-            enabled: true,
-            top: 3,
-            left: 0,
-            blur: 4,
-            opacity: 0.24,
-          },
-        },
+        startAngle: -90,
+        endAngle: 90,
         track: {
-          background: "#fff",
-          strokeWidth: "67%",
-          margin: 0, // margin is in pixels
-          dropShadow: {
+          background: "#e7e7e7",
+          strokeWidth: "97%",
+          margin: 5, // margin is in pixels
+          shadow: {
             enabled: true,
-            top: -3,
+            top: 2,
             left: 0,
-            blur: 4,
-            opacity: 0.35,
+            color: "#999",
+            opacity: 1,
+            blur: 2,
           },
         },
-
         dataLabels: {
           name: {
-            offsetY: -10,
-            show: true,
-            color: "#888", //label
-            fontSize: "17px",
+            show: false,
           },
           value: {
-            formatter: function (val) {
-              return parseInt(val);
-            },
-            color: "#111", //value
-            fontSize: "36px",
-            show: true,
+            offsetY: 15,
+            fontSize: "22px",
           },
         },
       },
@@ -962,76 +908,47 @@ export const KARCO = {
       ],
       type: "gradient",
       gradient: {
-        shade: "dark",
-        type: "horizontal",
-        shadeIntensity: 0.5,
-        gradientToColors: [""],
+        shade: "light",
+        shadeIntensity: 0.4,
         inverseColors: false,
+        gradientToColors: [""],
         opacityFrom: 1,
         opacityTo: 1,
-        stops: [0, 100],
+        stops: [0, 50, 53, 91],
       },
     },
-    stroke: {
-      lineCap: "round",
-    },
-    labels: ["Percent"],
+    labels: ["Average Results"],
   },
 };
 
 // start::VIDEOTEL
 export const VIDEOTEL = {
   series: [],
-  chartOptions: {
-    chart: {
-      toolbar: {
-        show: true,
-      },
-    },
+   chartOptions: {
     plotOptions: {
       radialBar: {
-        startAngle: -135,
-        endAngle: 225,
-        hollow: {
-          margin: 0,
-          size: "70%",
-          background: "#fff", //inner section
-          position: "front",
-          dropShadow: {
-            enabled: true,
-            top: 3,
-            left: 0,
-            blur: 4,
-            opacity: 0.24,
-          },
-        },
+        startAngle: -90,
+        endAngle: 90,
         track: {
-          background: "#fff",
-          strokeWidth: "67%",
-          margin: 0, // margin is in pixels
-          dropShadow: {
+          background: "#e7e7e7",
+          strokeWidth: "97%",
+          margin: 5, // margin is in pixels
+          shadow: {
             enabled: true,
-            top: -3,
+            top: 2,
             left: 0,
-            blur: 4,
-            opacity: 0.35,
+            color: "#999",
+            opacity: 1,
+            blur: 2,
           },
         },
-
         dataLabels: {
           name: {
-            offsetY: -10,
-            show: true,
-            color: "#888", //label
-            fontSize: "17px",
+            show: false,
           },
           value: {
-            formatter: function (val) {
-              return parseInt(val);
-            },
-            color: "#111", //value
-            fontSize: "36px",
-            show: true,
+            offsetY: 15,
+            fontSize: "22px",
           },
         },
       },
@@ -1048,20 +965,16 @@ export const VIDEOTEL = {
       ],
       type: "gradient",
       gradient: {
-        shade: "dark",
-        type: "horizontal",
-        shadeIntensity: 0.5,
-        gradientToColors: [""],
+        shade: "light",
+        shadeIntensity: 0.4,
         inverseColors: false,
+        gradientToColors: [""],
         opacityFrom: 1,
         opacityTo: 1,
-        stops: [0, 100],
+        stops: [0, 50, 53, 91],
       },
     },
-    stroke: {
-      lineCap: "round",
-    },
-    labels: ["Percent"],
+    labels: ["Average Results"],
   },
 };
 

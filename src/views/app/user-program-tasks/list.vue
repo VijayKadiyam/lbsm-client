@@ -2,20 +2,45 @@
   <div class="main-content">
     <breadcumb :page="'User Program Task'" :folder="'User Program Tasks'" />
     <!-- User & Program Details Card -->
-    <b-row>
-      <b-col>
-        <b-button
-          variant="primary"
-          class="btn-rounded d-none d-sm-block"
-          style="float: right"
-          v-if="(is_generating = true)"
-          @click="generatePDF(user.id)"
-        >
-          <span v-if="user_reports == 0"> Generate Report </span>
-          <span v-else> Download Report </span>
-        </b-button>
-      </b-col>
-    </b-row>
+
+    <b-card>
+      <b-row>
+        <b-col md="5">
+          <b-form-group label="From Date">
+            <b-form-datepicker
+              id="from_date"
+              v-model="report.from_date"
+              class="mb-2"
+              placeholder="From Date"
+            ></b-form-datepicker>
+          </b-form-group>
+        </b-col>
+        <b-col md="5">
+          <b-form-group label="To Date">
+            <b-form-datepicker
+              id="to_date"
+              v-model="report.to_date"
+              class="mb-2"
+              placeholder="To Date"
+            ></b-form-datepicker>
+          </b-form-group>
+        </b-col>
+
+        <b-col md="2">
+          <br />
+          <b-button
+            variant="primary"
+            class="btn-rounded d-none d-sm-block"
+            style="float: right"
+            v-if="(is_generating = true)"
+            @click="generatePDF(user.id)"
+          >
+            <span v-if="user_reports == 0"> Generate Report </span>
+            <span v-else> Download Report </span>
+          </b-button>
+        </b-col>
+      </b-row>
+    </b-card>
     <br />
     <b-row>
       <b-col md="6">
@@ -362,119 +387,130 @@
           <h4>Landbridge Ship Management (HK) Limited</h4>
           <h4>CPP Performance Report</h4>
         </center>
-        <!-- <b-col md="12">
-            <b-row>
-              <b-col md="1">
-                <img src="@/assets/images/aaibuzz-logo1.png" alt />
-              </b-col>
-              <b-col md="11">
-                <h4>Landbridge Ship Management (HK) Limited</h4>
-              </b-col>
-            </b-row>
-          </b-col>
-
-          <b-col md="12">
-            <center>
-              <h4>CPP Performance Report</h4>
-               <h4 style="margin-top: 50px">CPP Performance Report</h4> 
-             </center>
-          </b-col> -->
-        <!-- </b-row> -->
         <hr />
         <b-col md="12">
           <h4>User Details</h4>
 
-          <table class="table table-response">
+          <table class="my-table">
             <tr>
               <th>Sr No</th>
-              <th>Name</th>
-              <th>Rank</th>
-              <th>Danos</th>
-              <th>Email</th>
+              <th colspan="4">Name</th>
+              <th colspan="3">Rank</th>
+              <th colspan="3">Danos</th>
+              <th colspan="3">Email</th>
             </tr>
             <tr
               v-for="(userDetail, at) in user_reports"
               :key="`userDetail${at}`"
             >
               <td>{{ at + 1 }}</td>
-              <td>{{ userDetail.first_name + " " + userDetail.last_name }}</td>
-              <td>{{ userDetail.rank.description }}</td>
-              <td>{{ userDetail.unique_id }}</td>
-              <td>{{ userDetail ? userDetail.email : "" }}</td>
+              <td colspan="4">
+                <span>{{ userDetail ? userDetail.first_name : "" }} </span>
+                &nbsp;
+                <span>{{ userDetail ? userDetail.last_name : "" }}</span>
+              </td>
+              <td colspan="3">{{ userDetail.rank.description }}</td>
+              <td colspan="3">{{ userDetail.unique_id }}</td>
+              <td colspan="3">{{ userDetail ? userDetail.email : "" }}</td>
             </tr>
           </table>
         </b-col>
+        <br />
         <b-col md="12">
-          <h4>User Program Details</h4>
+          <h4>Program Details</h4>
 
-          <table class="table table-response">
+          <table class="my-table">
             <tr>
               <th>Sr No</th>
-              <th>Program Name</th>
-              <th>Program Description</th>
+              <th colspan="13">Program Name</th>
+              <!-- <th>Program Description</th> -->
             </tr>
             <tr
               v-for="(userProgramDetail, at) in user_reports[0].user_programs"
               :key="`userProgramDetail${at}`"
             >
               <td>{{ at + 1 }}</td>
-              <td>{{ userProgramDetail ? userProgramDetail.program.program_name : ''}}</td>
-              <td>{{ userProgramDetail ? userProgramDetail.program.program_description : ''}}</td>
+              <td colspan="13">
+                {{
+                  userProgramDetail
+                    ? userProgramDetail.program.program_name
+                    : ""
+                }}
+              </td>
+              <!-- <td>{{ userProgramDetail ? userProgramDetail.program.program_description : ''}}</td> -->
             </tr>
           </table>
         </b-col>
-
-        <b-col md="12">
-          <h4>User Program Tasks</h4>
-          <table class="table table-response">
+        <br />
+        <b-col md="12" class="no-break">
+          <h4>CPP Tasks</h4>
+          <table class="my-table">
             <tr>
               <th>Sr No</th>
-              <th>Vessel Name</th>
-              <th>Task Name</th>
-              <th>Marks Obtained</th>
-              <th>Is Completed</th>
-              <th>Completed Date</th>
-              <th>Remark</th>
+              <th colspan="5">Vessel Name</th>
+              <th colspan="2">Task Name</th>
+              <th colspan="2">Marks Obtained</th>
+              <th colspan="2">Is Completed</th>
+              <th colspan="3">Completed Date</th>
+              <th colspan="2">Remark</th>
             </tr>
             <tr
               v-for="(userProgramTaskDetail, at) in user_reports[0]
-                .user_program_tasks"
+                .cpp_tasks"
               :key="`userProgramTaskDetail${at}`"
             >
               <td>{{ at + 1 }}</td>
-              <td>
-                {{ userProgramTaskDetail ? userProgramTaskDetail.ship.code : '' }}
-              </td>
-              <td>
+              <td colspan="5">
                 {{
-                  userProgramTaskDetail ? userProgramTaskDetail.program_task.serial_no : '' +
-                  " - " +
-                  userProgramTaskDetail ? userProgramTaskDetail.program_task.task : ''
+                  userProgramTaskDetail ? userProgramTaskDetail.ship.code : ""
                 }}
               </td>
-              <td>
-                {{ userProgramTaskDetail ? userProgramTaskDetail.marks_obtained : ''}} 
+              <td colspan="2">
+                {{
+                  userProgramTaskDetail
+                    ? userProgramTaskDetail.program_task.serial_no
+                    : "" + " - " + userProgramTaskDetail
+                    ? userProgramTaskDetail.program_task.task
+                    : ""
+                }}
+              </td>
+              <td colspan="2">
+                {{
+                  userProgramTaskDetail
+                    ? userProgramTaskDetail.marks_obtained
+                    : ""
+                }}
                 <b-badge
                   v-if="userProgramTaskDetail.marks_obtained < 5"
                   variant="danger  m-2"
                   >FAILED</b-badge
                 >
               </td>
-              <td>{{ userProgramTaskDetail.is_completed ? "YES" : "NO" }}</td>
-              <td>{{ userProgramTaskDetail ? userProgramTaskDetail.completion_date : '' }}</td>
-              <td>{{ userProgramTaskDetail ? userProgramTaskDetail.remark : '' }}</td>
+              <td colspan="2">
+                {{ userProgramTaskDetail.is_completed ? "YES" : "NO" }}
+              </td>
+              <td colspan="3">
+                {{
+                  userProgramTaskDetail
+                    ? userProgramTaskDetail.completion_date
+                    : ""
+                }}
+              </td>
+              <td colspan="2">
+                {{ userProgramTaskDetail ? userProgramTaskDetail.remark : "" }}
+              </td>
             </tr>
           </table>
         </b-col>
-
-        <b-col md="12">
+        <br />
+        <b-col md="12" class="no-break">
           <b-row>
             <b-col md="4"
               ><b-col md="8">
                 <p class="text-muted mt-2 mb-0">Task Completed</p>
               </b-col>
               <b-col md="4">
-                <p class="text-primary text-24 line-height-1 mb-2">
+                <p class="text-24 line-height-1 mb-2">
                   {{ total_completed_task ? total_completed_task : 0 }}
                 </p>
               </b-col></b-col
@@ -484,7 +520,7 @@
                 <p class="text-muted mt-2 mb-0">Pending Task</p>
               </b-col>
               <b-col md="4">
-                <p class="text-primary text-24 line-height-1 mb-2">
+                <p class="text-24 line-height-1 mb-2">
                   {{
                     total_pending_program_tasks
                       ? total_pending_program_tasks
@@ -498,71 +534,92 @@
                 <p class="text-muted mt-2 mb-0">Average Score</p>
               </b-col>
               <b-col md="4">
-                <p class="text-primary text-24 line-height-1 mb-2">
+                <p class="text-24 line-height-1 mb-2">
                   {{ average_score ? average_score.toFixed(1) : 0 }}
                 </p>
               </b-col>
             </b-col>
           </b-row>
         </b-col>
-
-        <b-col md="12">
+        <br />
+        <b-col md="12" class="no-break">
           <h4>KARCO Task Details</h4>
-          <table class="table table-response">
+          <table class="my-table">
             <tr>
               <th>Sr No</th>
-              <th>Vessel Name</th>
-              <th>Video Title</th>
-              <!-- <th>Obtained Marks</th>
-              <th>Total Marks</th> -->
-              <th>Percentage</th>
-              <th>Done On</th>
-              <th>Assessment Status</th>
+              <th colspan="4">Vessel Name</th>
+              <th colspan="5">Video Title</th>
+              <th colspan="2">Percentage</th>
+              <th colspan="2">Done On</th>
+              <th colspan="2">Assessment Status</th>
             </tr>
             <tr
-              v-for="(userKARCODetail, at) in user_reports[0].karco_tasks_report"
+              v-for="(userKARCODetail, at) in user_reports[0]
+                .karco_tasks"
               :key="`userKARCODetail${at}`"
             >
               <td>{{ at + 1 }}</td>
-              <td>{{ userKARCODetail ? userKARCODetail.ship.code : '' }}</td>
-              <td>{{ userKARCODetail ? userKARCODetail.video_title : '' }}</td>
-              <!-- <td>{{ userKARCODetail ? userKARCODetail.obtained_marks : '' }}</td>
-              <td>{{ userKARCODetail ? userKARCODetail.total_marks : '' }}</td> -->
-              <td>{{ userKARCODetail ? userKARCODetail.percentage : '' }}</td>
-              <td>{{ userKARCODetail ? userKARCODetail.done_on : '' }}</td>
-              <td>{{ userKARCODetail ? userKARCODetail.assessment_status : '' }}</td>
+              <td colspan="4">
+                {{ userKARCODetail ? userKARCODetail.ship.code : "" }}
+              </td>
+              <td colspan="5">
+                {{ userKARCODetail ? userKARCODetail.video_title : "" }}
+              </td>
+              <td colspan="2">
+                {{ userKARCODetail ? userKARCODetail.percentage : "" }}
+              </td>
+              <td colspan="2">
+                {{ userKARCODetail ? userKARCODetail.done_on : "" }}
+              </td>
+              <td colspan="2">
+                {{ userKARCODetail ? userKARCODetail.assessment_status : "" }}
+              </td>
             </tr>
           </table>
         </b-col>
-        
-        <b-col md="12">
+        <br />
+        <b-col md="12" class="no-break">
           <h4>Videotel Task Details</h4>
-          <table class="table table-response">
+          <table class="my-table">
             <tr>
               <th>Sr No</th>
-              <th>Vessel Name</th>
-              <th>Training Title</th>
-              <th>Type</th>
-              <th>Date</th>
-              <th>Score</th>
+              <th colspan="2">Vessel Name</th>
+              <th colspan="4">Training Title</th>
+              <th colspan="2">Type</th>
+              <th colspan="2">Date</th>
+              <th colspan="2">Score</th>
             </tr>
             <tr
-              v-for="(userVideotelDetail, at) in user_reports[0].videotel_tasks_report"
+              v-for="(userVideotelDetail, at) in user_reports[0]
+                .videotel_tasks"
               :key="`userVideotelDetail${at}`"
             >
               <td>{{ at + 1 }}</td>
-              <td>{{ userVideotelDetail ? userVideotelDetail.ship.code : '' }}</td>
-              <td>{{ userVideotelDetail ? userVideotelDetail.training_title : '' }}</td>
-              <td>{{ userVideotelDetail ? userVideotelDetail.type : '' }}</td>
-              <td>{{ userVideotelDetail ? userVideotelDetail.date : '' }}</td>
-              <td>{{ userVideotelDetail ? userVideotelDetail.score : '' }}</td>
+              <td colspan="2">
+                {{ userVideotelDetail ? userVideotelDetail.ship.code : "" }}
+              </td>
+              <td colspan="4">
+                {{
+                  userVideotelDetail ? userVideotelDetail.training_title : ""
+                }}
+              </td>
+              <td colspan="2">
+                {{ userVideotelDetail ? userVideotelDetail.type : "" }}
+              </td>
+              <td colspan="2">
+                {{ userVideotelDetail ? userVideotelDetail.date : "" }}
+              </td>
+              <td colspan="2">
+                {{ userVideotelDetail ? userVideotelDetail.score : "" }}
+              </td>
             </tr>
           </table>
         </b-col>
-        
-        
+
         <div class="parent">
-          <div class="child">End Of Report</div>
+          <div class="child">
+            <b><i>End Of Report</i></b>
+          </div>
         </div>
       </b-card>
     </section>
@@ -631,6 +688,10 @@ export default {
         },
       ],
       user: {},
+      report: {
+        from_date: "",
+        to_date: "",
+      },
       program: {},
       user_program: {},
       user_ships: {},
@@ -678,7 +739,9 @@ export default {
     async generatePDF(user_id) {
       this.is_generating = true;
       // console.log(this.user.id);
-      let user_reports = await axios.get(`/user_reports?user_id=${user_id}`);
+      let user_reports = await axios.get(
+        `/user_reports?user_id=${user_id}&from_date=${this.report.from_date}&to_date=${this.report.to_date}`
+      );
       this.user_reports = user_reports.data.data;
       if (this.user_reports != 0) {
         var element = document.getElementById("mydiv");
@@ -688,7 +751,7 @@ export default {
           image: { type: "jpeg", quality: 0.98 },
           html2canvas: { scale: 2 },
           jsPDF: { unit: "in", format: "A4", orientation: "portrait" },
-          pagebreak: [{avoid: 'table'},{avoid: 'h2'}, {avoid: 'tr'}, {avoid: 'td'}]
+          pagebreak: { avoid: ".no-break" },
         };
         html2pdf().set(opt).from(element).save();
         this.is_generating = false;
@@ -698,7 +761,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .parent {
   height: 100px;
   /* border: 5px solid #000; */
@@ -710,4 +773,23 @@ export default {
   /* background: #f00; */
   align-self: flex-end;
   text-align: center;
-}</style>
+}
+
+.my-table {
+  width: 100%;
+  table-layout: fixed;
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.my-table tr,
+td {
+  border: 1px solid black;
+  padding: 5px;
+  word-wrap: break-word;
+}
+.pagenum:before {
+  content: counter(page);
+}
+</style>

@@ -6,15 +6,17 @@
     <div class="row">
       <div class="col-md-6 text-center mb-30">
         <img :src="logo" style="float: left; margin: 15px" />
+        <h4 style="float: left; margin-top: 15px">Landbridge Ship Management (HK) Limited</h4>
       </div>
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6"></div>
           <div
             class="card col-md-6"
-            style="margin-top: 8px; margin-left: 350px"
+            style="margin-top: 20px; margin-left: 340px"
           >
-            <div style="padding-top: 1.5rem !important; padding-bottom: 0.5rem">
+            <div class="p-4">
+            <!-- <div style="padding-top: 1.5rem !important; padding-bottom: 0.5rem"> -->
               <!-- <div class="auth-logo text-center mb-30">
                 <img :src="logo" />
               </div> -->

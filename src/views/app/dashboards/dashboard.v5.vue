@@ -52,12 +52,13 @@
         </b-col>
 
         <b-col md="2">
-          <br>
+          <br />
           <b-button @click="kpiData" variant="primary"> Search </b-button>
-          <br>
+          <br />
           <div
             v-if="searchingStatus"
-            class="spinner spinner-primary mr-3" style="float: right; margin-top: -40px"
+            class="spinner spinner-primary mr-3"
+            style="float: right; margin-top: -40px"
           ></div>
         </b-col>
       </b-row>
@@ -65,7 +66,16 @@
       <b-row>
         <b-col md="4" lg="4" sm="4">
           <b-card title="CPP TASKS KPI" class="mb-30" style="height: 310px">
-            <h3>{{ total_kpi_CPP + "/20" }}</h3>
+            <h3>
+              {{ total_kpi_CPP + "/20" }}
+              <i
+                v-if="kpi_CPP > 20"
+                class="text-25 i-Up"
+                style="color: Green"
+              ></i
+              ><i v-else class="text-25 i-Down" style="color: orange"></i>
+            </h3>
+
             <div id="basicArea-chart">
               <apexchart
                 type="radialBar"
@@ -90,7 +100,15 @@
         </b-col> -->
         <b-col md="4" lg="4" sm="4">
           <b-card title="KARCO CBT KPI" class="mb-30" style="height: 310px">
-            <h3>{{ total_kpi_karco_tasks + "/100" }}</h3>
+            <h3>
+              {{ total_kpi_karco_tasks + "/100" }}
+              <i
+                v-if="kpi_karco_tasks > 100"
+                class="text-25 i-Up"
+                style="color: Green"
+              ></i
+              ><i v-else class="text-25 i-Down" style="color: orange"></i>
+            </h3>
             <div id="basicArea-chart">
               <apexchart
                 type="radialBar"
@@ -103,7 +121,15 @@
         </b-col>
         <b-col md="4" lg="4" sm="4">
           <b-card title="Videotel CBT KPI" class="mb-30" style="height: 310px">
-            <h3>{{ total_kpi_videotel_tasks + "/100" }}</h3>
+            <h3>
+              {{ total_kpi_videotel_tasks + "/100" }}
+              <i
+                v-if="kpi_videotel_tasks > 100"
+                class="text-25 i-Up"
+                style="color: Green"
+              ></i
+              ><i v-else class="text-25 i-Down" style="color: orange"></i>
+            </h3>
             <div id="basicArea-chart">
               <apexchart
                 type="radialBar"
@@ -393,6 +419,9 @@ export default {
       total_kpi_CPP: 0,
       total_kpi_karco_tasks: 0,
       total_kpi_videotel_tasks: 0,
+      kpi_CPP: 0,
+      kpi_karco_tasks: 0,
+      kpi_videotel_tasks: 0,
       program_count: "",
       inActive_user: "",
       total_task_completed: "",

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="display: none">
     <div class="customizer" :class="{ open: isOpen }">
       <div class="handle" @click="isOpen = !isOpen">
         <i class="i-Gear spin"></i>

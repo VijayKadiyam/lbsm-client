@@ -31,13 +31,13 @@
           <b-button
             variant="primary"
             class="btn-rounded d-none d-sm-block"
-            style="float: right"
             v-if="(is_generating = true)"
             @click="generatePDF(user.id)"
           >
             <span v-if="user_reports == 0"> Generate Report </span>
             <span v-else> Download Report </span>
           </b-button>
+        <div  v-if="generateStatus" class="spinner spinner-primary" style="float: right; margin-top: -40px"></div>
         </b-col>
       </b-row>
     </b-card>
@@ -455,8 +455,7 @@
               <th colspan="2">Remark</th>
             </tr>
             <tr
-              v-for="(userProgramTaskDetail, at) in user_reports[0]
-                .cpp_tasks"
+              v-for="(userProgramTaskDetail, at) in user_reports[0].cpp_tasks"
               :key="`userProgramTaskDetail${at}`"
             >
               <td>{{ at + 1 }}</td>
@@ -554,8 +553,7 @@
               <th colspan="2">Assessment Status</th>
             </tr>
             <tr
-              v-for="(userKARCODetail, at) in user_reports[0]
-                .karco_tasks"
+              v-for="(userKARCODetail, at) in user_reports[0].karco_tasks"
               :key="`userKARCODetail${at}`"
             >
               <td>{{ at + 1 }}</td>
@@ -590,8 +588,7 @@
               <th colspan="2">Score</th>
             </tr>
             <tr
-              v-for="(userVideotelDetail, at) in user_reports[0]
-                .videotel_tasks"
+              v-for="(userVideotelDetail, at) in user_reports[0].videotel_tasks"
               :key="`userVideotelDetail${at}`"
             >
               <td>{{ at + 1 }}</td>
@@ -697,6 +694,7 @@ export default {
       user_ships: {},
       user_program_tasks: [],
       user_reports: [],
+      generateStatus: false,
       total_completed_task: "",
       total_pending_task: "",
       total_pending_program_tasks: "",
@@ -738,6 +736,7 @@ export default {
     },
     async generatePDF(user_id) {
       this.is_generating = true;
+      this.generateStatus = true;
       // console.log(this.user.id);
       let user_reports = await axios.get(
         `/user_reports?user_id=${user_id}&from_date=${this.report.from_date}&to_date=${this.report.to_date}`
@@ -755,6 +754,7 @@ export default {
         };
         html2pdf().set(opt).from(element).save();
         this.is_generating = false;
+        this.generateStatus = false;
       }
       // this.user_reports = [];
     },

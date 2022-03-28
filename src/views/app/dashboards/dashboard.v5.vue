@@ -52,14 +52,19 @@
         </b-col>
 
         <b-col md="2">
-          <br />
+          <br>
           <b-button @click="kpiData" variant="primary"> Search </b-button>
+          <br>
+          <div
+            v-if="searchingStatus"
+            class="spinner spinner-primary mr-3" style="float: right; margin-top: -40px"
+          ></div>
         </b-col>
       </b-row>
       <!-- <br> -->
       <b-row>
         <b-col md="4" lg="4" sm="4">
-          <b-card title="CPP TASKS KPI" class="mb-30" style="height: 310px;">
+          <b-card title="CPP TASKS KPI" class="mb-30" style="height: 310px">
             <h3>{{ total_kpi_CPP + "/20" }}</h3>
             <div id="basicArea-chart">
               <apexchart
@@ -84,7 +89,7 @@
           </b-card>
         </b-col> -->
         <b-col md="4" lg="4" sm="4">
-          <b-card title="KARCO CBT KPI" class="mb-30" style="height: 310px;">
+          <b-card title="KARCO CBT KPI" class="mb-30" style="height: 310px">
             <h3>{{ total_kpi_karco_tasks + "/100" }}</h3>
             <div id="basicArea-chart">
               <apexchart
@@ -97,7 +102,7 @@
           </b-card>
         </b-col>
         <b-col md="4" lg="4" sm="4">
-          <b-card title="Videotel CBT KPI" class="mb-30" style="height: 310px;">
+          <b-card title="Videotel CBT KPI" class="mb-30" style="height: 310px">
             <h3>{{ total_kpi_videotel_tasks + "/100" }}</h3>
             <div id="basicArea-chart">
               <apexchart
@@ -379,6 +384,7 @@ export default {
   },
   data() {
     return {
+      searchingStatus: false,
       multipleBar2,
       CPP,
       KARCO,
@@ -749,6 +755,7 @@ export default {
       });
     },
     async kpiData() {
+      this.searchingStatus = true;
       if (this.selectedPeriod[0]) {
         this.period = this.selectedPeriod[0] ? this.selectedPeriod[0].id : "";
       } else {
@@ -777,7 +784,7 @@ export default {
       VIDEOTEL.series = [];
       VIDEOTEL.series.push(this.kpi_videotel_tasks);
 
-      this.isLoading = false;
+      this.searchingStatus = false;
     },
   },
   computed: {
@@ -810,7 +817,7 @@ export default {
 // start::CPP
 export const CPP = {
   series: [],
-   chartOptions: {
+  chartOptions: {
     plotOptions: {
       radialBar: {
         startAngle: -90,
@@ -924,7 +931,7 @@ export const KARCO = {
 // start::VIDEOTEL
 export const VIDEOTEL = {
   series: [],
-   chartOptions: {
+  chartOptions: {
     plotOptions: {
       radialBar: {
         startAngle: -90,

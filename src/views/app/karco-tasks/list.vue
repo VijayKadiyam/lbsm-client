@@ -34,7 +34,7 @@
         </b-col>
         <b-col md="2">
           <b-button
-            style="margin-top: 22px;"
+            style="margin-top: 22px"
             variant="primary"
             class="btn-rounded d-none d-sm-block"
             @click="filterKarcos()"
@@ -52,6 +52,7 @@
           enabled: true,
           placeholder: 'Search this table',
         }"
+        :isLoading.sync="isLoading"
         :pagination-options="{
           enabled: true,
           mode: 'records',
@@ -79,65 +80,7 @@
             </b-button> -->
           </b-row>
         </div>
-
         <template slot="table-row" slot-scope="props">
-          <!-- <span v-if="props.column.field == 'button'">
-            <a :href="'/app/karco-tasks/' + props.row.id">
-              <i class="i-Eraser-2 text-25 text-success mr-2"></i>
-              {{ props.row.button }}</a
-            >
-          </span> -->
-          <span v-if="props.column.field == 'vessel_name'">
-            {{ props.row.ship.description }}
-          </span>
-          <span v-if="props.column.field == 'crew_name'">
-            {{ props.row.user.user_name }}
-          </span>
-          <span v-if="props.column.field == 'employee_id'">
-            {{ props.row.user.unique_id }}
-          </span>
-          <span v-if="props.column.field == 'rank'">
-            {{ props.row.user.rank.description }}
-          </span>
-          <span v-if="props.column.field == 'nationality'">
-            {{ props.row.user.nationality }}
-          </span>
-          <span v-if="props.column.field == 'department'">
-            {{ props.row.department }}
-          </span>
-          <span v-if="props.column.field == 'status'">
-            {{ props.row.status }}
-          </span>
-          <span v-if="props.column.field == 'signed_on'">
-            {{ props.row.signed_on }}
-          </span>
-          <span v-if="props.column.field == 'video_title'">
-            {{ props.row.video_title }}
-          </span>
-          <span v-if="props.column.field == 'no_of_preview_watched'">
-            {{ props.row.no_of_preview_watched }}
-          </span>
-          <span v-if="props.column.field == 'no_of_video_watched'">
-            {{ props.row.no_of_video_watched }}
-          </span>
-          <span v-if="props.column.field == 'obtained_marks'">
-            {{ props.row.obtained_marks }}
-          </span>
-          <span v-if="props.column.field == 'total_marks'">
-            {{ props.row.total_marks }}
-          </span>
-          <span v-if="props.column.field == 'percentage'">
-            {{ props.row.percentage }}
-          </span>
-          <span v-if="props.column.field == 'done_on'">
-            {{ props.row.done_on }}
-          </span>
-          <span v-if="props.column.field == 'due_days'">
-            {{ props.row.due_days }}
-          </span>
-          <span v-if="props.column.field == 'assessment_status'">
-            {{ props.row.assessment_status }}
-          </span>
           <span v-if="props.column.field == 'delete'">
             <b-button
               variant="primary"
@@ -161,22 +104,23 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       columns: [
         {
           label: "Vessel Name",
-          field: "vessel_name",
+          field: "ship.description",
         },
         {
           label: "Crew Name",
-          field: "crew_name",
+          field: "user.user_name",
         },
         {
           label: "Employee ID",
-          field: "employee_id",
+          field: "user.unique_id",
         },
         {
           label: "Rank",
-          field: "rank",
+          field: "user.rank.description",
         },
         {
           label: "Department",
@@ -192,7 +136,7 @@ export default {
         },
         {
           label: "Nationality",
-          field: "nationality",
+          field: "user.nationality",
         },
         {
           label: "Video Title",
@@ -322,11 +266,13 @@ export default {
         this.selectedYear = [];
       }
     },
-    async filterKarcos(){
+    async filterKarcos() {
       this.month = this.selectedMonth[0].id;
       this.year = this.selectedYear[0].id;
 
-      let karco_tasks = await axios.get(`karco_tasks?month=${this.month}&year=${this.year}`);
+      let karco_tasks = await axios.get(
+        `karco_tasks?month=${this.month}&year=${this.year}`
+      );
       this.karco_tasks = karco_tasks.data.data;
     },
   },

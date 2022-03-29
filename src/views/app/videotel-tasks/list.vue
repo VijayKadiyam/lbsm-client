@@ -52,6 +52,7 @@
           enabled: true,
           placeholder: 'Search this table',
         }"
+        :isLoading.sync="isLoading"
         :pagination-options="{
           enabled: true,
           mode: 'records',
@@ -87,7 +88,7 @@
               {{ props.row.button }}</a
             >
           </span> -->
-          <span v-if="props.column.field == 'location'">
+          <!-- <span v-if="props.column.field == 'location'">
             {{ props.row.ship.description }}
           </span>
           <span v-if="props.column.field == 'first_name'">
@@ -119,7 +120,7 @@
           </span>
           <span v-if="props.column.field == 'score'">
             {{ props.row.score }}
-          </span>
+          </span> -->
           <span v-if="props.column.field == 'delete'">
             <b-button
               variant="primary"
@@ -143,26 +144,27 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       columns: [
         {
           label: "Location",
-          field: "location",
+          field: "ship.description",
         },
         {
           label: "First Name",
-          field: "first_name",
+          field: "user.first_name",
         },
         {
           label: "Last Name",
-          field: "last_name",
+          field: "user.last_name",
         },
         {
           label: "Crew ID",
-          field: "crew_id",
+          field: "user.unique_id",
         },
         {
           label: "Rank",
-          field: "rank",
+          field: "rank.description",
         },
         {
           label: "Training Title",

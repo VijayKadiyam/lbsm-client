@@ -10,6 +10,7 @@
           enabled: true,
           placeholder: 'Search this table',
         }"
+        :isLoading.sync="isLoading"
         :pagination-options="{
           enabled: true,
           mode: 'records',
@@ -75,6 +76,7 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       columns: [
         {
           label: "User",

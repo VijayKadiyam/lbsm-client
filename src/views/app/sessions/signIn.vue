@@ -3,24 +3,33 @@
     style="min-height: 100vh; background-size: cover"
     :style="{ backgroundImage: 'url(' + bgImage + ')' }"
   >
-    <div class="row">
-      <div class="col-md-6 text-center mb-30">
-        <img :src="logo" style="float: left; margin: 15px" />
-        <h4 style="float: left; margin-top: 15px">Landbridge Ship Management (HK) Limited</h4>
+    <div class="main-header" style="background-color: lightgrey">
+      <div class="logo">
+        <img src="@/assets/images/logo.png" alt />
       </div>
+
+      <h2>Landbridge Ship Management (HK) Limited</h2>
+
+      <div style="margin: auto"></div>
+
+      <div class="header-part-right"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 text-center mb-30"></div>
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6"></div>
           <div
             class="card col-md-6"
-            style="margin-top: 20px; margin-left: 340px"
+            style="margin-top: 10px; margin-left: 355px"
           >
             <div class="p-4">
-            <!-- <div style="padding-top: 1.5rem !important; padding-bottom: 0.5rem"> -->
+              <!-- <div style="padding-top: 1.5rem !important; padding-bottom: 0.5rem"> -->
               <!-- <div class="auth-logo text-center mb-30">
                 <img :src="logo" />
               </div> -->
-              <!-- <h1 class="mb-3 text-18">Sign In</h1> -->
+              <!-- <center><h1 class="mb-3 text-18">Sign In</h1></center> -->
               <b-form @submit.prevent="formSubmit">
                 <b-form-group label="Email Address" class="text-12">
                   <b-form-input

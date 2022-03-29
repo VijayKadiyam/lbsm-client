@@ -1,6 +1,6 @@
 <template>
   <div class="main-content">
-    <breadcumb :page="'Videotel Tasks List'" :folder="'Videotel Tasks'" />
+    <breadcumb :page="'KARCO Tasks List'" :folder="'KARCO Tasks'" />
     <!-- <div class="wrapper"> -->
     <b-card>
       <b-row class="col-md-12">
@@ -37,7 +37,7 @@
             style="margin-top: 22px"
             variant="primary"
             class="btn-rounded d-none d-sm-block"
-            @click="filterKarco()"
+            @click="filterKarcos()"
             >Search
           </b-button>
         </b-col>
@@ -71,15 +71,21 @@
               class="btn-rounded d-none d-sm-block mr-2"
               ><i class="i-Arrow-Back-3"></i> BACK</b-button
             >
+
+            <!-- <b-button
+              variant="primary"
+              class="btn-rounded d-none d-sm-block"
+              to="/app/karco-tasks/create"
+              ><i class="i-Add text-white mr-2"> </i>Add karco-task
+            </b-button> -->
           </b-row>
         </div>
-
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'delete'">
             <b-button
               variant="primary"
               class="btn-rounded d-none d-sm-block"
-              @click="deleteKarco(props.row.id)"
+              @click="deleteKarcos(props.row.id)"
               >Delete
             </b-button>
           </span>
@@ -94,7 +100,7 @@ import axios from "axios";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Videotel Task Lits",
+    title: "KARCO Task Lits",
   },
   data() {
     return {
@@ -225,7 +231,7 @@ export default {
       // this.serialNoStarting = (page - 1) * this.rowsPerPage;
       this.isLoading = false;
     },
-    async deleteKarco(id) {
+    async deleteKarcos(id) {
       this.$swal({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -260,7 +266,7 @@ export default {
         this.selectedYear = [];
       }
     },
-    async filterKarco() {
+    async filterKarcos() {
       this.month = this.selectedMonth[0].id;
       this.year = this.selectedYear[0].id;
 

@@ -346,7 +346,16 @@
               v-if="props.row.imagepath1 != null"
               target="_blank"
             >
-              <i class="i-File-Pictures text-25"></i>
+              <img
+                v-if="props.row.imagepath1.split('.').pop() == 'pdf'"
+                src="/img/pdf-file.png"
+                style="width: 40px; height: 40px"
+              />
+              <img
+                v-else
+                src="/img/picture.png"
+                style="width: 40px; height: 40px"
+              />
             </a>
           </span>
           <span v-if="props.column.field == 'imagepath2'">
@@ -355,7 +364,16 @@
               v-if="props.row.imagepath2 != null"
               target="_blank"
             >
-              <i class="i-File-Pictures text-25"></i>
+              <img
+                v-if="props.row.imagepath2.split('.').pop() == 'pdf'"
+                src="/img/pdf-file.png"
+                style="width: 40px; height: 40px"
+              />
+              <img
+                v-else
+                src="/img/picture.png"
+                style="width: 40px; height: 40px"
+              />
             </a>
           </span>
           <span v-if="props.column.field == 'imagepath3'">
@@ -364,7 +382,16 @@
               v-if="props.row.imagepath3 != null"
               target="_blank"
             >
-              <i class="i-File-Pictures text-25"></i>
+              <img
+                v-if="props.row.imagepath3.split('.').pop() == 'pdf'"
+                src="/img/pdf-file.png"
+                style="width: 40px; height: 40px"
+              />
+              <img
+                v-else
+                src="/img/picture.png"
+                style="width: 40px; height: 40px"
+              />
             </a>
           </span>
           <span v-if="props.column.field == 'imagepath4'">
@@ -373,7 +400,16 @@
               v-if="props.row.imagepath4 != null"
               target="_blank"
             >
-              <i class="i-File-Pictures text-25"></i>
+              <img
+                v-if="props.row.imagepath4.split('.').pop() == 'pdf'"
+                src="/img/pdf-file.png"
+                style="width: 40px; height: 40px"
+              />
+              <img
+                v-else
+                src="/img/picture.png"
+                style="width: 40px; height: 40px"
+              />
             </a>
           </span>
           <span v-else-if="props.column.field == 'active'">
@@ -502,9 +538,7 @@
                 </td>
               </tr>
               <tr>
-                <td colspan="9"
-                  v-if="userProgramTaskDetail.remark"
-                >
+                <td colspan="9" v-if="userProgramTaskDetail.remark">
                   {{
                     userProgramTaskDetail ? userProgramTaskDetail.remark : ""
                   }}

@@ -532,8 +532,8 @@
                 <td colspan="3">
                   {{
                     userProgramTaskDetail
-                      ? userProgramTaskDetail.completion_date
-                      : ""
+                      ? userProgramTaskDetail.completion_date 
+                      : "" | ddmmyyyy
                   }}
                 </td>
               </tr>

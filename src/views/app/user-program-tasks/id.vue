@@ -101,7 +101,16 @@
                         v-if="form.imagepath1 != null"
                         target="_blank"
                       >
-                        <i class="i-File-Pictures text-25"></i>
+                        <img
+                          v-if="form.imagepath1.split('.').pop() == 'pdf'"
+                          src="/img/pdf-file.png"
+                          style="width: 40px; height: 40px"
+                        />
+                        <img
+                          v-else
+                          src="/img/picture.png"
+                          style="width: 40px; height: 40px"
+                        />
                         <br />
                         <span>View Attachment 1</span>
                       </a>
@@ -137,7 +146,16 @@
                         v-if="form.imagepath2 != null"
                         target="_blank"
                       >
-                        <i class="i-File-Pictures text-25"></i>
+                        <img
+                          v-if="form.imagepath2.split('.').pop() == 'pdf'"
+                          src="/img/pdf-file.png"
+                          style="width: 40px; height: 40px"
+                        />
+                        <img
+                          v-else
+                          src="/img/picture.png"
+                          style="width: 40px; height: 40px"
+                        />
                         <br />
                         <span>View Attachment 2</span>
                       </a>
@@ -174,7 +192,16 @@
                         v-if="form.imagepath3 != null"
                         target="_blank"
                       >
-                        <i class="i-File-Pictures text-25"></i>
+                        <img
+                          v-if="form.imagepath3.split('.').pop() == 'pdf'"
+                          src="/img/pdf-file.png"
+                          style="width: 40px; height: 40px"
+                        />
+                        <img
+                          v-else
+                          src="/img/picture.png"
+                          style="width: 40px; height: 40px"
+                        />
                         <br />
                         <span>View Attachment 3</span>
                       </a>
@@ -210,7 +237,16 @@
                         v-if="form.imagepath4 != null"
                         target="_blank"
                       >
-                        <i class="i-File-Pictures text-25"></i>
+                        <img
+                          v-if="form.imagepath4.split('.').pop() == 'pdf'"
+                          src="/img/pdf-file.png"
+                          style="width: 40px; height: 40px"
+                        />
+                        <img
+                          v-else
+                          src="/img/picture.png"
+                          style="width: 40px; height: 40px"
+                        />
                         <br />
                         <span>View Attachment 4</span>
                       </a>

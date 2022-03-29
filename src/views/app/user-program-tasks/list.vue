@@ -37,7 +37,11 @@
             <span v-if="user_reports == 0"> Generate Report </span>
             <span v-else> Download Report </span>
           </b-button>
-        <div  v-if="generateStatus" class="spinner spinner-primary" style="float: right; margin-top: -40px"></div>
+          <div
+            v-if="generateStatus"
+            class="spinner spinner-primary"
+            style="float: right; margin-top: -40px"
+          ></div>
         </b-col>
       </b-row>
     </b-card>
@@ -452,53 +456,60 @@
               <th colspan="2">Marks Obtained</th>
               <th colspan="2">Is Completed</th>
               <th colspan="3">Completed Date</th>
-              <th colspan="2">Remark</th>
+              <!-- <th colspan="2">Remark</th> -->
             </tr>
-            <tr
+            <template
               v-for="(userProgramTaskDetail, at) in user_reports[0].cpp_tasks"
-              :key="`userProgramTaskDetail${at}`"
             >
-              <td>{{ at + 1 }}</td>
-              <td colspan="5">
-                {{
-                  userProgramTaskDetail ? userProgramTaskDetail.ship.code : ""
-                }}
-              </td>
-              <td colspan="2">
-                {{
-                  userProgramTaskDetail
-                    ? userProgramTaskDetail.program_task.serial_no
-                    : "" + " - " + userProgramTaskDetail
-                    ? userProgramTaskDetail.program_task.task
-                    : ""
-                }}
-              </td>
-              <td colspan="2">
-                {{
-                  userProgramTaskDetail
-                    ? userProgramTaskDetail.marks_obtained
-                    : ""
-                }}
-                <b-badge
-                  v-if="userProgramTaskDetail.marks_obtained < 5"
-                  variant="danger  m-2"
-                  >FAILED</b-badge
+              <tr>
+                <td rowspan="2">{{ at + 1 }}</td>
+                <td colspan="5" rowspan="2">
+                  {{
+                    userProgramTaskDetail ? userProgramTaskDetail.ship.code : ""
+                  }}
+                </td>
+                <td colspan="2">
+                  {{
+                    userProgramTaskDetail
+                      ? userProgramTaskDetail.program_task.serial_no
+                      : "" + " - " + userProgramTaskDetail
+                      ? userProgramTaskDetail.program_task.task
+                      : ""
+                  }}
+                </td>
+                <td colspan="2">
+                  {{
+                    userProgramTaskDetail
+                      ? userProgramTaskDetail.marks_obtained
+                      : ""
+                  }}
+                  <b-badge
+                    v-if="userProgramTaskDetail.marks_obtained < 5"
+                    variant="danger  m-2"
+                    >FAILED</b-badge
+                  >
+                </td>
+                <td colspan="2">
+                  {{ userProgramTaskDetail.is_completed ? "YES" : "NO" }}
+                </td>
+                <td colspan="3">
+                  {{
+                    userProgramTaskDetail
+                      ? userProgramTaskDetail.completion_date
+                      : ""
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <td colspan="9"
+                  v-if="userProgramTaskDetail.remark"
                 >
-              </td>
-              <td colspan="2">
-                {{ userProgramTaskDetail.is_completed ? "YES" : "NO" }}
-              </td>
-              <td colspan="3">
-                {{
-                  userProgramTaskDetail
-                    ? userProgramTaskDetail.completion_date
-                    : ""
-                }}
-              </td>
-              <td colspan="2">
-                {{ userProgramTaskDetail ? userProgramTaskDetail.remark : "" }}
-              </td>
-            </tr>
+                  {{
+                    userProgramTaskDetail ? userProgramTaskDetail.remark : ""
+                  }}
+                </td>
+              </tr>
+            </template>
           </table>
         </b-col>
         <br />

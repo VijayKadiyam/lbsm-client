@@ -29,7 +29,7 @@
               <!-- <div class="auth-logo text-center mb-30">
                 <img :src="logo" />
               </div> -->
-              <!-- <center><h1 class="mb-3 text-18">Sign In</h1></center> -->
+              <center><h1 class="mb-3 text-18">CMS Login</h1></center>
               <b-form @submit.prevent="formSubmit">
                 <b-form-group label="Email Address" class="text-12">
                   <b-form-input

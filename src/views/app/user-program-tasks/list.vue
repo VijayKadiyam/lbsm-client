@@ -352,6 +352,15 @@
                 style="width: 40px; height: 40px"
               />
               <img
+                v-else-if="
+                  props.row.imagepath1.split('.').pop() == 'xls' ||
+                  props.row.imagepath1.split('.').pop() == 'xlxs' ||
+                  props.row.imagepath1.split('.').pop() == 'csv'
+                "
+                src="/public/img/excel.png"
+                style="width: 40px; height: 40px"
+              />
+              <img
                 v-else
                 src="/img/picture.png"
                 style="width: 40px; height: 40px"
@@ -367,6 +376,15 @@
               <img
                 v-if="props.row.imagepath2.split('.').pop() == 'pdf'"
                 src="/img/pdf-file.png"
+                style="width: 40px; height: 40px"
+              />
+              <img
+                v-else-if="
+                  props.row.imagepath2.split('.').pop() == 'xls' ||
+                  props.row.imagepath2.split('.').pop() == 'xlxs' ||
+                  props.row.imagepath2.split('.').pop() == 'csv'
+                "
+                src="/public/img/excel.png"
                 style="width: 40px; height: 40px"
               />
               <img
@@ -388,6 +406,15 @@
                 style="width: 40px; height: 40px"
               />
               <img
+                v-else-if="
+                  props.row.imagepath3.split('.').pop() == 'xls' ||
+                  props.row.imagepath3.split('.').pop() == 'xlxs' ||
+                  props.row.imagepath3.split('.').pop() == 'csv'
+                "
+                src="/public/img/excel.png"
+                style="width: 40px; height: 40px"
+              />
+              <img
                 v-else
                 src="/img/picture.png"
                 style="width: 40px; height: 40px"
@@ -403,6 +430,15 @@
               <img
                 v-if="props.row.imagepath4.split('.').pop() == 'pdf'"
                 src="/img/pdf-file.png"
+                style="width: 40px; height: 40px"
+              />
+              <img
+                v-else-if="
+                  props.row.imagepath4.split('.').pop() == 'xls' ||
+                  props.row.imagepath4.split('.').pop() == 'xlxs' ||
+                  props.row.imagepath4.split('.').pop() == 'csv'
+                "
+                src="/public/img/excel.png"
                 style="width: 40px; height: 40px"
               />
               <img
@@ -532,7 +568,7 @@
                 <td colspan="3">
                   {{
                     userProgramTaskDetail
-                      ? userProgramTaskDetail.completion_date 
+                      ? userProgramTaskDetail.completion_date
                       : "" | ddmmyyyy
                   }}
                 </td>
@@ -555,7 +591,7 @@
                 <p class="text-muted mt-2 mb-0">Task Completed</p>
               </b-col>
               <b-col md="4">
-                <p class="text-24 line-height-1 mb-2">
+                <p class="text-24 line-height-1 mb-2" style="font-size: 14px;">
                   {{ total_completed_task ? total_completed_task : 0 }}
                 </p>
               </b-col></b-col
@@ -565,7 +601,7 @@
                 <p class="text-muted mt-2 mb-0">Pending Task</p>
               </b-col>
               <b-col md="4">
-                <p class="text-24 line-height-1 mb-2">
+                <p class="text-24 line-height-1 mb-2" style="font-size: 14px;">
                   {{
                     total_pending_program_tasks
                       ? total_pending_program_tasks
@@ -579,7 +615,7 @@
                 <p class="text-muted mt-2 mb-0">Average Score</p>
               </b-col>
               <b-col md="4">
-                <p class="text-24 line-height-1 mb-2">
+                <p class="text-24 line-height-1 mb-2" style="font-size: 14px;">
                   {{ average_score ? average_score.toFixed(1) : 0 }}
                 </p>
               </b-col>
@@ -792,7 +828,7 @@ export default {
       if (this.user_reports != 0) {
         var element = document.getElementById("mydiv");
         var opt = {
-          margin: [0.25, 0, 0.25, 0],
+          margin: [0.25, 0, 0.20, 0],
           filename: "User-report.pdf",
           image: { type: "jpeg", quality: 0.98 },
           html2canvas: { scale: 2 },
@@ -828,15 +864,12 @@ export default {
   border: 1px solid black;
   border-collapse: collapse;
   text-align: center;
+  font-size: 11px;
 }
 
-.my-table tr,
-td {
+.my-table td {
   border: 1px solid black;
   padding: 5px;
   word-wrap: break-word;
-}
-.pagenum:before {
-  content: counter(page);
 }
 </style>

@@ -45,6 +45,7 @@
     "vue-router": "^3.5.3",
     "vue-simple-calendar": "^4.4.0",
     "vue-slider-component": "^3.2.15",
+    "vue-speedometer": "^1.7.0",
     "vue-star-rating": "^1.7.0",
     "vue-sweetalert2": "^3.0.8",
     "vue-the-mask": "^0.11.1",

@@ -76,7 +76,25 @@
               ><i v-else class="text-25 i-Down" style="color: orange"></i>
             </h3>
 
-            <div id="basicArea-chart">
+            <div>
+              <!-- <vue-speedometer
+                :start-angle="-90"
+                :end-angle="90"
+                :value="value"
+                :min-value="minValue"
+                :max-value="maxValue"
+                text-color="primary"
+                needle-color="#000000"
+                :segments="3"
+                :segment-colors="segmentColors"
+                :custom-segment-stops="segmentValues"
+                start-color="#4daedb"
+                :ring-width="50"
+                :force-render="builder ? true : false"
+                :needle-height-ratio="0.85"
+                :current-value-text="'${value} ' + 'ºC'"
+                value-text-font-weight="400"
+              /> -->
               <apexchart
                 type="radialBar"
                 height="350"
@@ -395,9 +413,9 @@
 
 <script>
 import axios from "axios";
-
 // import
 export default {
+  // template: `<vue-speedometer />`,
   // metaInfo: {
   //   // if no subcomponents specify a metaInfo.title, this title will be used
   //   title: "Dashboard v5",
@@ -817,6 +835,24 @@ export default {
     },
   },
   computed: {
+    builder() {
+      return false;
+    },
+    segmentColors() {
+      return ["#4daedb", "#9C1515", "#40C332", "#1311E4", "#4daedb"];
+    },
+    segmentValues() {
+      return [0, 0, 10, 100, 100];
+    },
+    value() {
+      return 15;
+    },
+    minValue() {
+      return 0;
+    },
+    maxValue() {
+      return 100;
+    },
     filteredShipItems() {
       return this.shipItems.filter((pt) => {
         return (

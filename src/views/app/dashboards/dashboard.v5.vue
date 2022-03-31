@@ -413,8 +413,11 @@
 
 <script>
 import axios from "axios";
-// import
+// import VueSpeedometer from "vue-speedometer";
 export default {
+  // components: {
+  //   VueSpeedometer,
+  // },
   // template: `<vue-speedometer />`,
   // metaInfo: {
   //   // if no subcomponents specify a metaInfo.title, this title will be used

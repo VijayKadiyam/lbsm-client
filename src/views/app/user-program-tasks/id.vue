@@ -103,14 +103,24 @@
                       >
                         <img
                           v-if="form.imagepath1.split('.').pop() == 'pdf'"
-                          src="/img/pdf-file.png"
+                          src="/img/pdf.png"
+                          style="width: 40px; height: 40px"
+                        />
+                        <img
+                          v-else-if="
+                            props.row.imagepath4.split('.').pop() == 'xls' ||
+                            props.row.imagepath4.split('.').pop() == 'xlsx' ||
+                            props.row.imagepath4.split('.').pop() == 'csv'
+                          "
+                          src="/img/excel.png"
                           style="width: 40px; height: 40px"
                         />
                         <img
                           v-else
-                          src="/img/picture.png"
+                          src="/img/file.png"
                           style="width: 40px; height: 40px"
                         />
+
                         <br />
                         <span>View Attachment 1</span>
                       </a>
@@ -148,12 +158,21 @@
                       >
                         <img
                           v-if="form.imagepath2.split('.').pop() == 'pdf'"
-                          src="/img/pdf-file.png"
+                          src="/img/pdf.png"
+                          style="width: 40px; height: 40px"
+                        />
+                        <img
+                          v-else-if="
+                            props.row.imagepath4.split('.').pop() == 'xls' ||
+                            props.row.imagepath4.split('.').pop() == 'xlsx' ||
+                            props.row.imagepath4.split('.').pop() == 'csv'
+                          "
+                          src="/img/excel.png"
                           style="width: 40px; height: 40px"
                         />
                         <img
                           v-else
-                          src="/img/picture.png"
+                          src="/img/file.png"
                           style="width: 40px; height: 40px"
                         />
                         <br />
@@ -194,12 +213,21 @@
                       >
                         <img
                           v-if="form.imagepath3.split('.').pop() == 'pdf'"
-                          src="/img/pdf-file.png"
+                          src="/img/pdf.png"
+                          style="width: 40px; height: 40px"
+                        />
+                        <img
+                          v-else-if="
+                            props.row.imagepath4.split('.').pop() == 'xls' ||
+                            props.row.imagepath4.split('.').pop() == 'xlsx' ||
+                            props.row.imagepath4.split('.').pop() == 'csv'
+                          "
+                          src="/img/excel.png"
                           style="width: 40px; height: 40px"
                         />
                         <img
                           v-else
-                          src="/img/picture.png"
+                          src="/img/file.png"
                           style="width: 40px; height: 40px"
                         />
                         <br />
@@ -239,12 +267,21 @@
                       >
                         <img
                           v-if="form.imagepath4.split('.').pop() == 'pdf'"
-                          src="/img/pdf-file.png"
+                          src="/img/pdf.png"
+                          style="width: 40px; height: 40px"
+                        />
+                        <img
+                          v-else-if="
+                            props.row.imagepath4.split('.').pop() == 'xls' ||
+                            props.row.imagepath4.split('.').pop() == 'xlsx' ||
+                            props.row.imagepath4.split('.').pop() == 'csv'
+                          "
+                          src="/img/excel.png"
                           style="width: 40px; height: 40px"
                         />
                         <img
                           v-else
-                          src="/img/picture.png"
+                          src="/img/file.png"
                           style="width: 40px; height: 40px"
                         />
                         <br />

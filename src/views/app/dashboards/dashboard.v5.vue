@@ -67,7 +67,7 @@
         <b-col md="4" lg="4" sm="4">
           <b-card title="CPP TASKS KPI" class="mb-30" style="height: 310px">
             <h3>
-              {{ total_kpi_CPP + "/20" }}
+              {{ total_kpi_CPP + "/" + cpp_out_of }}
               <i
                 v-if="kpi_CPP > 20"
                 class="text-25 i-Up"
@@ -77,49 +77,34 @@
             </h3>
 
             <div>
-              <!-- <vue-speedometer
-                :start-angle="-90"
-                :end-angle="90"
-                :value="value"
-                :min-value="minValue"
-                :max-value="maxValue"
-                text-color="primary"
-                needle-color="#000000"
-                :segments="3"
-                :segment-colors="segmentColors"
-                :custom-segment-stops="segmentValues"
-                start-color="#4daedb"
-                :ring-width="50"
-                :force-render="builder ? true : false"
-                :needle-height-ratio="0.85"
-                :current-value-text="'${value} ' + 'ºC'"
-                value-text-font-weight="400"
-              /> -->
-              <apexchart
-                type="radialBar"
-                height="350"
-                :options="CPP.chartOptions"
-                :series="CPP.series"
-              />
+              {{ test + kpi_CPP }}
+              <!-- <vue-gauge
+                :options="{
+                  chartWidth: 400,
+                  needleValue: 20,
+                  hasNeedle: true,
+                  needleColor: 'black',
+                  needleStartValue: 50,
+                  arcColors: [
+                    'rgb(255,84,84)',
+                    'rgb(239,214,19)',
+                    'rgb(61,204,91)',
+                  ],
+                  arcDelimiters: [40, 60],
+                  rangeLabel: ['52', '8'],
+                }"
+              >
+              </vue-gauge> -->
+              <vue-gauge
+                :options="CPPtest.options"
+              ></vue-gauge>
             </div>
           </b-card>
         </b-col>
-        <!-- <b-col md="4" lg="4" sm="4">
-          <b-card title="CPP TASKS KPI" class="mb-30">
-            <div id="basicArea-chart">
-              <apexchart
-                type="radialBar"
-                height="350"
-                :options="CPP.chartOptions"
-                :series="CPP.series"
-              />
-            </div>
-          </b-card>
-        </b-col> -->
         <b-col md="4" lg="4" sm="4">
           <b-card title="KARCO CBT KPI" class="mb-30" style="height: 310px">
             <h3>
-              {{ total_kpi_karco_tasks + "/100" }}
+              {{ total_kpi_karco_tasks + "/" + karco_videotel_out_of }}
               <i
                 v-if="kpi_karco_tasks > 100"
                 class="text-25 i-Up"
@@ -140,7 +125,7 @@
         <b-col md="4" lg="4" sm="4">
           <b-card title="Videotel CBT KPI" class="mb-30" style="height: 310px">
             <h3>
-              {{ total_kpi_videotel_tasks + "/100" }}
+              {{ total_kpi_videotel_tasks + "/" + karco_videotel_out_of }}
               <i
                 v-if="kpi_videotel_tasks > 100"
                 class="text-25 i-Up"
@@ -311,6 +296,7 @@
               enabled: true,
               placeholder: 'Search this table',
             }"
+            :isLoading.sync="isLoading"
             :pagination-options="{
               enabled: true,
               mode: 'records',
@@ -413,16 +399,8 @@
 
 <script>
 import axios from "axios";
-// import VueSpeedometer from "vue-speedometer";
+import Vue from 'vue'
 export default {
-  // components: {
-  //   VueSpeedometer,
-  // },
-  // template: `<vue-speedometer />`,
-  // metaInfo: {
-  //   // if no subcomponents specify a metaInfo.title, this title will be used
-  //   title: "Dashboard v5",
-  // },
   props: {
     title: {
       type: String,
@@ -431,13 +409,18 @@ export default {
   },
   data() {
     return {
+       isLoading: false,
       searchingStatus: false,
       multipleBar2,
+      CPPtest,
       CPP,
       KARCO,
       VIDEOTEL,
       type: 0,
       total_kpi_CPP: 0,
+      cpp_out_of: 0,
+      karco_videotel_out_of: 0,
+      test: 0,
       total_kpi_karco_tasks: 0,
       total_kpi_videotel_tasks: 0,
       kpi_CPP: 0,
@@ -714,10 +697,10 @@ export default {
     //     return this.userRankCount.sort((a, b) => a.id - b.id );
     // },
     async getTopPerformers_by_Average() {
+       this.isLoading = true;
       let rank = this.selectedTopPerformerByAverageRank[0]
         ? this.selectedTopPerformerByAverageRank[0].id
         : "";
-      this.isLoading = true;
       let top_performers_by_average = await axios.get(
         `/top_performers_by_average?year=${this.year}&rank=${rank}`
       );
@@ -725,11 +708,11 @@ export default {
       this.isLoading = false;
     },
     async getTopPerformers_by_Task() {
+      this.isLoading = true;
       let rank = this.selectedTopPerformerByTaskRank[0]
         ? this.selectedTopPerformerByTaskRank[0].id
         : "";
 
-      this.isLoading = true;
       let top_performers_by_task = await axios.get(
         `/top_performers_by_task?year=${this.year}&rank=${rank}`
       );
@@ -737,11 +720,11 @@ export default {
       this.isLoading = false;
     },
     async getTopPerformers() {
+      this.isLoading = true;
       let rank = this.selectedTopPerformerRank[0]
         ? this.selectedTopPerformerRank[0].id
         : "";
 
-      this.isLoading = true;
       let top_performers = await axios.get(
         `/top_performers?year=${this.year}&rank=${rank}&type=${this.type}`
       );
@@ -750,12 +733,12 @@ export default {
       this.isLoading = false;
     },
     async getTotalTaskPerformed() {
+      this.isLoading = true;
       this.rank = this.selectedRank[0] ? this.selectedRank[0].id : "";
       this.ships = [];
       this.selectedShip.forEach((ship) => {
         this.ships.push(ship.id);
       });
-      this.isLoading = true;
 
       let total_tasks_performed = await axios.get(
         `/total_tasks_performed?year=${this.year}&ship=${this.ships}&rank=${this.rank}`
@@ -787,6 +770,7 @@ export default {
       this.total_tasks_performed.forEach((month) => {
         this.ttp.push(month);
       });
+       this.isLoading = false;
     },
     async getMasters() {
       let masters = await axios.get(`analytics/masters`);
@@ -817,16 +801,40 @@ export default {
       let kpi_data = await axios.get(
         `/kpi_data?year=${this.year}&from_date=${this.kpi.from_date}&to_date=${this.kpi.to_date}&period=${this.period}`
       );
-      this.kpi_CPP = kpi_data.data.kpi_CPP_count;
-      this.kpi_karco_tasks = kpi_data.data.kpi_karco_tasks_count;
-      this.kpi_videotel_tasks = kpi_data.data.kpi_videotel_tasks_count;
+      this.kpi_CPP = kpi_data.data.kpi_CPP_percentage;
+      this.kpi_karco_tasks = kpi_data.data.kpi_karco_tasks_percentage;
+      this.kpi_videotel_tasks = kpi_data.data.kpi_videotel_tasks_percentage;
 
       this.total_kpi_CPP = kpi_data.data.kpi_CPP;
       this.total_kpi_karco_tasks = kpi_data.data.kpi_karco_tasks;
       this.total_kpi_videotel_tasks = kpi_data.data.kpi_videotel_tasks;
+      this.cpp_out_of = kpi_data.data.cpp_out_of;
+      this.karco_videotel_out_of = kpi_data.data.karco_videotel_out_of;
 
-      CPP.series = [];
-      CPP.series.push(this.kpi_CPP);
+      // CPP.series = [];
+      // let needleValue = ''
+      // needleValue = this.kpi_CPP
+      //       let element = document.querySelector("#gaugeArea");
+      //       let options = {
+      //   hasNeedle: true,
+      //   needleColor: 'gray',
+      //   needleUpdateSpeed: 1000,
+      //   arcColors: ['rgb(44, 151, 222)', 'lightgray'],
+      //   arcDelimiters: [30],
+      //   rangeLabel: ['0', '100'],
+      //   centralLabel: '50',
+      // }
+      //       VueGauge.gaugeChart(element, 300, options).updateNeedle(50);
+      // this.test = "'" + this.kpi_CPP + "'";
+
+      // // let abc={
+      // //   needleValue: this.kpi_CPP
+      // // };
+      CPPtest.options.needleValue = 0;
+      Vue.set(CPPtest.options, "needleValue", this.kpi_CPP)
+      // CPPtest.options.needleValue.push(this.kpi_CPP);
+      
+      console.log(CPPtest.options);
 
       KARCO.series = [];
       KARCO.series.push(this.kpi_karco_tasks);
@@ -838,24 +846,6 @@ export default {
     },
   },
   computed: {
-    builder() {
-      return false;
-    },
-    segmentColors() {
-      return ["#4daedb", "#9C1515", "#40C332", "#1311E4", "#4daedb"];
-    },
-    segmentValues() {
-      return [0, 0, 10, 100, 100];
-    },
-    value() {
-      return 15;
-    },
-    minValue() {
-      return 0;
-    },
-    maxValue() {
-      return 100;
-    },
     filteredShipItems() {
       return this.shipItems.filter((pt) => {
         return (
@@ -883,6 +873,19 @@ export default {
 // start::gradientRadial
 
 // start::CPP
+export const CPPtest = {
+  options: {
+    chartWidth: 320,
+    hasNeedle: true,
+    needleColor: "black",
+    needleStartValue: 7,
+    needleValue: 0,
+    needleUpdateSpeed: 5,
+    arcColors: ["orange", "green"],
+    arcDelimiters: [33],
+    rangeLabel: ["0", "60"],
+  },
+};
 export const CPP = {
   series: [],
   chartOptions: {

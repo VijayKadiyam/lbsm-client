@@ -27,7 +27,9 @@ Vue.component('VueFontawesome', require('vue-fontawesome-icon/VueFontawesome.vue
 Vue.component("breadcumb", Breadcumb);
 import InstantSearch from 'vue-instantsearch';
 // Vue.use(VueRouter);
- 
+
+import VueGauge from 'vue-gauge';
+Vue.component('vue-gauge', VueGauge);
 
 
 Vue.use(InstantSearch);

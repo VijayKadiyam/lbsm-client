@@ -348,13 +348,13 @@
             >
               <img
                 v-if="props.row.imagepath1.split('.').pop() == 'pdf'"
-                src="/img/pdf-file.png"
+                src="/img/pdf.png"
                 style="width: 40px; height: 40px"
               />
               <img
                 v-else-if="
                   props.row.imagepath1.split('.').pop() == 'xls' ||
-                  props.row.imagepath1.split('.').pop() == 'xlxs' ||
+                  props.row.imagepath1.split('.').pop() == 'xlsx' ||
                   props.row.imagepath1.split('.').pop() == 'csv'
                 "
                 src="/public/img/excel.png"
@@ -362,7 +362,7 @@
               />
               <img
                 v-else
-                src="/img/picture.png"
+                src="/img/file.png"
                 style="width: 40px; height: 40px"
               />
             </a>
@@ -375,13 +375,13 @@
             >
               <img
                 v-if="props.row.imagepath2.split('.').pop() == 'pdf'"
-                src="/img/pdf-file.png"
+                src="/img/pdf.png"
                 style="width: 40px; height: 40px"
               />
               <img
                 v-else-if="
                   props.row.imagepath2.split('.').pop() == 'xls' ||
-                  props.row.imagepath2.split('.').pop() == 'xlxs' ||
+                  props.row.imagepath2.split('.').pop() == 'xlsx' ||
                   props.row.imagepath2.split('.').pop() == 'csv'
                 "
                 src="/public/img/excel.png"
@@ -389,7 +389,7 @@
               />
               <img
                 v-else
-                src="/img/picture.png"
+                src="/img/file.png"
                 style="width: 40px; height: 40px"
               />
             </a>
@@ -402,13 +402,13 @@
             >
               <img
                 v-if="props.row.imagepath3.split('.').pop() == 'pdf'"
-                src="/img/pdf-file.png"
+                src="/img/pdf.png"
                 style="width: 40px; height: 40px"
               />
               <img
                 v-else-if="
                   props.row.imagepath3.split('.').pop() == 'xls' ||
-                  props.row.imagepath3.split('.').pop() == 'xlxs' ||
+                  props.row.imagepath3.split('.').pop() == 'xlsx' ||
                   props.row.imagepath3.split('.').pop() == 'csv'
                 "
                 src="/public/img/excel.png"
@@ -416,7 +416,7 @@
               />
               <img
                 v-else
-                src="/img/picture.png"
+                src="/img/file.png"
                 style="width: 40px; height: 40px"
               />
             </a>
@@ -429,13 +429,13 @@
             >
               <img
                 v-if="props.row.imagepath4.split('.').pop() == 'pdf'"
-                src="/img/pdf-file.png"
+                src="/img/pdf.png"
                 style="width: 40px; height: 40px"
               />
               <img
                 v-else-if="
                   props.row.imagepath4.split('.').pop() == 'xls' ||
-                  props.row.imagepath4.split('.').pop() == 'xlxs' ||
+                  props.row.imagepath4.split('.').pop() == 'xlsx' ||
                   props.row.imagepath4.split('.').pop() == 'csv'
                 "
                 src="/public/img/excel.png"
@@ -443,7 +443,7 @@
               />
               <img
                 v-else
-                src="/img/picture.png"
+                src="/img/file.png"
                 style="width: 40px; height: 40px"
               />
             </a>

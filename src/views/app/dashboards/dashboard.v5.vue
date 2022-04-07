@@ -425,7 +425,7 @@ export default {
           needleUpdateSpeed: 5,
           arcColors: ["orange", "green"],
           arcDelimiters: [33],
-          rangeLabel: ["0", "60"],
+          rangeLabel: ["0", "160"],
         },
       },
       CPP,

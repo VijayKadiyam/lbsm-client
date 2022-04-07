@@ -34,9 +34,10 @@
           <b-form-group label="From Date">
             <b-form-datepicker
               id="from_date"
-              v-model="kpi.from_date"
+              v-model="from_date"
               class="mb-2"
               placeholder="From Date"
+              @change="clearFilter()"
             ></b-form-datepicker>
           </b-form-group>
         </b-col>
@@ -44,7 +45,7 @@
           <b-form-group label="To Date">
             <b-form-datepicker
               id="to_date"
-              v-model="kpi.to_date"
+              v-model="to_date"
               class="mb-2"
               placeholder="To Date"
             ></b-form-datepicker>
@@ -77,24 +78,7 @@
             </h3>
 
             <div>
-              <h4>{{ test + kpi_CPP }}%</h4>
-              <!-- <vue-gauge
-                :options="{
-                  chartWidth: 400,
-                  needleValue: 20,
-                  hasNeedle: true,
-                  needleColor: 'black',
-                  needleStartValue: 50,
-                  arcColors: [
-                    'rgb(255,84,84)',
-                    'rgb(239,214,19)',
-                    'rgb(61,204,91)',
-                  ],
-                  arcDelimiters: [40, 60],
-                  rangeLabel: ['52', '8'],
-                }"
-              >
-              </vue-gauge> -->
+              <h4>{{ kpi_CPP }}%</h4>
               <vue-gauge
                 :id="'cpp-graph'"
                 :options="CPPtest.options"
@@ -114,12 +98,16 @@
               ><i v-else class="text-25 i-Down" style="color: orange"></i>
             </h3>
             <div id="basicArea-chart">
-              <apexchart
+              <!-- <apexchart
                 type="radialBar"
                 height="350"
                 :options="KARCO.chartOptions"
                 :series="KARCO.series"
-              />
+              /> -->
+              <vue-gauge
+                :id="'karco-graph'"
+                :options="KARCOtest.options"
+              ></vue-gauge>
             </div>
           </b-card>
         </b-col>
@@ -135,12 +123,16 @@
               ><i v-else class="text-25 i-Down" style="color: orange"></i>
             </h3>
             <div id="basicArea-chart">
-              <apexchart
+              <!-- <apexchart
                 type="radialBar"
                 height="350"
                 :options="VIDEOTEL.chartOptions"
                 :series="VIDEOTEL.series"
-              />
+              /> -->
+              <vue-gauge
+                :id="'videotel-graph'"
+                :options="VIDEOTELtest.options"
+              ></vue-gauge>
             </div>
           </b-card>
         </b-col>
@@ -235,7 +227,7 @@
     </b-row>
     <b-row>
       <b-col md="12" lg="12">
-        <b-card title="Total Tasks Performed (2021)" class="mb-30">
+        <b-card title="Total Tasks Performed (2022)" class="mb-30">
           <!-- <b-dropdown
             variant="primary"
             id="dropdown-1"
@@ -428,9 +420,32 @@ export default {
           rangeLabel: ["0", "160"],
         },
       },
-      CPP,
-      KARCO,
-      VIDEOTEL,
+      KARCOtest: {
+        options: {
+          chartWidth: 320,
+          hasNeedle: true,
+          needleColor: "black",
+          needleStartValue: 0,
+          // needleValue: 0,
+          needleUpdateSpeed: 5,
+          arcColors: ["orange", "green"],
+          arcDelimiters: [33.33],
+          rangeLabel: ["0", "900"],
+        },
+      },
+      VIDEOTELtest: {
+        options: {
+          chartWidth: 320,
+          hasNeedle: true,
+          needleColor: "black",
+          needleStartValue: 0,
+          // needleValue: 0,
+          needleUpdateSpeed: 5,
+          arcColors: ["orange", "green"],
+          arcDelimiters: [33.33],
+          rangeLabel: ["0", "900"],
+        },
+      },
       type: 0,
       total_kpi_CPP: 0,
       cpp_out_of: 0,
@@ -456,10 +471,8 @@ export default {
       form: {
         year: "",
       },
-      kpi: {
-        from_date: "",
-        to_date: "",
-      },
+      from_date: "",
+      to_date: "",
       years: [
         { value: 2020, text: 2020 },
         { value: 2021, text: 2021 },
@@ -468,7 +481,7 @@ export default {
       selectedShip: [],
       shipItems: [],
 
-      searchPeriod: "3 Month",
+      searchPeriod: "",
       selectedPeriod: [],
       periodItems: [
         { id: "30", text: "1 Month" },
@@ -604,6 +617,8 @@ export default {
         // },
       ],
       cppGauge: null,
+      karcoGauge: null,
+      videotelGauge: null,
     };
   },
   watch: {
@@ -613,19 +628,43 @@ export default {
     selectedTopPerformerByTaskRank: "getTopPerformers_by_Task",
     selectedTopPerformerRank: "getTopPerformers",
     type: "getTopPerformers",
+    selectedPeriod: "clearDateFilter",
+    from_date: "clearPeriodFilter",
+    to_date: "clearPeriodFilter",
   },
   mounted() {
     this.year = "2022";
     this.getData(this.year);
     this.getMasters();
-
+    this.selectedPeriod.push({ id: "90", text: "3 Month" });
     this.cppGauge = GaugeChart.gaugeChart(
       document.querySelector("#cpp-graph"),
       250,
       this.CPPtest.options
     );
+    this.karcoGauge = GaugeChart.gaugeChart(
+      document.querySelector("#karco-graph"),
+      250,
+      this.KARCOtest.options
+    );
+    this.videotelGauge = GaugeChart.gaugeChart(
+      document.querySelector("#videotel-graph"),
+      250,
+      this.VIDEOTELtest.options
+    );
   },
   methods: {
+    clearPeriodFilter() {
+      this.selectedPeriod=[]
+      this.period = "";
+    },
+    clearDateFilter() {
+      if (this.selectedPeriod[0]) {
+        this.period = this.selectedPeriod[0] ? this.selectedPeriod[0].id : "";
+        this.from_date = "";
+        this.to_date = "";
+      } 
+    },
     async getData(year) {
       this.year = year;
       this.isLoading = true;
@@ -710,14 +749,11 @@ export default {
 
       this.kpiData();
       this.getTotalTaskPerformed();
-      this.getTopPerformers_by_Average();
-      this.getTopPerformers_by_Task();
+      // this.getTopPerformers_by_Average();
+      // this.getTopPerformers_by_Task();
       this.getTopPerformers();
       this.isLoading = false;
     },
-    //     sortedArray(){
-    //     return this.userRankCount.sort((a, b) => a.id - b.id );
-    // },
     async getTopPerformers_by_Average() {
       this.isLoading = true;
       let rank = this.selectedTopPerformerByAverageRank[0]
@@ -812,16 +848,9 @@ export default {
     },
     async kpiData() {
       this.searchingStatus = true;
-      if (this.selectedPeriod[0]) {
-        this.period = this.selectedPeriod[0] ? this.selectedPeriod[0].id : "";
-      } else {
-        this.period = 90;
-      }
-
-      this.isLoading = true;
 
       let kpi_data = await axios.get(
-        `/kpi_data?year=${this.year}&from_date=${this.kpi.from_date}&to_date=${this.kpi.to_date}&period=${this.period}`
+        `/kpi_data?year=${this.year}&from_date=${this.from_date}&to_date=${this.to_date}&period=${this.period}`
       );
       this.kpi_CPP = kpi_data.data.kpi_CPP_percentage;
       this.kpi_karco_tasks = kpi_data.data.kpi_karco_tasks_percentage;
@@ -833,26 +862,7 @@ export default {
       this.cpp_out_of = kpi_data.data.cpp_out_of;
       this.karco_videotel_out_of = kpi_data.data.karco_videotel_out_of;
 
-      // CPP.series = [];
-      // let needleValue = ''
-      // needleValue = this.kpi_CPP
-      // let element = document.querySelector("#cpp-graph");
-      //       let options = {
-      //   hasNeedle: true,
-      //   needleColor: 'gray',
-      //   needleUpdateSpeed: 1000,
-      //   arcColors: ['rgb(44, 151, 222)', 'lightgray'],
-      //   arcDelimiters: [30],
-      //   rangeLabel: ['0', '100'],
-      //   centralLabel: '50',
-      // }
-      //       VueGauge.gaugeChart(element, 300, options).updateNeedle(50);
-      // this.test = "'" + this.kpi_CPP + "'";
-
-      // // let abc={
-      // //   needleValue: this.kpi_CPP
-      // // };
-
+      // CPP GAUGE SECTION
       this.cppGauge.removeGauge();
       let rangeLast = this.cpp_out_of * 3;
       this.CPPtest.options.arcDelimiters = [33.33];
@@ -866,11 +876,35 @@ export default {
       let cppGraphPercent = (this.total_kpi_CPP / rangeLast) * 100;
       this.cppGauge.updateNeedle(cppGraphPercent);
 
-      KARCO.series = [];
-      KARCO.series.push(this.kpi_karco_tasks);
+      // KARCO GAUGE SECTION
+      this.karcoGauge.removeGauge();
+      let karco_rangeLast = this.karco_videotel_out_of * 3;
+      this.KARCOtest.options.arcDelimiters = [33.33];
+      this.KARCOtest.options.rangeLabel = ["0", "" + karco_rangeLast];
+      this.karcoGauge = GaugeChart.gaugeChart(
+        document.querySelector("#karco-graph"),
+        250,
+        this.KARCOtest.options
+      );
 
-      VIDEOTEL.series = [];
-      VIDEOTEL.series.push(this.kpi_videotel_tasks);
+      let karcoGraphPercent =
+        (this.total_kpi_karco_tasks / karco_rangeLast) * 100;
+      this.karcoGauge.updateNeedle(karcoGraphPercent);
+
+      // VIDEOTEL GAUGE SECTION
+      this.videotelGauge.removeGauge();
+      let videotel_rangeLast = this.karco_videotel_out_of * 3;
+      this.VIDEOTELtest.options.arcDelimiters = [33.33];
+      this.VIDEOTELtest.options.rangeLabel = ["0", "" + videotel_rangeLast];
+      this.videotelGauge = GaugeChart.gaugeChart(
+        document.querySelector("#videotel-graph"),
+        250,
+        this.VIDEOTELtest.options
+      );
+
+      let videotelGraphPercent =
+        (this.total_kpi_videotel_tasks / videotel_rangeLast) * 100;
+      this.videotelGauge.updateNeedle(videotelGraphPercent);
 
       this.searchingStatus = false;
     },
@@ -897,178 +931,6 @@ export default {
         );
       });
     },
-  },
-};
-// const year=this.year;
-// start::gradientRadial
-
-export const CPP = {
-  series: [],
-  chartOptions: {
-    plotOptions: {
-      radialBar: {
-        startAngle: -90,
-        endAngle: 90,
-        track: {
-          background: "#e7e7e7",
-          strokeWidth: "97%",
-          margin: 5, // margin is in pixels
-          shadow: {
-            enabled: true,
-            top: 2,
-            left: 0,
-            color: "#999",
-            opacity: 1,
-            blur: 2,
-          },
-        },
-        dataLabels: {
-          name: {
-            show: false,
-          },
-          value: {
-            offsetY: 15,
-            fontSize: "22px",
-          },
-        },
-      },
-    },
-    fill: {
-      colors: [
-        function ({ value }) {
-          if (value < 100) {
-            return "orange";
-          } else {
-            return "green";
-          }
-        },
-      ],
-      type: "gradient",
-      gradient: {
-        shade: "light",
-        shadeIntensity: 0.4,
-        inverseColors: false,
-        gradientToColors: [""],
-        opacityFrom: 1,
-        opacityTo: 1,
-        stops: [0, 50, 53, 91],
-      },
-    },
-    labels: ["Average Results"],
-  },
-};
-
-// start::KARCO
-export const KARCO = {
-  series: [],
-  chartOptions: {
-    plotOptions: {
-      radialBar: {
-        startAngle: -90,
-        endAngle: 90,
-        track: {
-          background: "#e7e7e7",
-          strokeWidth: "97%",
-          margin: 5, // margin is in pixels
-          shadow: {
-            enabled: true,
-            top: 2,
-            left: 0,
-            color: "#999",
-            opacity: 1,
-            blur: 2,
-          },
-        },
-        dataLabels: {
-          name: {
-            show: false,
-          },
-          value: {
-            offsetY: 15,
-            fontSize: "22px",
-          },
-        },
-      },
-    },
-    fill: {
-      colors: [
-        function ({ value }) {
-          if (value < 100) {
-            return "orange";
-          } else {
-            return "green";
-          }
-        },
-      ],
-      type: "gradient",
-      gradient: {
-        shade: "light",
-        shadeIntensity: 0.4,
-        inverseColors: false,
-        gradientToColors: [""],
-        opacityFrom: 1,
-        opacityTo: 1,
-        stops: [0, 50, 53, 91],
-      },
-    },
-    labels: ["Average Results"],
-  },
-};
-
-// start::VIDEOTEL
-export const VIDEOTEL = {
-  series: [],
-  chartOptions: {
-    plotOptions: {
-      radialBar: {
-        startAngle: -90,
-        endAngle: 90,
-        track: {
-          background: "#e7e7e7",
-          strokeWidth: "97%",
-          margin: 5, // margin is in pixels
-          shadow: {
-            enabled: true,
-            top: 2,
-            left: 0,
-            color: "#999",
-            opacity: 1,
-            blur: 2,
-          },
-        },
-        dataLabels: {
-          name: {
-            show: false,
-          },
-          value: {
-            offsetY: 15,
-            fontSize: "22px",
-          },
-        },
-      },
-    },
-    fill: {
-      colors: [
-        function ({ value }) {
-          if (value < 100) {
-            return "orange";
-          } else {
-            return "green";
-          }
-        },
-      ],
-      type: "gradient",
-      gradient: {
-        shade: "light",
-        shadeIntensity: 0.4,
-        inverseColors: false,
-        gradientToColors: [""],
-        opacityFrom: 1,
-        opacityTo: 1,
-        stops: [0, 50, 53, 91],
-      },
-    },
-    labels: ["Average Results"],
   },
 };
 

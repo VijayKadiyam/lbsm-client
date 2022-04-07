@@ -853,7 +853,7 @@ export default {
       // //   needleValue: this.kpi_CPP
       // // };
 
-      this.cppGauge.updateNeedle(this.kpi_CPP);
+      this.cppGauge.updateNeedle(this.total_kpi_CPP);
 
       KARCO.series = [];
       KARCO.series.push(this.kpi_karco_tasks);

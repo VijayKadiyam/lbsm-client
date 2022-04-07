@@ -622,7 +622,7 @@ export default {
     this.cppGauge = GaugeChart.gaugeChart(
       document.querySelector("#cpp-graph"),
       250,
-      this.CPPtest.options,
+      this.CPPtest.options
     );
   },
   methods: {
@@ -853,7 +853,17 @@ export default {
       // //   needleValue: this.kpi_CPP
       // // };
 
-      let cppGraphPercent = (this.total_kpi_CPP / 160) * 100;
+      this.cppGauge.removeGauge();
+      let rangeLast = this.cpp_out_of * 3;
+      this.CPPtest.options.arcDelimiters = [33.33];
+      this.CPPtest.options.rangeLabel = ["0", "" + rangeLast];
+      this.cppGauge = GaugeChart.gaugeChart(
+        document.querySelector("#cpp-graph"),
+        250,
+        this.CPPtest.options
+      );
+
+      let cppGraphPercent = (this.total_kpi_CPP / rangeLast) * 100;
       this.cppGauge.updateNeedle(cppGraphPercent);
 
       KARCO.series = [];

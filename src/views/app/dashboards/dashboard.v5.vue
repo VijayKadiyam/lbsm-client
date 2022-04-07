@@ -77,7 +77,7 @@
             </h3>
 
             <div>
-              {{ test + kpi_CPP }} %
+              <h4>{{ test + kpi_CPP }}%</h4>
               <!-- <vue-gauge
                 :options="{
                   chartWidth: 400,
@@ -420,11 +420,11 @@ export default {
           chartWidth: 320,
           hasNeedle: true,
           needleColor: "black",
-          needleStartValue: 7,
+          needleStartValue: 0,
           // needleValue: 0,
           needleUpdateSpeed: 5,
           arcColors: ["orange", "green"],
-          arcDelimiters: [33],
+          arcDelimiters: [12.5],
           rangeLabel: ["0", "160"],
         },
       },
@@ -853,7 +853,8 @@ export default {
       // //   needleValue: this.kpi_CPP
       // // };
 
-      this.cppGauge.updateNeedle(this.total_kpi_CPP);
+      let cppGraphPercent = (this.total_kpi_CPP / 160) * 100;
+      this.cppGauge.updateNeedle(cppGraphPercent);
 
       KARCO.series = [];
       KARCO.series.push(this.kpi_karco_tasks);

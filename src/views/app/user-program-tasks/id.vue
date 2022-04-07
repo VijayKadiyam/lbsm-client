@@ -102,7 +102,7 @@
                         target="_blank"
                       >
                         <img
-                          v-if="form.imagepath1.split('.').pop() == 'pdf'"
+                          v-if="form.imagepath1.split('.').pop() == 'pdf' || props.row.imagepath4.split('.').pop() == 'PDF'"
                           src="/img/pdf.png"
                           style="width: 40px; height: 40px"
                         />
@@ -157,7 +157,7 @@
                         target="_blank"
                       >
                         <img
-                          v-if="form.imagepath2.split('.').pop() == 'pdf'"
+                          v-if="form.imagepath2.split('.').pop() == 'pdf' || props.row.imagepath4.split('.').pop() == 'PDF'"
                           src="/img/pdf.png"
                           style="width: 40px; height: 40px"
                         />
@@ -212,7 +212,7 @@
                         target="_blank"
                       >
                         <img
-                          v-if="form.imagepath3.split('.').pop() == 'pdf'"
+                          v-if="form.imagepath3.split('.').pop() == 'pdf' || props.row.imagepath4.split('.').pop() == 'PDF'"
                           src="/img/pdf.png"
                           style="width: 40px; height: 40px"
                         />
@@ -266,7 +266,7 @@
                         target="_blank"
                       >
                         <img
-                          v-if="form.imagepath4.split('.').pop() == 'pdf'"
+                          v-if="form.imagepath4.split('.').pop() == 'pdf' || props.row.imagepath4.split('.').pop() == 'PDF'"
                           src="/img/pdf.png"
                           style="width: 40px; height: 40px"
                         />

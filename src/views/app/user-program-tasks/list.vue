@@ -347,7 +347,7 @@
               target="_blank"
             >
               <img
-                v-if="props.row.imagepath1.split('.').pop() == 'pdf' || props.row.imagepath4.split('.').pop() == 'PDF'"
+                v-if="props.row.imagepath1.split('.').pop() == 'pdf' || props.row.imagepath1.split('.').pop() == 'PDF'"
                 src="/img/pdf.png"
                 style="width: 40px; height: 40px"
               />
@@ -374,7 +374,7 @@
               target="_blank"
             >
               <img
-                v-if="props.row.imagepath2.split('.').pop() == 'pdf' || props.row.imagepath4.split('.').pop() == 'PDF'"
+                v-if="props.row.imagepath2.split('.').pop() == 'pdf' || props.row.imagepath2.split('.').pop() == 'PDF'"
                 src="/img/pdf.png"
                 style="width: 40px; height: 40px"
               />
@@ -401,7 +401,7 @@
               target="_blank"
             >
               <img
-                v-if="props.row.imagepath3.split('.').pop() == 'pdf' || props.row.imagepath4.split('.').pop() == 'PDF'"
+                v-if="props.row.imagepath3.split('.').pop() == 'pdf' || props.row.imagepath3.split('.').pop() == 'PDF'"
                 src="/img/pdf.png"
                 style="width: 40px; height: 40px"
               />

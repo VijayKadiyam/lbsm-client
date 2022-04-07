@@ -77,7 +77,7 @@
             </h3>
 
             <div>
-              {{ test + kpi_CPP }}
+              {{ test + kpi_CPP }} %
               <!-- <vue-gauge
                 :options="{
                   chartWidth: 400,
@@ -96,6 +96,7 @@
               >
               </vue-gauge> -->
               <vue-gauge
+                :id="'cpp-graph'"
                 :options="CPPtest.options"
               ></vue-gauge>
             </div>
@@ -399,7 +400,9 @@
 
 <script>
 import axios from "axios";
-import Vue from 'vue'
+import Vue from "vue";
+let GaugeChart = require("vue-gauge/assets/bundle.js");
+
 export default {
   props: {
     title: {
@@ -409,10 +412,22 @@ export default {
   },
   data() {
     return {
-       isLoading: false,
+      isLoading: false,
       searchingStatus: false,
       multipleBar2,
-      CPPtest,
+      CPPtest: {
+        options: {
+          chartWidth: 320,
+          hasNeedle: true,
+          needleColor: "black",
+          needleStartValue: 7,
+          // needleValue: 0,
+          needleUpdateSpeed: 5,
+          arcColors: ["orange", "green"],
+          arcDelimiters: [33],
+          rangeLabel: ["0", "60"],
+        },
+      },
       CPP,
       KARCO,
       VIDEOTEL,
@@ -453,7 +468,7 @@ export default {
       selectedShip: [],
       shipItems: [],
 
-      searchPeriod: "",
+      searchPeriod: "3 Month",
       selectedPeriod: [],
       periodItems: [
         { id: "30", text: "1 Month" },
@@ -588,6 +603,7 @@ export default {
         //   field: "dob",
         // },
       ],
+      cppGauge: null,
     };
   },
   watch: {
@@ -602,6 +618,12 @@ export default {
     this.year = "2022";
     this.getData(this.year);
     this.getMasters();
+
+    this.cppGauge = GaugeChart.gaugeChart(
+      document.querySelector("#cpp-graph"),
+      250,
+      this.CPPtest.options,
+    );
   },
   methods: {
     async getData(year) {
@@ -697,7 +719,7 @@ export default {
     //     return this.userRankCount.sort((a, b) => a.id - b.id );
     // },
     async getTopPerformers_by_Average() {
-       this.isLoading = true;
+      this.isLoading = true;
       let rank = this.selectedTopPerformerByAverageRank[0]
         ? this.selectedTopPerformerByAverageRank[0].id
         : "";
@@ -770,7 +792,7 @@ export default {
       this.total_tasks_performed.forEach((month) => {
         this.ttp.push(month);
       });
-       this.isLoading = false;
+      this.isLoading = false;
     },
     async getMasters() {
       let masters = await axios.get(`analytics/masters`);
@@ -814,7 +836,7 @@ export default {
       // CPP.series = [];
       // let needleValue = ''
       // needleValue = this.kpi_CPP
-      //       let element = document.querySelector("#gaugeArea");
+      // let element = document.querySelector("#cpp-graph");
       //       let options = {
       //   hasNeedle: true,
       //   needleColor: 'gray',
@@ -830,11 +852,8 @@ export default {
       // // let abc={
       // //   needleValue: this.kpi_CPP
       // // };
-      CPPtest.options.needleValue = 0;
-      Vue.set(CPPtest.options, "needleValue", this.kpi_CPP)
-      // CPPtest.options.needleValue.push(this.kpi_CPP);
-      
-      console.log(CPPtest.options);
+
+      this.cppGauge.updateNeedle(this.kpi_CPP);
 
       KARCO.series = [];
       KARCO.series.push(this.kpi_karco_tasks);
@@ -872,20 +891,6 @@ export default {
 // const year=this.year;
 // start::gradientRadial
 
-// start::CPP
-export const CPPtest = {
-  options: {
-    chartWidth: 320,
-    hasNeedle: true,
-    needleColor: "black",
-    needleStartValue: 7,
-    needleValue: 0,
-    needleUpdateSpeed: 5,
-    arcColors: ["orange", "green"],
-    arcDelimiters: [33],
-    rangeLabel: ["0", "60"],
-  },
-};
 export const CPP = {
   series: [],
   chartOptions: {

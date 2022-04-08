@@ -98,6 +98,7 @@
               ><i v-else class="text-25 i-Down" style="color: orange"></i>
             </h3>
             <div id="basicArea-chart">
+              <h4>{{ kpi_karco_tasks }}%</h4>
               <!-- <apexchart
                 type="radialBar"
                 height="350"
@@ -123,6 +124,8 @@
               ><i v-else class="text-25 i-Down" style="color: orange"></i>
             </h3>
             <div id="basicArea-chart">
+              <h4>{{ kpi_videotel_tasks }}%</h4>
+
               <!-- <apexchart
                 type="radialBar"
                 height="350"
@@ -663,7 +666,7 @@ export default {
         this.period = this.selectedPeriod[0] ? this.selectedPeriod[0].id : "";
         this.from_date = "";
         this.to_date = "";
-      } 
+      }
     },
     async getData(year) {
       this.year = year;

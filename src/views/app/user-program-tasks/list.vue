@@ -462,7 +462,7 @@
         <p style="float: right">Date Of Report: {{ reportDate }}</p>
         <center>
           <h4>Landbridge Ship Management (HK) Limited</h4>
-          <h4>CPP Performance Report</h4>
+          <h4>Training Report</h4>
         </center>
         <hr />
         <b-col md="12">

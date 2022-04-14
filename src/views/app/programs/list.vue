@@ -42,9 +42,14 @@
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
               {{ props.row.button }}</router-link
             >
-            <router-link :to="'/app/programs/' + props.row.id + '/program-tasks'">
+            <router-link
+              :to="'/app/programs/' + props.row.id + '/program-tasks'"
+            >
               <i class="i-Add text-25 text-success mr-2"></i>
             </router-link>
+          </span>
+          <span v-else-if="props.column.field == 'active'">
+            {{ props.row.active == 1 ? "YES" : "NO" }}
           </span>
         </template>
       </vue-good-table>
@@ -78,6 +83,10 @@ export default {
         {
           label: "Hours",
           field: "hours",
+        },
+        {
+          label: "Active",
+          field: "active",
         },
         {
           label: "Action",

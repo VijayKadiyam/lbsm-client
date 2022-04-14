@@ -76,14 +76,16 @@
               ></i
               ><i v-else class="text-25 i-Down" style="color: orange"></i>
             </h3>
-
-            <div>
               <h4>{{ kpi_CPP }}%</h4>
+
+            <center>
+              <div>
               <vue-gauge
                 :id="'cpp-graph'"
                 :options="CPPtest.options"
               ></vue-gauge>
             </div>
+            </center>
           </b-card>
         </b-col>
         <b-col md="4" lg="4" sm="4">
@@ -97,19 +99,15 @@
               ></i
               ><i v-else class="text-25 i-Down" style="color: orange"></i>
             </h3>
-            <div id="basicArea-chart">
               <h4>{{ kpi_karco_tasks }}%</h4>
-              <!-- <apexchart
-                type="radialBar"
-                height="350"
-                :options="KARCO.chartOptions"
-                :series="KARCO.series"
-              /> -->
+           <center>
+              <div>
               <vue-gauge
                 :id="'karco-graph'"
                 :options="KARCOtest.options"
               ></vue-gauge>
             </div>
+           </center>
           </b-card>
         </b-col>
         <b-col md="4" lg="4" sm="4">
@@ -123,20 +121,15 @@
               ></i
               ><i v-else class="text-25 i-Down" style="color: orange"></i>
             </h3>
-            <div id="basicArea-chart">
               <h4>{{ kpi_videotel_tasks }}%</h4>
-
-              <!-- <apexchart
-                type="radialBar"
-                height="350"
-                :options="VIDEOTEL.chartOptions"
-                :series="VIDEOTEL.series"
-              /> -->
+            <center>
+              <div>
               <vue-gauge
                 :id="'videotel-graph'"
                 :options="VIDEOTELtest.options"
               ></vue-gauge>
             </div>
+            </center>
           </b-card>
         </b-col>
       </b-row>
@@ -395,7 +388,7 @@
 
 <script>
 import axios from "axios";
-import Vue from "vue";
+// import Vue from "vue";
 let GaugeChart = require("vue-gauge/assets/bundle.js");
 
 export default {
@@ -642,23 +635,23 @@ export default {
     this.selectedPeriod.push({ id: "90", text: "3 Month" });
     this.cppGauge = GaugeChart.gaugeChart(
       document.querySelector("#cpp-graph"),
-      250,
+      320,
       this.CPPtest.options
     );
     this.karcoGauge = GaugeChart.gaugeChart(
       document.querySelector("#karco-graph"),
-      250,
+      320,
       this.KARCOtest.options
     );
     this.videotelGauge = GaugeChart.gaugeChart(
       document.querySelector("#videotel-graph"),
-      250,
+      320,
       this.VIDEOTELtest.options
     );
   },
   methods: {
     clearPeriodFilter() {
-      this.selectedPeriod=[]
+      this.selectedPeriod = [];
       this.period = "";
     },
     clearDateFilter() {
@@ -869,10 +862,11 @@ export default {
       this.cppGauge.removeGauge();
       let rangeLast = this.cpp_out_of * 3;
       this.CPPtest.options.arcDelimiters = [33.33];
+      // this.CPPtest.options.chartWidth = 420;
       this.CPPtest.options.rangeLabel = ["0", "" + rangeLast];
       this.cppGauge = GaugeChart.gaugeChart(
         document.querySelector("#cpp-graph"),
-        250,
+        320,
         this.CPPtest.options
       );
 
@@ -886,7 +880,7 @@ export default {
       this.KARCOtest.options.rangeLabel = ["0", "" + karco_rangeLast];
       this.karcoGauge = GaugeChart.gaugeChart(
         document.querySelector("#karco-graph"),
-        250,
+        320,
         this.KARCOtest.options
       );
 
@@ -901,7 +895,7 @@ export default {
       this.VIDEOTELtest.options.rangeLabel = ["0", "" + videotel_rangeLast];
       this.videotelGauge = GaugeChart.gaugeChart(
         document.querySelector("#videotel-graph"),
-        250,
+        320,
         this.VIDEOTELtest.options
       );
 

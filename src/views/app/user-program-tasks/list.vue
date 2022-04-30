@@ -534,7 +534,7 @@
             <template
               v-for="(userProgramTaskDetail, at) in user_reports[0].cpp_tasks"
             >
-              <tr>
+              <tr  class="no-break">
                 <td rowspan="2">{{ at + 1 }}</td>
                 <td colspan="5" rowspan="2">
                   {{
@@ -637,6 +637,7 @@
             <tr
               v-for="(userKARCODetail, at) in user_reports[0].karco_tasks"
               :key="`userKARCODetail${at}`"
+               class="no-break"
             >
               <td>{{ at + 1 }}</td>
               <td colspan="4">
@@ -672,6 +673,7 @@
             <tr
               v-for="(userVideotelDetail, at) in user_reports[0].videotel_tasks"
               :key="`userVideotelDetail${at}`"
+               class="no-break"
             >
               <td>{{ at + 1 }}</td>
               <td colspan="2">

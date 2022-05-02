@@ -723,8 +723,9 @@
 import axios from "axios";
 // import html2pdf from "html2pdf.js";
 import moment from "moment";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
+
+var jsPDF = require('jspdf');
+require('jspdf-autotable');
 
 export default {
   metaInfo: {
@@ -898,7 +899,7 @@ export default {
               15,
               15
             );
-            
+
             doc.setFontSize(10);
             doc.text(
               "Date Of Report: " + moment(new Date()).format("DD/MM/YYYY"),

@@ -844,6 +844,7 @@ export default {
       this.user_reports = user_reports.data.data;
       if (this.user_reports != 0) {
         const doc = new jsPDF();
+        var totalPagesExp = "{total_pages_count_string}";
         var pageHeight =
           doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
         var pageWidth =
@@ -918,6 +919,9 @@ export default {
             );
             // Footer
             var str = "Page " + doc.internal.getNumberOfPages();
+            if (typeof doc.putTotalPages === "function") {
+              str = str + " of " + totalPagesExp;
+            }
             doc.setFontSize(10);
             // jsPDF 1.4+ uses getWidth, <1.4 uses .width
             var pageSize = doc.internal.pageSize;
@@ -981,6 +985,9 @@ export default {
             );
             // Footer
             var str = "Page " + doc.internal.getNumberOfPages();
+            if (typeof doc.putTotalPages === "function") {
+              str = str + " of " + totalPagesExp;
+            }
             doc.setFontSize(10);
             // jsPDF 1.4+ uses getWidth, <1.4 uses .width
             var pageSize = doc.internal.pageSize;
@@ -1060,6 +1067,9 @@ export default {
             );
             // Footer
             var str = "Page " + doc.internal.getNumberOfPages();
+            if (typeof doc.putTotalPages === "function") {
+              str = str + " of " + totalPagesExp;
+            }
             doc.setFontSize(10);
             // jsPDF 1.4+ uses getWidth, <1.4 uses .width
             var pageSize = doc.internal.pageSize;
@@ -1081,14 +1091,14 @@ export default {
             (this.total_pending_program_tasks
               ? this.total_pending_program_tasks
               : 0),
-          10,
-          doc.lastAutoTable.finalY + 15
+          50,
+          doc.lastAutoTable.finalY + 10
         );
         doc.text(
           "Average Score: " +
             (this.average_score ? this.average_score.toFixed(1) : 0),
-          10,
-          doc.lastAutoTable.finalY + 20
+          85,
+          doc.lastAutoTable.finalY + 10
         );
 
         // Karco Tasks
@@ -1153,6 +1163,9 @@ export default {
             );
             // Footer
             var str = "Page " + doc.internal.getNumberOfPages();
+            if (typeof doc.putTotalPages === "function") {
+              str = str + " of " + totalPagesExp;
+            }
             doc.setFontSize(10);
             // jsPDF 1.4+ uses getWidth, <1.4 uses .width
             var pageSize = doc.internal.pageSize;
@@ -1224,6 +1237,9 @@ export default {
             );
             // Footer
             var str = "Page " + doc.internal.getNumberOfPages();
+            if (typeof doc.putTotalPages === "function") {
+              str = str + " of " + totalPagesExp;
+            }
             doc.setFontSize(10);
             // jsPDF 1.4+ uses getWidth, <1.4 uses .width
             var pageSize = doc.internal.pageSize;
@@ -1239,6 +1255,10 @@ export default {
           (pageWidth - doc.getTextWidth("END OF REPORT")) / 2,
           doc.lastAutoTable.finalY + 10
         );
+
+        if (typeof doc.putTotalPages === "function") {
+          doc.putTotalPages(totalPagesExp);
+        }
 
         doc.save("User Details.pdf");
         this.is_generating = false;

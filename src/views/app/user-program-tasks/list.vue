@@ -898,6 +898,7 @@ export default {
               15,
               15
             );
+            
             doc.setFontSize(10);
             doc.text(
               "Date Of Report: " + moment(new Date()).format("DD/MM/YYYY"),

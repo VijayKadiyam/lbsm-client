@@ -21,7 +21,7 @@
     "firebase": "^7.24.0",
     "font-awesome": "^4.7.0",
     "html2pdf.js": "^0.9.2",
-    "jspdf-autotable": "^3.5.22",
+    "jspdf-autotable": "3.5.22",
     "mobile-device-detect": "^0.4.3",
     "nprogress": "^0.2.0",
     "v-calendar": "^1.0.8",

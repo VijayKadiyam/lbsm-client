@@ -843,8 +843,8 @@ export default {
         `/user_reports?user_id=${user_id}&from_date=${this.report.from_date}&to_date=${this.report.to_date}`
       );
       this.user_reports = user_reports.data.data;
+      const doc = new jsPDF();
       if (this.user_reports != 0) {
-        const doc = new jsPDF();
         var totalPagesExp = "{total_pages_count_string}";
         var pageHeight =
           doc.internal.pageSize.height || doc.internal.pageSize.getHeight();

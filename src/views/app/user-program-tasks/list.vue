@@ -930,7 +930,7 @@ export default {
             var pageHeight = pageSize.height
               ? pageSize.height
               : pageSize.getHeight();
-            doc.text(str, data.settings.margin.left, pageHeight - 10);
+            doc.text(str, pageWidth - 28, pageHeight - 10);
           },
         });
 
@@ -996,7 +996,7 @@ export default {
             var pageHeight = pageSize.height
               ? pageSize.height
               : pageSize.getHeight();
-            doc.text(str, data.settings.margin.left, pageHeight - 10);
+            doc.text(str, pageWidth - 28, pageHeight - 10);
           },
         });
 
@@ -1078,7 +1078,7 @@ export default {
             var pageHeight = pageSize.height
               ? pageSize.height
               : pageSize.getHeight();
-            doc.text(str, data.settings.margin.left, pageHeight - 10);
+            doc.text(str, pageWidth - 28, pageHeight - 10);
           },
         });
         doc.setFontSize(10);
@@ -1174,7 +1174,7 @@ export default {
             var pageHeight = pageSize.height
               ? pageSize.height
               : pageSize.getHeight();
-            doc.text(str, data.settings.margin.left, pageHeight - 10);
+            doc.text(str, pageWidth - 28, pageHeight - 10);
           },
         });
 
@@ -1248,7 +1248,7 @@ export default {
             var pageHeight = pageSize.height
               ? pageSize.height
               : pageSize.getHeight();
-            doc.text(str, data.settings.margin.left, pageHeight - 10);
+            doc.text(str, pageWidth - 28, pageHeight - 10);
           },
         });
 

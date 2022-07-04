@@ -281,38 +281,32 @@ const routes = [
       // KARCO Tasks
       {
         path: "/app/karco-tasks",
-        component: () =>
-          import("./views/app/karco-tasks"),
+        component: () => import("./views/app/karco-tasks"),
         redirect: "/app/karco-tasks/list",
         children: [
           {
             path: "list",
-            component: () =>
-              import("./views/app/karco-tasks/list"),
+            component: () => import("./views/app/karco-tasks/list"),
           },
           {
             path: "upload",
-            component: () =>
-              import("./views/app/karco-tasks/upload"),
+            component: () => import("./views/app/karco-tasks/upload"),
           },
         ],
       },
       // Videotel Tasks
       {
         path: "/app/videotel-tasks",
-        component: () =>
-          import("./views/app/videotel-tasks"),
+        component: () => import("./views/app/videotel-tasks"),
         redirect: "/app/videotel-tasks/list",
         children: [
           {
             path: "list",
-            component: () =>
-              import("./views/app/videotel-tasks/list"),
+            component: () => import("./views/app/videotel-tasks/list"),
           },
           {
             path: "upload",
-            component: () =>
-              import("./views/app/videotel-tasks/upload"),
+            component: () => import("./views/app/videotel-tasks/upload"),
           },
         ],
       },
@@ -345,6 +339,43 @@ const routes = [
           {
             path: "user-report",
             component: () => import("./views/app/reports/user-report"),
+          },
+        ],
+      },
+      // Dump Program Tasks List
+      {
+        path: "/app/dump-program-tasks",
+        component: () => import("./views/app/dump-program-tasks"),
+        redirect: "/app/dump-program-tasks/list",
+        children: [
+          {
+            path: "list",
+            component: () => import("./views/app/dump-program-tasks/list"),
+          },
+          {
+            path: ":id",
+            component: () => import("./views/app/dump-program-tasks/id"),
+          },
+        ],
+      },
+      // Dump Program Task Assign To User
+      {
+        path: "/app/dump-program-tasks/:dump_program_tasks_id/assign-user-program-tasks",
+        component: () => import("./views/app/dump-program-tasks"),
+        redirect:
+          "/app/dump-program-tasks/:dump_program_tasks_id/assign-user-program-tasks/id",
+        children: [
+          // {
+          //   path: "list",
+          //   component: () => import("./views/app/dump-program-tasks/create"),
+          // },
+          // {
+          //   path: "create",
+          //   component: () => import("./views/app/user-program-tasks/create"),
+          // },
+          {
+            path: ":id",
+            component: () => import("./views/app/dump-program-tasks/create"),
           },
         ],
       },

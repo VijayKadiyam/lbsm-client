@@ -102,15 +102,15 @@
                         target="_blank"
                       >
                         <img
-                          v-if="form.imagepath1.split('.').pop() == 'pdf' || props.row.imagepath1.split('.').pop() == 'PDF'"
+                          v-if="form.imagepath1.split('.').pop() == 'pdf'"
                           src="/img/pdf.png"
                           style="width: 40px; height: 40px"
                         />
                         <img
                           v-else-if="
-                            props.row.imagepath4.split('.').pop() == 'xls' ||
-                            props.row.imagepath4.split('.').pop() == 'xlsx' ||
-                            props.row.imagepath4.split('.').pop() == 'csv'
+                            form.imagepath1.split('.').pop() == 'xls' ||
+                            form.imagepath1.split('.').pop() == 'xlsx' ||
+                            form.imagepath1.split('.').pop() == 'csv'
                           "
                           src="/img/excel.png"
                           style="width: 40px; height: 40px"
@@ -157,15 +157,15 @@
                         target="_blank"
                       >
                         <img
-                          v-if="form.imagepath2.split('.').pop() == 'pdf' || props.row.imagepath2.split('.').pop() == 'PDF'"
+                          v-if="form.imagepath2.split('.').pop() == 'pdf'"
                           src="/img/pdf.png"
                           style="width: 40px; height: 40px"
                         />
                         <img
                           v-else-if="
-                            props.row.imagepath4.split('.').pop() == 'xls' ||
-                            props.row.imagepath4.split('.').pop() == 'xlsx' ||
-                            props.row.imagepath4.split('.').pop() == 'csv'
+                            form.imagepath2.split('.').pop() == 'xls' ||
+                            form.imagepath2.split('.').pop() == 'xlsx' ||
+                            form.imagepath2.split('.').pop() == 'csv'
                           "
                           src="/img/excel.png"
                           style="width: 40px; height: 40px"
@@ -212,15 +212,15 @@
                         target="_blank"
                       >
                         <img
-                          v-if="form.imagepath3.split('.').pop() == 'pdf' || props.row.imagepath3.split('.').pop() == 'PDF'"
+                          v-if="form.imagepath3.split('.').pop() == 'pdf'"
                           src="/img/pdf.png"
                           style="width: 40px; height: 40px"
                         />
                         <img
                           v-else-if="
-                            props.row.imagepath4.split('.').pop() == 'xls' ||
-                            props.row.imagepath4.split('.').pop() == 'xlsx' ||
-                            props.row.imagepath4.split('.').pop() == 'csv'
+                            form.imagepath3.split('.').pop() == 'xls' ||
+                            form.imagepath3.split('.').pop() == 'xlsx' ||
+                            form.imagepath3.split('.').pop() == 'csv'
                           "
                           src="/img/excel.png"
                           style="width: 40px; height: 40px"
@@ -266,15 +266,15 @@
                         target="_blank"
                       >
                         <img
-                          v-if="form.imagepath4.split('.').pop() == 'pdf' || props.row.imagepath4.split('.').pop() == 'PDF'"
+                          v-if="form.imagepath4.split('.').pop() == 'pdf'"
                           src="/img/pdf.png"
                           style="width: 40px; height: 40px"
                         />
                         <img
                           v-else-if="
-                            props.row.imagepath4.split('.').pop() == 'xls' ||
-                            props.row.imagepath4.split('.').pop() == 'xlsx' ||
-                            props.row.imagepath4.split('.').pop() == 'csv'
+                            form.imagepath4.split('.').pop() == 'xls' ||
+                            form.imagepath4.split('.').pop() == 'xlsx' ||
+                            form.imagepath4.split('.').pop() == 'csv'
                           "
                           src="/img/excel.png"
                           style="width: 40px; height: 40px"
@@ -379,6 +379,10 @@ export default {
         is_completed: "",
         completion_date: "",
         ship_id: "",
+        imagepath1: "",
+        imagepath2: "",
+        imagepath3: "",
+        imagepath4: "",
       },
       submitStatus: null,
       searchProgramTask: "",
@@ -490,12 +494,11 @@ export default {
       );
       this.form = form.data.data;
 
-      // console.log(this.ships);
-
       let user_program = await axios.get(
         `/user_programs/${this.$route.params.user_program_id}`
       );
       this.user_program = user_program.data.data;
+      console.log(this.user_program);
       this.isLoading = false;
     },
     //   validate form
@@ -514,7 +517,7 @@ export default {
         try {
           this.submitStatus = "PENDING";
           this.isLoading = true;
-          console.log(this.form);
+          // console.log(this.form);
           await axios.patch(
             `user_programs/${this.form.user_program_id}/user_program_tasks/${this.$route.params.id}`,
             this.form
@@ -539,10 +542,7 @@ export default {
       let attachment3 = this.$refs.file3?.files[0];
       let attachment4 = this.$refs.file4?.files[0];
       const user_program_task_id = this.form.id;
-      console.log(attachment1);
-      console.log(attachment2);
-      console.log(attachment3);
-      console.log(attachment4);
+
       let formData = new FormData();
       formData.append("user_program_task_id", user_program_task_id);
       formData.append("imagepath1", attachment1);

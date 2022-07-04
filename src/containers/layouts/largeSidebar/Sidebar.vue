@@ -11,8 +11,7 @@
       ref="myData"
       class="sidebar-left rtl-ps-none ps scroll"
     >
-      <div
-       style="background-color: lightgray;">
+      <div style="background-color: lightgray">
         <ul class="navigation-left">
           <!-- Dashboard -->
           <li
@@ -23,7 +22,11 @@
             :data-submenu="true"
             v-if="this.userPermissions.indexOf(1) != -1"
           >
-            <router-link tag="a" class="nav-item-hold" to="/app/dashboards/dashboard.v5">
+            <router-link
+              tag="a"
+              class="nav-item-hold"
+              to="/app/dashboards/dashboard.v5"
+            >
               <a class="nav-item-hold" href="#">
                 <i class="nav-icon i-Bar-Chart"></i>
                 <span class="nav-text">{{ $t("dashboard") }}</span>
@@ -74,7 +77,11 @@
             :data-submenu="true"
             v-if="this.userPermissions.indexOf(4) != -1"
           >
-            <router-link tag="a" class="nav-item-hold" to="/app/permissions/list">
+            <router-link
+              tag="a"
+              class="nav-item-hold"
+              to="/app/permissions/list"
+            >
               <a class="nav-item-hold" href="#">
                 <i class="nav-icon text-20 i-Check"></i>
                 <span class="nav-text">Permissions</span>
@@ -108,7 +115,11 @@
             :data-submenu="true"
             v-if="this.userPermissions.indexOf(6) != -1"
           >
-            <router-link tag="a" class="nav-item-hold" to="/app/value-lists/list">
+            <router-link
+              tag="a"
+              class="nav-item-hold"
+              to="/app/value-lists/list"
+            >
               <a class="nav-item-hold" href="#">
                 <i class="nav-icon text-20 i-Diploma-2"></i>
                 <span class="nav-text">Value Lists</span>
@@ -142,7 +153,11 @@
             :data-submenu="true"
             v-if="this.userPermissions.indexOf(8) != -1"
           >
-            <router-link tag="a" class="nav-item-hold" to="/app/program-posts/list">
+            <router-link
+              tag="a"
+              class="nav-item-hold"
+              to="/app/program-posts/list"
+            >
               <a class="nav-item-hold" href="#">
                 <i class="nav-icon text-20 i-Diploma-2"></i>
                 <span class="nav-text">Program Posts</span>
@@ -159,7 +174,11 @@
             :data-submenu="true"
             v-if="this.userPermissions.indexOf(9) != -1"
           >
-            <router-link tag="a" class="nav-item-hold" to="/app/user-programs/list">
+            <router-link
+              tag="a"
+              class="nav-item-hold"
+              to="/app/user-programs/list"
+            >
               <a class="nav-item-hold" href="#">
                 <i class="nav-icon text-20 i-Diploma-2"></i>
                 <span class="nav-text">User Programs</span>
@@ -176,7 +195,11 @@
             :data-submenu="true"
             v-if="this.userPermissions.indexOf(10) != -1"
           >
-            <router-link tag="a" class="nav-item-hold" to="/app/user-program-posts/list">
+            <router-link
+              tag="a"
+              class="nav-item-hold"
+              to="/app/user-program-posts/list"
+            >
               <a class="nav-item-hold" href="#">
                 <i class="nav-icon text-20 i-Diploma-2"></i>
                 <span class="nav-text">User Program Posts</span>
@@ -193,7 +216,11 @@
             :data-submenu="true"
             v-if="this.userPermissions.indexOf(11) != -1"
           >
-            <router-link tag="a" class="nav-item-hold" to="/app/user-program-tasks/list">
+            <router-link
+              tag="a"
+              class="nav-item-hold"
+              to="/app/user-program-tasks/list"
+            >
               <a class="nav-item-hold" href="#">
                 <i class="nav-icon text-20 i-Diploma-2"></i>
                 <span class="nav-text">User Program Tasks</span>
@@ -210,7 +237,11 @@
             :data-submenu="true"
           >
             <!-- v-if="this.userPermissions.indexOf(11) != -1" -->
-            <router-link tag="a" class="nav-item-hold" to="/app/karco-tasks/list">
+            <router-link
+              tag="a"
+              class="nav-item-hold"
+              to="/app/karco-tasks/list"
+            >
               <a class="nav-item-hold" href="#">
                 <i class="nav-icon text-20 i-Diploma-2"></i>
                 <span class="nav-text">KARCO</span>
@@ -227,10 +258,35 @@
             :data-submenu="true"
           >
             <!-- v-if="this.userPermissions.indexOf(11) != -1" -->
-            <router-link tag="a" class="nav-item-hold" to="/app/videotel-tasks/list">
+            <router-link
+              tag="a"
+              class="nav-item-hold"
+              to="/app/videotel-tasks/list"
+            >
               <a class="nav-item-hold" href="#">
                 <i class="nav-icon text-20 i-Diploma-2"></i>
                 <span class="nav-text">VideoTel</span>
+              </a>
+            </router-link>
+            <div class="triangle"></div>
+          </li>
+          <!-- Dump Program tasks -->
+          <li
+            @mouseenter="toggleSubMenu"
+            class="nav-item"
+            :class="{ active: selectedParentMenu == 'dump-program-tasks' }"
+            data-item="dump-program-tasks"
+            :data-submenu="true"
+          >
+            <!-- v-if="this.userPermissions.indexOf(11) != -1" -->
+            <router-link
+              tag="a"
+              class="nav-item-hold"
+              to="/app/dump-program-tasks/list"
+            >
+              <a class="nav-item-hold" href="#">
+                <i class="nav-icon text-20 i-Diploma-2"></i>
+                <span class="nav-text">Dump Program Tasks</span>
               </a>
             </router-link>
             <div class="triangle"></div>
@@ -242,8 +298,8 @@
             data-item="user-ships"
             :data-submenu="true"
           > -->
-            <!-- v-if="this.userPermissions.indexOf(11) != -1" -->
-            <!-- <router-link tag="a" class="nav-item-hold" to="/app/user-ships/list">
+          <!-- v-if="this.userPermissions.indexOf(11) != -1" -->
+          <!-- <router-link tag="a" class="nav-item-hold" to="/app/user-ships/list">
               <a class="nav-item-hold" href="#">
                 <i class="nav-icon text-20 i-Diploma-2"></i>
                 <span class="nav-text">User Ships</span>
@@ -251,11 +307,9 @@
             </router-link>
             <div class="triangle"></div>
           </li> -->
-          
         </ul>
       </div>
     </vue-perfect-scrollbar>
-
     <vue-perfect-scrollbar
       :class="{ open: getSideBarToggleProperties.isSecondarySideNavOpen }"
       :settings="{ suppressScrollX: true, wheelPropagation: false }"
@@ -268,7 +322,7 @@
           data-parent="dashboards"
           :class="{ 'd-block': selectedParentMenu == 'dashboards' }"
         > -->
-          <!-- <li class="nav-item">
+        <!-- <li class="nav-item">
             <router-link tag="a" class to="/app/dashboards/dashboard.v1">
               <i class="nav-icon i-Clock-3"></i>
               <span class="item-name">{{
@@ -454,7 +508,7 @@
             </router-link>
           </li>
         </ul>
-         <!-- Submenu User Program Tasks -->
+        <!-- Submenu User Program Tasks -->
         <ul
           class="childNav d-none"
           data-parent="user-program-tasks"
@@ -467,7 +521,7 @@
             </router-link>
           </li>
         </ul>
-         <!-- Submenu KARCO Tasks -->
+        <!-- Submenu KARCO Tasks -->
         <ul
           class="childNav d-none"
           data-parent="karco-tasks"
@@ -486,7 +540,7 @@
             </router-link>
           </li>
         </ul>
-         <!-- Submenu Videotel Tasks -->
+        <!-- Submenu Videotel Tasks -->
         <ul
           class="childNav d-none"
           data-parent="videotel-tasks"
@@ -502,6 +556,19 @@
             <router-link tag="a" class to="/app/videotel-tasks/upload">
               <i class="nav-icon i-File-Clipboard-Text--Image"></i>
               <span class="item-name">Upload</span>
+            </router-link>
+          </li>
+        </ul>
+        <!-- Submenu Dump Emails -->
+        <ul
+          class="childNav d-none"
+          data-parent="dump-program-tasks"
+          :class="{ 'd-block': selectedParentMenu == 'dump-program-tasks' }"
+        >
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/dump-program-tasks/list">
+              <i class="nav-icon i-File-Clipboard-Text--Image"></i>
+              <span class="item-name">Listing</span>
             </router-link>
           </li>
         </ul>
@@ -524,7 +591,6 @@
             </router-link>
           </li>
         </ul> -->
-        
       </div>
     </vue-perfect-scrollbar>
     <div

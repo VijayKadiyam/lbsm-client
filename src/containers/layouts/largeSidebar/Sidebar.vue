@@ -214,8 +214,8 @@
             :class="{ active: selectedParentMenu == 'user-program-tasks' }"
             data-item="user-program-tasks"
             :data-submenu="true"
-            v-if="this.userPermissions.indexOf(11) != -1"
           >
+            <!-- v-if="this.userPermissions.indexOf(11) != -1" -->
             <router-link
               tag="a"
               class="nav-item-hold"

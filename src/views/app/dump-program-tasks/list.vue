@@ -37,7 +37,9 @@
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
             <router-link :to="'/app/dump-program-tasks/' + props.row.id">
-              <i class="i-Add text-25 text-success mr-2"></i>
+              <button v-if="!props.row.user_id" class="btn btn-success btn-sm">
+                Assign
+              </button>
               {{ props.row.button }}</router-link
             >
           </span>
@@ -62,6 +64,10 @@ export default {
           field: "subject",
         },
         {
+          label: "Assigned User",
+          field: "user.first_name",
+        },
+        {
           label: "Attachment",
           field: "imagepath1",
         },
@@ -84,6 +90,7 @@ export default {
       // User Program Task log
       let dump_program_tasks = await axios.get(`/dump_program_tasks`);
       this.dump_program_tasks = dump_program_tasks.data.data;
+
       // this.serialNoStarting = (page - 1) * this.rowsPerPage;
       this.isLoading = false;
     },

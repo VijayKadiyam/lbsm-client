@@ -2,7 +2,7 @@
   <div class="main-content">
     <breadcumb :page="'User Program Task'" :folder="'User Program Tasks'" />
     <!-- <div class="wrapper"> -->
-    <b-row>
+    <b-row v-if="user.roles[0].id != 4">
       <b-col md="12" class="mt-4 mb-4">
         <b-card title="Users">
           <vue-tags-input
@@ -127,6 +127,9 @@ export default {
   mounted() {
     // this.form.site_id = this.site.id;
     this.getMasters();
+    if (this.user.roles[0].id == 4) {
+      this.getData();
+    }
   },
   methods: {
     async getMasters() {
@@ -175,7 +178,12 @@ export default {
 
       if (this.selectedUser.length > 0) {
         this.changeValue = 100;
+        if (this.user.roles[0].id == 4) {
+          console.log("hi");
+          this.user_Id = this.user.id;
+        }
         this.user_Id = this.selectedUser[0].id;
+        console.log(this.user_Id);
         let user_programs = await axios.get(
           `/user_programs?search=${this.user_Id}`
         );
@@ -185,6 +193,15 @@ export default {
       }
       this.searchingStatus = "";
       this.isLoading = false;
+    },
+    async getData() {
+      if (this.user.roles[0].id == 4) {
+        this.user_Id = this.user.id;
+        let user_programs = await axios.get(
+          `/user_programs?search=${this.user_Id}`
+        );
+        this.user_programs = user_programs.data.data;
+      }
     },
   },
 };

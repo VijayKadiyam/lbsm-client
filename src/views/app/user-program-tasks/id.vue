@@ -89,7 +89,12 @@
               >
             </b-form-group>
             <b-row>
-              <b-col md="6">
+              <b-col
+                md="6"
+                v-if="
+                  user.roles[0].id != 4 && (form.marks != '' || form.marks > 0)
+                "
+              >
                 <b-form-group label="Attachment 1">
                   <b-form-file name="imagepath1" ref="file1"></b-form-file>
                 </b-form-group>
@@ -143,8 +148,64 @@
                   </b-col>
                 </b-row>
               </b-col>
+              <b-col md="6" v-else>
+                <b-row>
+                  <b-col md="6">
+                    <center>
+                      <a
+                        :href="mediaUrl + form.imagepath1"
+                        v-if="form.imagepath1 != null"
+                        target="_blank"
+                      >
+                        <img
+                          v-if="form.imagepath1.split('.').pop() == 'pdf'"
+                          src="/img/pdf.png"
+                          style="width: 40px; height: 40px"
+                        />
+                        <img
+                          v-else-if="
+                            form.imagepath1.split('.').pop() == 'xls' ||
+                            form.imagepath1.split('.').pop() == 'xlsx' ||
+                            form.imagepath1.split('.').pop() == 'csv'
+                          "
+                          src="/img/excel.png"
+                          style="width: 40px; height: 40px"
+                        />
+                        <img
+                          v-else
+                          src="/img/file.png"
+                          style="width: 40px; height: 40px"
+                        />
 
-              <b-col md="6">
+                        <br />
+                        <span>View Attachment 1</span>
+                      </a>
+                    </center>
+                  </b-col>
+                  <b-col md="6">
+                    <center>
+                      <a
+                        href="#"
+                        v-if="form.imagepath1 != null"
+                        @click="
+                          DeleteImage(form.id, form.imagepath1, 'imagepath1')
+                        "
+                      >
+                        <i class="i-Close-Window text-25"></i>
+                        <br />
+                        <span>Remove Attachment 1</span>
+                      </a>
+                    </center>
+                  </b-col>
+                </b-row>
+              </b-col>
+
+              <b-col
+                md="6"
+                v-if="
+                  user.roles[0].id != 4 && (form.marks != '' || form.marks > 0)
+                "
+              >
                 <b-form-group label="Attachment 2">
                   <b-form-file name="imagepath2" ref="file2"></b-form-file>
                 </b-form-group>
@@ -197,9 +258,64 @@
                   </b-col>
                 </b-row>
               </b-col>
+              <b-col md="6" v-else>
+                <b-row>
+                  <b-col md="6">
+                    <center>
+                      <a
+                        :href="mediaUrl + form.imagepath2"
+                        v-if="form.imagepath2 != null"
+                        target="_blank"
+                      >
+                        <img
+                          v-if="form.imagepath2.split('.').pop() == 'pdf'"
+                          src="/img/pdf.png"
+                          style="width: 40px; height: 40px"
+                        />
+                        <img
+                          v-else-if="
+                            form.imagepath2.split('.').pop() == 'xls' ||
+                            form.imagepath2.split('.').pop() == 'xlsx' ||
+                            form.imagepath2.split('.').pop() == 'csv'
+                          "
+                          src="/img/excel.png"
+                          style="width: 40px; height: 40px"
+                        />
+                        <img
+                          v-else
+                          src="/img/file.png"
+                          style="width: 40px; height: 40px"
+                        />
+                        <br />
+                        <span>View Attachment 2</span>
+                      </a>
+                    </center>
+                  </b-col>
+                  <b-col md="6">
+                    <center>
+                      <a
+                        href="#"
+                        v-if="form.imagepath2 != null"
+                        @click="
+                          DeleteImage(form.id, form.imagepath2, 'imagepath2')
+                        "
+                      >
+                        <i class="i-Close-Window text-25"></i>
+                        <br />
+                        <span>Remove Attachment 2</span>
+                      </a>
+                    </center>
+                  </b-col>
+                </b-row>
+              </b-col>
             </b-row>
             <b-row>
-              <b-col md="6">
+              <b-col
+                md="6"
+                v-if="
+                  user.roles[0].id != 4 && (form.marks != '' || form.marks > 0)
+                "
+              >
                 <b-form-group label="Attachment 3">
                   <b-form-file name="imagepath3" ref="file3"></b-form-file>
                 </b-form-group>
@@ -252,11 +368,116 @@
                   </b-col>
                 </b-row>
               </b-col>
+              <b-col md="6" v-else>
+                <b-row>
+                  <b-col md="6">
+                    <center>
+                      <a
+                        :href="mediaUrl + form.imagepath3"
+                        v-if="form.imagepath3 != null"
+                        target="_blank"
+                      >
+                        <img
+                          v-if="form.imagepath3.split('.').pop() == 'pdf'"
+                          src="/img/pdf.png"
+                          style="width: 40px; height: 40px"
+                        />
+                        <img
+                          v-else-if="
+                            form.imagepath3.split('.').pop() == 'xls' ||
+                            form.imagepath3.split('.').pop() == 'xlsx' ||
+                            form.imagepath3.split('.').pop() == 'csv'
+                          "
+                          src="/img/excel.png"
+                          style="width: 40px; height: 40px"
+                        />
+                        <img
+                          v-else
+                          src="/img/file.png"
+                          style="width: 40px; height: 40px"
+                        />
+                        <br />
+                        <span>View Attachment 3</span>
+                      </a>
+                    </center>
+                  </b-col>
+                  <b-col md="6">
+                    <center>
+                      <a
+                        href="#"
+                        v-if="form.imagepath3 != null"
+                        @click="
+                          DeleteImage(form.id, form.imagepath3, 'imagepath3')
+                        "
+                      >
+                        <i class="i-Close-Window text-25"></i>
+                        <br />
+                        <span>Remove Attachment 3</span>
+                      </a>
+                    </center>
+                  </b-col>
+                </b-row>
+              </b-col>
 
-              <b-col md="6">
+              <b-col
+                md="6"
+                v-if="
+                  user.roles[0].id != 4 && (form.marks != '' || form.marks > 0)
+                "
+              >
                 <b-form-group label="Attachment 4">
                   <b-form-file name="imagepath4" ref="file4"></b-form-file>
                 </b-form-group>
+                <b-row>
+                  <b-col md="6">
+                    <center>
+                      <a
+                        :href="mediaUrl + form.imagepath4"
+                        v-if="form.imagepath4 != null"
+                        target="_blank"
+                      >
+                        <img
+                          v-if="form.imagepath4.split('.').pop() == 'pdf'"
+                          src="/img/pdf.png"
+                          style="width: 40px; height: 40px"
+                        />
+                        <img
+                          v-else-if="
+                            form.imagepath4.split('.').pop() == 'xls' ||
+                            form.imagepath4.split('.').pop() == 'xlsx' ||
+                            form.imagepath4.split('.').pop() == 'csv'
+                          "
+                          src="/img/excel.png"
+                          style="width: 40px; height: 40px"
+                        />
+                        <img
+                          v-else
+                          src="/img/file.png"
+                          style="width: 40px; height: 40px"
+                        />
+                        <br />
+                        <span>View Attachment 4</span>
+                      </a>
+                    </center>
+                  </b-col>
+                  <b-col md="6">
+                    <center>
+                      <a
+                        href="#"
+                        v-if="form.imagepath4 != null"
+                        @click="
+                          DeleteImage(form.id, form.imagepath4, 'imagepath4')
+                        "
+                      >
+                        <i class="i-Close-Window text-25"></i>
+                        <br />
+                        <span>Remove Attachment 4</span>
+                      </a>
+                    </center>
+                  </b-col>
+                </b-row>
+              </b-col>
+              <b-col md="6" v-else>
                 <b-row>
                   <b-col md="6">
                     <center>

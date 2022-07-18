@@ -346,6 +346,7 @@
               v-if="props.row.imagepath1 != null"
               target="_blank"
             >
+              <!-- lbsm/user-program-task/620/APP USER ID FOR WEST.xlsx -->
               <img
                 v-if="
                   props.row.imagepath1.split('.').pop() == 'pdf' ||
@@ -360,7 +361,7 @@
                   props.row.imagepath1.split('.').pop() == 'xlsx' ||
                   props.row.imagepath1.split('.').pop() == 'csv'
                 "
-                src="/public/img/excel.png"
+                src="/img/excel.png"
                 style="width: 40px; height: 40px"
               />
               <img

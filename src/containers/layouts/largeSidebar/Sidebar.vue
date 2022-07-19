@@ -10,8 +10,9 @@
       :class="{ open: getSideBarToggleProperties.isSideNavOpen }"
       ref="myData"
       class="sidebar-left rtl-ps-none ps scroll"
+      style="background-color: lightgray"
     >
-      <div style="background-color: lightgray">
+      <div>
         <ul class="navigation-left">
           <!-- Dashboard -->
           <li

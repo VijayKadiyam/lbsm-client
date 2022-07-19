@@ -46,23 +46,9 @@
                 class="mb-2"
                 label="Marks Obtained"
                 placeholder="Enter Marks Obtained"
-                v-model.trim="$v.form.marks_obtained.$model"
+                v-model="form.marks_obtained"
               >
               </b-form-input>
-              <b-alert
-                show
-                variant="danger"
-                class="error mt-1"
-                v-if="!$v.form.marks_obtained.required"
-                >Field is required</b-alert
-              >
-              <b-alert
-                show
-                variant="danger"
-                class="error mt-1"
-                v-if="!$v.form.marks_obtained.decimal"
-                >Numeric Values Only</b-alert
-              >
             </b-form-group>
             <b-form-group label="Remark" v-if="user.roles[0].id != 4">
               <b-form-input
@@ -76,17 +62,10 @@
             <b-form-group label="Completion Date" v-if="user.roles[0].id != 4">
               <b-form-datepicker
                 id="dob"
-                v-model.trim="$v.form.completion_date.$model"
+                v-model="form.completion_date"
                 class="mb-2"
                 placeholder="Completion Date"
               ></b-form-datepicker>
-              <b-alert
-                show
-                variant="danger"
-                class="error mt-1"
-                v-if="!$v.form.completion_date.required"
-                >Field is required</b-alert
-              >
             </b-form-group>
             <b-row>
               <b-col md="6">
@@ -150,7 +129,7 @@
 
 <script>
 import axios from "axios";
-import { decimal, required } from "vuelidate/lib/validators";
+// import { decimal, required } from "vuelidate/lib/validators";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
@@ -265,6 +244,7 @@ export default {
         this.form.marks_obtained = 0;
         this.form.is_completed = false;
       }
+      this.form.added_by_id = this.user.id;
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";

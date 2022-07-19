@@ -464,6 +464,10 @@
           <span v-else-if="props.column.field == 'active'">
             {{ props.row.active == 1 ? "YES" : "NO" }}
           </span>
+          <span v-if="props.column.field == 'added_by'">
+            
+            {{ props.row.added_by ? props.row.added_by.first_name  + ' - ' + props.row.added_by.roles[0].name : ''}}
+          </span>
         </template>
       </vue-good-table>
     </b-card>
@@ -796,6 +800,10 @@ export default {
         {
           label: "Attachment 4",
           field: "imagepath4",
+        },
+        {
+          label: "Added By",
+          field: "added_by",
         },
         {
           label: "Active",

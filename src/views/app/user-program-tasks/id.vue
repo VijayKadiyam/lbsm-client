@@ -41,7 +41,7 @@
                 placeholder="Type Program Task Name"
               />
             </b-form-group>
-            <b-form-group label="Marks Obtained">
+            <b-form-group label="Marks Obtained" v-if="user.roles[0].id != 4">
               <b-form-input
                 class="mb-2"
                 label="Marks Obtained"
@@ -64,7 +64,7 @@
                 >Numeric Values Only</b-alert
               >
             </b-form-group>
-            <b-form-group label="Remark">
+            <b-form-group label="Remark" v-if="user.roles[0].id != 4">
               <b-form-input
                 class="mb-2"
                 label="Remark"
@@ -73,7 +73,7 @@
               >
               </b-form-input>
             </b-form-group>
-            <b-form-group label="Completion Date">
+            <b-form-group label="Completion Date" v-if="user.roles[0].id != 4">
               <b-form-datepicker
                 id="dob"
                 v-model.trim="$v.form.completion_date.$model"
@@ -529,7 +529,7 @@
               </b-col>
             </b-row>
             <b-row>
-              <b-col md="6">
+              <b-col md="6" v-if="user.roles[0].id != 4">
                 <b-form-group label="Is Completed">
                   <label class="switch switch-success mr-3">
                     <input

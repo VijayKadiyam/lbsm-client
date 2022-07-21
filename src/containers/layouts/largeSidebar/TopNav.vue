@@ -1,7 +1,10 @@
 <template>
-  <div class="main-header" style="background-color: lightgrey;">
-    <div class="logo">
+  <div class="main-header" style="background-color: lightgrey">
+    <div class="logo" v-if="user == ''">
       <img src="@/assets/images/aaibuzz-logo1.png" alt />
+    </div>
+    <div class="logo" else>
+      <!-- <img src="@/assets/images/aaibuzz-logo1.png" alt /> -->
     </div>
 
     <div @click="sideBarToggle" class="menu-toggle">
@@ -12,11 +15,9 @@
 
     <!-- <h2>Landbridge Ship Management (HK) Limited</h2> -->
 
-
     <div style="margin: auto"></div>
 
     <div class="header-part-right">
-
       <!-- User avatar dropdown -->
       <div class="dropdown">
         <b-dropdown
@@ -68,11 +69,11 @@ export default {
       isStyle: true,
       isSearchOpen: false,
       isMouseOnMegaMenu: true,
-      isMegaMenuOpen: false
+      isMegaMenuOpen: false,
     };
   },
   computed: {
-    ...mapGetters(["getSideBarToggleProperties"])
+    ...mapGetters(["getSideBarToggleProperties"]),
   },
 
   methods: {
@@ -83,13 +84,13 @@ export default {
       "signOut",
     ]),
     ...mapActions({
-      logOut: 'auth/logOut',
+      logOut: "auth/logOut",
     }),
     handleFullScreen() {
       Util.toggleFullScreen();
     },
     logoutUser() {
-      this.logOut()
+      this.logOut();
       this.$router.push("/app/sessions/signIn");
     },
 
@@ -118,14 +119,10 @@ export default {
         !this.getSideBarToggleProperties.isSideNavOpen &&
         !this.getSideBarToggleProperties.isSecondarySideNavOpen
       ) {
-
         this.changeSidebarProperties();
         this.changeSecondarySidebarProperties();
       }
-    }
-  }
+    },
+  },
 };
 </script>
-
-
-

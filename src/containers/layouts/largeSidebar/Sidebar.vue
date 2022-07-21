@@ -210,6 +210,7 @@
           </li>
           <!-- User Program Tasks -->
           <li
+          v-if="user.roles[0].id != 6"
             @mouseenter="toggleSubMenu"
             class="nav-item"
             :class="{ active: selectedParentMenu == 'user-program-tasks' }"
@@ -225,6 +226,27 @@
               <a class="nav-item-hold" href="#">
                 <i class="nav-icon text-20 i-Diploma-2"></i>
                 <span class="nav-text">User Program Tasks</span>
+              </a>
+            </router-link>
+            <div class="triangle"></div>
+          </li>
+          <li
+            v-if="user.roles[0].id == 6"
+            @mouseenter="toggleSubMenu"
+            class="nav-item"
+            :class="{ active: selectedParentMenu == 'user-program-tasks' }"
+            data-item="user-program-tasks"
+            :data-submenu="true"
+          >
+            <!-- v-if="this.userPermissions.indexOf(11) != -1" -->
+            <router-link
+              tag="a"
+              class="nav-item-hold"
+              to="/app/user-program-tasks/list"
+            >
+              <a class="nav-item-hold" href="#">
+                <i class="nav-icon text-20 i-Diploma-2"></i>
+                <span class="nav-text">CPP</span>
               </a>
             </router-link>
             <div class="triangle"></div>

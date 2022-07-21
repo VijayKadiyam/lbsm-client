@@ -120,20 +120,17 @@
               props.row.user.first_name + " " + props.row.user.last_name || ""
             }}
           </span>
-          <span v-if="props.column.field == 'ship'">
-            {{ props.row.ship.description || "" }}
+          <span v-if="props.column.field == 'rank'">
+            {{ props.row.user.rank.description || "" }}
+          </span>
+          <span v-if="props.column.field == 'sign_on'">
+            {{ props.row.from_date || "" }}
+          </span>
+          <span v-if="props.column.field == 'sign_off'">
+            {{ props.row.to_date || "" }}
           </span>
           <span v-if="props.column.field == 'program'">
-            {{ props.row.program.program_name || "" }}
-          </span>
-          <span v-if="props.column.field == 'description'">
-            {{ props.row.program.program_description || "" }}
-          </span>
-          <span v-if="props.column.field == 'instructor'">
-            {{ props.row.program.instructor || "" }}
-          </span>
-          <span v-if="props.column.field == 'hours'">
-            {{ props.row.program.hours || "" }}
+            {{ props.row.user.user_programs[0].program.program_name || "" }}
           </span>
         </template>
       </vue-good-table>
@@ -180,16 +177,20 @@ export default {
           field: "user",
         },
         {
-          label: "Ship",
-          field: "ship",
+          label: "Rank",
+          field: "rank",
+        },
+        {
+          label: "Sign on",
+          field: "sign_on",
+        },
+        {
+          label: "Sign Off",
+          field: "sign_off",
         },
         {
           label: "Program Name",
           field: "program",
-        },
-        {
-          label: "Description",
-          field: "description",
         },
         {
           label: "Task Detail",
@@ -316,6 +317,7 @@ export default {
           `/user_programs?search=${this.user_Id}`
         );
         this.user_programs = user_programs.data.data;
+        console.log(this.user_programs);
         this.isLoading = false;
       }
     },
@@ -333,6 +335,8 @@ export default {
           `/user_program_task_users?search=${this.ship_Id}`
         );
         this.user_program_tasks = user_program_tasks.data.data;
+
+        console.log(this.user_program_tasks);
       } else {
         this.user_program_tasks = [];
       }

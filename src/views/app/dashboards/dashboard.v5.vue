@@ -76,15 +76,15 @@
               ></i
               ><i v-else class="text-25 i-Down" style="color: orange"></i>
             </h3>
-              <h4>{{ kpi_CPP }}%</h4>
+            <h4>{{ kpi_CPP }}%</h4>
 
             <center>
               <div>
-              <vue-gauge
-                :id="'cpp-graph'"
-                :options="CPPtest.options"
-              ></vue-gauge>
-            </div>
+                <vue-gauge
+                  :id="'cpp-graph'"
+                  :options="CPPtest.options"
+                ></vue-gauge>
+              </div>
             </center>
           </b-card>
         </b-col>
@@ -99,15 +99,15 @@
               ></i
               ><i v-else class="text-25 i-Down" style="color: orange"></i>
             </h3>
-              <h4>{{ kpi_karco_tasks }}%</h4>
-           <center>
+            <h4>{{ kpi_karco_tasks }}%</h4>
+            <center>
               <div>
-              <vue-gauge
-                :id="'karco-graph'"
-                :options="KARCOtest.options"
-              ></vue-gauge>
-            </div>
-           </center>
+                <vue-gauge
+                  :id="'karco-graph'"
+                  :options="KARCOtest.options"
+                ></vue-gauge>
+              </div>
+            </center>
           </b-card>
         </b-col>
         <b-col md="4" lg="4" sm="4">
@@ -121,14 +121,14 @@
               ></i
               ><i v-else class="text-25 i-Down" style="color: orange"></i>
             </h3>
-              <h4>{{ kpi_videotel_tasks }}%</h4>
+            <h4>{{ kpi_videotel_tasks }}%</h4>
             <center>
               <div>
-              <vue-gauge
-                :id="'videotel-graph'"
-                :options="VIDEOTELtest.options"
-              ></vue-gauge>
-            </div>
+                <vue-gauge
+                  :id="'videotel-graph'"
+                  :options="VIDEOTELtest.options"
+                ></vue-gauge>
+              </div>
             </center>
           </b-card>
         </b-col>
@@ -632,6 +632,7 @@ export default {
     this.year = "2022";
     this.getData(this.year);
     this.getMasters();
+    this.kpiData();
     this.selectedPeriod.push({ id: "90", text: "3 Month" });
     this.cppGauge = GaugeChart.gaugeChart(
       document.querySelector("#cpp-graph"),
@@ -743,11 +744,11 @@ export default {
 
       this.userRankCount.sort((a, b) => a.id - b.id);
 
-      this.kpiData();
+      // this.kpiData();
       this.getTotalTaskPerformed();
       // this.getTopPerformers_by_Average();
       // this.getTopPerformers_by_Task();
-      this.getTopPerformers();
+      // this.getTopPerformers();
       this.isLoading = false;
     },
     async getTopPerformers_by_Average() {
@@ -844,7 +845,7 @@ export default {
     },
     async kpiData() {
       this.searchingStatus = true;
-
+      this.period = "90";
       let kpi_data = await axios.get(
         `/kpi_data?year=${this.year}&from_date=${this.from_date}&to_date=${this.to_date}&period=${this.period}`
       );

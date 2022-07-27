@@ -1,8 +1,9 @@
 <template>
-  <div
+  <div>
+    <!-- <div
     style="min-height: 100vh; background-size: cover"
     :style="{ backgroundImage: 'url(' + bgImage + ')' }"
-  >
+  > -->
     <div class="main-header" style="background-color: lightgrey">
       <div class="logo">
         <img src="@/assets/images/logo.png" alt />
@@ -12,86 +13,104 @@
 
       <div style="margin: auto"></div>
 
-      <div class="header-part-right"></div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6 text-center mb-30"></div>
-      <div class="col-md-6">
-        <div class="row">
-          <div class="col-md-6"></div>
-          <div
-            class="card col-md-6"
-            style="margin-top: 10px; margin-left: 355px"
-          >
-            <div class="p-4">
-              <!-- <div style="padding-top: 1.5rem !important; padding-bottom: 0.5rem"> -->
-              <!-- <div class="auth-logo text-center mb-30">
-                <img :src="logo" />
-              </div> -->
-              <center><h1 class="mb-3 text-18">CMS Login</h1></center>
-              <b-form @submit.prevent="formSubmit">
-                <b-form-group label="Email Address" class="text-12">
-                  <b-form-input
-                    class="form-control-rounded"
-                    type="text"
-                    v-model="email"
-                    email
-                    required
-                  ></b-form-input>
-                </b-form-group>
-
-                <b-form-group label="Password" class="text-12">
-                  <b-form-input
-                    class="form-control-rounded"
-                    type="password"
-                    v-model="password"
-                  ></b-form-input>
-                </b-form-group>
-
-                <!-- <b-button block to="/" variant="primary btn-rounded mt-2"
-                  >Sign In</b-button
-                > -->
-                <b-button
-                  type="submit"
-                  tag="button"
-                  class="btn-rounded btn-block mt-2"
-                  variant="primary mt-2"
-                >
-                  {{ isLoading == true ? "Loading..." : "SignIn" }}
-                </b-button>
-                <div v-once class="typo__p" v-if="loading">
-                  <div class="spinner sm spinner-primary mt-3"></div>
-                </div>
-              </b-form>
-
-              <div class="mt-3 text-center">
-                <router-link to="forgot" tag="a" class="text-muted">
-                  <u>Forgot Password?</u>
-                </router-link>
-              </div>
-            </div>
-          </div>
+      <!-- <div class="header-part-right"> -->
+      <div class="row">
+        <!-- <b-form > -->
+        <div class="col-md-4">
+          <b-form-group label="Email Address" class="text-12">
+            <b-form-input
+              class="form-control-rounded"
+              type="text"
+              v-model="email"
+              email
+              required
+            ></b-form-input>
+          </b-form-group>
         </div>
+        <div class="col-md-4">
+          <b-form-group label="Password" class="text-12">
+            <b-form-input
+              class="form-control-rounded"
+              type="password"
+              v-model="password"
+            ></b-form-input>
+          </b-form-group>
+        </div>
+        <div class="col-md-4" style="padding-top: 14px">
+          <b-button
+            @click="formSubmit()"
+            type="submit"
+            tag="button"
+            class="btn-rounded btn-block mt-2"
+            variant="primary mt-2"
+          >
+            {{ isLoading == true ? "Loading..." : "SignIn" }}
+          </b-button>
+        </div>
+        <!-- </b-form> -->
       </div>
+      <div class="col-md-1"></div>
+      <!-- </div> -->
     </div>
+
+    <!-- <div class="col-md-12"> -->
+
+    <slider
+      animation="fade"
+      speed="6000"
+      style="width: auto; height: 740px !important"
+    >
+      <slider-item>
+        <img src="@/assets/images/3.jpg" id="bg" />
+      </slider-item>
+      <slider-item>
+        <img src="@/assets/images/4.jpeg" id="bg" />
+      </slider-item>
+      <slider-item>
+        <img src="@/assets/images/5.jpeg" id="bg" />
+      </slider-item>
+      <slider-item>
+        <img src="@/assets/images/6.jpg" id="bg" />
+      </slider-item>
+    </slider>
   </div>
+  <!-- </div> -->
 </template>
 <script>
 import { mapActions } from "vuex";
+import { Slider, SliderItem } from "vue-easy-slider";
 export default {
   metaInfo: {
     title: "SignIn",
+  },
+  components: {
+    Slider,
+    SliderItem,
   },
   data() {
     return {
       email: "admin@gmail.com",
       password: "123456",
       userId: "",
-      bgImage: require("@/assets/images/photo-wide-4.jpg"),
-      logo: require("@/assets/images/logo.png"),
-      signInImage: require("@/assets/images/photo-long-3.jpg"),
+      // bgImage: require("@/assets/images/1.jpeg"),
+      // bgImage2: require("@/assets/images/2.jpeg"),
+      // logo: require("@/assets/images/logo.png"),
+      // signInImage: require("@/assets/images/photo-long-3.jpg"),
       isLoading: false,
+      sliderIndex: 1,
+      // list: [
+      //   {
+      //     backgroundImage: "url(" + this.bgImage + ")",
+      //     width: "100%",
+      //     height: "100%",
+      //   },
+      //   {
+      //     backgroundImage: "url(" + this.bgImage2 + ")",
+      //     width: "100%",
+      //     height: "100%",
+      //   },
+      //   { backgroundColor: "#f44336", width: "100%", height: "100%" },
+      // ],
     };
   },
   computed: {
@@ -104,6 +123,9 @@ export default {
     ...mapActions({
       logIn: "auth/logIn",
     }),
+    hello($event) {
+      console.log(`hello index: ${$event}`);
+    },
     formSubmit() {
       this.isLoading = true;
       this.logIn({ email: this.email, password: this.password }).then(() => {
@@ -141,5 +163,14 @@ export default {
 .spinner.sm {
   height: 2em;
   width: 2em;
+}
+#bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  height: 100%;
 }
 </style>

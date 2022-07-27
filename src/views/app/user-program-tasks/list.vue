@@ -465,8 +465,13 @@
             {{ props.row.active == 1 ? "YES" : "NO" }}
           </span>
           <span v-if="props.column.field == 'added_by'">
-            
-            {{ props.row.added_by ? props.row.added_by.first_name  + ' - ' + props.row.added_by.roles[0].name : ''}}
+            {{
+              props.row.added_by
+                ? props.row.added_by.first_name +
+                  " - " +
+                  props.row.added_by.roles[0].name
+                : ""
+            }}
           </span>
         </template>
       </vue-good-table>
@@ -600,42 +605,22 @@
         </b-col>
         <br />
         <b-col md="12" class="no-break">
-          <b-row>
-            <b-col md="4"
-              ><b-col md="8">
-                <p class="text-muted mt-2 mb-0">Task Completed</p>
-              </b-col>
-              <b-col md="4">
-                <p class="text-24 line-height-1 mb-2" style="font-size: 14px">
-                  {{ total_completed_task ? total_completed_task : 0 }}
-                </p>
-              </b-col></b-col
-            >
-            <b-col md="4"
-              ><b-col md="8">
-                <p class="text-muted mt-2 mb-0">Pending Task</p>
-              </b-col>
-              <b-col md="4">
-                <p class="text-24 line-height-1 mb-2" style="font-size: 14px">
-                  {{
-                    total_pending_program_tasks
-                      ? total_pending_program_tasks
-                      : 0
-                  }}
-                </p>
-              </b-col>
-            </b-col>
-            <b-col md="4"
-              ><b-col md="8">
-                <p class="text-muted mt-2 mb-0">Average Score</p>
-              </b-col>
-              <b-col md="4">
-                <p class="text-24 line-height-1 mb-2" style="font-size: 14px">
-                  {{ average_score ? average_score.toFixed(1) : 0 }}
-                </p>
-              </b-col>
-            </b-col>
-          </b-row>
+          <table class="my-table">
+            <tr>
+              <th>Task Completed</th>
+              <th>Pending Task</th>
+              <th>Average Score</th>
+            </tr>
+            <tr>
+              <td>{{ total_completed_task ? total_completed_task : 0 }}</td>
+              <td>
+                {{
+                  total_pending_program_tasks ? total_pending_program_tasks : 0
+                }}
+              </td>
+              <td>{{ average_score ? average_score.toFixed(1) : 0 }}</td>
+            </tr>
+          </table>
         </b-col>
         <br />
         <b-col md="12" class="no-break">
@@ -853,7 +838,7 @@ export default {
         `/user_programs/${this.$route.params.user_program_id}/user_program_tasks?user_id=${this.user.id}`
       );
       this.user_program_tasks = user_program_tasks.data.data;
-      console.log(this.user_program_tasks);
+      // console.log(this.user_program_tasks);
       this.total_completed_task = user_program_tasks.data.total_completed_task;
       this.total_pending_task = user_program_tasks.data.total_pending_task;
       this.total_pending_program_tasks =
@@ -1117,26 +1102,97 @@ export default {
         });
 
         doc.setFontSize(10);
-        doc.text(
-          "Task Completed: " +
-            (this.total_completed_task ? this.total_completed_task : 0),
-          10,
-          doc.lastAutoTable.finalY + 10
-        );
-        doc.text(
-          "Pending Task: " +
-            (this.total_pending_program_tasks
-              ? this.total_pending_program_tasks
-              : 0),
-          50,
-          doc.lastAutoTable.finalY + 10
-        );
-        doc.text(
-          "Average Score: " +
-            (this.average_score ? this.average_score.toFixed(1) : 0),
-          85,
-          doc.lastAutoTable.finalY + 10
-        );
+        // doc.text(
+        //   "Task Completed: " +
+        //     (this.total_completed_task ? this.total_completed_task : 0),
+        //   10,
+        //   doc.lastAutoTable.finalY + 10
+        // );
+        // doc.text(
+        //   "Pending Task: " +
+        //     (this.total_pending_program_tasks
+        //       ? this.total_pending_program_tasks
+        //       : 0),
+        //   50,
+        //   doc.lastAutoTable.finalY + 10
+        // );
+        // doc.text(
+        //   "Average Score: " +
+        //     (this.average_score ? this.average_score.toFixed(1) : 0),
+        //   85,
+        //   doc.lastAutoTable.finalY + 10
+        // );
+
+        // Score Details
+        columns = [
+          { title: "Task Completed", dataKey: "total_completed_task" },
+          { title: "Pending Task", dataKey: "total_pending_program_tasks" },
+          { title: "Average Score", dataKey: "average_score" },
+        ];
+        rows = [];
+        count = 1;
+        // for (const userProgramDetail of this.user_reports[0].user_programs) {
+        rows.push({
+          total_completed_task: this.total_completed_task
+            ? this.total_completed_task
+            : "0",
+          total_pending_program_tasks: this.total_pending_program_tasks
+            ? this.total_pending_program_tasks
+            : "0",
+          average_score: this.average_score ? this.average_score.toFixed(1) : 0,
+          //   85 : "0",
+        });
+        // count++;
+        // }
+        doc.text("Score", 10, doc.lastAutoTable.finalY + 10);
+        doc.autoTable(columns, rows, {
+          startY: doc.lastAutoTable.finalY + 15,
+          margin: [35, 10, 15, 10],
+          styles: { overflow: "linebreak" },
+          bodyStyles: { valign: "top" },
+          columnStyles: { email: { columnWidth: "wrap" } },
+          theme: "striped",
+          showHead: "everyPage",
+          didDrawPage: function (data) {
+            // Header
+            doc.setFontSize(20);
+            doc.setTextColor(40);
+            var imgData =
+              "data:image/png;base64,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";
+            doc.addImage(
+              imgData,
+              "JPEG",
+              data.settings.margin.left,
+              15,
+              15,
+              15
+            );
+            doc.text(
+              "Landbridge Ship Management (HK) Limited",
+              (pageWidth -
+                doc.getTextWidth("Landbridge Ship Management (HK) Limited")) /
+                2,
+              22
+            );
+            doc.text(
+              "Training Report",
+              (pageWidth - doc.getTextWidth("Training Report")) / 2,
+              32
+            );
+            // Footer
+            var str = "Page " + doc.internal.getNumberOfPages();
+            if (typeof doc.putTotalPages === "function") {
+              str = str + " of " + totalPagesExp;
+            }
+            doc.setFontSize(10);
+            // jsPDF 1.4+ uses getWidth, <1.4 uses .width
+            var pageSize = doc.internal.pageSize;
+            var pageHeight = pageSize.height
+              ? pageSize.height
+              : pageSize.getHeight();
+            doc.text(str, pageWidth - 28, pageHeight - 10);
+          },
+        });
 
         // Pending CPP Tasks
         doc.setFontSize(20);
@@ -1158,9 +1214,14 @@ export default {
           });
           count++;
         }
-        doc.text("Pending CPP Tasks", 10, doc.lastAutoTable.finalY + 30);
+        var strArr = doc.splitTextToSize(
+          "A longer title that might be split",
+          10
+        );
+        doc.text(strArr, 10, doc.lastAutoTable.finalY + 20);
+        // doc.text("Pending CPP Tasks", 10, doc.lastAutoTable.finalY + 10, );
         doc.autoTable(columns, rows, {
-          startY: doc.lastAutoTable.finalY + 35,
+          startY: doc.lastAutoTable.finalY + 15,
           margin: [35, 10, 15, 10],
           styles: { overflow: "linebreak" },
           bodyStyles: { valign: "top" },

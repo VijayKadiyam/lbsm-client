@@ -1,5 +1,6 @@
 <template>
   <div
+    style="width: auto; background-size: cover"
     :style="user.id != null ? { backgroundImage: 'url(' + bgImage + ')' } : {}"
   >
     <router-view></router-view>
@@ -14,7 +15,7 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      bgImage: require("@/assets/images/photo-wide-4.jpg"),
+      bgImage: require("@/assets/images/5.jpeg"),
     };
   },
   computed: {

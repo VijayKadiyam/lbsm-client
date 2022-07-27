@@ -54,7 +54,7 @@
     </div>
 
     <!-- <div class="col-md-12"> -->
-
+<!-- Slider -->
     <slider
       animation="fade"
       speed="6000"

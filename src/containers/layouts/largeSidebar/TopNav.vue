@@ -91,7 +91,7 @@ export default {
     },
     logoutUser() {
       this.logOut();
-      this.$router.push("/app/sessions/signIn");
+      this.$router.go("/app/sessions/signIn");
     },
 
     sideBarToggle() {

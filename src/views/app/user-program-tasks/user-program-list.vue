@@ -127,7 +127,7 @@
             {{ props.row.from_date || "" }}
           </span>
           <span v-if="props.column.field == 'sign_off'">
-            {{ props.row.to_date || "" }}
+            {{ props.row.to_date || "On Board" }}
           </span>
           <span v-if="props.column.field == 'program'">
             {{ props.row.user.user_programs[0].program.program_name || "" }}

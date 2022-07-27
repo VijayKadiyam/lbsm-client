@@ -31,6 +31,10 @@ import InstantSearch from 'vue-instantsearch';
 import VueGauge from 'vue-gauge';
 Vue.component('vue-gauge', VueGauge);
 
+import EasySlider from 'vue-easy-slider'
+Vue.use(EasySlider)
+
+
 
 Vue.use(InstantSearch);
 Vue.use(GullKit);

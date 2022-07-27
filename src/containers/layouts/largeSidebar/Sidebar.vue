@@ -210,7 +210,7 @@
           </li>
           <!-- User Program Tasks -->
           <li
-          v-if="user.roles[0].id != 6"
+            v-if="user.roles[0].id != 6"
             @mouseenter="toggleSubMenu"
             class="nav-item"
             :class="{ active: selectedParentMenu == 'user-program-tasks' }"
@@ -253,6 +253,7 @@
           </li>
           <!-- KARCO Tasks -->
           <li
+            v-if="user.roles[0].id != 6"
             @mouseenter="toggleSubMenu"
             class="nav-item"
             :class="{ active: selectedParentMenu == 'karco-tasks' }"
@@ -274,6 +275,7 @@
           </li>
           <!-- VideoTel Tasks -->
           <li
+            v-if="user.roles[0].id != 6"
             @mouseenter="toggleSubMenu"
             class="nav-item"
             :class="{ active: selectedParentMenu == 'videotel-tasks' }"
@@ -295,6 +297,7 @@
           </li>
           <!-- Dump Program tasks -->
           <li
+            v-if="user.roles[0].id != 6"
             @mouseenter="toggleSubMenu"
             class="nav-item"
             :class="{ active: selectedParentMenu == 'dump-program-tasks' }"

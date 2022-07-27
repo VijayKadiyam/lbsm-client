@@ -54,11 +54,11 @@
     </div>
 
     <!-- <div class="col-md-12"> -->
-<!-- Slider -->
+    <!-- Slider -->
     <slider
       animation="fade"
       speed="6000"
-      style="width: auto; height: 740px !important"
+      style="width: auto; height: 1280px; background: rgba(255, 255, 255, 0.5)"
     >
       <slider-item>
         <img src="@/assets/images/3.jpg" id="bg" />

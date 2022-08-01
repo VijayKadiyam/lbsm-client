@@ -748,7 +748,7 @@ export default {
       this.getTotalTaskPerformed();
       // this.getTopPerformers_by_Average();
       // this.getTopPerformers_by_Task();
-      // this.getTopPerformers();
+      this.getTopPerformers();
       this.isLoading = false;
     },
     async getTopPerformers_by_Average() {

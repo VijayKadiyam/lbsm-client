@@ -60,9 +60,9 @@
       speed="6000"
       style="width: auto; height: 1280px; background: rgba(255, 255, 255, 0.5)"
     >
-      <slider-item>
+      <!-- <slider-item>
         <img src="@/assets/images/3.jpg" id="bg" />
-      </slider-item>
+      </slider-item> -->
       <slider-item>
         <img src="@/assets/images/4.jpeg" id="bg" />
       </slider-item>

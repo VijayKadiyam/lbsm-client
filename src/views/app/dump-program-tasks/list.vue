@@ -102,6 +102,7 @@ export default {
       let dump_program_tasks = await axios.get(`/dump_program_tasks/emails`);
       this.dump_program_tasks = dump_program_tasks.data.data;
       // this.serialNoStarting = (page - 1) * this.rowsPerPage;
+      this.getData();
       this.generateStatus = false;
     },
   },

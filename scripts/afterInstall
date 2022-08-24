@@ -2,4 +2,6 @@
 export PATH="$PATH:"/usr/local/bin/
 cd /var/www/vhosts/lbsm/lbsm-client
 
+npm update
+
 npm run build

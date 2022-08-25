@@ -379,6 +379,20 @@ const routes = [
           },
         ],
       },
+      // Dump Program Task Assign To User
+      {
+        path: "/app/behavioural-competency-assessments",
+        component: () =>
+          import("./views/app/behavioural-competency-assessments"),
+        redirect: "/app/behavioural-competency-assessments",
+        children: [
+          {
+            path: "list",
+            component: () =>
+              import("./views/app/behavioural-competency-assessments/list"),
+          },
+        ],
+      },
     ],
   },
   // sessions

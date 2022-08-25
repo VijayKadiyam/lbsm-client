@@ -251,6 +251,31 @@
             </router-link>
             <div class="triangle"></div>
           </li>
+          <!-- behavioural-competency-assessments -->
+          <li
+            v-if="user.roles[0].id != 6"
+            @mouseenter="toggleSubMenu"
+            class="nav-item"
+            :class="{
+              active:
+                selectedParentMenu == 'behavioural-competency-assessments',
+            }"
+            data-item="behavioural-competency-assessments"
+            :data-submenu="true"
+          >
+            <!-- v-if="this.userPermissions.indexOf(11) != -1" -->
+            <router-link
+              tag="a"
+              class="nav-item-hold"
+              to="/app/behavioural-competency-assessments/list"
+            >
+              <a class="nav-item-hold" href="#">
+                <i class="nav-icon text-20 i-Diploma-2"></i>
+                <span class="nav-text">Behavioural Competency Assessment</span>
+              </a>
+            </router-link>
+            <div class="triangle"></div>
+          </li>
           <!-- KARCO Tasks -->
           <li
             v-if="user.roles[0].id != 6"
@@ -542,6 +567,26 @@
         >
           <li class="nav-item">
             <router-link tag="a" class to="/app/user-program-tasks/list">
+              <i class="nav-icon i-File-Clipboard-Text--Image"></i>
+              <span class="item-name">Listing</span>
+            </router-link>
+          </li>
+        </ul>
+        <!-- Submenu KARCO Tasks -->
+        <ul
+          class="childNav d-none"
+          data-parent="behavioural-competency-assessments"
+          :class="{
+            'd-block':
+              selectedParentMenu == 'behavioural-competency-assessments',
+          }"
+        >
+          <li class="nav-item">
+            <router-link
+              tag="a"
+              class
+              to="/app/behavioural-competency-assessments/list"
+            >
               <i class="nav-icon i-File-Clipboard-Text--Image"></i>
               <span class="item-name">Listing</span>
             </router-link>

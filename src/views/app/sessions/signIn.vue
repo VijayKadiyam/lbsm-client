@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background-color: lightgrey">
     <!-- <div
     style="min-height: 100vh; background-size: cover"
     :style="{ backgroundImage: 'url(' + bgImage + ')' }"
@@ -54,15 +54,42 @@
     </div>
 
     <!-- <div class="col-md-12"> -->
+
     <!-- Slider -->
+    <div class="col-md-12">
+      <h1
+        style="
+          text-align: center;
+          margin-top: 20px;
+          font-size: xxx-large;
+          font-weight: bolder;
+          font-style: italic;
+        "
+      >
+        Competency Management System
+      </h1>
+        <!-- font-size: xx-large;-->
+      <h2
+      style="
+        text-align: center;
+        font-weight: bolder; 
+        margin-top: 5px;
+        font-style: italic;
+        text-decoration: underline;
+      "
+    >
+      Ensuring marine ecosystem is protected by our competent seafarer sailing
+      on Landbridge fleet
+    </h2>
+    </div>
+    <br />
+
     <slider
       animation="fade"
       speed="6000"
-      style="width: auto; height: 1280px; background: rgba(255, 255, 255, 0.5)"
+      style="width: auto; height: 700px; background: rgba(255, 255, 255, 0.5)"
     >
-      <slider-item>
-        <img src="@/assets/images/3.jpg" id="bg" />
-      </slider-item>
+      <!-- height: 1280px; -->
       <slider-item>
         <img src="@/assets/images/4.jpeg" id="bg" />
       </slider-item>
@@ -73,7 +100,37 @@
         <img src="@/assets/images/6.jpg" id="bg" />
       </slider-item>
     </slider>
+
+    
+    <br />
+    <div class="container-fluid">
+      <div class="row" >
+        <div class="col-md-12" style="padding-left: 80px; ">
+          <h2 style="margin-top: 20px">
+            LBSM, a leading VLCC operator has kept training on its forefront
+            agenda. Web based CMS is developed to enhance and monitor the
+            competency requirement of seafarer. Program is objectively designed
+            to identify the present, future training requirement as well as manage skill development and promotion. CMS facilitates
+            the comprehensive ship and shore interface and review of all
+            training modules of the company.
+          </h2>
+        </div>
+        <!-- <div
+          class="col-md-6"
+          style="
+            border-left: groove;
+            border-bottom: groove;
+            padding-right: 100px;
+          "
+        >
+          <h3 style="padding-left: 15px; padding-top: 25px">
+            
+          </h3>
+        </div> -->
+      </div>
+    </div>
   </div>
+
   <!-- </div> -->
 </template>
 <script>

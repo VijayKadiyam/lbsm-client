@@ -66,7 +66,7 @@
           font-style: italic;
         "
       >
-        Competency Management system
+        Competency Management System
       </h1>
         <!-- font-size: xx-large;-->
       <h2
@@ -110,7 +110,7 @@
             LBSM, a leading VLCC operator has kept training on its forefront
             agenda. Web based CMS is developed to enhance and monitor the
             competency requirement of seafarer. Program is objectively designed
-            to identify the present, future training requirementas well as manage skill development and promotion. CMS facilitates
+            to identify the present, future training requirement as well as manage skill development and promotion. CMS facilitates
             the comprehensive ship and shore interface and review of all
             training modules of the company.
           </h2>

@@ -24,6 +24,7 @@
     "jspdf-autotable": "3.5.22",
     "mobile-device-detect": "^0.4.3",
     "nprogress": "^0.2.0",
+    "sass": "^1.58.1",
     "v-calendar": "^1.0.8",
     "v2-datepicker": "^3.1.1",
     "vue": "^2.7.8",
@@ -69,7 +70,6 @@
     "copy-webpack-plugin": "^6.4.1",
     "eslint": "^6.8.0",
     "eslint-plugin-vue": "^6.2.2",
-    "node-sass": "^4.14.1",
     "sass-loader": "^9.0.3",
     "vue-loader": "^15.10.0",
     "vue-template-compiler": "^2.7.8"

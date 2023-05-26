@@ -35,7 +35,6 @@
           </b-row>
         </div>
         <div slot="table-actions" class="mb-3"></div>
-
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
             <router-link :to="'/app/programs/' + props.row.id">

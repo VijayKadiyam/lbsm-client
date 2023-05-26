@@ -42,7 +42,6 @@
                 max-rows="6"
               ></b-form-textarea>
             </b-form-group>
-
             <b-form-group label="Short Name">
               <b-form-input
                 class="mb-2"

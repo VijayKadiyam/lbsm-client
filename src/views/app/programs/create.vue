@@ -52,6 +52,7 @@
               >
               </b-form-input>
             </b-form-group>
+
             <b-form-group label="Instructor">
               <b-form-input
                 class="mb-2"

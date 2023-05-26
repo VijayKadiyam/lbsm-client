@@ -77,6 +77,10 @@ export default {
           field: "program_description",
         },
         {
+          label: "Short Name",
+          field: "short_name",
+        },
+        {
           label: "Instructor",
           field: "instructor",
         },

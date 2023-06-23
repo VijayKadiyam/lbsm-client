@@ -43,6 +43,15 @@
               ></b-form-textarea>
             </b-form-group>
 
+            <b-form-group label="Short Name">
+              <b-form-input
+                class="mb-2"
+                label="Short Name"
+                placeholder="Enter Short Name"
+                v-model.trim="form.short_name"
+              >
+              </b-form-input>
+            </b-form-group>
             <b-form-group label="Instructor">
               <b-form-input
                 class="mb-2"

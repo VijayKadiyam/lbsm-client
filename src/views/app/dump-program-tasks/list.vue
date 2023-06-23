@@ -36,15 +36,36 @@
 
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
-            <router-link :to="'/app/dump-program-tasks/' + props.row.id">
-              <button v-if="!props.row.user_id" class="btn btn-success btn-sm">
-                Assign
-              </button>
+            <router-link
+              v-if="!props.row.user_id"
+              :to="'/app/dump-program-tasks/' + props.row.id"
+              style="margin-bottom: 5px"
+            >
+              <button class="btn btn-success btn-sm">Manually Assign</button>
               {{ props.row.button }}</router-link
             >
+            <button
+              v-if="!props.row.user_id"
+              @click="autoAssign(props.row.id)"
+              class="btn btn-success btn-sm"
+              style="margin-top: 5px"
+            >
+              <span v-if="autoAssignStatus == false">Auto Assign</span>
+              <span v-else>Assigning...</span>
+            </button>
           </span>
         </template>
       </vue-good-table>
+      <b-div>
+        <b-modal v-model="modalShow" hide-footer>
+          <div class="d-block text-center">
+            <h3>{{ msg }}</h3>
+          </div>
+          <b-button class="mt-3" block @click="modalShow = fasle"
+            >Close</b-button
+          >
+        </b-modal>
+      </b-div>
     </b-card>
   </div>
 </template>
@@ -78,6 +99,9 @@ export default {
       ],
       dump_program_tasks: [],
       generateStatus: false,
+      autoAssignStatus: false,
+      msg: "",
+      modalShow: false,
     };
   },
   mounted() {
@@ -105,6 +129,26 @@ export default {
       this.getData();
       this.generateStatus = false;
     },
+    async autoAssign(dumpId) {
+      this.autoAssignStatus = true;
+
+      let dump_program_tasks = await axios.get(
+        `/dump_program_tasks/assign/${dumpId}`
+      );
+      this.dump_program_tasks = dump_program_tasks.data.data;
+      this.msg = dump_program_tasks.data.message;
+      console.log(this.msg);
+      this.modalShow = true;
+      // this.serialNoStarting = (page - 1) * this.rowsPerPage;
+      this.getData();
+      this.autoAssignStatus = false;
+    },
+    // showModal() {
+    //   this.$refs["my-modal"].show();
+    // },
+    // hideModal() {
+    //   this.$refs["my-modal"].hide();
+    // },
   },
 };
 </script>

@@ -868,6 +868,8 @@ export default {
 
         doc.autoTable({ html: "#my-table" });
 
+        console.log(123)
+
         // User Details
         let columns = [
           { title: "Sr No.", dataKey: "sr_no" },
@@ -932,7 +934,7 @@ export default {
             doc.text(
               "Training Report",
               (pageWidth - doc.getTextWidth("Training Report")) / 2,
-              32
+              50
             );
             // Footer
             var str = "Page " + doc.internal.getNumberOfPages();

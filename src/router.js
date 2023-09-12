@@ -296,9 +296,9 @@ const routes = [
       },
       // Videotel Tasks
       {
-        path: "/app/videotel-tasks",
+        path: "/app/olp",
         component: () => import("./views/app/videotel-tasks"),
-        redirect: "/app/videotel-tasks/list",
+        redirect: "/app/olp/list",
         children: [
           {
             path: "list",

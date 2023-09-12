@@ -277,7 +277,7 @@
             <div class="triangle"></div>
           </li>
           <!-- KARCO Tasks -->
-          <li
+          <!-- <li
             v-if="user.roles[0].id != 6"
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -285,8 +285,8 @@
             data-item="karco-tasks"
             :data-submenu="true"
           >
-            <!-- v-if="this.userPermissions.indexOf(11) != -1" -->
-            <router-link
+             v-if="this.userPermissions.indexOf(11) != -1" -->
+          <!-- <router-link
               tag="a"
               class="nav-item-hold"
               to="/app/karco-tasks/list"
@@ -297,7 +297,7 @@
               </a>
             </router-link>
             <div class="triangle"></div>
-          </li>
+          </li> -->
           <!-- VideoTel Tasks -->
           <li
             v-if="user.roles[0].id != 6"
@@ -308,14 +308,10 @@
             :data-submenu="true"
           >
             <!-- v-if="this.userPermissions.indexOf(11) != -1" -->
-            <router-link
-              tag="a"
-              class="nav-item-hold"
-              to="/app/videotel-tasks/list"
-            >
+            <router-link tag="a" class="nav-item-hold" to="/app/olp/list">
               <a class="nav-item-hold" href="#">
                 <i class="nav-icon text-20 i-Diploma-2"></i>
-                <span class="nav-text">VideoTel</span>
+                <span class="nav-text">OLP</span>
               </a>
             </router-link>
             <div class="triangle"></div>

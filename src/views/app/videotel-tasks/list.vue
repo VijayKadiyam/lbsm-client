@@ -1,8 +1,8 @@
 <template>
   <div class="main-content">
-    <breadcumb :page="'Videotel Tasks List'" :folder="'Videotel Tasks'" />
+    <breadcumb :page="'OLP List'" :folder="'OLP'" />
     <!-- <div class="wrapper"> -->
-      <b-card>
+    <b-card>
       <b-row class="col-md-12">
         <b-col md="5">
           <b-form-group label="Month">
@@ -34,7 +34,7 @@
         </b-col>
         <b-col md="2">
           <b-button
-            style="margin-top: 22px;"
+            style="margin-top: 22px"
             variant="primary"
             class="btn-rounded d-none d-sm-block"
             @click="filterVideotel()"
@@ -286,11 +286,13 @@ export default {
         this.selectedYear = [];
       }
     },
-    async filterVideotel(){
+    async filterVideotel() {
       this.month = this.selectedMonth[0].id;
       this.year = this.selectedYear[0].id;
 
-      let videotel_tasks = await axios.get(`videotel_tasks?month=${this.month}&year=${this.year}`);
+      let videotel_tasks = await axios.get(
+        `videotel_tasks?month=${this.month}&year=${this.year}`
+      );
       this.videotel_tasks = videotel_tasks.data.data;
     },
   },

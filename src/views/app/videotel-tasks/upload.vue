@@ -1,6 +1,6 @@
 <template>
   <div class="main-content">
-    <breadcumb :page="'Upload Videotel Tasks'" :folder="'Videotel Tasks'" />
+    <breadcumb :page="'Upload OLP'" :folder="'OLP'" />
     <!-- Controller card -->
     <b-row class="justify-content-md-center">
       <b-col md="12">
@@ -88,7 +88,7 @@ import axios from "axios";
 export default {
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: "Upload Videotel Tasks Excel",
+    title: "Upload OLP Excel",
   },
   data() {
     return {
@@ -185,7 +185,7 @@ export default {
 
           // alert("Uploaded Successfully");
         })
-        .catch(function() {
+        .catch(function () {
           console.log("FAILURE!!");
         });
       this.isLoading = false;

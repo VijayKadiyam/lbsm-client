@@ -320,10 +320,10 @@
           </span>
           <span v-if="props.column.field == 'program_task'">
             {{
-              props.row.program_task.serial_no +
-              " - " +
-              props.row.program_task.task
-            }}
+              props.row.program_task
+                ? props.row.program_task.serial_no + " - "
+                : ""
+            }}{{ props.row.program_task ? props.row.program_task.task : "" }}
           </span>
           <span v-if="props.column.field == 'marks_obtained'">
             {{ props.row.marks_obtained }}
@@ -567,7 +567,9 @@
                   {{
                     userProgramTaskDetail.program_task.serial_no +
                     " - " +
-                    userProgramTaskDetail.program_task.task
+                    userProgramTaskDetail.program_task
+                      ? userProgramTaskDetail.program_task.task
+                      : ""
                   }}
                 </td>
                 <td colspan="2">
@@ -638,7 +640,9 @@
               <td>{{ at + 1 }}</td>
               <td colspan="4">
                 {{
-                  pendingProgramTask.serial_no + " - " + pendingProgramTask.task
+                  pendingProgramTask.serial_no + " - " + pendingProgramTask
+                    ? pendingProgramTask.task
+                    : ""
                 }}
               </td>
             </tr>
@@ -868,7 +872,7 @@ export default {
 
         doc.autoTable({ html: "#my-table" });
 
-        console.log(123)
+        console.log(123);
 
         // User Details
         let columns = [
@@ -1039,10 +1043,11 @@ export default {
             //   : "" + " - " + userProgramTaskDetail
             //   ? userProgramTaskDetail.program_task.task
             //   : "",
-            task_name:
-              userProgramTaskDetail.program_task.serial_no +
-              " - " +
-              userProgramTaskDetail.program_task.task,
+            task_name: userProgramTaskDetail.program_task
+              ? userProgramTaskDetail.program_task.serial_no
+              : "" + " - " + userProgramTaskDetail.program_task
+              ? userProgramTaskDetail.program_task.task
+              : "",
             marks_obtained: userProgramTaskDetail
               ? userProgramTaskDetail.marks_obtained
               : "",

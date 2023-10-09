@@ -738,7 +738,9 @@ import axios from "axios";
 // import html2pdf from "html2pdf.js";
 import moment from "moment";
 
-var jsPDF = require("jspdf");
+import JsPDF from 'jspdf'
+
+// var JsPDF = require("jspdf");
 require("jspdf-autotable");
 
 export default {
@@ -862,7 +864,7 @@ export default {
         `/user_reports?user_id=${user_id}&from_date=${this.report.from_date}&to_date=${this.report.to_date}`
       );
       this.user_reports = user_reports.data.data;
-      const doc = new jsPDF();
+      const doc = new JsPDF();
       if (this.user_reports != 0) {
         var totalPagesExp = "{total_pages_count_string}";
         var pageHeight =

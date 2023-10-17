@@ -65,6 +65,7 @@
       </b-row>
       <!-- <br> -->
       <b-row>
+        <b-col md="2" lg="2" sm="2"></b-col>
         <b-col md="4" lg="4" sm="4">
           <b-card title="CPP TASKS KPI" class="mb-30" style="height: 310px">
             <h3>
@@ -89,7 +90,7 @@
           </b-card>
         </b-col>
         <b-col md="4" lg="4" sm="4">
-          <b-card title="KARCO CBT KPI" class="mb-30" style="height: 310px">
+          <b-card title="OLP" class="mb-30" style="height: 310px">
             <h3>
               {{ total_kpi_karco_tasks + "/" + karco_videotel_out_of }}
               <i
@@ -110,7 +111,8 @@
             </center>
           </b-card>
         </b-col>
-        <b-col md="4" lg="4" sm="4">
+        <b-col md="2" lg="2" sm="2"></b-col>
+        <!-- <b-col md="4" lg="4" sm="4">
           <b-card title="Videotel CBT KPI" class="mb-30" style="height: 310px">
             <h3>
               {{ total_kpi_videotel_tasks + "/" + karco_videotel_out_of }}
@@ -131,7 +133,7 @@
               </div>
             </center>
           </b-card>
-        </b-col>
+        </b-col> -->
       </b-row>
     </b-card>
     <br />

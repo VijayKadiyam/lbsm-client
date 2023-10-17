@@ -616,7 +616,7 @@ export default {
       ],
       cppGauge: null,
       karcoGauge: null,
-      videotelGauge: null,
+      // videotelGauge: null,
     };
   },
   watch: {
@@ -646,11 +646,11 @@ export default {
       320,
       this.KARCOtest.options
     );
-    this.videotelGauge = GaugeChart.gaugeChart(
-      document.querySelector("#videotel-graph"),
-      320,
-      this.VIDEOTELtest.options
-    );
+    // this.videotelGauge = GaugeChart.gaugeChart(
+    //   document.querySelector("#videotel-graph"),
+    //   320,
+    //   this.VIDEOTELtest.options
+    // );
   },
   methods: {
     clearPeriodFilter() {
@@ -892,19 +892,19 @@ export default {
       this.karcoGauge.updateNeedle(karcoGraphPercent);
 
       // VIDEOTEL GAUGE SECTION
-      this.videotelGauge.removeGauge();
-      let videotel_rangeLast = this.karco_videotel_out_of * 3;
-      this.VIDEOTELtest.options.arcDelimiters = [33.33];
-      this.VIDEOTELtest.options.rangeLabel = ["0", "" + videotel_rangeLast];
-      this.videotelGauge = GaugeChart.gaugeChart(
-        document.querySelector("#videotel-graph"),
-        320,
-        this.VIDEOTELtest.options
-      );
+      // this.videotelGauge.removeGauge();
+      // let videotel_rangeLast = this.karco_videotel_out_of * 3;
+      // this.VIDEOTELtest.options.arcDelimiters = [33.33];
+      // this.VIDEOTELtest.options.rangeLabel = ["0", "" + videotel_rangeLast];
+      // this.videotelGauge = GaugeChart.gaugeChart(
+      //   document.querySelector("#videotel-graph"),
+      //   320,
+      //   this.VIDEOTELtest.options
+      // );
 
-      let videotelGraphPercent =
-        (this.total_kpi_videotel_tasks / videotel_rangeLast) * 100;
-      this.videotelGauge.updateNeedle(videotelGraphPercent);
+      // let videotelGraphPercent =
+      //   (this.total_kpi_videotel_tasks / videotel_rangeLast) * 100;
+      // this.videotelGauge.updateNeedle(videotelGraphPercent);
 
       this.searchingStatus = false;
     },

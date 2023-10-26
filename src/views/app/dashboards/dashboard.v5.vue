@@ -821,6 +821,7 @@ export default {
       this.isLoading = true;
       this.rank = this.selectedRank[0] ? this.selectedRank[0].id : "";
       this.ships = [];
+
       this.selectedShip.forEach((ship) => {
         this.ships.push(ship.id);
       });

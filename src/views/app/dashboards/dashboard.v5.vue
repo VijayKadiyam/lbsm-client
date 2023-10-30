@@ -877,7 +877,6 @@ export default {
     async kpiData() {
       this.searchingStatus = true;
       this.period = "90";
-
       let kpi_data = await axios.get(
         `/kpi_data?year=${this.year}&from_date=${this.from_date}&to_date=${this.to_date}&period=${this.period}`
       );

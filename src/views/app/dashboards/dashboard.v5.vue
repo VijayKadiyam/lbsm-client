@@ -225,7 +225,7 @@
     </b-row>
     <b-row>
       <b-col md="12" lg="12">
-        <b-card title="Total Tasks Performed (2022)" class="mb-30">
+        <b-card :title="`Total Tasks Performed (${year})`" class="mb-30">
           <!-- <b-dropdown
             variant="primary"
             id="dropdown-1"
@@ -295,8 +295,8 @@
             styleClass="tableOne vgt-table"
             :rows="top_performers"
           >
-            <div slot="table-actions" class="mb-3">
-              <b-row id="act" class="mr-6">
+            <div slot="table-actions" class="mb-3 mr-48">
+              <b-row id="act" class="mr-12">
                 <b-col md="6">
                   <span>Mark</span>
                   <label class="switch switch-success mr-1 ml-1">
@@ -320,6 +320,18 @@
                       (newTags) => (selectedTopPerformerRank = newTags)
                     "
                     placeholder="Type Rank Name"
+                  />
+                </b-col>
+                <b-col md="6">
+                  <vue-tags-input
+                    v-model="searchYear"
+                    :tags="selectedYear"
+                    class="tag-custom text-15 mb-2"
+                    :autocomplete-items="filteredYearItems"
+                    :add-only-from-autocomplete="true"
+                    :max-tags="1"
+                    @tags-changed="(newTags) => (selectedYear = newTags)"
+                    placeholder="Select Year"
                   />
                 </b-col>
               </b-row>
@@ -390,7 +402,7 @@
 
 <script>
 import axios from "axios";
-// import Vue from "vue";
+import moment from "moment";
 let GaugeChart = require("vue-gauge/assets/bundle.js");
 
 export default {
@@ -462,6 +474,7 @@ export default {
       ships: [],
       userRankCount: [],
       rank: "",
+      year: "",
       top_performers: [],
       top_performers_by_average: [],
       top_performers_by_task: [],
@@ -472,14 +485,19 @@ export default {
       from_date: "",
       to_date: "",
       years: [
-        { value: 2020, text: 2020 },
-        { value: 2021, text: 2021 },
+        { value: "2020", text: "2020" },
+        { value: "2021", text: "2021" },
+        { value: "2022", text: "2022" },
+        { value: "2023", text: "2023" },
+        { value: "2024", text: "2024" },
+        { value: "2025", text: "2025" },
       ],
       searchShip: "",
       selectedShip: [],
       shipItems: [],
 
       searchPeriod: "",
+      selectedPeriod: [],
       selectedPeriod: [],
       periodItems: [
         { id: "30", text: "1 Month" },
@@ -490,7 +508,9 @@ export default {
       ],
 
       searchRank: "",
+      searchYear: "",
       selectedRank: [],
+      selectedYear: [],
       selectedTopPerformerByAverageRank: [],
       selectedTopPerformerByTaskRank: [],
       selectedTopPerformerRank: [],
@@ -625,17 +645,20 @@ export default {
     selectedTopPerformerByAverageRank: "getTopPerformers_by_Average",
     selectedTopPerformerByTaskRank: "getTopPerformers_by_Task",
     selectedTopPerformerRank: "getTopPerformers",
+    selectedYear: "getTopPerformers",
     type: "getTopPerformers",
     selectedPeriod: "clearDateFilter",
+    // selectedYear: "clearDateFilter",
     from_date: "clearPeriodFilter",
     to_date: "clearPeriodFilter",
   },
   mounted() {
-    this.year = "2022";
+    this.year = moment().year();
     this.getData(this.year);
     this.getMasters();
     this.kpiData();
     this.selectedPeriod.push({ id: "90", text: "3 Month" });
+    this.selectedYear.push({ id: this.year, text: this.year });
     this.cppGauge = GaugeChart.gaugeChart(
       document.querySelector("#cpp-graph"),
       320,
@@ -769,9 +792,10 @@ export default {
       let rank = this.selectedTopPerformerByTaskRank[0]
         ? this.selectedTopPerformerByTaskRank[0].id
         : "";
+      let year = this.selectedYear[0] ? this.selectedYear[0].id : "";
 
       let top_performers_by_task = await axios.get(
-        `/top_performers_by_task?year=${this.year}&rank=${rank}`
+        `/top_performers_by_task?year=${year}&rank=${rank}`
       );
       this.top_performers_by_task = top_performers_by_task.data.data;
       this.isLoading = false;
@@ -782,8 +806,12 @@ export default {
         ? this.selectedTopPerformerRank[0].id
         : "";
 
+      let year = this.selectedYear[0] ? this.selectedYear[0].text : this.year;
+
+      console.log(year);
+
       let top_performers = await axios.get(
-        `/top_performers?year=${this.year}&rank=${rank}&type=${this.type}`
+        `/top_performers?year=${year}&rank=${rank}&type=${this.type}`
       );
       this.top_performers = top_performers.data.data;
       this.filter_type = top_performers.data.filter_type;
@@ -793,6 +821,7 @@ export default {
       this.isLoading = true;
       this.rank = this.selectedRank[0] ? this.selectedRank[0].id : "";
       this.ships = [];
+
       this.selectedShip.forEach((ship) => {
         this.ships.push(ship.id);
       });
@@ -848,6 +877,7 @@ export default {
     async kpiData() {
       this.searchingStatus = true;
       this.period = "90";
+
       let kpi_data = await axios.get(
         `/kpi_data?year=${this.year}&from_date=${this.from_date}&to_date=${this.to_date}&period=${this.period}`
       );
@@ -921,6 +951,13 @@ export default {
       return this.rankItems.filter((pt) => {
         return (
           pt.text.toLowerCase().indexOf(this.searchRank.toLowerCase()) !== -1
+        );
+      });
+    },
+    filteredYearItems() {
+      return this.years.filter((pt) => {
+        return (
+          pt.text.toLowerCase().indexOf(this.searchYear.toLowerCase()) !== -1
         );
       });
     },

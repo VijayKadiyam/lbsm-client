@@ -1035,7 +1035,7 @@ export default {
         for (const userProgramTaskDetail of this.user_reports[0].cpp_tasks) {
           rows.push({
             sr_no: count,
-            vessel_name: userProgramTaskDetail
+            vessel_name: userProgramTaskDetail.ship
               ? userProgramTaskDetail.ship.code
               : "",
             // task_name: userProgramTaskDetail

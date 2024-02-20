@@ -5,4 +5,4 @@ cd /var/www/vhosts/lbsm/lbsm-client
 # npm install
 
 
-npm run build
+# npm run build

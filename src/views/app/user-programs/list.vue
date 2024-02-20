@@ -26,19 +26,23 @@
               variant="primary"
               ><i class="i-Arrow-Back-3"></i> Back</b-button
             >
-          <b-button
-            variant="primary"
-            class="btn-rounded d-none d-sm-block"
-            to="/app/user-programs/create"
-            ><i class="i-Add text-white mr-2"> </i>Add User Program
-          </b-button>
+            <b-button
+              v-if="user.roles[0].name != 'Acting Admin'"
+              variant="primary"
+              class="btn-rounded d-none d-sm-block"
+              to="/app/user-programs/create"
+              ><i class="i-Add text-white mr-2"> </i>Add User Program
+            </b-button>
           </b-row>
         </div>
         <div slot="table-actions" class="mb-3"></div>
 
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
-            <router-link :to="'/app/user-programs/' + props.row.id">
+            <router-link
+              :to="'/app/user-programs/' + props.row.id"
+              v-if="user.roles[0].name != 'Acting Admin'"
+            >
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
               {{ props.row.button }}</router-link
             >

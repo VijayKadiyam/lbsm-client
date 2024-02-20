@@ -27,6 +27,7 @@
               ><i class="i-Arrow-Back-3"></i> Back</b-button
             >
             <b-button
+              v-if="user.roles[0].name != 'Acting Admin'"
               variant="primary"
               class="btn-rounded d-none d-sm-block"
               to="/app/user-program-posts/create"
@@ -38,13 +39,20 @@
 
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
-            <router-link :to="'/app/user-program-posts/' + props.row.id">
+            <router-link
+              :to="'/app/user-program-posts/' + props.row.id"
+              v-if="user.roles[0].name != 'Acting Admin'"
+            >
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
               {{ props.row.button }}</router-link
             >
           </span>
           <span v-if="props.column.field == 'user.first_name'">
-            {{ props.row.user.first_name + " " + props.row.user.last_name }}
+            {{
+              props.row.user != null
+                ? props.row.user.first_name + " " + props.row.user.last_name
+                : ""
+            }}
           </span>
           <span v-if="props.column.field == 'program.program_name'">
             {{ props.row.program.program_name }}

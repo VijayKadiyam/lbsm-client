@@ -99,7 +99,7 @@
               class="m-0 text-lg w-20 mt-8 pt-3"
               style="color: red; font-size: 20px"
             >
-              Select only one to proceed.
+              Please leave one candidate unselected to proceed further.
             </p>
           </b-col>
         </b-row>

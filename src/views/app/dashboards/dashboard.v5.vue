@@ -837,19 +837,19 @@ export default {
       // console.log("Multiple Bar");
       // console.log(multipleBar2);
 
-      this.total_karco_tasks_performed =
-        total_tasks_performed.data.total_karco_tasks_performed;
-      // multipleBar2.setOption();
-      multipleBar2.series[1].data = [];
-      this.total_karco_tasks_performed.forEach((data) => {
-        multipleBar2.series[1].data.push(data);
-      });
+      // this.total_karco_tasks_performed =
+      //   total_tasks_performed.data.total_karco_tasks_performed;
+      // // multipleBar2.setOption();
+      // multipleBar2.series[1].data = [];
+      // this.total_karco_tasks_performed.forEach((data) => {
+      //   multipleBar2.series[1].data.push(data);
+      // });
 
       this.total_videotel_tasks_performed =
         total_tasks_performed.data.total_videotel_tasks_performed;
-      multipleBar2.series[2].data = [];
+      multipleBar2.series[1].data = [];
       this.total_videotel_tasks_performed.forEach((data) => {
-        multipleBar2.series[2].data.push(data);
+        multipleBar2.series[1].data.push(data);
       });
       this.ttp = [];
       this.month = [];
@@ -1093,34 +1093,34 @@ export const multipleBar2 = {
       data: [],
       // data: [320, 332, 301, 334, 390, 350, 215, 332, 301, 334, 390, 350],
     },
-    {
-      color: "#74c475",
-      name: "KARCO",
-      type: "bar",
-      label: {
-        normal: {
-          show: false,
-          position: "insideBottom",
-          distance: 5,
-          align: "left",
-          verticalAlign: "middle",
-          rotate: 90,
-          formatter: "{c}  {name|{a}}",
-          fontSize: 14,
-          fontWeight: "bold",
-          rich: {
-            name: {
-              color: "#fff",
-            },
-          },
-        },
-      },
-      data: [],
-      // data: [220, 182, 191, 234, 290, 190, 210, 182, 191, 234, 290, 190],
-    },
+    // {
+    //   color: "#74c475",
+    //   name: "KARCO",
+    //   type: "bar",
+    //   label: {
+    //     normal: {
+    //       show: false,
+    //       position: "insideBottom",
+    //       distance: 5,
+    //       align: "left",
+    //       verticalAlign: "middle",
+    //       rotate: 90,
+    //       formatter: "{c}  {name|{a}}",
+    //       fontSize: 14,
+    //       fontWeight: "bold",
+    //       rich: {
+    //         name: {
+    //           color: "#fff",
+    //         },
+    //       },
+    //     },
+    //   },
+    //   data: [],
+    //   // data: [220, 182, 191, 234, 290, 190, 210, 182, 191, 234, 290, 190],
+    // },
     {
       color: "#e6550d",
-      name: "Videotel",
+      name: "OLP",
       type: "bar",
       label: {
         normal: {

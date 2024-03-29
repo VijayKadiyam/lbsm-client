@@ -65,7 +65,7 @@
             <router-link
               tag="a"
               class
-              to="/app/videotel-tasks/upload"
+              to="/app/olp/upload"
               v-if="user.roles[0].name != 'Acting Admin'"
             >
               <i class="i-Upload text-25 text-success mr-2"></i

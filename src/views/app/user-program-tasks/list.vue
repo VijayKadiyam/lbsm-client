@@ -32,7 +32,7 @@
             variant="primary"
             class="btn-rounded d-none d-sm-block"
             v-if="(is_generating = true)"
-            @click="generatePDF(user.id)"
+            @click="generatePDF(userData.id)"
           >
             <span v-if="user_reports == 0"> Generate Report </span>
             <span v-else> Download Report </span>
@@ -56,7 +56,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user.user_name }}
+                  {{ userData.user_name }}
                 </p>
               </b-col>
             </b-row>
@@ -66,7 +66,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user.first_name }}
+                  {{ userData.first_name }}
                 </p>
               </b-col>
             </b-row>
@@ -76,7 +76,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user.last_name }}
+                  {{ userData.last_name }}
                 </p>
               </b-col>
             </b-row>
@@ -86,7 +86,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user.rank ? user.rank.description : "" }}
+                  {{ userData.rank ? userData.rank.description : "" }}
                 </p>
               </b-col>
             </b-row>
@@ -96,7 +96,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user.unique_id }}
+                  {{ userData.unique_id }}
                 </p>
               </b-col>
             </b-row>
@@ -106,7 +106,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user.email }}
+                  {{ userData.email }}
                 </p>
               </b-col>
             </b-row>
@@ -116,7 +116,7 @@
               </b-col>
               <b-col md="9">
                 <p class="text-primary text-24 line-height-1 mb-2">
-                  {{ user.phone }}
+                  {{ userData.phone }}
                 </p>
               </b-col>
             </b-row>
@@ -288,6 +288,7 @@
               ><i class="i-Arrow-Back-3"></i> Back</b-button
             >
             <b-button
+              v-if="user.roles[0].name != 'Acting Admin'"
               variant="primary"
               class="btn-rounded d-none d-sm-block"
               :to="
@@ -304,6 +305,7 @@
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
             <router-link
+              v-if="user.roles[0].name != 'Acting Admin'"
               :to="
                 '/app/user-program/' +
                 user_program.id +
@@ -805,7 +807,7 @@ export default {
           field: "button",
         },
       ],
-      user: {},
+      userData: {},
       report: {
         from_date: "",
         to_date: "",
@@ -836,12 +838,12 @@ export default {
         `/user_programs/${this.$route.params.user_program_id}`
       );
       this.user_program = user_program.data.data;
-      this.user = this.user_program.user;
+      this.userData = this.user_program.user;
       // console.log(this.user.id);
       this.program = this.user_program.program;
       // User Program Task log
       let user_program_tasks = await axios.get(
-        `/user_programs/${this.$route.params.user_program_id}/user_program_tasks?user_id=${this.user.id}`
+        `/user_programs/${this.$route.params.user_program_id}/user_program_tasks?user_id=${this.userData.id}`
       );
       this.user_program_tasks = user_program_tasks.data.data;
       // console.log(this.user_program_tasks);
@@ -1035,7 +1037,7 @@ export default {
         for (const userProgramTaskDetail of this.user_reports[0].cpp_tasks) {
           rows.push({
             sr_no: count,
-            vessel_name: userProgramTaskDetail
+            vessel_name: userProgramTaskDetail.ship
               ? userProgramTaskDetail.ship.code
               : "",
             // task_name: userProgramTaskDetail

@@ -318,7 +318,7 @@
           </li>
           <!-- Dump Program tasks -->
           <li
-            v-if="user.roles[0].id != 6"
+            v-if="user.roles[0].id != 6 && user.roles[0].id != 7"
             @mouseenter="toggleSubMenu"
             class="nav-item"
             :class="{ active: selectedParentMenu == 'dump-program-tasks' }"
@@ -334,6 +334,30 @@
               <a class="nav-item-hold" href="#">
                 <i class="nav-icon text-20 i-Diploma-2"></i>
                 <span class="nav-text">Dump Program Tasks</span>
+              </a>
+            </router-link>
+            <div class="triangle"></div>
+          </li>
+          <!-- Same User Data Migrations -->
+          <li
+            v-if="user.roles[0].id != 6 && user.roles[0].id != 7"
+            @mouseenter="toggleSubMenu"
+            class="nav-item"
+            :class="{
+              active: selectedParentMenu == 'same-user-data-migrations',
+            }"
+            data-item="same-user-data-migrations"
+            :data-submenu="true"
+          >
+            <!-- v-if="this.userPermissions.indexOf(11) != -1" -->
+            <router-link
+              tag="a"
+              class="nav-item-hold"
+              to="/app/same-user-data-migrations/list"
+            >
+              <a class="nav-item-hold" href="#">
+                <i class="nav-icon text-20 i-Diploma-2"></i>
+                <span class="nav-text">User Data Migrations</span>
               </a>
             </router-link>
             <div class="triangle"></div>
@@ -433,7 +457,7 @@
               <span class="item-name">Listing</span>
             </router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="user.roles[0].id != 7">
             <router-link tag="a" class to="/app/users/create">
               <i class="nav-icon i-Split-Vertical"></i>
               <span class="item-name">Add New User</span>
@@ -465,7 +489,7 @@
               <span class="item-name">Listing</span>
             </router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="user.roles[0].id != 7">
             <router-link tag="a" class to="/app/programs/create">
               <i class="nav-icon i-Split-Vertical"></i>
               <span class="item-name">Add New Program</span>
@@ -484,7 +508,7 @@
               <span class="item-name">Listing</span>
             </router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="user.roles[0].id != 7">
             <router-link tag="a" class to="/app/values/create">
               <i class="nav-icon i-Split-Vertical"></i>
               <span class="item-name">Add New Value</span>
@@ -529,7 +553,7 @@
               <span class="item-name">Listing</span>
             </router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="user.roles[0].id != 7">
             <router-link tag="a" class to="/app/user-programs/create">
               <i class="nav-icon i-Split-Vertical"></i>
               <span class="item-name">Add New User Programs</span>
@@ -548,7 +572,7 @@
               <span class="item-name">Listing</span>
             </router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="user.roles[0].id != 7">
             <router-link tag="a" class to="/app/user-program-posts/create">
               <i class="nav-icon i-Split-Vertical"></i>
               <span class="item-name">Add New User Program Posts</span>
@@ -600,7 +624,7 @@
               <span class="item-name">Listing</span>
             </router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="user.roles[0].id != 7">
             <router-link tag="a" class to="/app/karco-tasks/upload">
               <i class="nav-icon i-File-Clipboard-Text--Image"></i>
               <span class="item-name">Upload</span>
@@ -619,7 +643,7 @@
               <span class="item-name">Listing</span>
             </router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="user.roles[0].id != 7">
             <router-link tag="a" class to="/app/videotel-tasks/upload">
               <i class="nav-icon i-File-Clipboard-Text--Image"></i>
               <span class="item-name">Upload</span>
@@ -634,6 +658,21 @@
         >
           <li class="nav-item">
             <router-link tag="a" class to="/app/dump-program-tasks/list">
+              <i class="nav-icon i-File-Clipboard-Text--Image"></i>
+              <span class="item-name">Listing</span>
+            </router-link>
+          </li>
+        </ul>
+        <!-- Submenu Same User Data Migrations -->
+        <ul
+          class="childNav d-none"
+          data-parent="same-user-data-migrations"
+          :class="{
+            'd-block': selectedParentMenu == 'same-user-data-migrations',
+          }"
+        >
+          <li class="nav-item">
+            <router-link tag="a" class to="/app/same-user-data-migrations/list">
               <i class="nav-icon i-File-Clipboard-Text--Image"></i>
               <span class="item-name">Listing</span>
             </router-link>

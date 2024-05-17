@@ -393,6 +393,20 @@ const routes = [
           },
         ],
       },
+
+      // Same User Data Migrations
+      {
+        path: "/app/same-user-data-migrations",
+        component: () => import("./views/app/same-user-data-migrations"),
+        redirect: "/app/same-user-data-migrations/list",
+        children: [
+          {
+            path: "list",
+            component: () =>
+              import("./views/app/same-user-data-migrations/list"),
+          },
+        ],
+      },
     ],
   },
   // sessions

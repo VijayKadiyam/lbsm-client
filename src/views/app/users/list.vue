@@ -20,7 +20,12 @@
       >
         <div slot="table-actions" class="mb-3">
           <b-row>
-            <router-link tag="a" class to="/app/users/upload">
+            <router-link
+              tag="a"
+              class
+              to="/app/users/upload"
+              v-if="user.roles[0].name != 'Acting Admin'"
+            >
               <i class="i-Upload text-25 text-success mr-2"></i
             ></router-link>
             <b-button
@@ -31,6 +36,7 @@
             >
 
             <b-button
+              v-if="user.roles[0].name != 'Acting Admin'"
               variant="primary"
               class="btn-rounded d-none d-sm-block"
               to="/app/users/create"
@@ -41,7 +47,10 @@
 
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'button'">
-            <router-link :to="'/app/users/' + props.row.id">
+            <router-link
+              :to="'/app/users/' + props.row.id"
+              v-if="user.roles[0].name != 'Acting Admin'"
+            >
               <i class="i-Eraser-2 text-25 text-success mr-2"></i>
               {{ props.row.button }}</router-link
             >
@@ -55,16 +64,18 @@
           <span v-else-if="props.column.field == 'first_name'">
             {{ props.row.first_name.toUpperCase() }}
           </span>
-          <span v-else-if="props.column.field == 'last_name' ">
-            {{ props.row.last_name ? props.row.last_name.toUpperCase() : ''  }}
+          <span v-else-if="props.column.field == 'last_name'">
+            {{ props.row.last_name ? props.row.last_name.toUpperCase() : "" }}
           </span>
-          <span v-else-if="props.column.field == 'nationality' ">
-            {{ props.row.nationality ? props.row.nationality.toUpperCase() : ''  }}
+          <span v-else-if="props.column.field == 'nationality'">
+            {{
+              props.row.nationality ? props.row.nationality.toUpperCase() : ""
+            }}
           </span>
-          <span v-else-if="props.column.field == 'email' ">
-            {{ props.row.email ? props.row.email.toUpperCase() : ''  }}
+          <span v-else-if="props.column.field == 'email'">
+            {{ props.row.email ? props.row.email.toUpperCase() : "" }}
           </span>
-         <span v-else-if="props.column.field == 'active'">
+          <span v-else-if="props.column.field == 'active'">
             {{ props.row.active == 1 ? "YES" : "NO" }}
           </span>
         </template>

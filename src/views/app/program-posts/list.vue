@@ -19,7 +19,7 @@
               />
               {{ searchingStatus }}
             </b-col>
-            <b-col md="3">
+            <b-col md="3" v-if="user.roles[0].name != 'Acting Admin'">
               <b-button
                 variant="primary"
                 class="btn-rounded d-none d-sm-block"
@@ -47,7 +47,11 @@
         styleClass="tableOne vgt-table"
         :rows="programPosts"
       >
-        <div slot="table-actions-bottom" class="mb-1 mr-2 mt-3 pull-right">
+        <div
+          slot="table-actions-bottom"
+          class="mb-1 mr-2 mt-3 pull-right"
+          v-if="user.roles[0].name != 'Acting Admin'"
+        >
           <b-button
             variant="primary"
             class="btn-rounded d-none d-sm-block"
@@ -189,7 +193,7 @@ export default {
       });
     },
     async search() {
-      console.log('123')
+      console.log("123");
       this.isLoading = true;
       this.savingStatus = "";
       this.searchingStatus = "Searching...";
@@ -252,5 +256,4 @@ export default {
   },
 };
 </script>
-<style >
-</style>
+<style></style>
